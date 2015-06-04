@@ -1,15 +1,15 @@
 ## Bundler and Minifier
 
 A Visual Studio extension that let's you configure bundling and 
-minification.
+minification of JS, CSS and HTML files.
 
 ### Bundling
 
-![alt text](art\contextmenu-createbundle.png)
+![Create bundle](art\contextmenu-createbundle.png)
 
 ### Minification
 
-![alt text](art\contextmenu-minify.png)
+![Minify file](art\contextmenu-minify.png)
 
 ### bundleconfig.json
 
