@@ -3,13 +3,28 @@
 A Visual Studio extension that let's you configure bundling and 
 minification of JS, CSS and HTML files.
 
+[![Build status](https://ci.appveyor.com/api/projects/status/ktn1qy982qsprwb5?svg=true)](https://ci.appveyor.com/project/madskristensen/bundlerminifier)
+
 ### Bundling
+
+Select 2 or more of the same type of files in Solution Explorer
+to create a bundle.
 
 ![Create bundle](art/contextmenu-createbundle.png)
 
+Any edits being made to the source files will instantly produce
+updated bundle file output.
+
 ### Minification
 
+Minify any JS, CSS or HTML file by right-clicking it in Solution
+Explorer. That will create a `<filename>.min.<ext>` and nest
+it under the original file.
+
 ![Minify file](art/contextmenu-minify.png)
+
+When the original file is modified, a new min file is produced
+instantly.
 
 ### bundleconfig.json
 

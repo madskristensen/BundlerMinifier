@@ -11,6 +11,7 @@ before_build:
   #- nuget.exe restore
 
 build_script:
+  - nuget restore
   - msbuild /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
 
 after_test:
