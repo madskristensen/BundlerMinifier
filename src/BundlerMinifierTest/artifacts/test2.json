@@ -1,0 +1,10 @@
+﻿[
+	{
+		"outputFileName": "foo.js",
+		"inputFiles": [
+			"test2"
+		],
+		"minify": true,
+		"includeInProject": true
+	}
+]

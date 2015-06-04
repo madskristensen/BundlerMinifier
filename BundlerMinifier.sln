@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BundlerMinifierVsix", "src\BundlerMinifierVsix\BundlerMinifierVsix.csproj", "{49C270BE-9645-40D5-BE08-91ADE243D394}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BundlerMinifier", "src\BundlerMinifier\BundlerMinifier.csproj", "{B714B5B9-27C4-443C-9517-FE5C5EF46EA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BundlerMinifierTest", "src\BundlerMinifierTest\BundlerMinifierTest.csproj", "{43AAA3AD-A806-45A0-99A3-F0E7E3B81AEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E9E392DE-6C44-4AD2-858C-D73AD3016E6E}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49C270BE-9645-40D5-BE08-91ADE243D394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49C270BE-9645-40D5-BE08-91ADE243D394}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49C270BE-9645-40D5-BE08-91ADE243D394}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49C270BE-9645-40D5-BE08-91ADE243D394}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B714B5B9-27C4-443C-9517-FE5C5EF46EA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B714B5B9-27C4-443C-9517-FE5C5EF46EA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B714B5B9-27C4-443C-9517-FE5C5EF46EA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B714B5B9-27C4-443C-9517-FE5C5EF46EA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43AAA3AD-A806-45A0-99A3-F0E7E3B81AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43AAA3AD-A806-45A0-99A3-F0E7E3B81AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43AAA3AD-A806-45A0-99A3-F0E7E3B81AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43AAA3AD-A806-45A0-99A3-F0E7E3B81AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

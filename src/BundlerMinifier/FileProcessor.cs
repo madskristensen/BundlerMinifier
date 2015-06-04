@@ -1,0 +1,89 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Linq;
+
+namespace BundlerMinifier
+{
+    public class FileProcessor
+    {
+        public static bool IsSupported(IEnumerable<string> files)
+        {
+            files = files.Where(f => !string.IsNullOrEmpty(f));
+
+            if (files.Count() <= 1) return false;
+
+            string ext = Path.GetExtension(files.ElementAt(0));
+
+            foreach (string file in files)
+            {
+                if (!Path.GetExtension(file).Equals(ext, StringComparison.OrdinalIgnoreCase))
+                    return false;
+            }
+
+            return true;
+        }
+
+        public void Process(string fileName)
+        {
+            FileInfo info = new FileInfo(fileName);
+            var bundles = Bundler.GetBundles(fileName);
+
+            foreach (Bundle bundle in bundles)
+            {
+                ProcessBundle(info.Directory.FullName, bundle);
+            }
+        }
+
+        public void SourceFileChanged(string bundleFile, string sourceFile)
+        {
+            var bundles = Bundler.GetBundles(bundleFile);
+            string folder = Path.GetDirectoryName(bundleFile);
+
+            foreach (Bundle bundle in bundles)
+            {
+                foreach (string inputFile in bundle.InputFiles)
+                {
+                    string input = Path.Combine(folder, inputFile.Replace("/", "\\"));
+
+                    if (input.Equals(sourceFile, System.StringComparison.OrdinalIgnoreCase))
+                        ProcessBundle(folder, bundle);
+                }
+            }
+        }
+
+        private void ProcessBundle(string baseFolder, Bundle bundle)
+        {
+            Bundler.ProcessBundle(baseFolder, bundle);
+            Minifier.ProcessBundle(bundle);
+
+            string outputFile = Path.Combine(baseFolder, bundle.OutputFileName);
+
+            OnBeforeProcess(outputFile, bundle, baseFolder);
+
+            File.WriteAllText(outputFile, bundle.Output, new UTF8Encoding(true));
+
+            OnAfterProcess(outputFile, bundle, baseFolder);
+        }
+
+        protected void OnBeforeProcess(string outputFileName, Bundle bundle, string baseFolder)
+        {
+            if (BeforeProcess != null)
+            {
+                BeforeProcess(this, new BundleFileEventArgs(outputFileName, bundle, baseFolder));
+            }
+        }
+
+        protected void OnAfterProcess(string outputFileName, Bundle bundle, string baseFolder)
+        {
+            if (AfterProcess != null)
+            {
+                AfterProcess(this, new BundleFileEventArgs(outputFileName, bundle, baseFolder));
+            }
+        }
+
+        public event EventHandler<BundleFileEventArgs> BeforeProcess;
+        public event EventHandler<BundleFileEventArgs> AfterProcess;
+    }
+}

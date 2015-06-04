@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <Extern href="stdidcmd.h"/>
+    <Extern href="vsshlids.h"/>
+    <Include href="KnownImageIds.vsct"/>
+
+    <Commands package="guidBundlerPackage">
+        <Groups>
+            <Group guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0600">
+                <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
+            </Group>
+        </Groups>
+        
+        <!-- See all available images for ImageCatalogGuid at http://glyphlist.azurewebsites.net/knownmonikers/ -->
+        <Buttons>
+            <Button guid="guidBundlerCmdSet" id="CreateBundleId" priority="0x0100" type="Button">
+                <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
+                <Icon guid="ImageCatalogGuid" id="Join" />
+                <CommandFlag>IconIsMoniker</CommandFlag>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <CommandFlag>DynamicItemStart</CommandFlag>
+                <Strings>
+                    <ButtonText>Create bundle...</ButtonText>
+                </Strings>
+            </Button>
+            <Button guid="guidBundlerCmdSet" id="UpdateBundle" priority="0x0200" type="Button">
+                <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
+                <Icon guid="ImageCatalogGuid" id="RunUpdate" />
+                <CommandFlag>IconIsMoniker</CommandFlag>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <CommandFlag>DynamicItemStart</CommandFlag>
+                <Strings>
+                    <ButtonText>Update bundle</ButtonText>
+                </Strings>
+            </Button>
+            <Button guid="guidBundlerCmdSet" id="MinifyFile" priority="0x0300" type="Button">
+                <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
+                <Icon guid="ImageCatalogGuid" id="ContractArrow" />
+                <CommandFlag>IconIsMoniker</CommandFlag>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <CommandFlag>DynamicItemStart</CommandFlag>
+                <Strings>
+                    <ButtonText>Minify File</ButtonText>
+                </Strings>
+            </Button>
+        </Buttons>
+    </Commands>
+
+    <CommandPlacements>
+        <CommandPlacement guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0200">
+            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBITEMNODE"/>
+        </CommandPlacement>
+    </CommandPlacements>
+
+    <Symbols>
+        <!-- This is the package guid. -->
+        <GuidSymbol name="guidBundlerPackage" value="{67411f3b-36b3-4df0-84e8-5748f8a541ac}" />
+
+        <!-- This is the guid used to group the menu commands together -->
+        <GuidSymbol name="guidBundlerCmdSet" value="{7b10be0c-81e1-4817-abda-e08788679bd5}">
+            <IDSymbol name="MyMenuGroup" value="0x1020" />
+            <IDSymbol name="CreateBundleId" value="0x0100" />
+            <IDSymbol name="UpdateBundle" value="0x0200" />
+            <IDSymbol name="MinifyFile" value="0x0300" />
+        </GuidSymbol>
+    </Symbols>
+</CommandTable>
