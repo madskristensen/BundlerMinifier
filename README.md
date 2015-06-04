@@ -15,6 +15,9 @@ to create a bundle.
 Any edits being made to the source files will instantly produce
 updated bundle file output.
 
+The bundle configuration is stored in a file called `bundleconfig.json`
+which gets added to the root of the project.
+
 ### Minification
 
 Minify any JS, CSS or HTML file by right-clicking it in Solution
