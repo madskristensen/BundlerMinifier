@@ -5,11 +5,11 @@ minification of JS, CSS and HTML files.
 
 ### Bundling
 
-![Create bundle](art\contextmenu-createbundle.png)
+![Create bundle](art/contextmenu-createbundle.png)
 
 ### Minification
 
-![Minify file](art\contextmenu-minify.png)
+![Minify file](art/contextmenu-minify.png)
 
 ### bundleconfig.json
 
