@@ -34,7 +34,14 @@ it under the original file.
 When the original file is modified, a new min file is produced
 instantly.
 
-Source maps are supported for JavaScript minification.
+### Source maps
+
+Source maps are supported for JavaScript minification only - not
+for bundles yet.
+
+A `.map` file is produced next to the `.min.js` file automatically,
+but if you manually delete the `.map` file, a new one will not be
+created on subsequent minifications.
 
 ### bundleconfig.json
 

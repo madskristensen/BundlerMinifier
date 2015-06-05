@@ -29,8 +29,10 @@ namespace BundlerMinifierVsix
                 if (_processor == null)
                 {
                     _processor = new FileProcessor();
-                    _processor.BeforeProcess += BeforeProcess;
                     _processor.AfterProcess += AfterProcess;
+                    _processor.AfterWritingSourceMap += AfterWritingSourceMap;
+                    _processor.BeforeProcess += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.OutputFileName); };
+                    _processor.BeforeWritingSourceMap += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile); };
                 }
 
                 return _processor;
@@ -65,6 +67,21 @@ namespace BundlerMinifierVsix
         private static void BeforeProcess(object sender, BundleFileEventArgs e)
         {
             ProjectHelpers.CheckFileOutOfSourceControl(e.OutputFileName);
+        }
+
+        private static void AfterWritingSourceMap(object sender, MinifyFileEventArgs e)
+        {
+            var item = _dte.Solution.FindProjectItem(e.OriginalFile);
+
+            if (item == null || item.ContainingProject == null)
+                return;
+
+            ProjectHelpers.AddNestedFile(e.OriginalFile, e.ResultFile);
+        }
+
+        private static void BeforeWritingSourceMap(object sender, MinifyFileEventArgs e)
+        {
+            ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile);
         }
     }
 }

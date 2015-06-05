@@ -16,10 +16,13 @@ namespace BundlerMinifier
         public List<string> InputFiles { get; set; } = new List<string>();
 
         [JsonProperty("minify")]
-        public bool Minify { get; set; }
+        public bool Minify { get; set; } = true;
 
         [JsonProperty("includeInProject")]
         public bool IncludeInProject { get; set; }
+
+        [JsonProperty("sourceMaps")]
+        public bool SourceMaps { get; set; }
 
         internal string Output { get; set; }
     }

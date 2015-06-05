@@ -92,15 +92,17 @@ namespace BundlerMinifierVsix.Commands
             string mapFile;
             bool mapFileExist = FileHelpers.HasSourceMap(minFile, out mapFile);
 
-            MinificationResult result = FileMinifier.MinifyFile(file);
+            bool produceSourceMap = (minFileExist && mapFileExist) || (!minFileExist && !mapFileExist);
 
-            // Source maps
-            if (!string.IsNullOrEmpty(result.SourceMap))
+            MinificationResult result = FileMinifier.MinifyFile(file, produceSourceMap);
+
+            // Source maps            
+            if (produceSourceMap && !string.IsNullOrEmpty(result.SourceMap))
             {
                 mapFile = minFile + ".map";
                 ProjectHelpers.CheckFileOutOfSourceControl(mapFile);
                 File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(true));
-
+                
                 if (!mapFileExist)
                     ProjectHelpers.AddNestedFile(minFile, mapFile);
             }
@@ -108,12 +110,12 @@ namespace BundlerMinifierVsix.Commands
 
         private void AfterWritingMinFile(object sender, MinifyFileEventArgs e)
         {
-            ProjectHelpers.AddNestedFile(e.File, e.MinFile);
+            ProjectHelpers.AddNestedFile(e.OriginalFile, e.ResultFile);
         }
 
         private void BeforeWritingMinFile(object sender, MinifyFileEventArgs e)
         {
-            ProjectHelpers.CheckFileOutOfSourceControl(e.MinFile);
+            ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile);
         }
     }
 }

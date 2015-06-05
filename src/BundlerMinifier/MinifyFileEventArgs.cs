@@ -4,15 +4,15 @@ namespace BundlerMinifier
 {
     public class MinifyFileEventArgs : EventArgs
     {
-        public MinifyFileEventArgs(string file, string minFile)
+        public MinifyFileEventArgs(string originalFile, string resultFile)
         {
-            File = file;
-            MinFile = minFile;
+            OriginalFile = originalFile;
+            ResultFile = resultFile;
         }
 
-        public string File { get; set; }
+        public string OriginalFile { get; set; }
 
-        public string MinFile { get; set; }
+        public string ResultFile { get; set; }
 
     }
 }

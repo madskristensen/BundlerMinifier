@@ -12,14 +12,14 @@ namespace BundlerMinifier
 {
     public class FileMinifier
     {
-        public static MinificationResult MinifyFile(string file)
+        public static MinificationResult MinifyFile(string file, bool produceSourceMap)
         {
             string extension = Path.GetExtension(file).ToUpperInvariant();
 
             switch (extension)
             {
                 case ".JS":
-                    return MinifyJavaScriptWithSourceMap(file);
+                    return MinifyJavaScriptWithSourceMap(file, produceSourceMap);
 
                 case ".CSS":
                     return MinifyCss(file);
@@ -32,7 +32,7 @@ namespace BundlerMinifier
             return null;
         }
 
-        private static MinificationResult MinifyJavaScriptWithSourceMap(string file)
+        private static MinificationResult MinifyJavaScriptWithSourceMap(string file, bool produceSourceMap)
         {
             var settings = new CodeSettings()
             {
@@ -42,31 +42,44 @@ namespace BundlerMinifier
             };
 
             var minifier = new Minifier();
-            StringWriter writer = new StringWriter();
-
+            
             string ext = Path.GetExtension(file);
             string minFile = file.Substring(0, file.LastIndexOf(ext)) + ".min" + ext;
             string mapFile = minFile + ".map";
 
             string result = null;
 
-            using (V3SourceMap sourceMap = new V3SourceMap(writer))
+            if (!produceSourceMap)
             {
-                settings.SymbolsMap = sourceMap;
-                sourceMap.StartPackage(minFile, mapFile);
-
-                minifier.FileName = file;
                 result = minifier.MinifyJavaScript(File.ReadAllText(file), settings);
 
-                if (minifier.Errors.Count == 0)
-                {
-                    OnBeforeWritingMinFile(file, minFile);
-                    File.WriteAllText(minFile, result, new UTF8Encoding(true));
-                    OnAfterWritingMinFile(file, minFile);
-                }
+                OnBeforeWritingMinFile(file, minFile);
+                File.WriteAllText(minFile, result, new UTF8Encoding(true));
+                OnAfterWritingMinFile(file, minFile);
+
+                return new MinificationResult(result, null);
             }
 
-            return new MinificationResult(result, writer.ToString());
+            using (StringWriter writer = new StringWriter())
+            {
+                using (V3SourceMap sourceMap = new V3SourceMap(writer))
+                {
+                    settings.SymbolsMap = sourceMap;
+                    sourceMap.StartPackage(minFile, mapFile);
+
+                    minifier.FileName = file;
+                    result = minifier.MinifyJavaScript(File.ReadAllText(file), settings);
+
+                    if (minifier.Errors.Count == 0)
+                    {
+                        OnBeforeWritingMinFile(file, minFile);
+                        File.WriteAllText(minFile, result, new UTF8Encoding(true));
+                        OnAfterWritingMinFile(file, minFile);
+                    }
+                }
+
+                return new MinificationResult(result, writer.ToString());
+            }
         }
 
         private static MinificationResult MinifyCss(string file)
