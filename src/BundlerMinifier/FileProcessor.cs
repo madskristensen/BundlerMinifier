@@ -56,7 +56,7 @@ namespace BundlerMinifier
         private void ProcessBundle(string baseFolder, Bundle bundle)
         {
             Bundler.ProcessBundle(baseFolder, bundle);
-            Minifier.ProcessBundle(bundle);
+            StringMinifier.ProcessBundle(bundle);
 
             string outputFile = Path.Combine(baseFolder, bundle.OutputFileName);
 

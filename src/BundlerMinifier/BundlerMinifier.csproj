@@ -48,10 +48,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bundle.cs" />
+    <Compile Include="FileMinifier.cs" />
+    <Compile Include="MinifyFileEventArgs.cs" />
     <Compile Include="BundleFileEventArgs.cs" />
     <Compile Include="Bundler.cs" />
     <Compile Include="FileProcessor.cs" />
-    <Compile Include="Minifier.cs" />
+    <Compile Include="MinificationResult.cs" />
+    <Compile Include="StringMinifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

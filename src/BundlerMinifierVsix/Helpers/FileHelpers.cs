@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BundlerMinifier;
 
 namespace BundlerMinifierVsix
 {
@@ -11,10 +12,22 @@ namespace BundlerMinifierVsix
     {
         public static bool HasMinFile(string file, out string minFile)
         {
-            string ext = Path.GetExtension(file);
-            minFile = file.Substring(0, file.LastIndexOf(ext)) + ".min" + ext;
+            minFile = FileMinifier.GetMinFileName(file);
 
             return File.Exists(minFile);
+        }
+
+        public static bool HasSourceMap(string file, out string sourceMap)
+        {
+            if (File.Exists(file + ".map"))
+            {
+                sourceMap = file + ".map";
+                return true;
+            }
+
+            sourceMap = null;
+
+            return false;
         }
     }
 }

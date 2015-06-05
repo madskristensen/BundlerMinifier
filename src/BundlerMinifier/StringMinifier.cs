@@ -1,11 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Text;
 using Microsoft.Ajax.Utilities;
 using WebMarkupMin.Core.Minifiers;
 using WebMarkupMin.Core.Settings;
 
 namespace BundlerMinifier
 {
-    public class Minifier
+    public class StringMinifier
     {
         public static void ProcessBundle(Bundle bundle)
         {
@@ -32,31 +34,10 @@ namespace BundlerMinifier
             }
 
             if (!string.IsNullOrEmpty(result))
-                bundle.Output = result; 
+                bundle.Output = result;
         }
 
-        public static string MinifyFile(string file)
-        {
-            string extension = Path.GetExtension(file).ToUpperInvariant();
-            string content = File.ReadAllText(file);
-
-            switch (extension)
-            {
-                case ".JS":
-                    return MinifyJavaScript(content);
-
-                case ".CSS":
-                    return MinifyCss(content);
-
-                case ".HTML":
-                case ".HTM":
-                    return MinifyHtml(content);
-            }
-
-            return null;
-        }
-
-        public static string MinifyJavaScript(string content)
+        private static string MinifyJavaScript(string content)
         {
             var settings = new CodeSettings()
             {
@@ -75,7 +56,7 @@ namespace BundlerMinifier
             return null;
         }
 
-        public static string MinifyCss(string content)
+        internal static string MinifyCss(string content)
         {
             var settings = new CssSettings()
             {
@@ -92,7 +73,7 @@ namespace BundlerMinifier
             return null;
         }
 
-        public static string MinifyHtml(string content)
+        private static string MinifyHtml(string content)
         {
             var settings = new HtmlMinificationSettings
             {

@@ -30,6 +30,9 @@ namespace BundlerMinifierVsix.Commands
                 menuItem.BeforeQueryStatus += BeforeQueryStatus;
                 commandService.AddCommand(menuItem);
             }
+
+            FileMinifier.BeforeWritingMinFile += BeforeWritingMinFile;
+            FileMinifier.AfterWritingMinFile += AfterWritingMinFile;
         }
 
         private static string[] _allowed = new[] { ".JS", ".CSS", ".HTML", ".HTM" };
@@ -45,9 +48,10 @@ namespace BundlerMinifierVsix.Commands
                 return;
             }
 
-            string ext = Path.GetExtension(files.ElementAt(0)).ToUpperInvariant();
+            string fileName = Path.GetExtension(files.ElementAt(0));
+            string ext = fileName.ToUpperInvariant();
 
-            button.Visible = _allowed.Contains(ext);
+            button.Visible = !fileName.Contains(".min.") && _allowed.Contains(ext);
         }
 
         public static MinifyFile Instance
@@ -80,21 +84,36 @@ namespace BundlerMinifierVsix.Commands
         public void Minify(string file)
         {
             ProjectItem item = BundlerMinifierPackage._dte.Solution.FindProjectItem(file);
-            
+
             string ext = Path.GetExtension(file);
-
-            string result = Minifier.MinifyFile(file);
-
             string minFile;
             bool minFileExist = FileHelpers.HasMinFile(file, out minFile);
-            
-            if (minFileExist)
-                ProjectHelpers.CheckFileOutOfSourceControl(minFile);
 
-            File.WriteAllText(minFile, result, new UTF8Encoding(true));
+            string mapFile;
+            bool mapFileExist = FileHelpers.HasSourceMap(minFile, out mapFile);
 
-            if (!minFileExist && item != null && item.ContainingProject != null)
-                ProjectHelpers.AddNestedFile(file, minFile);
+            MinificationResult result = FileMinifier.MinifyFile(file);
+
+            // Source maps
+            if (!string.IsNullOrEmpty(result.SourceMap))
+            {
+                mapFile = minFile + ".map";
+                ProjectHelpers.CheckFileOutOfSourceControl(mapFile);
+                File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(true));
+
+                if (!mapFileExist)
+                    ProjectHelpers.AddNestedFile(minFile, mapFile);
+            }
+        }
+
+        private void AfterWritingMinFile(object sender, MinifyFileEventArgs e)
+        {
+            ProjectHelpers.AddNestedFile(e.File, e.MinFile);
+        }
+
+        private void BeforeWritingMinFile(object sender, MinifyFileEventArgs e)
+        {
+            ProjectHelpers.CheckFileOutOfSourceControl(e.MinFile);
         }
     }
 }

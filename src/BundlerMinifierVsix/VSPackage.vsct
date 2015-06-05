@@ -7,7 +7,7 @@
 
     <Commands package="guidBundlerPackage">
         <Groups>
-            <Group guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0600">
+            <Group guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0200">
                 <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
             </Group>
         </Groups>
