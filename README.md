@@ -34,6 +34,8 @@ it under the original file.
 When the original file is modified, a new min file is produced
 instantly.
 
+Source maps are supported for JavaScript minification.
+
 ### bundleconfig.json
 
 The extension adds a `bundleconfig.json` file at the root of the
