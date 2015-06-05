@@ -41,7 +41,7 @@
 
 					"items": {
 						"type": "string",
-						"format": "relativepath"
+						"format": "bundle_relativepath"
 					}
 				},
 				"minify": {

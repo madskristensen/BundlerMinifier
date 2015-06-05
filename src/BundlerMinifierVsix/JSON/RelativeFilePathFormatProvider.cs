@@ -12,7 +12,7 @@ namespace BundlerMinifierVsix.JSON
     {
         public override string FormatName
         {
-            get { return "relativepath"; }
+            get { return "bundle_relativepath"; }
         }
 
         public override bool HideFormatNameCompletion
