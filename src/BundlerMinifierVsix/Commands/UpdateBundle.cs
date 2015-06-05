@@ -61,7 +61,7 @@ namespace BundlerMinifierVsix.Commands
             var file = ProjectHelpers.GetSelectedItemPaths().ElementAt(0);
             var item = ProjectHelpers.GetSelectedItems().ElementAt(0);
 
-            BundlerMinifierPackage.Processor.Process(file);
+            BundleService.Processor.Process(file);
         }
     }
 }

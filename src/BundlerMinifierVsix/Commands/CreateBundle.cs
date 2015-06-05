@@ -37,7 +37,7 @@ namespace BundlerMinifierVsix.Commands
             var button = (OleMenuCommand)sender;
             var files = ProjectHelpers.GetSelectedItemPaths();
 
-            button.Visible = FileProcessor.IsSupported(files);
+            button.Visible = BundleFileProcessor.IsSupported(files);
         }
 
         public static CreateBundle Instance
@@ -82,7 +82,7 @@ namespace BundlerMinifierVsix.Commands
 
             BundlerMinifierPackage._dte.ItemOperations.OpenFile(jsonFile);
             ProjectHelpers.AddFileToProject(item.ContainingProject, jsonFile, "None");
-            BundlerMinifierPackage.Processor.Process(jsonFile);
+            BundleService.Processor.Process(jsonFile);
         }
         
         private static Bundle CreateBundleFile(IEnumerable<string> files,string outputFile)

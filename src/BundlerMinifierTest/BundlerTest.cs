@@ -11,14 +11,14 @@ namespace BundlerMinifierTest
     {
         private const string TEST_BUNDLE = "../../artifacts/test1.json";
         private Bundler _bundler;
-        private FileProcessor _processor;
+        private BundleFileProcessor _processor;
         private Guid _guid;
 
         [TestInitialize]
         public void Setup()
         {
             _bundler = new Bundler();
-            _processor = new FileProcessor();
+            _processor = new BundleFileProcessor();
             _guid = Guid.NewGuid();
         }
 
@@ -38,15 +38,15 @@ namespace BundlerMinifierTest
         public void IsSupported()
         {
             var files1 = new[] { "file.js", "file2.js" };
-            var result1 = FileProcessor.IsSupported(files1);
+            var result1 = BundleFileProcessor.IsSupported(files1);
             Assert.IsTrue(result1);
 
             var files2 = new[] { "file.js", "file2.css" };
-            var result2 = FileProcessor.IsSupported(files2);
+            var result2 = BundleFileProcessor.IsSupported(files2);
             Assert.IsFalse(result2);
 
             var files3 = new[] { null, "file2.css" };
-            var result3 = FileProcessor.IsSupported(files3);
+            var result3 = BundleFileProcessor.IsSupported(files3);
             Assert.IsFalse(result3);
         }
 

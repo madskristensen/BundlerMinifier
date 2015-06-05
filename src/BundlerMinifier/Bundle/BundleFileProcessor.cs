@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BundlerMinifier
 {
-    public class FileProcessor
+    public class BundleFileProcessor
     {
         public static bool IsSupported(IEnumerable<string> files)
         {

@@ -10,9 +10,11 @@ using Microsoft.VisualStudio.Utilities;
 namespace BundlerMinifierVsix.Listeners
 {
     [Export(typeof(IVsTextViewCreationListener))]
-    [ContentType("json")]
+    [ContentType("javascript")]
+    [ContentType("css")]
+    [ContentType("htmlx")]
     [TextViewRole(PredefinedTextViewRoles.Document)]
-    class JsonCreationListener : IVsTextViewCreationListener
+    class SourceFileCreationListener : IVsTextViewCreationListener
     {
         [Import]
         public IVsEditorAdaptersFactoryService EditorAdaptersFactoryService { get; set; }
@@ -28,12 +30,7 @@ namespace BundlerMinifierVsix.Listeners
 
             if (TextDocumentFactoryService.TryGetTextDocument(textView.TextDataModel.DocumentBuffer, out _document))
             {
-                string fileName = Path.GetFileName(_document.FilePath);
-
-                if (fileName.Equals("bundleconfig.json", StringComparison.OrdinalIgnoreCase))
-                {
-                    _document.FileActionOccurred += DocumentSaved;
-                }
+                _document.FileActionOccurred += DocumentSaved;
             }
 
             textView.Closed += TextviewClosed;
@@ -54,7 +51,21 @@ namespace BundlerMinifierVsix.Listeners
         {
             if (e.FileActionType == FileActionTypes.ContentSavedToDisk)
             {
-                BundlerMinifierPackage.Processor.Process(e.FilePath);
+                var item = BundlerMinifierPackage._dte.Solution.FindProjectItem(e.FilePath);
+
+                if (item != null && item.ContainingProject != null)
+                {
+                    string folder = ProjectHelpers.GetRootFolder(item.ContainingProject);
+                    string jsonFile = Path.Combine(folder, "bundleconfig.json");
+                    
+                    if (File.Exists(jsonFile))
+                        BundleService.Processor.SourceFileChanged(jsonFile, e.FilePath);
+
+                    string minFile;
+
+                    if (FileHelpers.HasMinFile(e.FilePath, out minFile))
+                        Commands.MinifyFile.Instance.Minify(e.FilePath);
+                }
             }
         }
     }
