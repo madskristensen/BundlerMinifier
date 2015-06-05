@@ -27,8 +27,11 @@ namespace BundlerMinifierTest
         {
             File.Delete("../../artifacts/" + _guid + ".json");
             File.Delete("../../artifacts/foo.js");
+            File.Delete("../../artifacts/foo.min.js");
             File.Delete("../../artifacts/foo.css");
+            File.Delete("../../artifacts/foo.min.css");
             File.Delete("../../artifacts/foo.html");
+            File.Delete("../../artifacts/foo.min.html");
         }
 
         [TestMethod]
@@ -93,15 +96,15 @@ namespace BundlerMinifierTest
             _processor.Process(TEST_BUNDLE);
 
             // JS
-            string jsResult = File.ReadAllText("../../artifacts/foo.js");
+            string jsResult = File.ReadAllText("../../artifacts/foo.min.js");
             Assert.AreEqual("var file1=1,file2=2;", jsResult);
 
             // CSS
-            string cssResult = File.ReadAllText("../../artifacts/foo.css");
+            string cssResult = File.ReadAllText("../../artifacts/foo.min.css");
             Assert.AreEqual("body{background:#ff0}body{display:block}", cssResult);
 
             // HTML
-            string htmlResult = File.ReadAllText("../../artifacts/foo.html");
+            string htmlResult = File.ReadAllText("../../artifacts/foo.min.html");
             Assert.AreEqual("<div>hatæ</div><span tabindex=2> <i> hat </i> </span>", htmlResult);
         }
 
@@ -111,7 +114,7 @@ namespace BundlerMinifierTest
             _processor.Process(TEST_BUNDLE.Replace("test1", "test2"));
 
             // JS
-            string jsResult = File.ReadAllText("../../artifacts/foo.js");
+            string jsResult = File.ReadAllText("../../artifacts/foo.min.js");
             Assert.AreEqual("var file1=1,file2=2;", jsResult);
         }
     }
