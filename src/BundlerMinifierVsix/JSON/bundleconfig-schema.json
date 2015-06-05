@@ -1,0 +1,69 @@
+﻿{
+	"$schema": "http://json-schema.org/draft-04/schema",
+	"description": "Schema for bundleconfig.json files",
+
+	"type": "array",
+
+	"definitions": {
+		"jsbundle": {
+			"properties": {
+				"outputFileName": {
+					"pattern": "\\.js$"
+				},
+				"sourceMap": {
+					"description": "Set to true to produce a source map.",
+					"type": "boolean"
+				}
+			}
+		},
+
+		"genericbundle": {
+			"properties": {
+				"outputFileName": {
+					"pattern": "\\.(css|html|htm)$"
+				}
+			}
+		},
+
+		"bundle": {
+			"required": ["outputFileName", "inputFiles"],
+
+			"properties": {
+				"outputFileName": {
+					"description": "The relative path to the desired output file name.",
+					"type": "string",
+					"format": "uri",
+					"minLength": 1
+				},
+				"inputFiles": {
+					"description": "One or more relative file names to bundle.",
+					"type": "array",
+
+					"items": {
+						"type": "string",
+						"format": "relativepath"
+					}
+				},
+				"minify": {
+					"description": "Set to true to create a minified file of the bundle output.",
+					"type": "boolean",
+					"default": true
+				},
+				"includeInProject": {
+					"description": "Set to true to include the output file in the project. Doesn't work in some Visual Studio project types like ASP.NET 5 applications.",
+					"type": "boolean",
+					"default": true
+				}
+			},
+
+			"oneOf": [
+				{ "$ref": "#/definitions/jsbundle" },
+				{ "$ref": "#/definitions/genericbundle" }
+			]
+		}
+	},
+
+	"items": {
+		"$ref": "#/definitions/bundle"
+	}
+}
