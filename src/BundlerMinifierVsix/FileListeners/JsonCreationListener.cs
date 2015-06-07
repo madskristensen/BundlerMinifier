@@ -30,7 +30,7 @@ namespace BundlerMinifierVsix.Listeners
             {
                 string fileName = Path.GetFileName(_document.FilePath);
 
-                if (fileName.Equals("bundleconfig.json", StringComparison.OrdinalIgnoreCase))
+                if (fileName.Equals(FileHelpers.FILENAME, StringComparison.OrdinalIgnoreCase))
                 {
                     _document.FileActionOccurred += DocumentSaved;
                 }

@@ -27,7 +27,7 @@ namespace BundlerMinifierVsix.JSON
 
             string fileName = Path.GetFileName(doc.DocumentLocation);
 
-            if (!fileName.Equals("bundleconfig.json", StringComparison.OrdinalIgnoreCase))
+            if (!fileName.Equals(FileHelpers.FILENAME, StringComparison.OrdinalIgnoreCase))
                 yield break;
 
             string folder = Path.GetDirectoryName(doc.DocumentLocation);

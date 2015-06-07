@@ -56,7 +56,7 @@ namespace BundlerMinifierVsix.Listeners
                 if (item != null && item.ContainingProject != null)
                 {
                     string folder = ProjectHelpers.GetRootFolder(item.ContainingProject);
-                    string jsonFile = Path.Combine(folder, "bundleconfig.json");
+                    string jsonFile = Path.Combine(folder, FileHelpers.FILENAME);
                     
                     if (File.Exists(jsonFile))
                         BundleService.Processor.SourceFileChanged(jsonFile, e.FilePath);

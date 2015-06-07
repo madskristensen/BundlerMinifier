@@ -23,7 +23,7 @@ namespace BundlerMinifierVsix.JSON
         {
             string fileName = Path.GetFileName(fileLocation);
 
-            if (!fileName.Equals("bundleconfig.json", StringComparison.OrdinalIgnoreCase))
+            if (!fileName.Equals(FileHelpers.FILENAME, StringComparison.OrdinalIgnoreCase))
                 return null;
             
             string assembly = Assembly.GetExecutingAssembly().Location;

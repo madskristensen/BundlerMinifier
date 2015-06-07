@@ -10,6 +10,8 @@ namespace BundlerMinifierVsix
 {
     public static class FileHelpers
     {
+        public const string FILENAME = "bundleconfig.json";
+
         public static bool HasMinFile(string file, out string minFile)
         {
             minFile = FileMinifier.GetMinFileName(file);

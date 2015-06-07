@@ -67,7 +67,7 @@ namespace BundlerMinifierVsix.Commands
                 return;
 
             string folder = ProjectHelpers.GetRootFolder(item.ContainingProject);
-            string jsonFile = Path.Combine(folder, "bundleconfig.json");
+            string jsonFile = Path.Combine(folder, FileHelpers.FILENAME);
             IEnumerable<string> files = ProjectHelpers.GetSelectedItemPaths().Select(f => MakeRelative(jsonFile, f));
             string outputFile = GetOutputFileName(folder, Path.GetExtension(files.ElementAt(0)));
             string relativeOutputFile = MakeRelative(jsonFile, outputFile);
