@@ -2,17 +2,29 @@ version: 1.0.{build}
 os: Visual Studio 2015 RC
 configuration: Release
 
-install: 
+install:
   - set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%"
   - ps: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
 
-before_build: 
+before_build:
   - ps: Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
-  #- nuget.exe restore
+  - ps: Vsix-IncrementNuspecVersion .\src\BundlerMinifier\MSBuild\*.nuspec
+  - ps: Vsix-TokenReplacement src\BundlerMinifierVsix\BundlerMinifierPackage.cs 'Version = "([0-9\\.]+)"' 'Version = "{version}"'
 
 build_script:
   - nuget restore
   - msbuild /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
 
 after_test:
-  - ps: Vsix-PushArtifacts | Vsix-PublishToGallery
+  - ps: Vsix-PushArtifacts
+
+artifacts:
+  - path: src\BundlerMinifier\**\*.nupkg
+
+deploy:
+- provider: NuGet
+  api_key:
+    secure: 6xBu/05BWJDPa2PRkxEH3PHU/caLvy2lzf1eWdRBGXwSCTejHtI+6e0V4s2LaVri
+
+after_deploy:
+  - ps: Vsix-PublishToGallery .\src\BundlerMinifierVsix\**\*.vsix

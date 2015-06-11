@@ -41,6 +41,7 @@ namespace BundlerMinifierVsix
             UpdateBundle.Initialize(this);
             MinifyFile.Initialize(this);
             ItemRemoved.Initialize(_dte);
+            BundleOnBuild.Initialize(this);
 
             base.Initialize();
         }
