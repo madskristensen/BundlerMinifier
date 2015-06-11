@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using BundlerMinifier;
 using EnvDTE;
@@ -30,6 +26,11 @@ namespace BundlerMinifierVsix.Commands
             try
             {
                 string fileName = item.Properties.Item("FullPath").Value.ToString();
+                string extension = Path.GetExtension(fileName).ToUpperInvariant();
+
+                if (!FileHelpers.SupportedFiles.Contains(extension))
+                    return;
+
                 string configFile = FileHelpers.GetConfigFile(item.ContainingProject);
 
                 RemoveBundle(fileName, configFile);

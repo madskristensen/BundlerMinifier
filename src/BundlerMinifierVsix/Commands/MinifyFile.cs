@@ -32,8 +32,6 @@ namespace BundlerMinifierVsix.Commands
             }
         }
 
-        private static string[] _allowed = new[] { ".JS", ".CSS", ".HTML", ".HTM" };
-
         private void BeforeQueryStatus(object sender, EventArgs e)
         {
             var button = (OleMenuCommand)sender;
@@ -48,7 +46,7 @@ namespace BundlerMinifierVsix.Commands
             string fileName = Path.GetExtension(files.ElementAt(0));
             string ext = fileName.ToUpperInvariant();
 
-            button.Visible = !fileName.Contains(".min.") && _allowed.Contains(ext);
+            button.Visible = !fileName.Contains(".min.") && FileHelpers.SupportedFiles.Contains(ext);
         }
 
         public static MinifyFile Instance
