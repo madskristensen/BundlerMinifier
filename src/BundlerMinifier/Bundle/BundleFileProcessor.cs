@@ -14,7 +14,7 @@ namespace BundlerMinifier
 
             if (files.Count() <= 1) return false;
 
-            string ext = Path.GetExtension(files.ElementAt(0));
+            string ext = Path.GetExtension(files.First());
 
             foreach (string file in files)
             {
@@ -67,7 +67,7 @@ namespace BundlerMinifier
             {
                 var result = BundleMinifier.MinifyBundle(bundle);
 
-                if (bundle.SourceMaps && !string.IsNullOrEmpty(result.SourceMap))
+                if (result != null && bundle.SourceMaps && !string.IsNullOrEmpty(result.SourceMap))
                 {
                     string minFile = FileMinifier.GetMinFileName(bundle.GetAbsoluteOutputFile());
                     string mapFile = minFile + ".map";

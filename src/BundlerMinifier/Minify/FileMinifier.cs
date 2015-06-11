@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Ajax.Utilities;
 using WebMarkupMin.Core.Minifiers;
 using WebMarkupMin.Core.Settings;
@@ -42,49 +40,73 @@ namespace BundlerMinifier
             };
 
             var minifier = new Minifier();
+            var result = new MinificationResult(file, null, null);
 
-            string ext = Path.GetExtension(file);
-            string minFile = file.Substring(0, file.LastIndexOf(ext)) + ".min" + ext;
+            string minFile = GetMinFileName(file);
             string mapFile = minFile + ".map";
 
-            string result = null;
-
-            if (!produceSourceMap)
+            try
             {
-                result = minifier.MinifyJavaScript(File.ReadAllText(file), settings);
-
-                OnBeforeWritingMinFile(file, minFile);
-                File.WriteAllText(minFile, result, new UTF8Encoding(true));
-                OnAfterWritingMinFile(file, minFile);
-
-                return new MinificationResult(result, null);
-            }
-
-            using (StringWriter writer = new StringWriter())
-            {
-                using (V3SourceMap sourceMap = new V3SourceMap(writer))
+                if (!produceSourceMap)
                 {
-                    settings.SymbolsMap = sourceMap;
-                    sourceMap.StartPackage(minFile, mapFile);
+                    result.MinifiedContent = minifier.MinifyJavaScript(File.ReadAllText(file), settings);
 
-                    minifier.FileName = file;
-                    result = minifier.MinifyJavaScript(File.ReadAllText(file), settings);
-
-                    if (minifier.Errors.Count == 0)
+                    if (!minifier.Errors.Any())
                     {
                         OnBeforeWritingMinFile(file, minFile);
-                        File.WriteAllText(minFile, result, new UTF8Encoding(true));
+                        File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
                         OnAfterWritingMinFile(file, minFile);
                     }
+                    else
+                    {
+                        AddAjaxminErrors(minifier, result);
+                    }
                 }
+                else
+                {
+                    using (StringWriter writer = new StringWriter())
+                    {
+                        using (V3SourceMap sourceMap = new V3SourceMap(writer))
+                        {
+                            settings.SymbolsMap = sourceMap;
+                            sourceMap.StartPackage(minFile, mapFile);
 
-                return new MinificationResult(result, writer.ToString());
+                            minifier.FileName = file;
+                            result.MinifiedContent = minifier.MinifyJavaScript(File.ReadAllText(file), settings);
+                            result.SourceMap = writer.ToString();
+
+                            if (!minifier.Errors.Any())
+                            {
+                                OnBeforeWritingMinFile(file, minFile);
+                                File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
+                                OnAfterWritingMinFile(file, minFile);
+                            }
+                            else
+                            {
+                                AddAjaxminErrors(minifier, result);
+                            }
+                        }
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                result.Errors.Add(new MinificationError
+                {
+                    FileName = file,
+                    Message = ex.Message,
+                    LineNumber = 0,
+                    ColumnNumber = 0
+                });
+            }
+
+            return result;
         }
 
         private static MinificationResult MinifyCss(string file)
         {
             string content = File.ReadAllText(file);
+            string minFile = GetMinFileName(file);
 
             var settings = new CssSettings()
             {
@@ -92,18 +114,35 @@ namespace BundlerMinifier
             };
 
             var minifier = new Minifier();
-            string result = minifier.MinifyStyleSheet(content, settings);
+            var result = new MinificationResult(file, null, null);
 
-            if (minifier.Errors.Any())
-                return null;
+            try
+            {
+                result.MinifiedContent = minifier.MinifyStyleSheet(content, settings);
 
-            string minFile = GetMinFileName(file);
+                if (!minifier.Errors.Any())
+                {
+                    OnBeforeWritingMinFile(file, minFile);
+                    File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
+                    OnAfterWritingMinFile(file, minFile);
+                }
+                else
+                {
+                    AddAjaxminErrors(minifier, result);
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Errors.Add(new MinificationError
+                {
+                    FileName = file,
+                    Message = ex.Message,
+                    LineNumber = 0,
+                    ColumnNumber = 0
+                });
+            }
 
-            OnBeforeWritingMinFile(file, minFile);
-            File.WriteAllText(minFile, result, new UTF8Encoding(true));
-            OnAfterWritingMinFile(file, minFile);
-
-            return new MinificationResult(result, null);
+            return result;
         }
 
         private static MinificationResult MinifyHtml(string file)
@@ -119,19 +158,67 @@ namespace BundlerMinifier
             string minFile = GetMinFileName(file);
 
             var minifier = new HtmlMinifier(settings);
-            MarkupMinificationResult result = minifier.Minify(content, generateStatistics: true);
+            var minResult = new MinificationResult(file, null, null);
 
-            OnBeforeWritingMinFile(file, minFile);
-            File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
-            OnAfterWritingMinFile(file, minFile);
+            try
+            {
+                MarkupMinificationResult result = minifier.Minify(content, generateStatistics: true);
+                minResult.MinifiedContent = result.MinifiedContent;
 
-            return new MinificationResult(result.MinifiedContent, null);
+                if (!result.Errors.Any())
+                {
+                    OnBeforeWritingMinFile(file, minFile);
+                    File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
+                    OnAfterWritingMinFile(file, minFile);
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        minResult.Errors.Add(new MinificationError
+                        {
+                            FileName = file,
+                            Message = error.Message,
+                            LineNumber = error.LineNumber,
+                            ColumnNumber = error.ColumnNumber
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                minResult.Errors.Add(new MinificationError
+                {
+                    FileName = file,
+                    Message = ex.Message,
+                    LineNumber = 0,
+                    ColumnNumber = 0
+                });
+            }
+
+            return minResult;
         }
 
         public static string GetMinFileName(string file)
         {
             string ext = Path.GetExtension(file);
             return file.Substring(0, file.LastIndexOf(ext)) + ".min" + ext;
+        }
+
+        internal static void AddAjaxminErrors(Minifier minifier, MinificationResult minResult)
+        {
+            foreach (var error in minifier.ErrorList)
+            {
+                var minError = new MinificationError
+                {
+                    FileName = minResult.FileName,
+                    Message = error.Message,
+                    LineNumber = error.StartLine,
+                    ColumnNumber = error.StartColumn
+                };
+
+                minResult.Errors.Add(minError);
+            }
         }
 
         protected static void OnBeforeWritingMinFile(string file, string minFile)

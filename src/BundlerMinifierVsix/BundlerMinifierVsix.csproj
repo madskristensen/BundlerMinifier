@@ -52,6 +52,8 @@
     <Compile Include="Commands\UpdateBundle.cs" />
     <Compile Include="Commands\CreateBundle.cs" />
     <Compile Include="BundlerMinifierPackage.cs" />
+    <Compile Include="ErrorList\ErrorList.cs" />
+    <Compile Include="ErrorList\ErrorListService.cs" />
     <Compile Include="Helpers\FileHelpers.cs" />
     <Compile Include="Helpers\ProjectHelpers.cs" />
     <Compile Include="FileListeners\SourceFileCreationListener.cs" />
@@ -155,6 +157,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BundlerMinifier\BundlerMinifier.csproj">

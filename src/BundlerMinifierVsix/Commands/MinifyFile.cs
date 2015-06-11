@@ -30,11 +30,6 @@ namespace BundlerMinifierVsix.Commands
                 menuItem.BeforeQueryStatus += BeforeQueryStatus;
                 commandService.AddCommand(menuItem);
             }
-
-            FileMinifier.BeforeWritingMinFile += BeforeWritingMinFile;
-            FileMinifier.AfterWritingMinFile += AfterWritingMinFile;
-            BundleMinifier.BeforeWritingMinFile += BeforeWritingMinFile;
-            BundleMinifier.AfterWritingMinFile += AfterWritingMinFile;
         }
 
         private static string[] _allowed = new[] { ".JS", ".CSS", ".HTML", ".HTM" };
@@ -77,7 +72,7 @@ namespace BundlerMinifierVsix.Commands
 
         private void UpdateSelectedBundle(object sender, EventArgs e)
         {
-            string file = ProjectHelpers.GetSelectedItemPaths().ElementAt(0);
+            string file = ProjectHelpers.GetSelectedItemPaths().First();
 
             if (!string.IsNullOrEmpty(file))
                 Minify(file);
@@ -85,39 +80,7 @@ namespace BundlerMinifierVsix.Commands
 
         public void Minify(string file)
         {
-            ProjectItem item = BundlerMinifierPackage._dte.Solution.FindProjectItem(file);
-
-            string ext = Path.GetExtension(file);
-            string minFile;
-            bool minFileExist = FileHelpers.HasMinFile(file, out minFile);
-
-            string mapFile;
-            bool mapFileExist = FileHelpers.HasSourceMap(minFile, out mapFile);
-
-            bool produceSourceMap = (minFileExist && mapFileExist) || (!minFileExist && !mapFileExist);
-
-            MinificationResult result = FileMinifier.MinifyFile(file, produceSourceMap);
-
-            // Source maps
-            if (produceSourceMap && !string.IsNullOrEmpty(result.SourceMap))
-            {
-                mapFile = minFile + ".map";
-                ProjectHelpers.CheckFileOutOfSourceControl(mapFile);
-                File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(true));
-
-                if (!mapFileExist)
-                    ProjectHelpers.AddNestedFile(minFile, mapFile);
-            }
-        }
-
-        private void AfterWritingMinFile(object sender, MinifyFileEventArgs e)
-        {
-            ProjectHelpers.AddNestedFile(e.OriginalFile, e.ResultFile);
-        }
-
-        private void BeforeWritingMinFile(object sender, MinifyFileEventArgs e)
-        {
-            ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile);
+            BundleService.MinifyFile(file);
         }
     }
 }

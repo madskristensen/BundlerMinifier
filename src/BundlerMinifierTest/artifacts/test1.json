@@ -8,7 +8,8 @@
 		"minify": {
 			"enabled": true
 		},
-		"includeInProject": true
+		"includeInProject": true,
+		"sourceMaps": false
 	},
 	{
 		"outputFileName": "foo.css",

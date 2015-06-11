@@ -57,9 +57,9 @@ namespace BundlerMinifierVsix.Listeners
                 {
                     string folder = ProjectHelpers.GetRootFolder(item.ContainingProject);
                     string jsonFile = Path.Combine(folder, FileHelpers.FILENAME);
-                    
+
                     if (File.Exists(jsonFile))
-                        BundleService.Processor.SourceFileChanged(jsonFile, e.FilePath);
+                        BundleService.SourceFileChanged(jsonFile, e.FilePath);
 
                     string minFile;
 

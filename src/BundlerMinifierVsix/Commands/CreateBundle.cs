@@ -67,10 +67,10 @@ namespace BundlerMinifierVsix.Commands
                 return;
 
             string folder = ProjectHelpers.GetRootFolder(item.ContainingProject);
-            string jsonFile = Path.Combine(folder, FileHelpers.FILENAME);
-            IEnumerable<string> files = ProjectHelpers.GetSelectedItemPaths().Select(f => MakeRelative(jsonFile, f));
+            string configFile = Path.Combine(folder, FileHelpers.FILENAME);
+            IEnumerable<string> files = ProjectHelpers.GetSelectedItemPaths().Select(f => MakeRelative(configFile, f));
             string outputFile = GetOutputFileName(folder, Path.GetExtension(files.ElementAt(0)));
-            string relativeOutputFile = MakeRelative(jsonFile, outputFile);
+            string relativeOutputFile = MakeRelative(configFile, outputFile);
 
             if (string.IsNullOrEmpty(outputFile))
                 return;
@@ -78,11 +78,11 @@ namespace BundlerMinifierVsix.Commands
             Bundle bundle = CreateBundleFile(files, relativeOutputFile);
 
             Bundler bundler = new Bundler();
-            bundler.AddBundle(jsonFile, bundle);
+            bundler.AddBundle(configFile, bundle);
 
-            BundlerMinifierPackage._dte.ItemOperations.OpenFile(jsonFile);
-            ProjectHelpers.AddFileToProject(item.ContainingProject, jsonFile, "None");
-            BundleService.Processor.Process(jsonFile);
+            BundlerMinifierPackage._dte.ItemOperations.OpenFile(configFile);
+            ProjectHelpers.AddFileToProject(item.ContainingProject, configFile, "None");
+            BundleService.Process(configFile);
         }
 
         private static Bundle CreateBundleFile(IEnumerable<string> files, string outputFile)

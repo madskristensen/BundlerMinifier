@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Windows.Threading;
 using BundlerMinifier;
 using BundlerMinifierVsix.Commands;
 using EnvDTE;
@@ -20,11 +21,20 @@ namespace BundlerMinifierVsix
     {
         public const string Version = "1.0";
         public static DTE2 _dte;
-        
+        public static Dispatcher _dispatcher;
+        public static Package Package;
+        private SolutionEvents _events;
 
         protected override void Initialize()
         {
             _dte = GetService(typeof(DTE)) as DTE2;
+            _dispatcher = Dispatcher.CurrentDispatcher;
+            Package = this;
+
+            Events2 events = _dte.Events as Events2;
+            _events = events.SolutionEvents;
+            _events.AfterClosing += () => { ErrorList.CleanAllErrors(); };
+            _events.ProjectRemoved += (project) => { ErrorList.CleanAllErrors(); };
 
             CreateBundle.Initialize(this);
             UpdateBundle.Initialize(this);

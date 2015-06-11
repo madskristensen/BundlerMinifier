@@ -14,5 +14,9 @@ namespace BundlerMinifier
 
         public string ResultFile { get; set; }
 
+        /// <summary>
+        /// A collection of any errors reported by the compiler.
+        /// </summary>
+        public MinificationResult Result { get; set; }
     }
 }

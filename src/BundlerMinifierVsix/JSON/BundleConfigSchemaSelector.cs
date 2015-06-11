@@ -12,7 +12,7 @@ namespace BundlerMinifierVsix.JSON
     [Export(typeof(IJSONSchemaSelector))]
     class BundleConfigSchemaSelector : IJSONSchemaSelector
     {
-        public event EventHandler AvailableSchemasChanged;
+        public event EventHandler AvailableSchemasChanged { add { } remove { } }
 
         public Task<IEnumerable<string>> GetAvailableSchemasAsync()
         {
@@ -25,7 +25,7 @@ namespace BundlerMinifierVsix.JSON
 
             if (!fileName.Equals(FileHelpers.FILENAME, StringComparison.OrdinalIgnoreCase))
                 return null;
-            
+
             string assembly = Assembly.GetExecutingAssembly().Location;
             string folder = Path.GetDirectoryName(assembly);
             return Path.Combine(folder, "json\\bundleconfig-schema.json");
