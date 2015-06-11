@@ -88,7 +88,7 @@ namespace BundlerMinifierVsix.Commands
 
             if (!_isInstalled)
             {
-                var question = MessageBox.Show("A NuGet package will be installed to augment the MSBuild process, but no files will be added to the project.\rThis may require an internet connection.\r\rDo you want to continue?", "Web Compiler", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                var question = MessageBox.Show("A NuGet package will be installed to augment the MSBuild process, but no files will be added to the project.\rThis may require an internet connection.\r\rDo you want to continue?", "Bundler & Minifier", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (question == DialogResult.No)
                     return;
