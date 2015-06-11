@@ -74,15 +74,25 @@ namespace BundlerMinifierVsix.Commands
             if (string.IsNullOrEmpty(outputFile))
                 return;
 
+            BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 0, 3);
+
             string relativeOutputFile = MakeRelative(configFile, outputFile);
             Bundle bundle = CreateBundleFile(files, relativeOutputFile);
 
             Bundler bundler = new Bundler();
             bundler.AddBundle(configFile, bundle);
 
+            BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 1, 3);
+
             ProjectHelpers.AddFileToProject(item.ContainingProject, configFile, "None");
+            BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 2, 3);
+
             BundlerMinifierPackage._dte.ItemOperations.OpenFile(configFile);
+            BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 3, 3);
+
             BundleService.Process(configFile);
+            BundlerMinifierPackage._dte.StatusBar.Progress(false, "Creating bundle");
+            BundlerMinifierPackage._dte.StatusBar.Text = "Bundle created";
         }
 
         private static Bundle CreateBundleFile(IEnumerable<string> files, string outputFile)
