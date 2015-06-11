@@ -8,17 +8,20 @@ namespace BundlerMinifier
 {
     public class BundleFileProcessor
     {
+        private static string[] _supported = new[] { ".JS", ".CSS", ".HTML", ".HTM" };
         public static bool IsSupported(IEnumerable<string> files)
         {
             files = files.Where(f => !string.IsNullOrEmpty(f));
 
             if (files.Count() <= 1) return false;
 
-            string ext = Path.GetExtension(files.First());
+            string ext = Path.GetExtension(files.First()).ToUpperInvariant();
 
             foreach (string file in files)
             {
-                if (!Path.GetExtension(file).Equals(ext, StringComparison.OrdinalIgnoreCase))
+                string fileExt = Path.GetExtension(file).ToUpperInvariant();
+
+                if (!_supported.Contains(fileExt) || !fileExt.Equals(ext, StringComparison.OrdinalIgnoreCase))
                     return false;
             }
 

@@ -23,7 +23,7 @@ namespace BundlerMinifierVsix
         public static DTE2 _dte;
         public static Dispatcher _dispatcher;
         public static Package Package;
-        private SolutionEvents _events;
+        private SolutionEvents _solutionEvents;
 
         protected override void Initialize()
         {
@@ -32,13 +32,15 @@ namespace BundlerMinifierVsix
             Package = this;
 
             Events2 events = _dte.Events as Events2;
-            _events = events.SolutionEvents;
-            _events.AfterClosing += () => { ErrorList.CleanAllErrors(); };
-            _events.ProjectRemoved += (project) => { ErrorList.CleanAllErrors(); };
+            _solutionEvents = events.SolutionEvents;
+
+            _solutionEvents.AfterClosing += () => { ErrorList.CleanAllErrors(); };
+            _solutionEvents.ProjectRemoved += (project) => { ErrorList.CleanAllErrors(); };
 
             CreateBundle.Initialize(this);
             UpdateBundle.Initialize(this);
             MinifyFile.Initialize(this);
+            ItemRemoved.Initialize(_dte);
 
             base.Initialize();
         }

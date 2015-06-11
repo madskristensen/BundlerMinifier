@@ -8,32 +8,45 @@ namespace BundlerMinifier
 {
     public class Bundler
     {
-        public void AddBundle(string fileName, Bundle bundle)
+        public void AddBundle(string configFile, Bundle bundle)
         {
-            IEnumerable<Bundle> existing = GetBundles(fileName);
+            IEnumerable<Bundle> existing = GetBundles(configFile);
             List<Bundle> bundles = new List<Bundle>();
             bundles.AddRange(existing);
             bundles.Add(bundle);
-            bundle.FileName = fileName;
+            bundle.FileName = configFile;
 
             string content = JsonConvert.SerializeObject(bundles, Formatting.Indented);
-            File.WriteAllText(fileName, content);
+            File.WriteAllText(configFile, content);
         }
 
-        public static IEnumerable<Bundle> GetBundles(string fileName)
+        public static void RemoveBundle(string configFile, Bundle bundleToRemove)
         {
-            FileInfo file = new FileInfo(fileName);
+            IEnumerable<Bundle> bundles = GetBundles(configFile);
+            List<Bundle> newBundles = new List<Bundle>();
+
+            if (bundles.Contains(bundleToRemove))
+            {
+                newBundles.AddRange(bundles.Where(b => !b.Equals(bundleToRemove)));
+                string content = JsonConvert.SerializeObject(newBundles, Formatting.Indented);
+                File.WriteAllText(configFile, content);
+            }
+        }
+
+        public static IEnumerable<Bundle> GetBundles(string configFile)
+        {
+            FileInfo file = new FileInfo(configFile);
 
             if (!file.Exists)
                 return Enumerable.Empty<Bundle>();
 
-            string content = File.ReadAllText(fileName);
+            string content = File.ReadAllText(configFile);
             var bundles = JsonConvert.DeserializeObject<IEnumerable<Bundle>>(content);
             string folder = Path.GetDirectoryName(file.FullName);
 
             foreach (Bundle bundle in bundles)
             {
-                bundle.FileName = fileName;
+                bundle.FileName = configFile;
             }
 
             return bundles;

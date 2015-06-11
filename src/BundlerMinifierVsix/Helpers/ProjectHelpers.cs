@@ -101,14 +101,14 @@ namespace BundlerMinifierVsix
 
             try
             {
-                if (item == null || item.ContainingProject == null || item.ContainingProject.Kind == "{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}")
-                return;
+                if (item == null || item.ContainingProject == null || item.ContainingProject.Kind == "{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") // ASP.NET 5 projects
+                    return;
 
-            if (item.ProjectItems == null) // Website project
-                item.ContainingProject.ProjectItems.AddFromFile(newFile);
-            else
-                item.ProjectItems.AddFromFile(newFile);
-        }
+                if (item.ProjectItems == null) // Website project
+                    item.ContainingProject.ProjectItems.AddFromFile(newFile);
+                else
+                    item.ProjectItems.AddFromFile(newFile);
+            }
             catch { /* Some projects don't support nesting. Ignore the error */ }
         }
     }

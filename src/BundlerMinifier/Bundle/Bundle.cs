@@ -34,5 +34,21 @@ namespace BundlerMinifier
             string folder = Path.GetDirectoryName(FileName);
             return Path.Combine(folder, OutputFileName.Replace("/", "\\"));
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (obj.GetType() != GetType()) return false;
+            if (obj == this) return true;
+
+            Bundle other = (Bundle)obj;
+
+            return GetHashCode() == other.GetHashCode();
+        }
+
+        public override int GetHashCode()
+        {
+            return OutputFileName.GetHashCode();
+        }
     }
 }

@@ -5,12 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BundlerMinifier;
+using EnvDTE;
 
 namespace BundlerMinifierVsix
 {
     public static class FileHelpers
     {
         public const string FILENAME = "bundleconfig.json";
+
+        public static string GetConfigFile(Project project)
+        {
+            string folder = ProjectHelpers.GetRootFolder(project);
+            return Path.Combine(folder, FILENAME);
+        }
 
         public static bool HasMinFile(string file, out string minFile)
         {

@@ -11,12 +11,12 @@
                 <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
             </Group>
         </Groups>
-        
+
         <!-- See all available images for ImageCatalogGuid at http://glyphlist.azurewebsites.net/knownmonikers/ -->
         <Buttons>
             <Button guid="guidBundlerCmdSet" id="CreateBundleId" priority="0x0100" type="Button">
                 <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
-                <Icon guid="ImageCatalogGuid" id="AddBuildToQueue" />
+                <Icon guid="ImageCatalogGuid" id="AddEntity" />
                 <CommandFlag>IconIsMoniker</CommandFlag>
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <CommandFlag>DynamicItemStart</CommandFlag>

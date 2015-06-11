@@ -48,6 +48,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BundleService.cs" />
+    <Compile Include="Commands\ItemRemoved.cs" />
     <Compile Include="Commands\MinifyFile.cs" />
     <Compile Include="Commands\UpdateBundle.cs" />
     <Compile Include="Commands\CreateBundle.cs" />
