@@ -47,6 +47,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Adornments\GeneratedAdornment.cs" />
+    <Compile Include="Adornments\LogoAdornment.cs" />
+    <Compile Include="Adornments\AdornmentLayer.cs" />
+    <Compile Include="Adornments\AdornmentProvider.cs" />
     <Compile Include="BundleService.cs" />
     <Compile Include="Commands\BundleOnBuild.cs" />
     <Compile Include="Commands\ItemRemoved.cs" />
@@ -155,6 +159,8 @@
       <HintPath>..\..\packages\NuGet.VisualStudio.2.8.5\lib\net40\NuGet.VisualStudio.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
@@ -164,6 +170,7 @@
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
