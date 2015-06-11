@@ -5,7 +5,8 @@
 	"type": "array",
 
 	"definitions": {
-		"jsbundle": {
+
+		"jsBundle": {
 			"properties": {
 				"outputFileName": {
 					"pattern": "\\.js$"
@@ -13,20 +14,64 @@
 				"sourceMap": {
 					"description": "Set to true to produce a source map.",
 					"type": "boolean"
+				},
+				"minify": {
+					"type": "object",
+					"properties": {
+						"preserveImportantComments": {
+							"type": "boolean"
+						},
+						"evalTreatment": {
+							"enum": [ "ignore", "makeAllSafe", "makeImmediateSafe" ]
+						},
+						"termSemicolons": {
+							"type": "boolean"
+						}
+					}
 				}
 			}
 		},
 
-		"genericbundle": {
+		"cssBundle": {
 			"properties": {
 				"outputFileName": {
-					"pattern": "\\.(css|html|htm)$"
+					"pattern": "\\.css$"
+				},
+				"minify": {
+					"type": "object",
+					"properties": {
+						"evalTreatment": {
+							"enum": [ "none", "hacks", "important" ]
+						},
+						"termSemicolons": {
+							"type": "boolean"
+						}
+					}
+				}
+			}
+		},
+
+		"htmlBundle": {
+			"properties": {
+				"outputFileName": {
+					"pattern": "\\.(html|htm)$"
+				},
+				"minify": {
+					"type": "object",
+					"properties": {
+						"evalTreatment": {
+							"enum": [ "none", "hacks", "important" ]
+						},
+						"termSemicolons": {
+							"type": "boolean"
+						}
+					}
 				}
 			}
 		},
 
 		"bundle": {
-			"required": ["outputFileName", "inputFiles"],
+			"required": [ "outputFileName", "inputFiles" ],
 
 			"properties": {
 				"outputFileName": {
@@ -44,21 +89,28 @@
 						"format": "bundle_relativepath"
 					}
 				},
-				"minify": {
-					"description": "Set to true to create a minified file of the bundle output.",
-					"type": "boolean",
-					"default": true
-				},
 				"includeInProject": {
 					"description": "Set to true to include the output file in the project. Doesn't work in some Visual Studio project types like ASP.NET 5 applications.",
 					"type": "boolean",
 					"default": true
+				},
+				"minify": {
+					"description": "Specify options for minification of the output file.",
+					"type": "object",
+					"required": [ "enabled" ],
+
+					"properties": {
+						"enabled": {
+							"type": "boolean"
+						}
+					}
 				}
 			},
 
 			"oneOf": [
-				{ "$ref": "#/definitions/jsbundle" },
-				{ "$ref": "#/definitions/genericbundle" }
+				{ "$ref": "#/definitions/jsBundle" },
+				{ "$ref": "#/definitions/cssBundle" },
+				{ "$ref": "#/definitions/htmlBundle" }
 			]
 		}
 	},

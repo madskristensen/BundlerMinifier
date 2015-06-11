@@ -4,7 +4,9 @@
 		"inputFiles": [
 			"test2"
 		],
-		"minify": true,
+		"minify": {
+			"enabled": true
+		},
 		"includeInProject": true
 	}
 ]

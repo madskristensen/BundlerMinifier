@@ -5,7 +5,9 @@
 			"file1.js",
 			"file2.js"
 		],
-		"minify": true,
+		"minify": {
+			"enabled": true
+		},
 		"includeInProject": true
 	},
 	{
@@ -14,7 +16,9 @@
 			"file1.css",
 			"file2.css"
 		],
-		"minify": true,
+		"minify": {
+			"enabled": true
+		},
 		"includeInProject": true
 	},
 	{
@@ -23,7 +27,9 @@
 			"file1.html",
 			"file2.html"
 		],
-		"minify": true,
+		"minify": {
+			"enabled": true
+		},
 		"includeInProject": true
 	}
 ]

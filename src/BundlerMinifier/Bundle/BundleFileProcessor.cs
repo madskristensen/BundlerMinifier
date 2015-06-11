@@ -56,20 +56,20 @@ namespace BundlerMinifier
         private void ProcessBundle(string baseFolder, Bundle bundle)
         {
             Bundler.ProcessBundle(baseFolder, bundle);
-            
+
             string outputFile = Path.Combine(baseFolder, bundle.OutputFileName);
 
-            OnBeforeProcess(outputFile, bundle, baseFolder);
+            OnBeforeProcess(bundle, baseFolder);
             File.WriteAllText(outputFile, bundle.Output, new UTF8Encoding(true));
-            OnAfterProcess(outputFile, bundle, baseFolder);
+            OnAfterProcess(bundle, baseFolder);
 
-            if (bundle.Minify)
+            if (bundle.Minify.ContainsKey("enabled") && bundle.Minify["enabled"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
             {
-                var result = FileMinifier.MinifyFile(bundle.OutputFileName, bundle.SourceMaps);
+                var result = BundleMinifier.MinifyBundle(bundle);
 
                 if (bundle.SourceMaps && !string.IsNullOrEmpty(result.SourceMap))
                 {
-                    string minFile = FileMinifier.GetMinFileName(bundle.OutputFileName);
+                    string minFile = FileMinifier.GetMinFileName(bundle.GetAbsoluteOutputFile());
                     string mapFile = minFile + ".map";
 
                     OnBeforeWritingSourceMap(minFile, mapFile);
@@ -79,19 +79,19 @@ namespace BundlerMinifier
             }
         }
 
-        protected void OnBeforeProcess(string outputFileName, Bundle bundle, string baseFolder)
+        protected void OnBeforeProcess(Bundle bundle, string baseFolder)
         {
             if (BeforeProcess != null)
             {
-                BeforeProcess(this, new BundleFileEventArgs(outputFileName, bundle, baseFolder));
+                BeforeProcess(this, new BundleFileEventArgs(bundle.GetAbsoluteOutputFile(), bundle, baseFolder));
             }
         }
 
-        protected void OnAfterProcess(string outputFileName, Bundle bundle, string baseFolder)
+        protected void OnAfterProcess(Bundle bundle, string baseFolder)
         {
             if (AfterProcess != null)
             {
-                AfterProcess(this, new BundleFileEventArgs(outputFileName, bundle, baseFolder));
+                AfterProcess(this, new BundleFileEventArgs(bundle.GetAbsoluteOutputFile(), bundle, baseFolder));
             }
         }
 

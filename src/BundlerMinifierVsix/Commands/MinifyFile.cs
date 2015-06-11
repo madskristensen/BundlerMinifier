@@ -33,6 +33,8 @@ namespace BundlerMinifierVsix.Commands
 
             FileMinifier.BeforeWritingMinFile += BeforeWritingMinFile;
             FileMinifier.AfterWritingMinFile += AfterWritingMinFile;
+            BundleMinifier.BeforeWritingMinFile += BeforeWritingMinFile;
+            BundleMinifier.AfterWritingMinFile += AfterWritingMinFile;
         }
 
         private static string[] _allowed = new[] { ".JS", ".CSS", ".HTML", ".HTM" };
@@ -96,13 +98,13 @@ namespace BundlerMinifierVsix.Commands
 
             MinificationResult result = FileMinifier.MinifyFile(file, produceSourceMap);
 
-            // Source maps            
+            // Source maps
             if (produceSourceMap && !string.IsNullOrEmpty(result.SourceMap))
             {
                 mapFile = minFile + ".map";
                 ProjectHelpers.CheckFileOutOfSourceControl(mapFile);
                 File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(true));
-                
+
                 if (!mapFileExist)
                     ProjectHelpers.AddNestedFile(minFile, mapFile);
             }

@@ -31,10 +31,8 @@ namespace BundlerMinifier
             var bundles = JsonConvert.DeserializeObject<IEnumerable<Bundle>>(content);
             string folder = Path.GetDirectoryName(file.FullName);
 
-            // Make the output path absolute
             foreach (Bundle bundle in bundles)
             {
-                bundle.OutputFileName = Path.Combine(folder, bundle.OutputFileName.Replace("/", "\\"));
                 bundle.FileName = fileName;
             }
 

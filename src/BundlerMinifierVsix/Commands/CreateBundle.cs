@@ -76,7 +76,7 @@ namespace BundlerMinifierVsix.Commands
                 return;
 
             Bundle bundle = CreateBundleFile(files, relativeOutputFile);
-            
+
             Bundler bundler = new Bundler();
             bundler.AddBundle(jsonFile, bundle);
 
@@ -84,13 +84,12 @@ namespace BundlerMinifierVsix.Commands
             ProjectHelpers.AddFileToProject(item.ContainingProject, jsonFile, "None");
             BundleService.Processor.Process(jsonFile);
         }
-        
-        private static Bundle CreateBundleFile(IEnumerable<string> files,string outputFile)
+
+        private static Bundle CreateBundleFile(IEnumerable<string> files, string outputFile)
         {
             return new Bundle
             {
                 IncludeInProject = true,
-                Minify = true,
                 OutputFileName = outputFile,
                 InputFiles = new List<string>(files)
             };

@@ -62,7 +62,6 @@ namespace BundlerMinifierTest
         {
             var bundle = new Bundle();
             bundle.IncludeInProject = true;
-            bundle.Minify = true;
             bundle.OutputFileName = _guid + ".js";
             bundle.InputFiles.AddRange(new[] { "file1.js", "file2.js" });
 
@@ -78,7 +77,6 @@ namespace BundlerMinifierTest
         {
             var bundle = new Bundle();
             bundle.IncludeInProject = true;
-            bundle.Minify = true;
             bundle.OutputFileName = _guid + ".js";
             bundle.InputFiles.AddRange(new[] { "file1.js", "file2.js" });
 
@@ -97,7 +95,7 @@ namespace BundlerMinifierTest
 
             // JS
             string jsResult = File.ReadAllText("../../artifacts/foo.min.js");
-            Assert.AreEqual("var file1=1,file2=2;", jsResult);
+            Assert.AreEqual("var file1=1,file2=2", jsResult);
 
             // CSS
             string cssResult = File.ReadAllText("../../artifacts/foo.min.css");
@@ -115,7 +113,7 @@ namespace BundlerMinifierTest
 
             // JS
             string jsResult = File.ReadAllText("../../artifacts/foo.min.js");
-            Assert.AreEqual("var file1=1,file2=2;", jsResult);
+            Assert.AreEqual("var file1=1,file2=2", jsResult);
         }
     }
 }

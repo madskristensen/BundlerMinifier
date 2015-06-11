@@ -48,13 +48,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bundle\Bundle.cs" />
+    <Compile Include="Minify\BundleMinifier.cs" />
+    <Compile Include="Minify\HtmlOptions.cs" />
+    <Compile Include="Minify\CssOptions.cs" />
     <Compile Include="Minify\FileMinifier.cs" />
+    <Compile Include="Minify\JavaScriptOptions.cs" />
     <Compile Include="Minify\MinifyFileEventArgs.cs" />
     <Compile Include="Bundle\BundleFileEventArgs.cs" />
     <Compile Include="Bundle\Bundler.cs" />
     <Compile Include="Bundle\BundleFileProcessor.cs" />
     <Compile Include="Minify\MinificationResult.cs" />
-    <Compile Include="Minify\StringMinifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

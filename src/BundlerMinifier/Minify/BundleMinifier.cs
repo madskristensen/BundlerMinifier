@@ -10,37 +10,33 @@ using WebMarkupMin.Core.Settings;
 
 namespace BundlerMinifier
 {
-    public class FileMinifier
+    public class BundleMinifier
     {
-        public static MinificationResult MinifyFile(string file, bool produceSourceMap)
+        public static MinificationResult MinifyBundle(Bundle bundle)
         {
+            string file = bundle.OutputFileName;
             string extension = Path.GetExtension(file).ToUpperInvariant();
 
             switch (extension)
             {
                 case ".JS":
-                    return MinifyJavaScriptWithSourceMap(file, produceSourceMap);
+                    return MinifyJavaScriptWithSourceMap(bundle);
 
                 case ".CSS":
-                    return MinifyCss(file);
+                    return MinifyCss(bundle);
 
                 case ".HTML":
                 case ".HTM":
-                    return MinifyHtml(file);
+                    return MinifyHtml(bundle);
             }
 
             return null;
         }
 
-        private static MinificationResult MinifyJavaScriptWithSourceMap(string file, bool produceSourceMap)
+        private static MinificationResult MinifyJavaScriptWithSourceMap(Bundle bundle)
         {
-            var settings = new CodeSettings()
-            {
-                EvalTreatment = EvalTreatment.Ignore,
-                TermSemicolons = true,
-                PreserveImportantComments = false,
-            };
-
+            string file = bundle.GetAbsoluteOutputFile();
+            var settings = JavaScriptOptions.GetSettings(bundle);
             var minifier = new Minifier();
 
             string ext = Path.GetExtension(file);
@@ -49,7 +45,7 @@ namespace BundlerMinifier
 
             string result = null;
 
-            if (!produceSourceMap)
+            if (!bundle.SourceMaps)
             {
                 result = minifier.MinifyJavaScript(File.ReadAllText(file), settings);
 
@@ -82,22 +78,18 @@ namespace BundlerMinifier
             }
         }
 
-        private static MinificationResult MinifyCss(string file)
+        private static MinificationResult MinifyCss(Bundle bundle)
         {
+            string file = bundle.GetAbsoluteOutputFile();
             string content = File.ReadAllText(file);
-
-            var settings = new CssSettings()
-            {
-                CommentMode = CssComment.Hacks
-            };
+            var settings = CssOptions.GetSettings(bundle);
 
             var minifier = new Minifier();
             string result = minifier.MinifyStyleSheet(content, settings);
+            string minFile = GetMinFileName(file);
 
             if (minifier.Errors.Any())
                 return null;
-
-            string minFile = GetMinFileName(file);
 
             OnBeforeWritingMinFile(file, minFile);
             File.WriteAllText(minFile, result, new UTF8Encoding(true));
@@ -106,8 +98,10 @@ namespace BundlerMinifier
             return new MinificationResult(result, null);
         }
 
-        private static MinificationResult MinifyHtml(string file)
+        private static MinificationResult MinifyHtml(Bundle bundle)
         {
+            string file = bundle.GetAbsoluteOutputFile();
+
             var settings = new HtmlMinificationSettings
             {
                 RemoveOptionalEndTags = false,
