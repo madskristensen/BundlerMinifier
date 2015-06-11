@@ -19,7 +19,7 @@ namespace BundlerMinifierVsix
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     public sealed class BundlerMinifierPackage : Package
     {
-        public const string Version = "1.0";
+        public const string Version = "1.0.21";
         public static DTE2 _dte;
         public static Dispatcher _dispatcher;
         public static Package Package;

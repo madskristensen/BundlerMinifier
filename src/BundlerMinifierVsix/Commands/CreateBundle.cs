@@ -80,8 +80,8 @@ namespace BundlerMinifierVsix.Commands
             Bundler bundler = new Bundler();
             bundler.AddBundle(configFile, bundle);
 
-            BundlerMinifierPackage._dte.ItemOperations.OpenFile(configFile);
             ProjectHelpers.AddFileToProject(item.ContainingProject, configFile, "None");
+            BundlerMinifierPackage._dte.ItemOperations.OpenFile(configFile);
             BundleService.Process(configFile);
         }
 

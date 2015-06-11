@@ -94,7 +94,7 @@ namespace BundlerMinifierVsix.Commands
                     return;
 
                 Version version = new Version(BundlerMinifierPackage.Version);
-                if (version == new Version(1, 0, 4))
+                if (version == new Version(1, 0, 21))
                     version = (Version)null;
 
                 System.Threading.ThreadPool.QueueUserWorkItem((o) =>
