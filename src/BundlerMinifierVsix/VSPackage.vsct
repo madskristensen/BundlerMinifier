@@ -16,7 +16,7 @@
         <Buttons>
             <Button guid="guidBundlerCmdSet" id="CreateBundleId" priority="0x0100" type="Button">
                 <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
-                <Icon guid="ImageCatalogGuid" id="AddEntity" />
+                <Icon guid="ImageCatalogGuid" id="Join" />
                 <CommandFlag>IconIsMoniker</CommandFlag>
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <CommandFlag>DynamicItemStart</CommandFlag>
@@ -26,7 +26,7 @@
             </Button>
             <Button guid="guidBundlerCmdSet" id="UpdateBundle" priority="0x0200" type="Button">
                 <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
-                <Icon guid="ImageCatalogGuid" id="RunUpdate" />
+                <Icon guid="ImageCatalogGuid" id="Join" />
                 <CommandFlag>IconIsMoniker</CommandFlag>
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <CommandFlag>DynamicItemStart</CommandFlag>

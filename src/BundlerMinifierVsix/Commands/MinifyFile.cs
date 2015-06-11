@@ -43,10 +43,13 @@ namespace BundlerMinifierVsix.Commands
                 return;
             }
 
-            string fileName = Path.GetExtension(files.ElementAt(0));
-            string ext = fileName.ToUpperInvariant();
+            string file = files.First();
+            string fileName = Path.GetFileName(file);
+            string ext = Path.GetExtension(fileName).ToUpperInvariant();
+            string minFile;
+            bool hasMinFile = FileHelpers.HasMinFile(file, out minFile);
 
-            button.Visible = !fileName.Contains(".min.") && FileHelpers.SupportedFiles.Contains(ext);
+            button.Visible = !fileName.Contains(".min.") && !hasMinFile && FileHelpers.SupportedFiles.Contains(ext);
         }
 
         public static MinifyFile Instance

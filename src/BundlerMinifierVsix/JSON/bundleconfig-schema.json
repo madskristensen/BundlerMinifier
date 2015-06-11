@@ -12,22 +12,22 @@
 					"pattern": "\\.js$"
 				},
 				"sourceMap": {
-					"description": "Set to true to produce a source map.",
+					"description": "JavaScript only. Set to true to produce a source map.",
 					"type": "boolean"
 				},
 				"minify": {
 					"type": "object",
 					"properties": {
-						"preserveImportantComments": {
-							"type": "boolean"
-						},
 						"evalTreatment": {
+							"description": "JavaScript only.",
 							"enum": [ "ignore", "makeAllSafe", "makeImmediateSafe" ]
 						},
-						"termSemicolons": {
+						"preserveImportantComments": {
+							"description": "JavaScript only.",
 							"type": "boolean"
 						}
-					}
+					},
+					"allOf": [ { "$ref": "#/definitions/ajaxminBaseSettings" } ]
 				}
 			}
 		},
@@ -40,13 +40,18 @@
 				"minify": {
 					"type": "object",
 					"properties": {
-						"evalTreatment": {
-							"enum": [ "none", "hacks", "important" ]
+						"colorNames": {
+							"description": "CSS only. If no color names are to be used, set this value to 'hex'. If a set of colors recognized by all major browser is okay to use (W3C-strict validation is not required), set this value to 'major'.",
+							"enum": [ "hex", "major", "noSwap", "strict" ],
+							"default": "strict"
 						},
-						"termSemicolons": {
-							"type": "boolean"
+						"commentMode": {
+							"description": "CSS only. How to treat comments in the code. The default is 'none', which will strip all comments except 'important' comments. 'all' will leave all comments, and 'hacks' will only leave certain known comment-based hacks.",
+							"enum": [ "none", "all", "hacks", "important" ],
+							"default": "none"
 						}
-					}
+					},
+					"allOf": [ { "$ref": "#/definitions/ajaxminBaseSettings" } ]
 				}
 			}
 		},
@@ -59,13 +64,73 @@
 				"minify": {
 					"type": "object",
 					"properties": {
-						"evalTreatment": {
-							"enum": [ "none", "hacks", "important" ]
+						"attributeQuotesRemovalMode": {
+							"description": "HTML only.",
+							"enum": [ "html4", "html5", "keepQuotes" ]
 						},
-						"termSemicolons": {
+						"collapseBooleanAttributes": {
+							"description": "HTML only.",
+							"type": "boolean"
+						},
+						"minifyAngularBindingExpressions": {
+							"description": "HTML only.",
+							"type": "boolean"
+						},
+						"minifyEmbeddedCssCode": {
+							"description": "HTML only.",
+							"type": "boolean"
+						},
+						"minifyEmbeddedJsCode": {
+							"description": "HTML only.",
+							"type": "boolean"
+						},
+						"minifyInlineCssCode": {
+							"description": "HTML only.",
+							"type": "boolean"
+						},
+						"minifyInlineJsCode": {
+							"description": "HTML only.",
+							"type": "boolean"
+						},
+						"minifyKnockoutBindingExpressions": {
+							"description": "HTML only.",
+							"type": "boolean"
+						},
+						"removeHtmlComments": {
+							"description": "HTML only.",
+							"type": "boolean"
+						},
+						"removeOptionalEndTags": {
+							"description": "HTML only.",
+							"type": "boolean"
+						},
+						"removeRedundantAttributes": {
+							"description": "HTML only.",
+							"type": "boolean"
+						},
+						"removeTagsWithoutContent": {
+							"description": "HTML only.",
 							"type": "boolean"
 						}
 					}
+				}
+			}
+		},
+
+		"ajaxminBaseSettings": {
+			"properties": {
+				"indentSize": {
+					"description": "For the multi-line output feature, how many spaces to use when indenting a block (see outputMode).",
+					"type": "integer"
+				},
+				"outputMode": {
+					"description": "SingleLine minifies everything to a single line. MultipleLines breaks the minified code into multiple lines for easier reading.",
+					"enum": [ "multipleLines", "singleLine", "none" ]
+				},
+				"termSemicolons": {
+					"description": "Forces all rules to be terminated with semicolons if set to true.",
+					"type": "boolean",
+					"default": false
 				}
 			}
 		},
@@ -74,11 +139,10 @@
 			"required": [ "outputFileName", "inputFiles" ],
 
 			"properties": {
-				"outputFileName": {
-					"description": "The relative path to the desired output file name.",
-					"type": "string",
-					"format": "uri",
-					"minLength": 1
+				"includeInProject": {
+					"description": "Set to true to include the output file in the project. Doesn't work in some Visual Studio project types like ASP.NET 5 applications.",
+					"type": "boolean",
+					"default": true
 				},
 				"inputFiles": {
 					"description": "One or more relative file names to bundle.",
@@ -88,11 +152,6 @@
 						"type": "string",
 						"format": "bundle_relativepath"
 					}
-				},
-				"includeInProject": {
-					"description": "Set to true to include the output file in the project. Doesn't work in some Visual Studio project types like ASP.NET 5 applications.",
-					"type": "boolean",
-					"default": true
 				},
 				"minify": {
 					"description": "Specify options for minification of the output file.",
@@ -104,6 +163,12 @@
 							"type": "boolean"
 						}
 					}
+				},
+				"outputFileName": {
+					"description": "The relative path to the desired output file name.",
+					"type": "string",
+					"format": "uri",
+					"minLength": 1
 				}
 			},
 

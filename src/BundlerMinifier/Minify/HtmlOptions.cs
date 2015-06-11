@@ -8,8 +8,18 @@ namespace BundlerMinifier
         public static HtmlMinificationSettings GetSettings(Bundle bundle)
         {
             HtmlMinificationSettings settings = new HtmlMinificationSettings();
-            settings.RemoveOptionalEndTags = GetValue(bundle, "removeOptionalEndTags") == "true";
-            settings.RemoveRedundantAttributes = GetValue(bundle, "removeRedundantAttributes") == "true";
+            settings.RemoveOptionalEndTags = GetValue(bundle, "removeOptionalEndTags") == "True";
+            settings.RemoveRedundantAttributes = GetValue(bundle, "removeRedundantAttributes") == "True";
+
+            settings.CollapseBooleanAttributes = GetValue(bundle, "collapseBooleanAttributes") == "True";
+            settings.MinifyAngularBindingExpressions = GetValue(bundle, "minifyAngularBindingExpressions") == "True";
+            settings.MinifyEmbeddedCssCode = GetValue(bundle, "minifyEmbeddedCssCode") == "True";
+            settings.MinifyEmbeddedJsCode= GetValue(bundle, "minifyEmbeddedJsCode") == "True";
+            settings.MinifyInlineCssCode = GetValue(bundle, "minifyInlineCssCode") == "True";
+            settings.MinifyInlineJsCode = GetValue(bundle, "minifyInlineJsCode") == "True";
+            settings.MinifyKnockoutBindingExpressions = GetValue(bundle, "minifyKnockoutBindingExpressions") == "True";
+            settings.RemoveHtmlComments = GetValue(bundle, "removeHtmlComments") == "True";
+            settings.RemoveTagsWithoutContent = GetValue(bundle, "removeTagsWithoutContent") == "True";
 
             string quotes = GetValue(bundle, "attributeQuotesRemovalMode");
 

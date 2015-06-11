@@ -41,12 +41,13 @@ namespace BundlerMinifierVsix.Commands
         private static void RemoveBundle(string fileName, string configFile)
         {
             var bundles = Bundler.GetBundles(configFile);
+            string friendlyName = Path.GetFileName(fileName);
 
             foreach (Bundle bundle in bundles)
             {
                 if (bundle.GetAbsoluteOutputFile() == fileName)
                 {
-                    var question = MessageBox.Show($"Do you want to remove the file from {FileHelpers.FILENAME}?", "Bundler & Minifier", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    var question = MessageBox.Show($"Do you want to remove {friendlyName} from {FileHelpers.FILENAME}?", "Bundler & Minifier", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
                     if (question == DialogResult.OK)
                         Bundler.RemoveBundle(configFile, bundle);
