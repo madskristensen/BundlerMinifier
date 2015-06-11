@@ -65,51 +65,59 @@
 					"type": "object",
 					"properties": {
 						"attributeQuotesRemovalMode": {
-							"description": "HTML only.",
-							"enum": [ "html4", "html5", "keepQuotes" ]
+							"description": "HTML only. Sets the removal mode of HTML attribute quotes.",
+							"enum": [ "html4", "html5", "keepQuotes" ],
+							"default": "html5"
 						},
 						"collapseBooleanAttributes": {
-							"description": "HTML only.",
+							"description": "HTML only. Remove values from boolean attributes.",
 							"type": "boolean"
 						},
+						"customAngularDirectiveList": {
+							"description": "HTML only. Specify array of names of custom Angular.js directives (e.g. [\"myDir\", \"btfCarousel\"]), that contain expressions.",
+							"type": "array"
+						},
 						"minifyAngularBindingExpressions": {
-							"description": "HTML only.",
+							"description": "HTML only. Minify Angular.js binding expressions in double curly brackets and directives.",
 							"type": "boolean"
 						},
 						"minifyEmbeddedCssCode": {
-							"description": "HTML only.",
+							"description": "HTML only. Minify CSS code in style tags.",
 							"type": "boolean"
 						},
 						"minifyEmbeddedJsCode": {
-							"description": "HTML only.",
+							"description": "HTML only. Minify JS code in script tags.",
 							"type": "boolean"
 						},
 						"minifyInlineCssCode": {
-							"description": "HTML only.",
+							"description": "HTML only. Minify CSS code in style attributes.",
 							"type": "boolean"
 						},
 						"minifyInlineJsCode": {
-							"description": "HTML only.",
+							"description": "HTML only. Minify JS code in event attributes and hyperlinks with javascript: pseudo-protocol.",
 							"type": "boolean"
 						},
 						"minifyKnockoutBindingExpressions": {
-							"description": "HTML only.",
+							"description": "HTML only. Minify Knockout.js binding expressions in data-bind attributes and containerless comments.",
 							"type": "boolean"
 						},
+						"processableScriptTypeList": {
+							"description": "HTML only. Specify array of types of script tags, that are processed by minifier (e.g. [\"text/html\", \"text/ng-template\"])."
+						},
 						"removeHtmlComments": {
-							"description": "HTML only.",
+							"description": "HTML only. Remove all HTML comments except conditional, noindex, Knockout.js containerless comments and Angular.js comment directives.",
 							"type": "boolean"
 						},
 						"removeOptionalEndTags": {
-							"description": "HTML only.",
+							"description": "HTML only. Remove optional end tags.",
 							"type": "boolean"
 						},
 						"removeRedundantAttributes": {
-							"description": "HTML only.",
+							"description": "HTML only. Remove redundant attributes.",
 							"type": "boolean"
 						},
 						"removeTagsWithoutContent": {
-							"description": "HTML only.",
+							"description": "HTML only. Remove tags without content (except for textarea, tr, th and td tags, and tags with class, id, name, role, src and data-* attributes).",
 							"type": "boolean"
 						}
 					}
