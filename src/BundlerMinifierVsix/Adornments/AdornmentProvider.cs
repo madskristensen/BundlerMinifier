@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.Composition;
 using System.IO;
 using BundlerMinifier;
@@ -98,7 +98,7 @@ namespace BundlerMinifierVsix
 
                     foreach (Bundle bundle in bundles)
                     {
-                        if (bundle.GetAbsoluteOutputFile() == normalizedFilePath)
+                        if (bundle.GetAbsoluteOutputFile().Equals(normalizedFilePath, StringComparison.OrdinalIgnoreCase))
                         {
                             GeneratedAdornment generated = new GeneratedAdornment(textView, _isVisible, _initOpacity);
                             break;

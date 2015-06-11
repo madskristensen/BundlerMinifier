@@ -70,11 +70,11 @@ namespace BundlerMinifierVsix.Commands
             string configFile = Path.Combine(folder, FileHelpers.FILENAME);
             IEnumerable<string> files = ProjectHelpers.GetSelectedItemPaths().Select(f => MakeRelative(configFile, f));
             string outputFile = GetOutputFileName(folder, Path.GetExtension(files.ElementAt(0)));
-            string relativeOutputFile = MakeRelative(configFile, outputFile);
 
             if (string.IsNullOrEmpty(outputFile))
                 return;
 
+            string relativeOutputFile = MakeRelative(configFile, outputFile);
             Bundle bundle = CreateBundleFile(files, relativeOutputFile);
 
             Bundler bundler = new Bundler();
@@ -105,11 +105,14 @@ namespace BundlerMinifierVsix.Commands
 
         private static string GetOutputFileName(string folder, string extension)
         {
+            string ext = extension.TrimStart('.');
+
             using (SaveFileDialog dialog = new SaveFileDialog())
             {
                 dialog.InitialDirectory = folder;
-                dialog.DefaultExt = extension.TrimStart('.');
+                dialog.DefaultExt = ext;
                 dialog.FileName = "bundle";
+                dialog.Filter = ext.ToUpperInvariant() + " File|*." + ext;
 
                 DialogResult result = dialog.ShowDialog();
 
