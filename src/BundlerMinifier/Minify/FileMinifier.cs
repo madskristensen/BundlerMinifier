@@ -17,7 +17,7 @@ namespace BundlerMinifier
             switch (extension)
             {
                 case ".JS":
-                    return MinifyJavaScriptWithSourceMap(file, produceSourceMap);
+                    return MinifyJavaScript(file, produceSourceMap);
 
                 case ".CSS":
                     return MinifyCss(file);
@@ -30,7 +30,7 @@ namespace BundlerMinifier
             return null;
         }
 
-        private static MinificationResult MinifyJavaScriptWithSourceMap(string file, bool produceSourceMap)
+        private static MinificationResult MinifyJavaScript(string file, bool produceSourceMap)
         {
             var settings = new CodeSettings()
             {
@@ -73,7 +73,6 @@ namespace BundlerMinifier
 
                             minifier.FileName = file;
                             result.MinifiedContent = minifier.MinifyJavaScript(File.ReadAllText(file), settings);
-                            result.SourceMap = writer.ToString();
 
                             if (!minifier.Errors.Any())
                             {
@@ -86,6 +85,8 @@ namespace BundlerMinifier
                                 AddAjaxminErrors(minifier, result);
                             }
                         }
+
+                        result.SourceMap = writer.ToString();
                     }
                 }
             }

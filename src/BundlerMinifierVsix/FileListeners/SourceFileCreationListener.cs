@@ -56,15 +56,17 @@ namespace BundlerMinifierVsix.Listeners
                 if (item != null && item.ContainingProject != null)
                 {
                     string folder = ProjectHelpers.GetRootFolder(item.ContainingProject);
-                    string jsonFile = Path.Combine(folder, FileHelpers.FILENAME);
+                    string configFile = Path.Combine(folder, FileHelpers.FILENAME);
 
-                    if (File.Exists(jsonFile))
-                        BundleService.SourceFileChanged(jsonFile, e.FilePath);
+                    ErrorList.CleanErrors(e.FilePath);
+
+                    if (File.Exists(configFile))
+                        BundleService.SourceFileChanged(configFile, e.FilePath);
 
                     string minFile;
 
                     if (FileHelpers.HasMinFile(e.FilePath, out minFile))
-                        Commands.MinifyFile.Instance.Minify(e.FilePath);
+                        BundleService.MinifyFile(e.FilePath);
                 }
             }
         }
