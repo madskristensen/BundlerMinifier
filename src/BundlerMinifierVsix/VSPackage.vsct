@@ -56,7 +56,7 @@
     </Commands>
 
     <CommandPlacements>
-        <CommandPlacement guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0200">
+        <CommandPlacement guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0100">
             <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBITEMNODE"/>
         </CommandPlacement>
     </CommandPlacements>

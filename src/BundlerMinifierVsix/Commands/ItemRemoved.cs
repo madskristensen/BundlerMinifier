@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using BundlerMinifier;
@@ -20,6 +21,17 @@ namespace BundlerMinifierVsix.Commands
 
         private static void FileDeleted(ProjectItem item)
         {
+            Window2 window = BundlerMinifierPackage._dte.ActiveWindow as Window2;
+
+            if (window == null || window.Type != vsWindowType.vsWindowTypeSolutionExplorer)
+            {
+                return;
+            }
+
+            var items = ProjectHelpers.GetSelectedItems();
+            if (items == null || items.Count() != 1)
+                return;
+
             if (item.ContainingProject == null)
                 return;
 
@@ -33,7 +45,10 @@ namespace BundlerMinifierVsix.Commands
 
                 string configFile = FileHelpers.GetConfigFile(item.ContainingProject);
 
-                RemoveBundle(fileName, configFile);
+                BundlerMinifierPackage._dispatcher.BeginInvoke(new Action(() =>
+                {
+                    RemoveBundle(fileName, configFile);
+                }), System.Windows.Threading.DispatcherPriority.ApplicationIdle, null);
             }
             catch { }
         }

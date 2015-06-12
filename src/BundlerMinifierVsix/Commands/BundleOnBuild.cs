@@ -42,6 +42,15 @@ namespace BundlerMinifierVsix.Commands
             if (item == null || item.ContainingProject == null)
                 return;
 
+            var sourceFile = item.Properties.Item("FullPath").Value.ToString();
+            bool isConfigFile = Path.GetFileName(sourceFile).Equals(FileHelpers.FILENAME, StringComparison.OrdinalIgnoreCase);
+
+            if (!isConfigFile)
+            {
+                button.Visible = false;
+                return;
+            }
+
             // Some projects don't have a .csproj file and will therefore not be able to execute the build task.
             if (item.ContainingProject.Kind.Equals("{E24C65DC-7377-472B-9ABA-BC803B73C61A}", StringComparison.OrdinalIgnoreCase) || // Website Project
                 item.ContainingProject.Kind.Equals("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}", StringComparison.OrdinalIgnoreCase))   // ASP.NET 5
@@ -50,9 +59,7 @@ namespace BundlerMinifierVsix.Commands
                 return;
             }
 
-            var sourceFile = ProjectHelpers.GetSelectedItemPaths().First();
-
-            button.Visible = Path.GetFileName(sourceFile).Equals(FileHelpers.FILENAME, StringComparison.OrdinalIgnoreCase);
+            button.Visible = isConfigFile;
 
             if (button.Visible)
             {
