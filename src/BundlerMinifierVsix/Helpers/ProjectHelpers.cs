@@ -83,16 +83,16 @@ namespace BundlerMinifierVsix
             if (project.Kind == "{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") // ASP.NET 5 projects
                 return;
 
-            ProjectItem item = project.ProjectItems.AddFromFile(file);
-
-            if (string.IsNullOrEmpty(itemType))
-                return;
-
             try
             {
+                ProjectItem item = project.ProjectItems.AddFromFile(file);
+
+                if (string.IsNullOrEmpty(itemType))
+                    return;
+
                 item.Properties.Item("ItemType").Value = "None";
             }
-            catch { }
+            catch { /* Not all project system support adding files to them through the APIs */ }
         }
 
         public static void AddNestedFile(string parentFile, string newFile)
@@ -101,7 +101,8 @@ namespace BundlerMinifierVsix
 
             try
             {
-                if (item == null || item.ContainingProject == null || item.ContainingProject.Kind == "{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") // ASP.NET 5 projects
+                if (item == null || item.ContainingProject == null ||
+                    item.ContainingProject.Kind == "{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") // ASP.NET 5 projects
                     return;
 
                 if (item.ProjectItems == null) // Website project
