@@ -10,14 +10,14 @@ namespace BundlerMinifierTest
     public class BundlerTest
     {
         private const string TEST_BUNDLE = "../../artifacts/test1.json";
-        private Bundler _bundler;
+        private BundleHandler _bundler;
         private BundleFileProcessor _processor;
         private Guid _guid;
 
         [TestInitialize]
         public void Setup()
         {
-            _bundler = new Bundler();
+            _bundler = new BundleHandler();
             _processor = new BundleFileProcessor();
             _guid = Guid.NewGuid();
         }
@@ -53,7 +53,7 @@ namespace BundlerMinifierTest
         [TestMethod]
         public void GetBundles()
         {
-            var bundles = Bundler.GetBundles(TEST_BUNDLE);
+            var bundles = BundleHandler.GetBundles(TEST_BUNDLE);
             Assert.AreEqual(3, bundles.Count());
         }
 
@@ -68,7 +68,7 @@ namespace BundlerMinifierTest
             string filePath = "../../artifacts/" + _guid + ".json";
             _bundler.AddBundle(filePath, bundle);
 
-            var bundles = Bundler.GetBundles(filePath);
+            var bundles = BundleHandler.GetBundles(filePath);
             Assert.AreEqual(1, bundles.Count());
         }
 
@@ -84,7 +84,7 @@ namespace BundlerMinifierTest
             File.Copy(TEST_BUNDLE, filePath);
             _bundler.AddBundle(filePath, bundle);
 
-            var bundles = Bundler.GetBundles(filePath);
+            var bundles = BundleHandler.GetBundles(filePath);
             Assert.AreEqual(4, bundles.Count());
         }
 

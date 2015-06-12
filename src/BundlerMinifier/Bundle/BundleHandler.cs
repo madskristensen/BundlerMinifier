@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace BundlerMinifier
 {
-    public class Bundler
+    public class BundleHandler
     {
         public void AddBundle(string configFile, Bundle bundle)
         {

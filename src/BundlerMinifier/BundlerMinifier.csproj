@@ -58,7 +58,7 @@
     <Compile Include="Minify\MinificationError.cs" />
     <Compile Include="Minify\MinifyFileEventArgs.cs" />
     <Compile Include="Bundle\BundleFileEventArgs.cs" />
-    <Compile Include="Bundle\Bundler.cs" />
+    <Compile Include="Bundle\BundleHandler.cs" />
     <Compile Include="Bundle\BundleFileProcessor.cs" />
     <Compile Include="Minify\MinificationResult.cs" />
     <Compile Include="MSBuild\BundlerBuildTask.cs" />

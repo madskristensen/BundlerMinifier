@@ -55,7 +55,7 @@ namespace BundlerMinifierVsix.Commands
 
         private static void RemoveBundle(string fileName, string configFile)
         {
-            var bundles = Bundler.GetBundles(configFile);
+            var bundles = BundleHandler.GetBundles(configFile);
             string friendlyName = Path.GetFileName(fileName);
 
             foreach (Bundle bundle in bundles)
@@ -65,7 +65,7 @@ namespace BundlerMinifierVsix.Commands
                     var question = MessageBox.Show($"Do you want to remove {friendlyName} from {Constants.FILENAME}?", Constants.VSIX_NAME, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
                     if (question == DialogResult.OK)
-                        Bundler.RemoveBundle(configFile, bundle);
+                        BundleHandler.RemoveBundle(configFile, bundle);
 
                     break;
                 }

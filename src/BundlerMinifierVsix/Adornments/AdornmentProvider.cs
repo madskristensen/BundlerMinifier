@@ -94,7 +94,7 @@ namespace BundlerMinifierVsix
                 string normalizedFilePath = fileName.Replace(".map", "").Replace(".min" + extension, extension);
 
                 try {
-                    var bundles = Bundler.GetBundles(configFile);
+                    var bundles = BundleHandler.GetBundles(configFile);
 
                     foreach (Bundle bundle in bundles)
                     {

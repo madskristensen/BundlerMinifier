@@ -4,6 +4,9 @@ using System.Threading;
 using System.Windows.Forms;
 using BundlerMinifier;
 using EnvDTE80;
+using System.Linq;
+using System;
+using System.Collections.Generic;
 
 namespace BundlerMinifierVsix
 {
@@ -11,13 +14,14 @@ namespace BundlerMinifierVsix
     {
         private static BundleFileProcessor _processor;
         private static DTE2 _dte;
+        private static string[] _supported = new[] { ".JS", ".CSS", ".HTML", ".HTM" };
 
         static BundleService()
         {
             _dte = BundlerMinifierPackage._dte;
 
             BundleMinifier.BeforeWritingMinFile += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile); };
-            BundleMinifier.AfterWritingMinFile += (s, e) => { ProjectHelpers.AddNestedFile(e.OriginalFile, e.ResultFile);  };
+            BundleMinifier.AfterWritingMinFile += (s, e) => { ProjectHelpers.AddNestedFile(e.OriginalFile, e.ResultFile); };
             BundleMinifier.ErrorMinifyingFile += ErrorMinifyingFile;
 
             FileMinifier.BeforeWritingMinFile += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile); };
@@ -39,6 +43,32 @@ namespace BundlerMinifierVsix
 
                 return _processor;
             }
+        }
+
+        public static bool IsSupportedOutput(string fileName)
+        {
+            string ext = Path.GetExtension(fileName).ToUpperInvariant();
+
+            return _supported.Contains(ext);
+        }
+
+        internal static IEnumerable<Bundle> IsOutputConfigered(string configFile, string sourceFile)
+        {
+            List<Bundle> list = new List<Bundle>();
+
+            try
+            {
+                var bundles = BundleHandler.GetBundles(configFile);
+
+                foreach (Bundle bundle in bundles)
+                {
+                    if (bundle.GetAbsoluteOutputFile().Equals(sourceFile, StringComparison.OrdinalIgnoreCase))
+                        list.Add(bundle);
+                }
+            }
+            catch { }
+
+            return list;
         }
 
         public static void Process(string conigFile)

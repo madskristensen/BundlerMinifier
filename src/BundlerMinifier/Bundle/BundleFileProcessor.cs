@@ -31,7 +31,7 @@ namespace BundlerMinifier
         public void Process(string fileName)
         {
             FileInfo info = new FileInfo(fileName);
-            var bundles = Bundler.GetBundles(fileName);
+            var bundles = BundleHandler.GetBundles(fileName);
 
             foreach (Bundle bundle in bundles)
             {
@@ -41,7 +41,7 @@ namespace BundlerMinifier
 
         public void SourceFileChanged(string bundleFile, string sourceFile)
         {
-            var bundles = Bundler.GetBundles(bundleFile);
+            var bundles = BundleHandler.GetBundles(bundleFile);
             string folder = Path.GetDirectoryName(bundleFile);
 
             foreach (Bundle bundle in bundles)
@@ -58,7 +58,7 @@ namespace BundlerMinifier
 
         private void ProcessBundle(string baseFolder, Bundle bundle)
         {
-            Bundler.ProcessBundle(baseFolder, bundle);
+            BundleHandler.ProcessBundle(baseFolder, bundle);
 
             string outputFile = Path.Combine(baseFolder, bundle.OutputFileName);
 

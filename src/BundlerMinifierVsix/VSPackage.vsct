@@ -16,7 +16,7 @@
         <Buttons>
             <Button guid="guidBundlerCmdSet" id="CreateBundleId" priority="0x0100" type="Button">
                 <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
-                <Icon guid="ImageCatalogGuid" id="Join" />
+                <Icon guid="ImageCatalogGuid" id="Class" />
                 <CommandFlag>IconIsMoniker</CommandFlag>
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <CommandFlag>DefaultInvisible</CommandFlag>
@@ -26,7 +26,7 @@
             </Button>
             <Button guid="guidBundlerCmdSet" id="UpdateBundle" priority="0x0200" type="Button">
                 <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
-                <Icon guid="ImageCatalogGuid" id="Join" />
+                <Icon guid="ImageCatalogGuid" id="Class" />
                 <CommandFlag>IconIsMoniker</CommandFlag>
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <CommandFlag>DefaultInvisible</CommandFlag>
@@ -52,6 +52,16 @@
                     <ButtonText>Enable bundle on build...</ButtonText>
                 </Strings>
             </Button>
+            <Button guid="guidBundlerCmdSet" id="RemoveBundle" priority="0x0300" type="Button">
+                <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
+                <Icon guid="ImageCatalogGuid" id="DeleteEntity" />
+                <CommandFlag>IconIsMoniker</CommandFlag>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <CommandFlag>DefaultInvisible</CommandFlag>
+                <Strings>
+                    <ButtonText>Remove from bundling...</ButtonText>
+                </Strings>
+            </Button>
         </Buttons>
     </Commands>
 
@@ -72,6 +82,7 @@
             <IDSymbol name="UpdateBundle" value="0x0200" />
             <IDSymbol name="MinifyFile" value="0x0300" />
             <IDSymbol name="BundleOnBuild" value="0x0400" />
+            <IDSymbol name="RemoveBundle" value="0x0500" />
         </GuidSymbol>
     </Symbols>
 </CommandTable>
