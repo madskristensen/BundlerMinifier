@@ -24,7 +24,7 @@ namespace BundlerMinifier
         {
             FileInfo configFile = new FileInfo(FileName);
 
-            Log.LogMessage(MessageImportance.High, "Bundler: Begin processing " + configFile.Name);
+            Log.LogMessage(MessageImportance.High, Environment.NewLine + "Bundler: Begin processing " + configFile.Name);
 
             if (!configFile.Exists)
             {
