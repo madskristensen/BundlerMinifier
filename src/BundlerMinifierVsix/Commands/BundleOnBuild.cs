@@ -46,7 +46,7 @@ namespace BundlerMinifierVsix.Commands
             }
 
             var sourceFile = item.Properties.Item("FullPath").Value.ToString();
-            bool isConfigFile = Path.GetFileName(sourceFile).Equals(FileHelpers.FILENAME, StringComparison.OrdinalIgnoreCase);
+            bool isConfigFile = Path.GetFileName(sourceFile).Equals(Constants.FILENAME, StringComparison.OrdinalIgnoreCase);
 
             if (!isConfigFile)
             {
@@ -98,7 +98,7 @@ namespace BundlerMinifierVsix.Commands
 
             if (!_isInstalled)
             {
-                var question = MessageBox.Show("A NuGet package will be installed to augment the MSBuild process, but no files will be added to the project.\rThis may require an internet connection.\r\rDo you want to continue?", "Bundler & Minifier", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                var question = MessageBox.Show("A NuGet package will be installed to augment the MSBuild process, but no files will be added to the project.\rThis may require an internet connection.\r\rDo you want to continue?", Constants.VSIX_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (question == DialogResult.No)
                     return;
@@ -111,17 +111,17 @@ namespace BundlerMinifierVsix.Commands
                 {
                     try
                     {
-                        BundlerMinifierPackage._dte.StatusBar.Text = @"Installing BuildBundlerMinifier NuGet package, this may take a minute...";
+                        BundlerMinifierPackage._dte.StatusBar.Text = $"Installing {Constants.NUGET_ID} NuGet package, this may take a minute...";
                         BundlerMinifierPackage._dte.StatusBar.Animate(true, vsStatusAnimation.vsStatusAnimationSync);
 
                         var installer = componentModel.GetService<IVsPackageInstaller>();
-                        installer.InstallPackage(null, item.ContainingProject, "BuildBundlerMinifier", version, false);
+                        installer.InstallPackage(null, item.ContainingProject, Constants.NUGET_ID, version, false);
 
-                        BundlerMinifierPackage._dte.StatusBar.Text = @"Finished installing the BuildBundlerMinifier NuGet package";
+                        BundlerMinifierPackage._dte.StatusBar.Text = $"Finished installing the {Constants.NUGET_ID} NuGet package";
                     }
                     catch
                     {
-                        BundlerMinifierPackage._dte.StatusBar.Text = @"Unable to install the BuildBundlerMinifier NuGet package";
+                        BundlerMinifierPackage._dte.StatusBar.Text = $"Unable to install the {Constants.NUGET_ID} NuGet package";
                     }
                     finally
                     {
@@ -135,16 +135,16 @@ namespace BundlerMinifierVsix.Commands
                 {
                     try
                     {
-                        BundlerMinifierPackage._dte.StatusBar.Text = @"Uninstalling BuildBundlerMinifier NuGet package, this may take a minute...";
+                        BundlerMinifierPackage._dte.StatusBar.Text = $"Uninstalling {Constants.NUGET_ID} NuGet package, this may take a minute...";
                         BundlerMinifierPackage._dte.StatusBar.Animate(true, vsStatusAnimation.vsStatusAnimationSync);
                         var uninstaller = componentModel.GetService<IVsPackageUninstaller>();
-                        uninstaller.UninstallPackage(item.ContainingProject, "BuildBundlerMinifier", false);
+                        uninstaller.UninstallPackage(item.ContainingProject, Constants.NUGET_ID, false);
 
-                        BundlerMinifierPackage._dte.StatusBar.Text = @"Finished uninstalling the BuildBundlerMinifier NuGet package";
+                        BundlerMinifierPackage._dte.StatusBar.Text = $"Finished uninstalling the {Constants.NUGET_ID} NuGet package";
                     }
                     catch
                     {
-                        BundlerMinifierPackage._dte.StatusBar.Text = @"Unable to ininstall the BuildBundlerMinifier NuGet package";
+                        BundlerMinifierPackage._dte.StatusBar.Text = $"Unable to ininstall the {Constants.NUGET_ID} NuGet package";
                     }
                     finally
                     {
@@ -159,7 +159,7 @@ namespace BundlerMinifierVsix.Commands
             var componentModel = (IComponentModel)Package.GetGlobalService(typeof(SComponentModel));
             IVsPackageInstallerServices installerServices = componentModel.GetService<IVsPackageInstallerServices>();
 
-            return installerServices.IsPackageInstalled(project, "BuildBundlerMinifier");
+            return installerServices.IsPackageInstalled(project, Constants.NUGET_ID);
         }
     }
 }

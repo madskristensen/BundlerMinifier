@@ -51,7 +51,7 @@ namespace BundlerMinifierVsix
                 }
                 catch
                 {
-                    MessageBox.Show($"There is an error in the {FileHelpers.FILENAME} file. This could be due to a change in the format after this extension was updated.", "Web Compiler", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"There is an error in the {Constants.FILENAME} file. This could be due to a change in the format after this extension was updated.", "Web Compiler", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             });
         }
@@ -66,7 +66,7 @@ namespace BundlerMinifierVsix
                 }
                 catch
                 {
-                    MessageBox.Show($"There is an error in the {FileHelpers.FILENAME} file. This could be due to a change in the format after this extension was updated.", "Web Compiler", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"There is an error in the {Constants.FILENAME} file. This could be due to a change in the format after this extension was updated.", "Web Compiler", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             });
         }

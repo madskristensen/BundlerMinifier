@@ -67,7 +67,7 @@ namespace BundlerMinifierVsix.Commands
                 return;
 
             string folder = item.ContainingProject.GetRootFolder();
-            string configFile = Path.Combine(folder, FileHelpers.FILENAME);
+            string configFile = Path.Combine(folder, Constants.FILENAME);
             IEnumerable<string> files = ProjectHelpers.GetSelectedItemPaths().Select(f => MakeRelative(configFile, f));
             string outputFile = GetOutputFileName(folder, Path.GetExtension(files.First()));
 

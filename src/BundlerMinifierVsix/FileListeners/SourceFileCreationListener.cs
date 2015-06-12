@@ -55,7 +55,7 @@ namespace BundlerMinifierVsix.Listeners
 
                 if (item != null && item.ContainingProject != null)
                 {
-                    string configFile = FileHelpers.GetConfigFile(item.ContainingProject);
+                    string configFile = item.ContainingProject.GetConfigFile();
 
                     ErrorList.CleanErrors(e.FilePath);
 

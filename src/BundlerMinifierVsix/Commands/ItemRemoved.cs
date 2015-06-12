@@ -43,7 +43,7 @@ namespace BundlerMinifierVsix.Commands
                 if (!FileHelpers.SupportedFiles.Contains(extension))
                     return;
 
-                string configFile = FileHelpers.GetConfigFile(item.ContainingProject);
+                string configFile = item.ContainingProject.GetConfigFile();
 
                 BundlerMinifierPackage._dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -62,7 +62,7 @@ namespace BundlerMinifierVsix.Commands
             {
                 if (bundle.GetAbsoluteOutputFile() == fileName)
                 {
-                    var question = MessageBox.Show($"Do you want to remove {friendlyName} from {FileHelpers.FILENAME}?", "Bundler & Minifier", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    var question = MessageBox.Show($"Do you want to remove {friendlyName} from {Constants.FILENAME}?", Constants.VSIX_NAME, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
                     if (question == DialogResult.OK)
                         Bundler.RemoveBundle(configFile, bundle);

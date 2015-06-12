@@ -58,6 +58,7 @@
     <Compile Include="Commands\UpdateBundle.cs" />
     <Compile Include="Commands\CreateBundle.cs" />
     <Compile Include="BundlerMinifierPackage.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="ErrorList\ErrorList.cs" />
     <Compile Include="ErrorList\ErrorListService.cs" />
     <Compile Include="Helpers\FileHelpers.cs" />
