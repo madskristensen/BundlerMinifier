@@ -34,7 +34,7 @@ namespace BundlerMinifierVsix.Commands
             var button = (OleMenuCommand)sender;
             var files = ProjectHelpers.GetSelectedItemPaths();
 
-            button.Visible = files.Count() == 1 && Path.GetFileName(files.ElementAt(0)) == FileHelpers.FILENAME;
+            button.Visible = files.Count() == 1 && Path.GetFileName(files.First()) == FileHelpers.FILENAME;
         }
 
         public static UpdateBundle Instance

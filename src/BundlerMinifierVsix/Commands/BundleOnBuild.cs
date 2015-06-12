@@ -39,8 +39,11 @@ namespace BundlerMinifierVsix.Commands
             var button = (OleMenuCommand)sender;
             var item = ProjectHelpers.GetSelectedItems().First();
 
-            if (item == null || item.ContainingProject == null)
+            if (item == null || item.ContainingProject == null || item.Properties == null)
+            {
+                button.Visible = false;
                 return;
+            }
 
             var sourceFile = item.Properties.Item("FullPath").Value.ToString();
             bool isConfigFile = Path.GetFileName(sourceFile).Equals(FileHelpers.FILENAME, StringComparison.OrdinalIgnoreCase);

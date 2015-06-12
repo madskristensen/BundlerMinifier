@@ -61,15 +61,15 @@ namespace BundlerMinifierVsix.Commands
 
         private void AddBundle(object sender, EventArgs e)
         {
-            var item = ProjectHelpers.GetSelectedItems().ElementAt(0);
+            var item = ProjectHelpers.GetSelectedItems().FirstOrDefault();
 
-            if (item.ContainingProject == null)
+            if (item == null || item.ContainingProject == null)
                 return;
 
             string folder = ProjectHelpers.GetRootFolder(item.ContainingProject);
             string configFile = Path.Combine(folder, FileHelpers.FILENAME);
             IEnumerable<string> files = ProjectHelpers.GetSelectedItemPaths().Select(f => MakeRelative(configFile, f));
-            string outputFile = GetOutputFileName(folder, Path.GetExtension(files.ElementAt(0)));
+            string outputFile = GetOutputFileName(folder, Path.GetExtension(files.First()));
 
             if (string.IsNullOrEmpty(outputFile))
                 return;

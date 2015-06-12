@@ -19,7 +19,7 @@
                 <Icon guid="ImageCatalogGuid" id="Join" />
                 <CommandFlag>IconIsMoniker</CommandFlag>
                 <CommandFlag>DynamicVisibility</CommandFlag>
-                <CommandFlag>DynamicItemStart</CommandFlag>
+                <CommandFlag>DefaultInvisible</CommandFlag>
                 <Strings>
                     <ButtonText>Create bundle...</ButtonText>
                 </Strings>
@@ -29,7 +29,7 @@
                 <Icon guid="ImageCatalogGuid" id="Join" />
                 <CommandFlag>IconIsMoniker</CommandFlag>
                 <CommandFlag>DynamicVisibility</CommandFlag>
-                <CommandFlag>DynamicItemStart</CommandFlag>
+                <CommandFlag>DefaultInvisible</CommandFlag>
                 <Strings>
                     <ButtonText>Update bundle</ButtonText>
                 </Strings>
@@ -39,7 +39,7 @@
                 <Icon guid="ImageCatalogGuid" id="ContractArrow" />
                 <CommandFlag>IconIsMoniker</CommandFlag>
                 <CommandFlag>DynamicVisibility</CommandFlag>
-                <CommandFlag>DynamicItemStart</CommandFlag>
+                <CommandFlag>DefaultInvisible</CommandFlag>
                 <Strings>
                     <ButtonText>Minify File</ButtonText>
                 </Strings>
@@ -47,7 +47,7 @@
             <Button guid="guidBundlerCmdSet" id="BundleOnBuild" priority="0x0300" type="Button">
                 <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
                 <CommandFlag>DynamicVisibility</CommandFlag>
-                <CommandFlag>DynamicItemStart</CommandFlag>
+                <CommandFlag>DefaultInvisible</CommandFlag>
                 <Strings>
                     <ButtonText>Enable bundle on build...</ButtonText>
                 </Strings>
