@@ -37,7 +37,7 @@ namespace BundlerMinifierVsix.Commands
         private void BeforeQueryStatus(object sender, EventArgs e)
         {
             var button = (OleMenuCommand)sender;
-            var item = ProjectHelpers.GetSelectedItems().First();
+            var item = ProjectHelpers.GetSelectedItems().FirstOrDefault();
             button.Visible = false;
 
             if (item == null || item.ContainingProject == null || item.Properties == null)

@@ -45,7 +45,7 @@ namespace BundlerMinifierVsix
             }
         }
 
-        public static bool IsSupportedOutput(string fileName)
+        public static bool IsSupported(string fileName)
         {
             string ext = Path.GetExtension(fileName).ToUpperInvariant();
 

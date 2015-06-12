@@ -36,20 +36,22 @@ namespace BundlerMinifierVsix.Commands
         {
             var button = (OleMenuCommand)sender;
             var files = ProjectHelpers.GetSelectedItemPaths();
+            button.Visible = false;
 
             if (files.Count() != 1)
-            {
-                button.Visible = false;
                 return;
-            }
 
             string file = files.First();
+
+            if (!BundleService.IsSupported(file))
+                return;
+
             string fileName = Path.GetFileName(file);
             string ext = Path.GetExtension(fileName).ToUpperInvariant();
             string minFile;
             bool hasMinFile = FileHelpers.HasMinFile(file, out minFile);
 
-            button.Visible = !fileName.Contains(".min.") && !hasMinFile && FileHelpers.SupportedFiles.Contains(ext);
+            button.Visible = !fileName.Contains(".min.") && !hasMinFile;
         }
 
         public static MinifyFile Instance

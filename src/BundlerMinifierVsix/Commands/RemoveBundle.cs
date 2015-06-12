@@ -51,7 +51,7 @@ namespace BundlerMinifierVsix.Commands
 
             var sourceFile = item.Properties.Item("FullPath").Value.ToString();
 
-            if (!BundleService.IsSupportedOutput(sourceFile))
+            if (!BundleService.IsSupported(sourceFile))
                 return;
 
             string configFile = item.ContainingProject.GetConfigFile();

@@ -38,9 +38,8 @@ namespace BundlerMinifierVsix.Commands
             try
             {
                 string fileName = item.Properties.Item("FullPath").Value.ToString();
-                string extension = Path.GetExtension(fileName).ToUpperInvariant();
 
-                if (!FileHelpers.SupportedFiles.Contains(extension))
+                if (!BundleService.IsSupported(fileName))
                     return;
 
                 string configFile = item.ContainingProject.GetConfigFile();
