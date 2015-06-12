@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using BundlerMinifier;
 using EnvDTE;
 
@@ -17,8 +12,7 @@ namespace BundlerMinifierVsix
 
         public static string GetConfigFile(Project project)
         {
-            string folder = ProjectHelpers.GetRootFolder(project);
-            return Path.Combine(folder, FILENAME);
+            return Path.Combine(project.GetRootFolder(), FILENAME);
         }
 
         public static bool HasMinFile(string file, out string minFile)

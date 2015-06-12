@@ -66,7 +66,7 @@ namespace BundlerMinifierVsix.Commands
             if (item == null || item.ContainingProject == null)
                 return;
 
-            string folder = ProjectHelpers.GetRootFolder(item.ContainingProject);
+            string folder = item.ContainingProject.GetRootFolder();
             string configFile = Path.Combine(folder, FileHelpers.FILENAME);
             IEnumerable<string> files = ProjectHelpers.GetSelectedItemPaths().Select(f => MakeRelative(configFile, f));
             string outputFile = GetOutputFileName(folder, Path.GetExtension(files.First()));
@@ -84,7 +84,7 @@ namespace BundlerMinifierVsix.Commands
 
             BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 1, 3);
 
-            ProjectHelpers.AddFileToProject(item.ContainingProject, configFile, "None");
+            item.ContainingProject.AddFileToProject(configFile, "None");
             BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 2, 3);
 
             BundlerMinifierPackage._dte.ItemOperations.OpenFile(configFile);

@@ -41,7 +41,7 @@ namespace BundlerMinifierVsix
             }
         }
 
-        public static string GetRootFolder(Project project)
+        public static string GetRootFolder(this Project project)
         {
             if (string.IsNullOrEmpty(project.FullName))
                 return null;
@@ -78,7 +78,7 @@ namespace BundlerMinifierVsix
             return null;
         }
 
-        public static void AddFileToProject(Project project, string file, string itemType = null)
+        public static void AddFileToProject(this Project project, string file, string itemType = null)
         {
             if (project.Kind == "{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") // ASP.NET 5 projects
                 return;

@@ -112,7 +112,7 @@ namespace BundlerMinifierVsix
             if (item == null || item.ContainingProject == null)
                 return;
 
-            ProjectHelpers.AddFileToProject(item.ContainingProject, e.OutputFileName);
+            item.ContainingProject.AddFileToProject(e.OutputFileName);
             _dte.StatusBar.Text = "Bundle updated";
         }
 
