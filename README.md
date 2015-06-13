@@ -103,6 +103,19 @@ Here's an example of what that file looks like:
     },
     "includeInProject": true,
     "sourceMaps": false
+  },
+  {
+    "outputFileName": "output/app.js",
+    "inputFiles": [
+      "input/main.js",
+      "input/core/" // all .js files in input/core/
+    ],
+    "minify": {
+			"enabled": true,
+			"termSemicolons": true
+    },
+    "includeInProject": true,
+    "sourceMaps": false
   }
 ]
 ```
