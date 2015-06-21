@@ -63,6 +63,7 @@ namespace BundlerMinifier
             string outputFile = Path.Combine(baseFolder, bundle.OutputFileName);
 
             OnBeforeProcess(bundle, baseFolder);
+            Directory.CreateDirectory(outputFile);
             File.WriteAllText(outputFile, bundle.Output, new UTF8Encoding(true));
             OnAfterProcess(bundle, baseFolder);
 
