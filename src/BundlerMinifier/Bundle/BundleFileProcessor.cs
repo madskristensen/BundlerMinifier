@@ -42,16 +42,18 @@ namespace BundlerMinifier
         public void SourceFileChanged(string bundleFile, string sourceFile)
         {
             var bundles = BundleHandler.GetBundles(bundleFile);
-            string folder = Path.GetDirectoryName(bundleFile);
+            string bundleFileFolder = Path.GetDirectoryName(bundleFile),
+                   sourceFileFolder = Path.GetDirectoryName(sourceFile);
 
             foreach (Bundle bundle in bundles)
             {
                 foreach (string inputFile in bundle.InputFiles)
                 {
-                    string input = Path.Combine(folder, inputFile.Replace("/", "\\"));
+                    string input = Path.Combine(bundleFileFolder, inputFile.Replace("/", "\\"));
 
-                    if (input.Equals(sourceFile, System.StringComparison.OrdinalIgnoreCase))
-                        ProcessBundle(folder, bundle);
+                    if (input.Equals(sourceFile, System.StringComparison.OrdinalIgnoreCase)||
+                        input.Equals(sourceFileFolder, System.StringComparison.OrdinalIgnoreCase))
+                        ProcessBundle(bundleFileFolder, bundle);
                 }
             }
         }
