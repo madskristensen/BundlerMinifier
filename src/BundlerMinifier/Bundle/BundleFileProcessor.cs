@@ -65,7 +65,12 @@ namespace BundlerMinifier
             string outputFile = Path.Combine(baseFolder, bundle.OutputFileName);
 
             OnBeforeProcess(bundle, baseFolder);
+            
+            DirectoryInfo outputFileDirectory = Directory.GetParent(outputFile);
+            outputFileDirectory.Create();
+            
             File.WriteAllText(outputFile, bundle.Output, new UTF8Encoding(true));
+            
             OnAfterProcess(bundle, baseFolder);
 
             if (bundle.Minify.ContainsKey("enabled") && bundle.Minify["enabled"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
