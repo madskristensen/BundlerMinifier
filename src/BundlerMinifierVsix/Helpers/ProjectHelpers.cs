@@ -43,7 +43,12 @@ namespace BundlerMinifierVsix
 
         public static string GetConfigFile(this Project project)
         {
-            return Path.Combine(project.GetRootFolder(), Constants.FILENAME);
+            string folder = project.GetRootFolder();
+
+            if (string.IsNullOrEmpty(folder))
+                return null;
+
+            return Path.Combine(folder, Constants.FILENAME);
         }
 
         public static string GetRootFolder(this Project project)
