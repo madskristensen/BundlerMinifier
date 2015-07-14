@@ -90,14 +90,14 @@ namespace BundlerMinifierVsix
 
         public static void AddFileToProject(this Project project, string file, string itemType = null)
         {
-            if (project.Kind == "{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") // ASP.NET 5 projects
+            if (project.Kind.Equals("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}", StringComparison.OrdinalIgnoreCase)) // ASP.NET 5 projects
                 return;
 
             try
             {
                 ProjectItem item = project.ProjectItems.AddFromFile(file);
 
-                if (string.IsNullOrEmpty(itemType))
+                if (string.IsNullOrEmpty(itemType) || project.Kind.Equals("{E24C65DC-7377-472B-9ABA-BC803B73C61A}", StringComparison.OrdinalIgnoreCase)) // Website
                     return;
 
                 item.Properties.Item("ItemType").Value = "None";
@@ -114,8 +114,7 @@ namespace BundlerMinifierVsix
 
             try
             {
-                if (item == null || item.ContainingProject == null ||
-                    item.ContainingProject.Kind == "{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") // ASP.NET 5 projects
+                if (item == null || item.ContainingProject == null || item.ContainingProject.Kind.Equals("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}", StringComparison.OrdinalIgnoreCase))
                     return;
 
                 if (item.ProjectItems == null) // Website project
