@@ -105,7 +105,10 @@ namespace BundlerMinifierVsix
                         }
                     }
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Logger.Log(ex);
+                }
             }
         }
     }

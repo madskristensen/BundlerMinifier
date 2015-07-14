@@ -66,7 +66,10 @@ namespace BundlerMinifierVsix
                         list.Add(bundle);
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Logger.Log(ex);
+            }
 
             return list;
         }
@@ -79,8 +82,9 @@ namespace BundlerMinifierVsix
                 {
                     Processor.Process(conigFile);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Logger.Log(ex);
                     MessageBox.Show($"There is an error in the {Constants.FILENAME} file. This could be due to a change in the format after this extension was updated.", "Web Compiler", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             });
@@ -94,8 +98,9 @@ namespace BundlerMinifierVsix
                 {
                     Processor.SourceFileChanged(configFile, sourceFile);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Logger.Log(ex);
                     MessageBox.Show($"There is an error in the {Constants.FILENAME} file. This could be due to a change in the format after this extension was updated.", "Web Compiler", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             });
@@ -105,29 +110,36 @@ namespace BundlerMinifierVsix
         {
             ThreadPool.QueueUserWorkItem((o) =>
             {
-                string ext = Path.GetExtension(fileName);
-                string minFile;
-                bool minFileExist = FileHelpers.HasMinFile(fileName, out minFile);
-
-                string mapFile;
-                bool mapFileExist = FileHelpers.HasSourceMap(minFile, out mapFile);
-
-                bool produceSourceMap = (minFileExist && mapFileExist) || (!minFileExist && !mapFileExist);
-
-                MinificationResult result = FileMinifier.MinifyFile(fileName, produceSourceMap);
-                if (result == null)
-                    return;
-
-                ErrorListService.ProcessCompilerResults(result);
-
-                if (!result.HasErrors && produceSourceMap && !string.IsNullOrEmpty(result.SourceMap))
+                try
                 {
-                    mapFile = minFile + ".map";
-                    ProjectHelpers.CheckFileOutOfSourceControl(mapFile);
-                    File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(true));
+                    string ext = Path.GetExtension(fileName);
+                    string minFile;
+                    bool minFileExist = FileHelpers.HasMinFile(fileName, out minFile);
 
-                    if (!mapFileExist)
-                        ProjectHelpers.AddNestedFile(minFile, mapFile);
+                    string mapFile;
+                    bool mapFileExist = FileHelpers.HasSourceMap(minFile, out mapFile);
+
+                    bool produceSourceMap = (minFileExist && mapFileExist) || (!minFileExist && !mapFileExist);
+
+                    MinificationResult result = FileMinifier.MinifyFile(fileName, produceSourceMap);
+                    if (result == null)
+                        return;
+
+                    ErrorListService.ProcessCompilerResults(result);
+
+                    if (!result.HasErrors && produceSourceMap && !string.IsNullOrEmpty(result.SourceMap))
+                    {
+                        mapFile = minFile + ".map";
+                        ProjectHelpers.CheckFileOutOfSourceControl(mapFile);
+                        File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(true));
+
+                        if (!mapFileExist)
+                            ProjectHelpers.AddNestedFile(minFile, mapFile);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log(ex);
                 }
             });
         }

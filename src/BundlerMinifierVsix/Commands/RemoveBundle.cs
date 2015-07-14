@@ -94,8 +94,9 @@ namespace BundlerMinifierVsix.Commands
                     BundleHandler.RemoveBundle(bundle.FileName, bundle);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Logger.Log(ex);
                 BundlerMinifierPackage._dte.StatusBar.Text = $"Could not update {Constants.FILENAME}. Make sure it's not write-protected or has syntax errors.";
             }
         }

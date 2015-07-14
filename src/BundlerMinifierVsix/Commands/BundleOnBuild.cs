@@ -115,8 +115,9 @@ namespace BundlerMinifierVsix.Commands
 
                         BundlerMinifierPackage._dte.StatusBar.Text = $"Finished installing the {Constants.NUGET_ID} NuGet package";
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        Logger.Log(ex);
                         BundlerMinifierPackage._dte.StatusBar.Text = $"Unable to install the {Constants.NUGET_ID} NuGet package";
                     }
                     finally
@@ -138,8 +139,9 @@ namespace BundlerMinifierVsix.Commands
 
                         BundlerMinifierPackage._dte.StatusBar.Text = $"Finished uninstalling the {Constants.NUGET_ID} NuGet package";
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        Logger.Log(ex);
                         BundlerMinifierPackage._dte.StatusBar.Text = $"Unable to ininstall the {Constants.NUGET_ID} NuGet package";
                     }
                     finally

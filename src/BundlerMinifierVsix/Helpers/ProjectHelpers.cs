@@ -102,7 +102,10 @@ namespace BundlerMinifierVsix
 
                 item.Properties.Item("ItemType").Value = "None";
             }
-            catch { /* Not all project system support adding files to them through the APIs */ }
+            catch (Exception ex)
+            {
+                Logger.Log(ex);
+            }
         }
 
         public static void AddNestedFile(string parentFile, string newFile)
@@ -120,7 +123,10 @@ namespace BundlerMinifierVsix
                 else
                     item.ProjectItems.AddFromFile(newFile);
             }
-            catch { /* Some projects don't support nesting. Ignore the error */ }
+            catch (Exception ex)
+            {
+                Logger.Log(ex);
+            }
         }
     }
 }

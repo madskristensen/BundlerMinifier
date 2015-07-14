@@ -49,7 +49,10 @@ namespace BundlerMinifierVsix.Commands
                     RemoveBundle(fileName, configFile);
                 }), System.Windows.Threading.DispatcherPriority.ApplicationIdle, null);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Logger.Log(ex);
+            }
         }
 
         private static void RemoveBundle(string fileName, string configFile)
