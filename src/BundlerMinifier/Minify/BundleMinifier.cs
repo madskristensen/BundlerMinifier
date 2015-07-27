@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using Microsoft.Ajax.Utilities;
@@ -25,7 +26,7 @@ namespace BundlerMinifier
                     break;
                 case ".HTML":
                 case ".HTM":
-                    result= MinifyHtml(bundle);
+                    result = MinifyHtml(bundle);
                     break;
             }
 
@@ -55,9 +56,9 @@ namespace BundlerMinifier
 
                     if (!minifier.Errors.Any())
                     {
-                        OnBeforeWritingMinFile(file, minFile);
+                        OnBeforeWritingMinFile(file, minFile, bundle);
                         File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
-                        OnAfterWritingMinFile(file, minFile);
+                        OnAfterWritingMinFile(file, minFile, bundle);
                     }
                     else
                     {
@@ -78,9 +79,9 @@ namespace BundlerMinifier
 
                             if (!minifier.Errors.Any())
                             {
-                                OnBeforeWritingMinFile(file, minFile);
+                                OnBeforeWritingMinFile(file, minFile, bundle);
                                 File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
-                                OnAfterWritingMinFile(file, minFile);
+                                OnAfterWritingMinFile(file, minFile, bundle);
                             }
                             else
                             {
@@ -91,6 +92,8 @@ namespace BundlerMinifier
                         result.SourceMap = writer.ToString();
                     }
                 }
+
+                GzipFile(minFile, bundle);
             }
             catch (Exception ex)
             {
@@ -122,9 +125,11 @@ namespace BundlerMinifier
 
                 if (!minifier.Errors.Any())
                 {
-                    OnBeforeWritingMinFile(file, minFile);
+                    OnBeforeWritingMinFile(file, minFile, bundle);
                     File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
-                    OnAfterWritingMinFile(file, minFile);
+                    OnAfterWritingMinFile(file, minFile, bundle);
+
+                    GzipFile(minFile, bundle);
                 }
                 else
                 {
@@ -162,9 +167,11 @@ namespace BundlerMinifier
 
                 if (!result.Errors.Any())
                 {
-                    OnBeforeWritingMinFile(file, minFile);
+                    OnBeforeWritingMinFile(file, minFile, bundle);
                     File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
-                    OnAfterWritingMinFile(file, minFile);
+                    OnAfterWritingMinFile(file, minFile, bundle);
+
+                    GzipFile(minFile, bundle);
                 }
                 else
                 {
@@ -194,25 +201,57 @@ namespace BundlerMinifier
             return minResult;
         }
 
+        private static void GzipFile(string sourceFile, Bundle bundle)
+        {
+            if (!bundle.Minify.ContainsKey("gzip") || !bundle.Minify["gzip"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
+                return;
+
+            var gzipFile = sourceFile + ".gz";
+            OnBeforeWritingGzipFile(sourceFile, gzipFile, bundle);
+
+            using (var sourceStream = File.OpenRead(sourceFile))
+            using (var targetStream = File.OpenWrite(gzipFile))
+            using (var gzipStream = new GZipStream(targetStream, CompressionMode.Compress))
+                sourceStream.CopyTo(gzipStream);
+
+            OnAfterWritingGzipFile(sourceFile, gzipFile, bundle);
+        }
+
         public static string GetMinFileName(string file)
         {
             string ext = Path.GetExtension(file);
             return file.Substring(0, file.LastIndexOf(ext)) + ".min" + ext;
         }
 
-        protected static void OnBeforeWritingMinFile(string file, string minFile)
+        protected static void OnBeforeWritingMinFile(string file, string minFile, Bundle bundle)
         {
             if (BeforeWritingMinFile != null)
             {
-                BeforeWritingMinFile(null, new MinifyFileEventArgs(file, minFile));
+                BeforeWritingMinFile(null, new MinifyFileEventArgs(file, minFile, bundle));
             }
         }
 
-        protected static void OnAfterWritingMinFile(string file, string minFile)
+        protected static void OnAfterWritingMinFile(string file, string minFile, Bundle bundle)
         {
             if (AfterWritingMinFile != null)
             {
-                AfterWritingMinFile(null, new MinifyFileEventArgs(file, minFile));
+                AfterWritingMinFile(null, new MinifyFileEventArgs(file, minFile, bundle));
+            }
+        }
+
+        protected static void OnBeforeWritingGzipFile(string minFile, string gzipFile, Bundle bundle)
+        {
+            if (BeforeWritingGzipFile != null)
+            {
+                BeforeWritingGzipFile(null, new MinifyFileEventArgs(minFile, gzipFile, bundle));
+            }
+        }
+
+        protected static void OnAfterWritingGzipFile(string minFile, string gzipFile, Bundle bundle)
+        {
+            if (AfterWritingGzipFile != null)
+            {
+                AfterWritingGzipFile(null, new MinifyFileEventArgs(minFile, gzipFile, bundle));
             }
         }
 
@@ -220,7 +259,7 @@ namespace BundlerMinifier
         {
             if (ErrorMinifyingFile != null)
             {
-                var e = new MinifyFileEventArgs(result.FileName, null);
+                var e = new MinifyFileEventArgs(result.FileName, null, null);
                 e.Result = result;
 
                 ErrorMinifyingFile(null, e);
@@ -229,6 +268,8 @@ namespace BundlerMinifier
 
         public static event EventHandler<MinifyFileEventArgs> BeforeWritingMinFile;
         public static event EventHandler<MinifyFileEventArgs> AfterWritingMinFile;
+        public static event EventHandler<MinifyFileEventArgs> BeforeWritingGzipFile;
+        public static event EventHandler<MinifyFileEventArgs> AfterWritingGzipFile;
         public static event EventHandler<MinifyFileEventArgs> ErrorMinifyingFile;
     }
 }

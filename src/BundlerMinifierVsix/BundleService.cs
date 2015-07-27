@@ -21,11 +21,31 @@ namespace BundlerMinifierVsix
             _dte = BundlerMinifierPackage._dte;
 
             BundleMinifier.BeforeWritingMinFile += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile); };
-            BundleMinifier.AfterWritingMinFile += (s, e) => { ProjectHelpers.AddNestedFile(e.OriginalFile, e.ResultFile); };
+            BundleMinifier.AfterWritingMinFile += AfterWritingFile;
+            BundleMinifier.BeforeWritingGzipFile += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile); };
+            BundleMinifier.AfterWritingGzipFile += AfterWritingFile;
             BundleMinifier.ErrorMinifyingFile += ErrorMinifyingFile;
 
             FileMinifier.BeforeWritingMinFile += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile); };
-            FileMinifier.AfterWritingMinFile += (s, e) => { ProjectHelpers.AddNestedFile(e.OriginalFile, e.ResultFile); };
+            FileMinifier.AfterWritingMinFile += AfterWritingFile;
+
+            FileMinifier.BeforeWritingGzipFile += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile); };
+            FileMinifier.AfterWritingGzipFile += AfterWritingFile;
+        }
+
+        private static void AfterWritingFile(object sender, MinifyFileEventArgs e)
+        {
+            if (e.Bundle != null)
+            {
+                // Bundle file minification
+                if (e.Bundle.IncludeInProject)
+                    ProjectHelpers.AddNestedFile(e.OriginalFile, e.ResultFile);
+            }
+            else
+            {
+                // Single file minification
+                ProjectHelpers.AddNestedFile(e.OriginalFile, e.ResultFile);
+            }
         }
 
         private static BundleFileProcessor Processor
@@ -119,9 +139,12 @@ namespace BundlerMinifierVsix
                     string mapFile;
                     bool mapFileExist = FileHelpers.HasSourceMap(minFile, out mapFile);
 
-                    bool produceSourceMap = (minFileExist && mapFileExist) || (!minFileExist && !mapFileExist);
+                    bool gzipFileExist = File.Exists(minFile + ".gz");
 
-                    MinificationResult result = FileMinifier.MinifyFile(fileName, produceSourceMap);
+                    bool produceSourceMap = (minFileExist && mapFileExist) || (!minFileExist && !mapFileExist);
+                    bool produceGzipFile = (minFileExist && gzipFileExist) || (!minFileExist && !gzipFileExist);
+
+                    MinificationResult result = FileMinifier.MinifyFile(fileName, produceGzipFile, produceSourceMap);
                     if (result == null)
                         return;
 

@@ -51,7 +51,7 @@ namespace BundlerMinifier
                 {
                     string input = Path.Combine(bundleFileFolder, inputFile.Replace("/", "\\"));
 
-                    if (input.Equals(sourceFile, System.StringComparison.OrdinalIgnoreCase)||
+                    if (input.Equals(sourceFile, System.StringComparison.OrdinalIgnoreCase) ||
                         input.Equals(sourceFileFolder, System.StringComparison.OrdinalIgnoreCase))
                         ProcessBundle(bundleFileFolder, bundle);
                 }
@@ -65,12 +65,12 @@ namespace BundlerMinifier
             string outputFile = Path.Combine(baseFolder, bundle.OutputFileName);
 
             OnBeforeProcess(bundle, baseFolder);
-            
+
             DirectoryInfo outputFileDirectory = Directory.GetParent(outputFile);
             outputFileDirectory.Create();
-            
+
             File.WriteAllText(outputFile, bundle.Output, new UTF8Encoding(true));
-            
+
             OnAfterProcess(bundle, baseFolder);
 
             if (bundle.Minify.ContainsKey("enabled") && bundle.Minify["enabled"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase))

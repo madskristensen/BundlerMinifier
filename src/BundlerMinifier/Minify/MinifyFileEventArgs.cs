@@ -10,9 +10,17 @@ namespace BundlerMinifier
             ResultFile = resultFile;
         }
 
-        public string OriginalFile { get; set; }
+        public MinifyFileEventArgs(string originalFile, string resultFile, Bundle bundle)
+            : this(originalFile, resultFile)
+        {
+            Bundle = bundle;
+        }
 
-        public string ResultFile { get; set; }
+        public string OriginalFile { get; private set; }
+
+        public string ResultFile { get; private set; }
+
+        public Bundle Bundle { get; private set; }
 
         /// <summary>
         /// A collection of any errors reported by the compiler.
