@@ -58,10 +58,10 @@ namespace BundlerMinifierVsix.Commands
 
         private void UpdateSelectedBundle(object sender, EventArgs e)
         {
-            var file = ProjectHelpers.GetSelectedItemPaths().ElementAt(0);
-            var item = ProjectHelpers.GetSelectedItems().ElementAt(0);
+            var file = ProjectHelpers.GetSelectedItemPaths().FirstOrDefault();
 
-            BundleService.Process(file);
+            if (!string.IsNullOrEmpty(file))
+                BundleService.Process(file);
         }
     }
 }
