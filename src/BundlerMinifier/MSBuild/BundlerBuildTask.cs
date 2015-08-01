@@ -33,7 +33,9 @@ namespace BundlerMinifier
             }
 
             BundleFileProcessor processor = new BundleFileProcessor();
+            processor.BeforeProcess += (s, e) => { RemoveReadonlyFlagFromFile(e.Bundle.GetAbsoluteOutputFile()); };
             processor.AfterProcess += Processor_AfterProcess;
+            processor.BeforeWritingSourceMap += (s, e) => { RemoveReadonlyFlagFromFile(e.ResultFile); };
             processor.AfterWritingSourceMap += Processor_AfterWritingSourceMap;
             BundleMinifier.ErrorMinifyingFile += BundleMinifier_ErrorMinifyingFile;
             BundleMinifier.AfterWritingMinFile += FileMinifier_AfterWritingMinFile;
@@ -43,6 +45,14 @@ namespace BundlerMinifier
             Log.LogMessage(MessageImportance.High, "Bundler: Done processing " + configFile.Name);
 
             return _isSuccessful;
+        }
+
+        private static void RemoveReadonlyFlagFromFile(string fileName)
+        {
+            FileInfo file = new FileInfo(fileName);
+
+            if (file.Exists && file.IsReadOnly)
+                file.IsReadOnly = false;
         }
 
         private void BundleMinifier_ErrorMinifyingFile(object sender, MinifyFileEventArgs e)

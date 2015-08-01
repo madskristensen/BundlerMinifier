@@ -17,6 +17,9 @@ namespace BundlerMinifierVsix
 
             if (_dte.SourceControl.IsItemUnderSCC(file) && !_dte.SourceControl.IsItemCheckedOut(file))
                 _dte.SourceControl.CheckOutItem(file);
+
+            FileInfo info = new FileInfo(file);
+            info.IsReadOnly = false;
         }
 
         public static IEnumerable<ProjectItem> GetSelectedItems()
