@@ -62,7 +62,7 @@ any files to the project itself. thead NuGet package contains an MSBuild
 task that will run the exact same compilers on the `bundleconfig.json`
 file in the root of the project.
 
-### Compile all
+### Update all bundles
 
 You can run the bundler on all `bundleconfig.json` files
 in the solution by using the keyboard shortcut `Shift+Alt+i`
