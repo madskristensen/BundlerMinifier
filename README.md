@@ -18,6 +18,7 @@ or get the
 - Minify individual or bundled CSS, JavaScript and HTML files
 - Minification options for each language is customizable
 - Shows a watermark when opening a generated file
+- Shortcut to update all bundles in solution
 
 ### Bundling
 
@@ -60,6 +61,14 @@ A NuGet package will be installed into the `packages` folder without adding
 any files to the project itself. thead NuGet package contains an MSBuild
 task that will run the exact same compilers on the `bundleconfig.json`
 file in the root of the project.
+
+### Compile all
+
+You can run the bundler on all `bundleconfig.json` files
+in the solution by using the keyboard shortcut `Shift+Alt+i`
+or by using the button on the top level Build menu.
+
+![Update all bundles](art/build-menu.png)
 
 ### Source maps
 
