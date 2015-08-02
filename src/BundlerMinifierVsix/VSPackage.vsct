@@ -10,6 +10,9 @@
             <Group guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0200">
                 <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
             </Group>
+            <Group guid="guidBundlerCmdSet" id="SolExpMenuGroup" priority="0x9000">
+                <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_BUILD"/>
+            </Group>
         </Groups>
 
         <!-- See all available images for ImageCatalogGuid at http://glyphlist.azurewebsites.net/knownmonikers/ -->
@@ -31,7 +34,7 @@
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <CommandFlag>DefaultInvisible</CommandFlag>
                 <Strings>
-                    <ButtonText>Update bundle</ButtonText>
+                    <ButtonText>Update bundles</ButtonText>
                 </Strings>
             </Button>
             <Button guid="guidBundlerCmdSet" id="MinifyFile" priority="0x0300" type="Button">
@@ -62,6 +65,16 @@
                     <ButtonText>Remove from bundling...</ButtonText>
                 </Strings>
             </Button>
+            <Button guid="guidBundlerCmdSet" id="UpdateSolution" priority="0x0200" type="Button">
+                <Parent guid="guidBundlerCmdSet" id="SolExpMenuGroup" />
+                <Icon guid="ImageCatalogGuid" id="Class" />
+                <CommandFlag>IconIsMoniker</CommandFlag>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <CommandFlag>DefaultInvisible</CommandFlag>
+                <Strings>
+                    <ButtonText>Update all bundles in solution</ButtonText>
+                </Strings>
+            </Button>
         </Buttons>
     </Commands>
 
@@ -69,7 +82,20 @@
         <CommandPlacement guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0100">
             <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBITEMNODE"/>
         </CommandPlacement>
+        <CommandPlacement guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0100">
+            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBPROJECT"/>
+        </CommandPlacement>
+        <CommandPlacement guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0100">
+            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
+        </CommandPlacement>
+        <CommandPlacement guid="guidBundlerCmdSet" id="SolExpMenuGroup" priority="0x0100">
+            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE"/>
+        </CommandPlacement>
     </CommandPlacements>
+
+    <KeyBindings>
+        <KeyBinding guid="guidBundlerCmdSet" id="UpdateSolution" mod1="Shift Alt" key1="I" editor="guidVSStd97"/>
+    </KeyBindings>
 
     <Symbols>
         <!-- This is the package guid. -->
@@ -78,11 +104,14 @@
         <!-- This is the guid used to group the menu commands together -->
         <GuidSymbol name="guidBundlerCmdSet" value="{7b10be0c-81e1-4817-abda-e08788679bd5}">
             <IDSymbol name="MyMenuGroup" value="0x1020" />
+            <IDSymbol name="SolExpMenuGroup" value="0x1030" />
+
             <IDSymbol name="CreateBundleId" value="0x0100" />
             <IDSymbol name="UpdateBundle" value="0x0200" />
             <IDSymbol name="MinifyFile" value="0x0300" />
             <IDSymbol name="BundleOnBuild" value="0x0400" />
             <IDSymbol name="RemoveBundle" value="0x0500" />
+            <IDSymbol name="UpdateSolution" value="0x0600" />
         </GuidSymbol>
     </Symbols>
 </CommandTable>

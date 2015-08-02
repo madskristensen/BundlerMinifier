@@ -2,15 +2,16 @@
 using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
+using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 
 namespace BundlerMinifierVsix.Commands
 {
-    internal sealed class UpdateBundle
+    internal sealed class UpdateAllFiles
     {
         private readonly Package _package;
 
-        private UpdateBundle(Package package)
+        private UpdateAllFiles(Package package)
         {
             if (package == null)
             {
@@ -22,7 +23,7 @@ namespace BundlerMinifierVsix.Commands
             OleMenuCommandService commandService = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (commandService != null)
             {
-                var menuCommandID = new CommandID(GuidList.guidBundlerCmdSet, PackageCommands.UpdateBundle);
+                var menuCommandID = new CommandID(GuidList.guidBundlerCmdSet, PackageCommands.UpdateSolution);
                 var menuItem = new OleMenuCommand(UpdateSelectedBundle, menuCommandID);
                 menuItem.BeforeQueryStatus += BeforeQueryStatus;
                 commandService.AddCommand(menuItem);
@@ -32,30 +33,11 @@ namespace BundlerMinifierVsix.Commands
         private void BeforeQueryStatus(object sender, EventArgs e)
         {
             var button = (OleMenuCommand)sender;
-            var files = ProjectHelpers.GetSelectedItemPaths();
-            button.Visible = false;
 
-            int count = files.Count();
-
-            if (count == 0) // Project
-            {
-                var project = ProjectHelpers.GetActiveProject();
-
-                if (project == null)
-                    return;
-
-                string config = project.GetConfigFile();
-
-                if (!string.IsNullOrEmpty(config) && File.Exists(config))
-                    button.Visible = true;
-            }
-            else
-            {
-                button.Visible = files.Count() == 1 && Path.GetFileName(files.First()) == Constants.FILENAME;
-            }
+            button.Visible = ProjectHelpers.IsSolutionLoaded();
         }
 
-        public static UpdateBundle Instance
+        public static UpdateAllFiles Instance
         {
             get;
             private set;
@@ -71,23 +53,20 @@ namespace BundlerMinifierVsix.Commands
 
         public static void Initialize(Package package)
         {
-            Instance = new UpdateBundle(package);
+            Instance = new UpdateAllFiles(package);
         }
 
         private void UpdateSelectedBundle(object sender, EventArgs e)
         {
-            var file = ProjectHelpers.GetSelectedItemPaths().FirstOrDefault();
+            var projects = ProjectHelpers.GetAllProjects();
 
-            if (string.IsNullOrEmpty(file)) // Project
+            foreach (Project project in projects)
             {
-                var project = ProjectHelpers.GetActiveProject();
+                string config = project.GetConfigFile();
 
-                if (project != null)
-                    file = project.GetConfigFile();
+                if (!string.IsNullOrEmpty(config))
+                    BundleService.Process(config);
             }
-
-            if (!string.IsNullOrEmpty(file))
-                BundleService.Process(file);
         }
     }
 }

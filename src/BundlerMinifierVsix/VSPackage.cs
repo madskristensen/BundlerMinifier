@@ -18,10 +18,12 @@ namespace BundlerMinifierVsix
     internal sealed partial class PackageCommands
     {
         public const int MyMenuGroup = 0x1020;
+        public const int SolExpMenuGroup = 0x1030;
         public const int CreateBundleId = 0x0100;
         public const int UpdateBundle = 0x0200;
         public const int MinifyFile = 0x0300;
         public const int BundleOnBuild = 0x0400;
         public const int RemoveBundle = 0x0500;
+        public const int UpdateSolution = 0x0600;
     }
 }

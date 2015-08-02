@@ -53,9 +53,9 @@
     <Compile Include="Adornments\AdornmentProvider.cs" />
     <Compile Include="BundleService.cs" />
     <Compile Include="Commands\BundleOnBuild.cs" />
-    <Compile Include="Commands\ItemRemoved.cs" />
     <Compile Include="Commands\MinifyFile.cs" />
     <Compile Include="Commands\RemoveBundle.cs" />
+    <Compile Include="Commands\UpdateAllFiles.cs" />
     <Compile Include="Commands\UpdateBundle.cs" />
     <Compile Include="Commands\CreateBundle.cs" />
     <Compile Include="BundlerMinifierPackage.cs" />

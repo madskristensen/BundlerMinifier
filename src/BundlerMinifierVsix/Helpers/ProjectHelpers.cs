@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using EnvDTE;
 using EnvDTE80;
 
@@ -129,6 +131,61 @@ namespace BundlerMinifierVsix
             {
                 Logger.Log(ex);
             }
+        }
+
+        public static IEnumerable<Project> GetAllProjects()
+        {
+            return _dte.Solution.Projects
+                  .Cast<Project>()
+                  .SelectMany(GetChildProjects)
+                  .Union(_dte.Solution.Projects.Cast<Project>())
+                  .Where(p => { try { return !string.IsNullOrEmpty(p.FullName); } catch { return false; } });
+        }
+
+        private static IEnumerable<Project> GetChildProjects(Project parent)
+        {
+            try
+            {
+                if (parent.Kind != ProjectKinds.vsProjectKindSolutionFolder && parent.Collection == null)  // Unloaded
+                    return Enumerable.Empty<Project>();
+
+                if (!string.IsNullOrEmpty(parent.FullName))
+                    return new[] { parent };
+            }
+            catch (COMException)
+            {
+                return Enumerable.Empty<Project>();
+            }
+
+            return parent.ProjectItems
+                    .Cast<ProjectItem>()
+                    .Where(p => p.SubProject != null)
+                    .SelectMany(p => GetChildProjects(p.SubProject));
+        }
+
+        public static bool IsSolutionLoaded()
+        {
+            if (_dte.Solution == null)
+                return false;
+
+            return GetAllProjects().Any();
+        }
+
+        public static Project GetActiveProject()
+        {
+            try
+            {
+                Array activeSolutionProjects = _dte.ActiveSolutionProjects as Array;
+
+                if (activeSolutionProjects != null && activeSolutionProjects.Length > 0)
+                    return activeSolutionProjects.GetValue(0) as Project;
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Error getting the active project" + ex);
+            }
+
+            return null;
         }
     }
 }
