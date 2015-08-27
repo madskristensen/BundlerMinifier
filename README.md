@@ -58,7 +58,7 @@ happen if you click the OK button.
 ![Bundle on build prompt](art/prompt-compileonsave.png)
 
 A NuGet package will be installed into the `packages` folder without adding
-any files to the project itself. thead NuGet package contains an MSBuild
+any files to the project itself. That NuGet package contains an MSBuild
 task that will run the exact same compilers on the `bundleconfig.json`
 file in the root of the project.
 
