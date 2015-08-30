@@ -1,8 +1,10 @@
 # Roadmap
 
 - [x] All minified files listed in bundleconfig.json
+   - You need to re-enable all minified files
 - [x] Re-minify all bundles in solution (#27)
-- [ ] Improve encoding of min files (#33)
+- [x] Improve encoding of min files (#33)
+- [x] Remove default settings from generated bundles
 
 Features that have a checkmark are complete and available for
 download in the

@@ -19,10 +19,10 @@ namespace BundlerMinifier
         public Dictionary<string, object> Minify { get; set; } = new Dictionary<string, object> { { "enabled", true } };
 
         [JsonProperty("includeInProject")]
-        public bool IncludeInProject { get; set; }
+        public bool IncludeInProject { get; set; } = true;
 
-        [JsonProperty("sourceMaps")]
-        public bool SourceMaps { get; set; }
+        [JsonProperty("sourceMap")]
+        public bool SourceMap { get; set; }
 
         internal string Output { get; set; }
 
@@ -49,6 +49,39 @@ namespace BundlerMinifier
         public override int GetHashCode()
         {
             return OutputFileName.GetHashCode();
+        }
+
+        /// <summary>For the JSON.NET serializer</summary>
+        public bool ShouldSerializeIncludeInProject()
+        {
+            Bundle config = new Bundle();
+            return IncludeInProject != config.IncludeInProject;
+        }
+
+        /// <summary>For the JSON.NET serializer</summary>
+        public bool ShouldSerializeMinify()
+        {
+            Bundle config = new Bundle();
+            return !DictionaryEqual(Minify, config.Minify, null);
+        }
+
+        private static bool DictionaryEqual<TKey, TValue>(
+            IDictionary<TKey, TValue> first, IDictionary<TKey, TValue> second,
+            IEqualityComparer<TValue> valueComparer)
+        {
+            if (first == second) return true;
+            if ((first == null) || (second == null)) return false;
+            if (first.Count != second.Count) return false;
+
+            valueComparer = valueComparer ?? EqualityComparer<TValue>.Default;
+
+            foreach (var kvp in first)
+            {
+                TValue secondValue;
+                if (!second.TryGetValue(kvp.Key, out secondValue)) return false;
+                if (!valueComparer.Equals(kvp.Value, secondValue)) return false;
+            }
+            return true;
         }
     }
 }

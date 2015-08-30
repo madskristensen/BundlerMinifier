@@ -50,9 +50,9 @@ namespace BundlerMinifier
 
             try
             {
-                if (!bundle.SourceMaps)
+                if (!bundle.SourceMap)
                 {
-                    result.MinifiedContent = minifier.MinifyJavaScript(File.ReadAllText(file), settings);
+                    result.MinifiedContent = minifier.MinifyJavaScript(ReadAllText(file), settings);
 
                     if (!minifier.Errors.Any())
                     {
@@ -75,7 +75,7 @@ namespace BundlerMinifier
                             sourceMap.StartPackage(minFile, mapFile);
 
                             minifier.FileName = file;
-                            result.MinifiedContent = minifier.MinifyJavaScript(File.ReadAllText(file), settings);
+                            result.MinifiedContent = minifier.MinifyJavaScript(ReadAllText(file), settings);
 
                             if (!minifier.Errors.Any())
                             {
@@ -112,7 +112,7 @@ namespace BundlerMinifier
         private static MinificationResult MinifyCss(Bundle bundle)
         {
             string file = bundle.GetAbsoluteOutputFile();
-            string content = File.ReadAllText(file);
+            string content = ReadAllText(file);
             var settings = CssOptions.GetSettings(bundle);
             string minFile = GetMinFileName(file);
 
@@ -153,7 +153,7 @@ namespace BundlerMinifier
         private static MinificationResult MinifyHtml(Bundle bundle)
         {
             string file = bundle.GetAbsoluteOutputFile();
-            string content = File.ReadAllText(file);
+            string content = ReadAllText(file);
             var settings = HtmlOptions.GetSettings(bundle);
             string minFile = GetMinFileName(file);
 
@@ -237,6 +237,14 @@ namespace BundlerMinifier
         {
             string ext = Path.GetExtension(file);
             return file.Substring(0, file.LastIndexOf(ext)) + ".min" + ext;
+        }
+
+        public static string ReadAllText(string file)
+        {
+            using (StreamReader reader = new StreamReader(file, Encoding.Default, true))
+            {
+                return reader.ReadToEnd();
+            }
         }
 
         protected static void OnBeforeWritingMinFile(string file, string minFile, Bundle bundle)

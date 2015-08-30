@@ -16,7 +16,13 @@ namespace BundlerMinifier
             bundles.Add(bundle);
             bundle.FileName = configFile;
 
-            string content = JsonConvert.SerializeObject(bundles, Formatting.Indented);
+            JsonSerializerSettings settings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+            };
+
+            string content = JsonConvert.SerializeObject(bundles, settings);
             File.WriteAllText(configFile, content);
         }
 

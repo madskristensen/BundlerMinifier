@@ -64,6 +64,7 @@
     <None Include="artifacts\test1.json" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="artifacts\encoding.js" />
     <Content Include="artifacts\file2.html" />
     <Content Include="artifacts\file1.html" />
     <Content Include="artifacts\file2.css" />

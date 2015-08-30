@@ -80,7 +80,7 @@ namespace BundlerMinifier
             {
                 var result = BundleMinifier.MinifyBundle(bundle);
 
-                if (result != null && bundle.SourceMaps && !string.IsNullOrEmpty(result.SourceMap))
+                if (result != null && bundle.SourceMap && !string.IsNullOrEmpty(result.SourceMap))
                 {
                     string minFile = GetMinFileName(bundle.GetAbsoluteOutputFile());
                     string mapFile = minFile + ".map";
