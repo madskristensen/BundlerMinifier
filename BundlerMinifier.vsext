@@ -1,0 +1,26 @@
+﻿{
+  "extensions": {
+    "mandatory": [
+      {
+        "name": "EditorConfig",
+        "productId": "EditorConfig..5cd8e6a2-be43-4fcc-a345-40f6cc1e9c9f",
+        "link": "https://visualstudiogallery.msdn.microsoft.com/c8bccfe2-650c-4b42-bc5c-845e21f96328",
+        "description": "This makes sure that everyone uses correct spaces and indentation."
+      },
+      {
+        "name": "Extensibility Tools 2015",
+        "productId": "f8330d54-0469-43a7-8fc0-7f19febeb897",
+        "link": "https://visualstudiogallery.msdn.microsoft.com/ab39a092-1343-46e2-b0f1-6a3f91155aa6",
+        "description": "Used for editing the '.vsct' file in the root of this project."
+      }
+    ],
+    "optional": [
+      {
+        "name": "YAML Editor",
+        "productId": "YamlDotNetEditor..074a7b74-655b-409c-b5ac-a028f12d6e89",
+        "link": "https://visualstudiogallery.msdn.microsoft.com/34423c06-f756-4721-8394-bc3d23b91ca7",
+        "description": "This is handy for editing the 'appveyor.yml' file."
+      }
+    ]
+  }
+}
