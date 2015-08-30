@@ -47,7 +47,7 @@ namespace BundlerMinifierTest
 
             var files3 = new[] { null, "file2.css" };
             var result3 = BundleFileProcessor.IsSupported(files3);
-            Assert.IsFalse(result3);
+            Assert.IsTrue(result3);
         }
 
         [TestMethod]
