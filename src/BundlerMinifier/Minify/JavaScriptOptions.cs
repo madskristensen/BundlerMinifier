@@ -13,6 +13,9 @@ namespace BundlerMinifier
 
             string evalTreatment = GetValue(bundle, "evanTreatment");
 
+            if (GetValue(bundle, "renameLocals") == "False")
+                settings.LocalRenaming = LocalRenaming.KeepAll;
+
             if (evalTreatment == "ignore")
                 settings.EvalTreatment = EvalTreatment.Ignore;
             else if (evalTreatment == "makeAllSafe")

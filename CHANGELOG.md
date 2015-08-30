@@ -6,6 +6,8 @@
 - [x] Improve encoding of min files (#33)
 - [x] Remove default settings from generated bundles
 - [x] Support recursive folder lookup (#36)
+- [x] Option for disabling renaming of locals (#32)
+   - `renameLocals` options is added to the `minify` object
 
 Features that have a checkmark are complete and available for
 download in the

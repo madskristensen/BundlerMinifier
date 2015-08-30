@@ -25,6 +25,11 @@
             "preserveImportantComments": {
               "description": "JavaScript only.",
               "type": "boolean"
+            },
+            "renameLocals": {
+              "description": "JavaScript only. Controls if local variables should be shortened.",
+              "type": "boolean",
+              "default": true
             }
           },
           "allOf": [ { "$ref": "#/definitions/ajaxminBaseSettings" } ]
