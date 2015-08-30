@@ -10,6 +10,10 @@ Download the extension at the
 or get the
 [nightly build](http://vsixgallery.com/extension/a0ae318b-4f07-4f71-93cb-f21d3f03c6d3/)
 
+See the
+[changelog](https://github.com/madskristensen/BundlerMinifier/blob/master/CHANGELOG.md)
+for changes and roadmap.
+
 ### Features
 
 - Bundles CSS, JavaScript or HTML files into a single output file
