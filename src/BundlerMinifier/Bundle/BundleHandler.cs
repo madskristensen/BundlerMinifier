@@ -72,7 +72,8 @@ namespace BundlerMinifier
                 if (Directory.Exists(fullPath))
                 {
                     DirectoryInfo dir = new DirectoryInfo(fullPath);
-                    var files = dir.GetFiles("*" + ext, SearchOption.TopDirectoryOnly);
+                    SearchOption search = bundle.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+                    var files = dir.GetFiles("*" + ext, search);
                     inputFiles.AddRange(files.Select(f => f.FullName));
                 }
                 else

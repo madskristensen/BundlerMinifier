@@ -5,6 +5,7 @@
 - [x] Re-minify all bundles in solution (#27)
 - [x] Improve encoding of min files (#33)
 - [x] Remove default settings from generated bundles
+- [x] Support recursive folder lookup (#36)
 
 Features that have a checkmark are complete and available for
 download in the

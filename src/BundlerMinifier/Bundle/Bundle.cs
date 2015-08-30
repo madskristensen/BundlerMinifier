@@ -24,6 +24,9 @@ namespace BundlerMinifier
         [JsonProperty("sourceMap")]
         public bool SourceMap { get; set; }
 
+        [JsonProperty("recursive")]
+        public bool Recursive { get; set; }
+
         internal string Output { get; set; }
 
         /// <summary>

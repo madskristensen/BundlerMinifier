@@ -182,6 +182,10 @@
           "type": "string",
           "format": "uri",
           "minLength": 1
+        },
+        "recursive": {
+          "description": "Set to true for recursive folder lookup.",
+          "type": "boolean"
         }
       },
 

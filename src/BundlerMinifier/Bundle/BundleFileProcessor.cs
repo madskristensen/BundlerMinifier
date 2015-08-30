@@ -51,8 +51,9 @@ namespace BundlerMinifier
                 {
                     string input = Path.Combine(bundleFileFolder, inputFile.Replace("/", "\\"));
 
-                    if (input.Equals(sourceFile, System.StringComparison.OrdinalIgnoreCase) ||
-                        input.Equals(sourceFileFolder, System.StringComparison.OrdinalIgnoreCase))
+                    if (input.Equals(sourceFile, StringComparison.OrdinalIgnoreCase) ||
+                        input.Equals(sourceFileFolder, StringComparison.OrdinalIgnoreCase) ||
+                        (bundle.Recursive && sourceFileFolder.StartsWith(input) && Directory.Exists(input)))
                         ProcessBundle(bundleFileFolder, bundle);
                 }
             }
