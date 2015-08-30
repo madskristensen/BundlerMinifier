@@ -83,8 +83,11 @@ namespace BundlerMinifier
             Log.LogMessage(MessageImportance.High, "\tMinified " + MakeRelative(FileName, e.ResultFile));
         }
 
-        private static string MakeRelative(string baseFile, string file)
+        public static string MakeRelative(string baseFile, string file)
         {
+            if (string.IsNullOrEmpty(file))
+                return file;
+
             Uri baseUri = new Uri(baseFile, UriKind.RelativeOrAbsolute);
             Uri fileUri = new Uri(file, UriKind.RelativeOrAbsolute);
 

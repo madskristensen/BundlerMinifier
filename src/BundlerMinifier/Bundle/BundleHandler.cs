@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -82,14 +83,32 @@ namespace BundlerMinifier
                 }
             }
 
-            foreach (string  input in inputFiles)
+            foreach (string input in inputFiles)
             {
                 string file = Path.Combine(baseFolder, input);
-                string content = File.ReadAllText(file);
+                string content;
+
+                if (input.EndsWith(".css", System.StringComparison.OrdinalIgnoreCase) && AdjustRelativePaths(bundle))
+                {
+                    content = CssRelativePath.Adjust(file, bundle.GetAbsoluteOutputFile());
+                }
+                else
+                {
+                    content = BundleMinifier.ReadAllText(file);
+                }
+
                 sb.AppendLine(content);
             }
 
             bundle.Output = sb.ToString();
+        }
+
+        private static bool AdjustRelativePaths(Bundle bundle)
+        {
+            if (!bundle.Minify.ContainsKey("adjustRelativePaths"))
+                return true;
+
+            return bundle.Minify["adjustRelativePaths"].ToString() == "True";
         }
     }
 }

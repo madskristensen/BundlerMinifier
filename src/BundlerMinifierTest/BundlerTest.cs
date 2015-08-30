@@ -94,12 +94,12 @@ namespace BundlerMinifierTest
             _processor.Process(TEST_BUNDLE);
 
             // JS
-            string jsResult = File.ReadAllText("../../artifacts/foo.min.js");
+            string jsResult = File.ReadAllText(new FileInfo("../../artifacts/foo.min.js").FullName);
             Assert.AreEqual("var file1=1,file2=2", jsResult);
 
             // CSS
-            string cssResult = File.ReadAllText("../../artifacts/foo.min.css");
-            Assert.AreEqual("body{background:#ff0}body{display:block}", cssResult);
+            string cssResult = File.ReadAllText(new FileInfo("../../artifacts/foo.min.css").FullName);
+            Assert.AreEqual("body{background:url('/test.png')}body{display:block}body{background:url(test2/image.png?foo=hat)}", cssResult);
 
             // HTML
             string htmlResult = File.ReadAllText("../../artifacts/foo.min.html");

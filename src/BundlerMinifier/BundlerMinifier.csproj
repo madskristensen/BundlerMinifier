@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Bundle\Bundle.cs" />
     <Compile Include="Minify\BundleMinifier.cs" />
+    <Compile Include="Minify\CssRelativePathAdjuster.cs" />
     <Compile Include="Minify\HtmlOptions.cs" />
     <Compile Include="Minify\CssOptions.cs" />
     <Compile Include="Minify\JavaScriptOptions.cs" />

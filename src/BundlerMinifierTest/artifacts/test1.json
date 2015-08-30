@@ -15,10 +15,11 @@
 		"outputFileName": "foo.css",
 		"inputFiles": [
 			"file1.css",
-			"file2.css"
+      "file2.css",
+      "test2/foo.css"
 		],
 		"minify": {
-			"enabled": true
+      "enabled": true
 		},
 		"includeInProject": true
 	},

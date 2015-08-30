@@ -7,9 +7,11 @@
 - [x] Remove default settings from generated bundles
 - [x] Support recursive folder lookup (#36)
 - [x] Option for disabling renaming of locals (#32)
-   - `renameLocals` options is added to the `minify` object
+   - `renameLocals` option added to `minify` object
+- [x] Adjust relative CSS `url()` paths (#34)
+   - `adjustRelativePaths` option added to `minify` object
 
-Features that have a checkmark are complete and available for
+ Features that have a checkmark are complete and available for
 download in the
 [nightly build](http://vsixgallery.com/extension/a0ae318b-4f07-4f71-93cb-f21d3f03c6d3/).
 
