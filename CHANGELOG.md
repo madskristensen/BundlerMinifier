@@ -1,5 +1,21 @@
 # Roadmap
 
+- [ ] Task Runner Explorer integration
+- [ ] Use FileSystemWatcher (#28)
+
+Features that have a checkmark are complete and available for
+download in the
+[nightly build](http://vsixgallery.com/extension/a0ae318b-4f07-4f71-93cb-f21d3f03c6d3/).
+
+# Changelog
+
+These are the changes to each version that has been released
+on the official Visual Studio extension gallery.
+
+## 1.2
+
+**2015-08-30**
+
 - [x] All minified files listed in bundleconfig.json
    - You need to re-enable all minified files
 - [x] Re-minify all bundles in solution (#27)
@@ -10,15 +26,6 @@
    - `renameLocals` option added to `minify` object
 - [x] Adjust relative CSS `url()` paths (#34)
    - `adjustRelativePaths` option added to `minify` object
-
- Features that have a checkmark are complete and available for
-download in the
-[nightly build](http://vsixgallery.com/extension/a0ae318b-4f07-4f71-93cb-f21d3f03c6d3/).
-
-# Changelog
-
-These are the changes to each version that has been released
-on the official Visual Studio extension gallery.
 
 ## 1.1
 
