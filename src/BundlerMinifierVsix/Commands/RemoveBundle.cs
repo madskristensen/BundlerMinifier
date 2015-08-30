@@ -25,7 +25,7 @@ namespace BundlerMinifierVsix.Commands
             OleMenuCommandService commandService = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (commandService != null)
             {
-                var menuCommandID = new CommandID(GuidList.guidBundlerCmdSet, PackageCommands.RemoveBundle);
+                var menuCommandID = new CommandID(PackageGuids.guidBundlerCmdSet, PackageIds.RemoveBundle);
                 var menuItem = new OleMenuCommand(RemoveConfig, menuCommandID);
                 menuItem.BeforeQueryStatus += BeforeQueryStatus;
                 commandService.AddCommand(menuItem);

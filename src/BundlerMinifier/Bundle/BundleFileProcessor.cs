@@ -13,7 +13,7 @@ namespace BundlerMinifier
         {
             files = files.Where(f => !string.IsNullOrEmpty(f));
 
-            if (files.Count() <= 1) return false;
+            if (!files.Any()) return false;
 
             string ext = Path.GetExtension(files.First()).ToUpperInvariant();
 
@@ -60,18 +60,21 @@ namespace BundlerMinifier
 
         private void ProcessBundle(string baseFolder, Bundle bundle)
         {
-            BundleHandler.ProcessBundle(baseFolder, bundle);
+            if (bundle.InputFiles.Count > 1 || bundle.InputFiles.FirstOrDefault() != bundle.OutputFileName)
+            {
+                BundleHandler.ProcessBundle(baseFolder, bundle);
 
-            string outputFile = Path.Combine(baseFolder, bundle.OutputFileName);
+                string outputFile = Path.Combine(baseFolder, bundle.OutputFileName);
 
-            OnBeforeProcess(bundle, baseFolder);
+                OnBeforeProcess(bundle, baseFolder);
 
-            DirectoryInfo outputFileDirectory = Directory.GetParent(outputFile);
-            outputFileDirectory.Create();
+                DirectoryInfo outputFileDirectory = Directory.GetParent(outputFile);
+                outputFileDirectory.Create();
 
-            File.WriteAllText(outputFile, bundle.Output, new UTF8Encoding(true));
+                File.WriteAllText(outputFile, bundle.Output, new UTF8Encoding(true));
 
-            OnAfterProcess(bundle, baseFolder);
+                OnAfterProcess(bundle, baseFolder);
+            }
 
             if (bundle.Minify.ContainsKey("enabled") && bundle.Minify["enabled"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
             {
@@ -79,7 +82,7 @@ namespace BundlerMinifier
 
                 if (result != null && bundle.SourceMaps && !string.IsNullOrEmpty(result.SourceMap))
                 {
-                    string minFile = FileMinifier.GetMinFileName(bundle.GetAbsoluteOutputFile());
+                    string minFile = GetMinFileName(bundle.GetAbsoluteOutputFile());
                     string mapFile = minFile + ".map";
 
                     OnBeforeWritingSourceMap(minFile, mapFile);
@@ -87,6 +90,12 @@ namespace BundlerMinifier
                     OnAfterWritingSourceMap(minFile, mapFile);
                 }
             }
+        }
+
+        public static string GetMinFileName(string file)
+        {
+            string ext = Path.GetExtension(file);
+            return file.Substring(0, file.LastIndexOf(ext)) + ".min" + ext;
         }
 
         protected void OnBeforeProcess(Bundle bundle, string baseFolder)

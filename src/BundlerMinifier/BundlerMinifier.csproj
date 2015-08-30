@@ -59,7 +59,6 @@
     <Compile Include="Minify\BundleMinifier.cs" />
     <Compile Include="Minify\HtmlOptions.cs" />
     <Compile Include="Minify\CssOptions.cs" />
-    <Compile Include="Minify\FileMinifier.cs" />
     <Compile Include="Minify\JavaScriptOptions.cs" />
     <Compile Include="Minify\MinificationError.cs" />
     <Compile Include="Minify\MinifyFileEventArgs.cs" />

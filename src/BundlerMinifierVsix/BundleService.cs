@@ -25,12 +25,6 @@ namespace BundlerMinifierVsix
             BundleMinifier.BeforeWritingGzipFile += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile); };
             BundleMinifier.AfterWritingGzipFile += AfterWritingFile;
             BundleMinifier.ErrorMinifyingFile += ErrorMinifyingFile;
-
-            FileMinifier.BeforeWritingMinFile += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile); };
-            FileMinifier.AfterWritingMinFile += AfterWritingFile;
-
-            FileMinifier.BeforeWritingGzipFile += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile); };
-            FileMinifier.AfterWritingGzipFile += AfterWritingFile;
         }
 
         private static void AfterWritingFile(object sender, MinifyFileEventArgs e)
@@ -122,47 +116,6 @@ namespace BundlerMinifierVsix
                 {
                     Logger.Log(ex);
                     MessageBox.Show($"There is an error in the {Constants.FILENAME} file. This could be due to a change in the format after this extension was updated.", "Web Compiler", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            });
-        }
-
-        public static void MinifyFile(string fileName)
-        {
-            ThreadPool.QueueUserWorkItem((o) =>
-            {
-                try
-                {
-                    string ext = Path.GetExtension(fileName);
-                    string minFile;
-                    bool minFileExist = FileHelpers.HasMinFile(fileName, out minFile);
-
-                    string mapFile;
-                    bool mapFileExist = FileHelpers.HasSourceMap(minFile, out mapFile);
-
-                    bool gzipFileExist = File.Exists(minFile + ".gz");
-
-                    bool produceSourceMap = (minFileExist && mapFileExist) || (!minFileExist && !mapFileExist);
-                    bool produceGzipFile = (minFileExist && gzipFileExist) || (!minFileExist && !gzipFileExist);
-
-                    MinificationResult result = FileMinifier.MinifyFile(fileName, produceGzipFile, produceSourceMap);
-                    if (result == null)
-                        return;
-
-                    ErrorListService.ProcessCompilerResults(result);
-
-                    if (!result.HasErrors && produceSourceMap && !string.IsNullOrEmpty(result.SourceMap))
-                    {
-                        mapFile = minFile + ".map";
-                        ProjectHelpers.CheckFileOutOfSourceControl(mapFile);
-                        File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(true));
-
-                        if (!mapFileExist)
-                            ProjectHelpers.AddNestedFile(minFile, mapFile);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Logger.Log(ex);
                 }
             });
         }

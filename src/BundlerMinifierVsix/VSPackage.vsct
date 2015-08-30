@@ -1,117 +1,108 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <Extern href="stdidcmd.h"/>
-    <Extern href="vsshlids.h"/>
-    <Include href="KnownImageIds.vsct"/>
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Include href="KnownImageIds.vsct"/>
 
-    <Commands package="guidBundlerPackage">
-        <Groups>
-            <Group guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0200">
-                <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
-            </Group>
-            <Group guid="guidBundlerCmdSet" id="SolExpMenuGroup" priority="0x0300">
-                <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_BUILD"/>
-            </Group>
-        </Groups>
+  <Commands package="guidBundlerPackage">
+    <Groups>
+      <Group guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0200">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
+      </Group>
+      <Group guid="guidBundlerCmdSet" id="SolExpMenuGroup" priority="0x0300">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_BUILD"/>
+      </Group>
+    </Groups>
 
-        <!-- See all available images for ImageCatalogGuid at http://glyphlist.azurewebsites.net/knownmonikers/ -->
-        <Buttons>
-            <Button guid="guidBundlerCmdSet" id="CreateBundleId" priority="0x0100" type="Button">
-                <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
-                <Icon guid="ImageCatalogGuid" id="Class" />
-                <CommandFlag>IconIsMoniker</CommandFlag>
-                <CommandFlag>DynamicVisibility</CommandFlag>
-                <CommandFlag>DefaultInvisible</CommandFlag>
-                <Strings>
-                    <ButtonText>Create bundle...</ButtonText>
-                </Strings>
-            </Button>
-            <Button guid="guidBundlerCmdSet" id="UpdateBundle" priority="0x0200" type="Button">
-                <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
-                <Icon guid="ImageCatalogGuid" id="Class" />
-                <CommandFlag>IconIsMoniker</CommandFlag>
-                <CommandFlag>DynamicVisibility</CommandFlag>
-                <CommandFlag>DefaultInvisible</CommandFlag>
-                <Strings>
-                    <ButtonText>Update bundles</ButtonText>
-                </Strings>
-            </Button>
-            <Button guid="guidBundlerCmdSet" id="MinifyFile" priority="0x0300" type="Button">
-                <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
-                <Icon guid="ImageCatalogGuid" id="ContractArrow" />
-                <CommandFlag>IconIsMoniker</CommandFlag>
-                <CommandFlag>DynamicVisibility</CommandFlag>
-                <CommandFlag>DefaultInvisible</CommandFlag>
-                <Strings>
-                    <ButtonText>Minify File</ButtonText>
-                </Strings>
-            </Button>
-            <Button guid="guidBundlerCmdSet" id="BundleOnBuild" priority="0x0300" type="Button">
-                <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
-                <CommandFlag>DynamicVisibility</CommandFlag>
-                <CommandFlag>DefaultInvisible</CommandFlag>
-                <Strings>
-                    <ButtonText>Enable bundle on build...</ButtonText>
-                </Strings>
-            </Button>
-            <Button guid="guidBundlerCmdSet" id="RemoveBundle" priority="0x0300" type="Button">
-                <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
-                <Icon guid="ImageCatalogGuid" id="DeleteEntity" />
-                <CommandFlag>IconIsMoniker</CommandFlag>
-                <CommandFlag>DynamicVisibility</CommandFlag>
-                <CommandFlag>DefaultInvisible</CommandFlag>
-                <Strings>
-                    <ButtonText>Remove from bundling...</ButtonText>
-                </Strings>
-            </Button>
-            <Button guid="guidBundlerCmdSet" id="UpdateSolution" priority="0x0200" type="Button">
-                <Parent guid="guidBundlerCmdSet" id="SolExpMenuGroup" />
-                <Icon guid="ImageCatalogGuid" id="Class" />
-                <CommandFlag>IconIsMoniker</CommandFlag>
-                <CommandFlag>DynamicVisibility</CommandFlag>
-                <CommandFlag>DefaultInvisible</CommandFlag>
-                <Strings>
-                    <ButtonText>Update all bundles in solution</ButtonText>
-                </Strings>
-            </Button>
-        </Buttons>
-    </Commands>
+    <!-- See all available images for ImageCatalogGuid at http://glyphlist.azurewebsites.net/knownmonikers/ -->
+    <Buttons>
+      <Button guid="guidBundlerCmdSet" id="CreateBundleId" priority="0x0100" type="Button">
+        <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="Class" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Bundle and Minify Files</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidBundlerCmdSet" id="UpdateBundle" priority="0x0200" type="Button">
+        <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="Class" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <Strings>
+          <ButtonText>Update bundles</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidBundlerCmdSet" id="BundleOnBuild" priority="0x0300" type="Button">
+        <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <Strings>
+          <ButtonText>Enable bundle on build...</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidBundlerCmdSet" id="RemoveBundle" priority="0x0300" type="Button">
+        <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="DeleteEntity" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <Strings>
+          <ButtonText>Remove from bundling...</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidBundlerCmdSet" id="UpdateSolution" priority="0x0200" type="Button">
+        <Parent guid="guidBundlerCmdSet" id="SolExpMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="Class" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <Strings>
+          <ButtonText>Re-Minify all bundles in solution</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
 
-    <CommandPlacements>
-        <CommandPlacement guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0100">
-            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBITEMNODE"/>
-        </CommandPlacement>
-        <CommandPlacement guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0100">
-            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBPROJECT"/>
-        </CommandPlacement>
-        <CommandPlacement guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0100">
-            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
-        </CommandPlacement>
-        <CommandPlacement guid="guidBundlerCmdSet" id="SolExpMenuGroup" priority="0x0100">
-            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE"/>
-        </CommandPlacement>
-    </CommandPlacements>
+  <CommandPlacements>
+    <CommandPlacement guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBITEMNODE"/>
+    </CommandPlacement>
+    <CommandPlacement guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBPROJECT"/>
+    </CommandPlacement>
+    <CommandPlacement guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
+    </CommandPlacement>
+    <CommandPlacement guid="guidBundlerCmdSet" id="SolExpMenuGroup" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE"/>
+    </CommandPlacement>
+  </CommandPlacements>
 
-    <KeyBindings>
-        <KeyBinding guid="guidBundlerCmdSet" id="UpdateSolution" mod1="Shift Alt" key1="I" editor="guidVSStd97"/>
-    </KeyBindings>
+  <KeyBindings>
+    <KeyBinding guid="guidBundlerCmdSet" id="UpdateSolution" mod1="Shift Alt" key1="I" editor="guidVSStd97"/>
+    <KeyBinding guid="guidBundlerCmdSet" id="CreateBundleId" mod1="Shift Alt" key1="F" editor="guidVSStd97"/>
+  </KeyBindings>
 
-    <Symbols>
-        <!-- This is the package guid. -->
-        <GuidSymbol name="guidBundlerPackage" value="{67411f3b-36b3-4df0-84e8-5748f8a541ac}" />
+  <Symbols>
+    <!-- This is the package guid. -->
+    <GuidSymbol name="guidBundlerPackage" value="{67411f3b-36b3-4df0-84e8-5748f8a541ac}" />
 
-        <!-- This is the guid used to group the menu commands together -->
-        <GuidSymbol name="guidBundlerCmdSet" value="{7b10be0c-81e1-4817-abda-e08788679bd5}">
-            <IDSymbol name="MyMenuGroup" value="0x1020" />
-            <IDSymbol name="SolExpMenuGroup" value="0x1030" />
+    <!-- This is the guid used to group the menu commands together -->
+    <GuidSymbol name="guidBundlerCmdSet" value="{7b10be0c-81e1-4817-abda-e08788679bd5}">
+      <IDSymbol name="MyMenuGroup" value="0x1020" />
+      <IDSymbol name="SolExpMenuGroup" value="0x1030" />
 
-            <IDSymbol name="CreateBundleId" value="0x0100" />
-            <IDSymbol name="UpdateBundle" value="0x0200" />
-            <IDSymbol name="MinifyFile" value="0x0300" />
-            <IDSymbol name="BundleOnBuild" value="0x0400" />
-            <IDSymbol name="RemoveBundle" value="0x0500" />
-            <IDSymbol name="UpdateSolution" value="0x0600" />
-        </GuidSymbol>
-    </Symbols>
+      <IDSymbol name="CreateBundleId" value="0x0100" />
+      <IDSymbol name="UpdateBundle" value="0x0200" />
+      <IDSymbol name="BundleOnBuild" value="0x0400" />
+      <IDSymbol name="RemoveBundle" value="0x0500" />
+      <IDSymbol name="UpdateSolution" value="0x0600" />
+    </GuidSymbol>
+  </Symbols>
 </CommandTable>

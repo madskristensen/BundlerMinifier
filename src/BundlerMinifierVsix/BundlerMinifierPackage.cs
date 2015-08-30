@@ -14,7 +14,7 @@ namespace BundlerMinifierVsix
     [PackageRegistration(UseManagedResourcesOnly = true)]
     [InstalledProductRegistration("#110", "#112", Version, IconResourceID = 400)] // Info on this package for Help/About
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [Guid(GuidList.guidBundlerPackageString)]
+    [Guid(PackageGuids.guidBundlerPackageString)]
     [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     public sealed class BundlerMinifierPackage : Package
@@ -41,7 +41,7 @@ namespace BundlerMinifierVsix
 
             CreateBundle.Initialize(this);
             UpdateBundle.Initialize(this);
-            MinifyFile.Initialize(this);
+            //MinifyFile.Initialize(this);
             UpdateAllFiles.Initialize(this);
             BundleOnBuild.Initialize(this);
             RemoveBundle.Initialize(this);

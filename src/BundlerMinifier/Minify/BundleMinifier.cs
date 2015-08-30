@@ -62,7 +62,7 @@ namespace BundlerMinifier
                     }
                     else
                     {
-                        FileMinifier.AddAjaxminErrors(minifier, result);
+                        AddAjaxminErrors(minifier, result);
                     }
                 }
                 else
@@ -85,7 +85,7 @@ namespace BundlerMinifier
                             }
                             else
                             {
-                                FileMinifier.AddAjaxminErrors(minifier, result);
+                                AddAjaxminErrors(minifier, result);
                             }
                         }
 
@@ -133,7 +133,7 @@ namespace BundlerMinifier
                 }
                 else
                 {
-                    FileMinifier.AddAjaxminErrors(minifier, result);
+                    AddAjaxminErrors(minifier, result);
                 }
             }
             catch (Exception ex)
@@ -215,6 +215,22 @@ namespace BundlerMinifier
                 sourceStream.CopyTo(gzipStream);
 
             OnAfterWritingGzipFile(sourceFile, gzipFile, bundle);
+        }
+
+        internal static void AddAjaxminErrors(Minifier minifier, MinificationResult minResult)
+        {
+            foreach (var error in minifier.ErrorList)
+            {
+                var minError = new MinificationError
+                {
+                    FileName = minResult.FileName,
+                    Message = error.Message,
+                    LineNumber = error.StartLine,
+                    ColumnNumber = error.StartColumn
+                };
+
+                minResult.Errors.Add(minError);
+            }
         }
 
         public static string GetMinFileName(string file)

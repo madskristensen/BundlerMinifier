@@ -61,11 +61,6 @@ namespace BundlerMinifierVsix.Listeners
 
                     if (File.Exists(configFile))
                         BundleService.SourceFileChanged(configFile, e.FilePath);
-
-                    string minFile;
-
-                    if (FileHelpers.HasMinFile(e.FilePath, out minFile))
-                        BundleService.MinifyFile(e.FilePath);
                 }
             }
         }

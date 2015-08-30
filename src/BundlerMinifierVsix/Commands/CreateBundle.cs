@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.IO;
@@ -25,19 +26,11 @@ namespace BundlerMinifierVsix.Commands
             OleMenuCommandService commandService = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (commandService != null)
             {
-                var menuCommandID = new CommandID(GuidList.guidBundlerCmdSet, PackageCommands.CreateBundleId);
+                var menuCommandID = new CommandID(PackageGuids.guidBundlerCmdSet, PackageIds.CreateBundleId);
                 var menuItem = new OleMenuCommand(AddBundle, menuCommandID);
                 menuItem.BeforeQueryStatus += BeforeQueryStatus;
                 commandService.AddCommand(menuItem);
             }
-        }
-
-        private void BeforeQueryStatus(object sender, EventArgs e)
-        {
-            var button = (OleMenuCommand)sender;
-            var files = ProjectHelpers.GetSelectedItemPaths();
-
-            button.Visible = BundleFileProcessor.IsSupported(files);
         }
 
         public static CreateBundle Instance
@@ -59,6 +52,19 @@ namespace BundlerMinifierVsix.Commands
             Instance = new CreateBundle(package);
         }
 
+        private void BeforeQueryStatus(object sender, EventArgs e)
+        {
+            var button = (OleMenuCommand)sender;
+            var files = ProjectHelpers.GetSelectedItemPaths();
+
+            if (files.Count() == 1)
+                button.Text = "Minify File";
+            else
+                button.Text = "Bundle and Minify Files";
+
+            button.Visible = BundleFileProcessor.IsSupported(files);
+        }
+
         private void AddBundle(object sender, EventArgs e)
         {
             var item = ProjectHelpers.GetSelectedItems().FirstOrDefault();
@@ -70,12 +76,17 @@ namespace BundlerMinifierVsix.Commands
             string configFile = Path.Combine(folder, Constants.FILENAME);
             IEnumerable<string> files = ProjectHelpers.GetSelectedItemPaths().Select(f => MakeRelative(configFile, f));
             string inputFile = item.Properties.Item("FullPath").Value.ToString();
-            string outputFile = GetOutputFileName(inputFile, Path.GetExtension(files.First()));
+            string outputFile = inputFile;
+
+            if (files.Count() > 1)
+            {
+                outputFile = GetOutputFileName(inputFile, Path.GetExtension(files.First()));
+            }
 
             if (string.IsNullOrEmpty(outputFile))
                 return;
 
-            BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 0, 3);
+            BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 0, 2);
 
             string relativeOutputFile = MakeRelative(configFile, outputFile);
             Bundle bundle = CreateBundleFile(files, relativeOutputFile);
@@ -83,13 +94,10 @@ namespace BundlerMinifierVsix.Commands
             BundleHandler bundler = new BundleHandler();
             bundler.AddBundle(configFile, bundle);
 
-            BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 1, 3);
+            BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 1, 2);
 
             item.ContainingProject.AddFileToProject(configFile, "None");
-            BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 2, 3);
-
-            BundlerMinifierPackage._dte.ItemOperations.OpenFile(configFile);
-            BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 3, 3);
+            BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 2, 2);
 
             BundleService.Process(configFile);
             BundlerMinifierPackage._dte.StatusBar.Progress(false, "Creating bundle");

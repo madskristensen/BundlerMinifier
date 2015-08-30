@@ -7,9 +7,15 @@ namespace BundlerMinifierVsix
     {
         public static bool HasMinFile(string file, out string minFile)
         {
-            minFile = FileMinifier.GetMinFileName(file);
+            minFile = GetMinFileName(file);
 
             return File.Exists(minFile);
+        }
+
+        public static string GetMinFileName(string file)
+        {
+            string ext = Path.GetExtension(file);
+            return file.Substring(0, file.LastIndexOf(ext)) + ".min" + ext;
         }
 
         public static bool HasSourceMap(string file, out string sourceMap)

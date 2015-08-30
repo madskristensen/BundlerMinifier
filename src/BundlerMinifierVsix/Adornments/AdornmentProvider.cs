@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.ComponentModel.Composition;
 using System.IO;
 using BundlerMinifier;
@@ -98,6 +99,9 @@ namespace BundlerMinifierVsix
 
                     foreach (Bundle bundle in bundles)
                     {
+                        if (bundle.InputFiles.Count == 1 && bundle.InputFiles.First() == bundle.OutputFileName && !fileName.Contains(".min.") && !fileName.Contains(".map"))
+                            continue;
+
                         if (bundle.GetAbsoluteOutputFile().Equals(normalizedFilePath, StringComparison.OrdinalIgnoreCase))
                         {
                             GeneratedAdornment generated = new GeneratedAdornment(textView, _isVisible, _initOpacity);
