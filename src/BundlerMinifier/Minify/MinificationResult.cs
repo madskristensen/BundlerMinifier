@@ -23,7 +23,7 @@ namespace BundlerMinifier
         /// <summary>
         /// A collection of any errors reported by the compiler.
         /// </summary>
-        public List<MinificationError> Errors { get; set; } = new List<MinificationError>();
+        public List<MinificationError> Errors { get; } = new List<MinificationError>();
 
         /// <summary>
         /// Checks if the compilation resulted in errors.

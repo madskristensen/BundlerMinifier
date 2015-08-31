@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace BundlerMinifier
 {
-    public class CssRelativePath
+    static class CssRelativePath
     {
         private static readonly Regex _rxUrl = new Regex(@"url\s*\(\s*([""']?)([^:)]+)\1\s*\)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 

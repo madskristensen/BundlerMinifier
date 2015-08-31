@@ -2,7 +2,7 @@
 
 namespace BundlerMinifier
 {
-    class CssOptions
+    static class CssOptions
     {
         public static CssSettings GetSettings(Bundle bundle)
         {

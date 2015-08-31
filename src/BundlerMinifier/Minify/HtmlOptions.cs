@@ -4,7 +4,7 @@ using WebMarkupMin.Core.Settings;
 
 namespace BundlerMinifier
 {
-    class HtmlOptions
+    static class HtmlOptions
     {
         public static HtmlMinificationSettings GetSettings(Bundle bundle)
         {

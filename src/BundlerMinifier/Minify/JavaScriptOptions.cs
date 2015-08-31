@@ -2,7 +2,7 @@
 
 namespace BundlerMinifier
 {
-    class JavaScriptOptions
+    static class JavaScriptOptions
     {
         public static CodeSettings GetSettings(Bundle bundle)
         {

@@ -53,7 +53,7 @@ namespace BundlerMinifier
 
                     if (input.Equals(sourceFile, StringComparison.OrdinalIgnoreCase) ||
                         input.Equals(sourceFileFolder, StringComparison.OrdinalIgnoreCase) ||
-                        (bundle.Recursive && sourceFileFolder.StartsWith(input) && Directory.Exists(input)))
+                        (bundle.Recursive && sourceFileFolder.StartsWith(input, StringComparison.OrdinalIgnoreCase) && Directory.Exists(input)))
                         ProcessBundle(bundleFileFolder, bundle);
                 }
             }
@@ -96,7 +96,7 @@ namespace BundlerMinifier
         public static string GetMinFileName(string file)
         {
             string ext = Path.GetExtension(file);
-            return file.Substring(0, file.LastIndexOf(ext)) + ".min" + ext;
+            return file.Substring(0, file.LastIndexOf(ext, StringComparison.OrdinalIgnoreCase)) + ".min" + ext;
         }
 
         protected void OnBeforeProcess(Bundle bundle, string baseFolder)

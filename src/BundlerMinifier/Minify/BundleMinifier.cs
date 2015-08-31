@@ -8,7 +8,7 @@ using WebMarkupMin.Core.Minifiers;
 
 namespace BundlerMinifier
 {
-    public class BundleMinifier
+    public static class BundleMinifier
     {
         public static MinificationResult MinifyBundle(Bundle bundle)
         {
@@ -69,25 +69,25 @@ namespace BundlerMinifier
                 {
                     using (StringWriter writer = new StringWriter())
                     {
-                        using (V3SourceMap sourceMap = new V3SourceMap(writer))
+                        V3SourceMap sourceMap = new V3SourceMap(writer);
+
+                        settings.SymbolsMap = sourceMap;
+                        sourceMap.StartPackage(minFile, mapFile);
+
+                        minifier.FileName = file;
+                        result.MinifiedContent = minifier.MinifyJavaScript(ReadAllText(file), settings).Trim();
+
+                        if (!minifier.Errors.Any())
                         {
-                            settings.SymbolsMap = sourceMap;
-                            sourceMap.StartPackage(minFile, mapFile);
-
-                            minifier.FileName = file;
-                            result.MinifiedContent = minifier.MinifyJavaScript(ReadAllText(file), settings).Trim();
-
-                            if (!minifier.Errors.Any())
-                            {
-                                OnBeforeWritingMinFile(file, minFile, bundle);
-                                File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
-                                OnAfterWritingMinFile(file, minFile, bundle);
-                            }
-                            else
-                            {
-                                AddAjaxminErrors(minifier, result);
-                            }
+                            OnBeforeWritingMinFile(file, minFile, bundle);
+                            File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
+                            OnAfterWritingMinFile(file, minFile, bundle);
                         }
+                        else
+                        {
+                            AddAjaxminErrors(minifier, result);
+                        }
+
 
                         result.SourceMap = writer.ToString();
                     }
@@ -211,8 +211,10 @@ namespace BundlerMinifier
 
             using (var sourceStream = File.OpenRead(sourceFile))
             using (var targetStream = File.OpenWrite(gzipFile))
-            using (var gzipStream = new GZipStream(targetStream, CompressionMode.Compress))
+            {
+                var gzipStream = new GZipStream(targetStream, CompressionMode.Compress);
                 sourceStream.CopyTo(gzipStream);
+            }
 
             OnAfterWritingGzipFile(sourceFile, gzipFile, bundle);
         }
@@ -247,7 +249,7 @@ namespace BundlerMinifier
             }
         }
 
-        protected static void OnBeforeWritingMinFile(string file, string minFile, Bundle bundle)
+        public static void OnBeforeWritingMinFile(string file, string minFile, Bundle bundle)
         {
             if (BeforeWritingMinFile != null)
             {
@@ -255,7 +257,7 @@ namespace BundlerMinifier
             }
         }
 
-        protected static void OnAfterWritingMinFile(string file, string minFile, Bundle bundle)
+        public static void OnAfterWritingMinFile(string file, string minFile, Bundle bundle)
         {
             if (AfterWritingMinFile != null)
             {
@@ -263,7 +265,7 @@ namespace BundlerMinifier
             }
         }
 
-        protected static void OnBeforeWritingGzipFile(string minFile, string gzipFile, Bundle bundle)
+        public static void OnBeforeWritingGzipFile(string minFile, string gzipFile, Bundle bundle)
         {
             if (BeforeWritingGzipFile != null)
             {
@@ -271,7 +273,7 @@ namespace BundlerMinifier
             }
         }
 
-        protected static void OnAfterWritingGzipFile(string minFile, string gzipFile, Bundle bundle)
+        public static void OnAfterWritingGzipFile(string minFile, string gzipFile, Bundle bundle)
         {
             if (AfterWritingGzipFile != null)
             {
@@ -279,7 +281,7 @@ namespace BundlerMinifier
             }
         }
 
-        protected static void OnErrorMinifyingFile(MinificationResult result)
+        public static void OnErrorMinifyingFile(MinificationResult result)
         {
             if (ErrorMinifyingFile != null)
             {

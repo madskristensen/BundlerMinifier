@@ -13,10 +13,10 @@ namespace BundlerMinifier
         public string OutputFileName { get; set; }
 
         [JsonProperty("inputFiles")]
-        public List<string> InputFiles { get; set; } = new List<string>();
+        public List<string> InputFiles { get; } = new List<string>();
 
         [JsonProperty("minify")]
-        public Dictionary<string, object> Minify { get; set; } = new Dictionary<string, object> { { "enabled", true } };
+        public Dictionary<string, object> Minify { get; } = new Dictionary<string, object> { { "enabled", true } };
 
         [JsonProperty("includeInProject")]
         public bool IncludeInProject { get; set; } = true;

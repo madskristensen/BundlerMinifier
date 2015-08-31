@@ -49,7 +49,6 @@ namespace BundlerMinifier
 
             string content = File.ReadAllText(configFile);
             var bundles = JsonConvert.DeserializeObject<IEnumerable<Bundle>>(content);
-            string folder = Path.GetDirectoryName(file.FullName);
 
             foreach (Bundle bundle in bundles)
             {

@@ -109,8 +109,7 @@ namespace BundlerMinifierVsix.Commands
             return new Bundle
             {
                 IncludeInProject = true,
-                OutputFileName = outputFile,
-                InputFiles = new List<string>(files)
+                OutputFileName = outputFile
             };
         }
 
