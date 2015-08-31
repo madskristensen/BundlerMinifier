@@ -91,8 +91,7 @@ namespace BundlerMinifierVsix.Commands
             string relativeOutputFile = MakeRelative(configFile, outputFile);
             Bundle bundle = CreateBundleFile(files, relativeOutputFile);
 
-            BundleHandler bundler = new BundleHandler();
-            bundler.AddBundle(configFile, bundle);
+            BundleHandler.AddBundle(configFile, bundle);
 
             BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 1, 2);
 

@@ -7,9 +7,9 @@ using Newtonsoft.Json;
 
 namespace BundlerMinifier
 {
-    public class BundleHandler
+    public static class BundleHandler
     {
-        public void AddBundle(string configFile, Bundle bundle)
+        public static void AddBundle(string configFile, Bundle bundle)
         {
             IEnumerable<Bundle> existing = GetBundles(configFile);
             List<Bundle> bundles = new List<Bundle>();
