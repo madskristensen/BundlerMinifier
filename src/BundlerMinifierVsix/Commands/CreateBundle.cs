@@ -105,11 +105,14 @@ namespace BundlerMinifierVsix.Commands
 
         private static Bundle CreateBundleFile(IEnumerable<string> files, string outputFile)
         {
-            return new Bundle
+            var bundle = new Bundle
             {
                 IncludeInProject = true,
                 OutputFileName = outputFile
             };
+
+            bundle.InputFiles.AddRange(files);
+            return bundle;
         }
 
         private static string MakeRelative(string baseFile, string file)
