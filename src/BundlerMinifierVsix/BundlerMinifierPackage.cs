@@ -2,7 +2,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
-using BundlerMinifier;
 using BundlerMinifierVsix.Commands;
 using EnvDTE;
 using EnvDTE80;
@@ -41,7 +40,6 @@ namespace BundlerMinifierVsix
 
             CreateBundle.Initialize(this);
             UpdateBundle.Initialize(this);
-            //MinifyFile.Initialize(this);
             UpdateAllFiles.Initialize(this);
             BundleOnBuild.Initialize(this);
             RemoveBundle.Initialize(this);

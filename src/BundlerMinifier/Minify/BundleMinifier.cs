@@ -52,7 +52,7 @@ namespace BundlerMinifier
             {
                 if (!bundle.SourceMap)
                 {
-                    result.MinifiedContent = minifier.MinifyJavaScript(ReadAllText(file), settings);
+                    result.MinifiedContent = minifier.MinifyJavaScript(ReadAllText(file), settings).Trim();
 
                     if (!minifier.Errors.Any())
                     {
@@ -75,7 +75,7 @@ namespace BundlerMinifier
                             sourceMap.StartPackage(minFile, mapFile);
 
                             minifier.FileName = file;
-                            result.MinifiedContent = minifier.MinifyJavaScript(ReadAllText(file), settings);
+                            result.MinifiedContent = minifier.MinifyJavaScript(ReadAllText(file), settings).Trim();
 
                             if (!minifier.Errors.Any())
                             {
@@ -121,7 +121,7 @@ namespace BundlerMinifier
 
             try
             {
-                result.MinifiedContent = minifier.MinifyStyleSheet(content, settings);
+                result.MinifiedContent = minifier.MinifyStyleSheet(content, settings).Trim();
 
                 if (!minifier.Errors.Any())
                 {
@@ -163,7 +163,7 @@ namespace BundlerMinifier
             try
             {
                 MarkupMinificationResult result = minifier.Minify(content, generateStatistics: true);
-                minResult.MinifiedContent = result.MinifiedContent;
+                minResult.MinifiedContent = result.MinifiedContent.Trim();
 
                 if (!result.Errors.Any())
                 {
