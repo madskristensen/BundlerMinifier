@@ -2,6 +2,7 @@
 
 - [ ] Task Runner Explorer integration
 - [ ] Use FileSystemWatcher (#28)
+- [x] Universal Windows Apps support
 
 Features that have a checkmark are complete and available for
 download in the
