@@ -24,6 +24,11 @@ for changes and roadmap.
 - Shows a watermark when opening a generated file
 - Shortcut to update all bundles in solution
 
+### A note about encoding
+All files without a BOM (Byte Order Mark) is treated as UTF-8. If you
+see strange characters in the output bundle files, you may want to consider
+saving the input files as UTF-8 or an encoding that lets you specify a BOM.
+
 ### Bundling
 
 Select 2 or more of the same type of files in Solution Explorer
