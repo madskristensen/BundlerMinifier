@@ -1,0 +1,12 @@
+﻿[
+	{
+		"outputFileName": "encoding.js",
+		"inputFiles": [
+      "utf-with-bom.js",
+      "utf-without-bom.js"
+		],
+		"minify": {
+			"enabled": true
+		}
+	}
+]

@@ -30,6 +30,8 @@ namespace BundlerMinifierTest
             File.Delete("../../artifacts/foo.min.css");
             File.Delete("../../artifacts/foo.html");
             File.Delete("../../artifacts/foo.min.html");
+            File.Delete("../../artifacts/encoding/encoding.js");
+            File.Delete("../../artifacts/encoding/encoding.min.js");
         }
 
         [TestMethod]
@@ -115,10 +117,19 @@ namespace BundlerMinifierTest
         }
 
         [TestMethod]
+        public void ProcessWithDifferentEncoding()
+        {
+            _processor.Process("../../artifacts/encoding/encoding.json");
+
+            string jsResult = File.ReadAllText("../../artifacts/encoding/encoding.js");
+            Assert.AreEqual("var bom = 'àèéèùì';\r\nvar nobom = 'àèéèùì'\r\n", jsResult);
+        }
+
+        [TestMethod]
         public void Encoding()
         {
             string jsResult = BundleMinifier.ReadAllText("../../artifacts/encoding.js");
             Assert.AreEqual("var test = 'æøå';", jsResult);
-}
+        }
     }
 }
