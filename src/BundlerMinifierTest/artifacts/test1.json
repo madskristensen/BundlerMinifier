@@ -9,7 +9,7 @@
 			"enabled": true
 		},
 		"includeInProject": true,
-		"sourceMaps": false
+		"sourceMap": true
 	},
 	{
 		"outputFileName": "foo.css",

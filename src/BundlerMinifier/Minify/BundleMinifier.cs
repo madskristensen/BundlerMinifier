@@ -69,25 +69,25 @@ namespace BundlerMinifier
                 {
                     using (StringWriter writer = new StringWriter())
                     {
-                        V3SourceMap sourceMap = new V3SourceMap(writer);
-
-                        settings.SymbolsMap = sourceMap;
-                        sourceMap.StartPackage(minFile, mapFile);
-
-                        minifier.FileName = file;
-                        result.MinifiedContent = minifier.MinifyJavaScript(ReadAllText(file), settings).Trim();
-
-                        if (!minifier.Errors.Any())
+                        using (V3SourceMap sourceMap = new V3SourceMap(writer))
                         {
-                            OnBeforeWritingMinFile(file, minFile, bundle);
-                            File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
-                            OnAfterWritingMinFile(file, minFile, bundle);
-                        }
-                        else
-                        {
-                            AddAjaxminErrors(minifier, result);
-                        }
+                            settings.SymbolsMap = sourceMap;
+                            sourceMap.StartPackage(minFile, mapFile);
 
+                            minifier.FileName = file;
+                            result.MinifiedContent = minifier.MinifyJavaScript(ReadAllText(file), settings).Trim();
+
+                            if (!minifier.Errors.Any())
+                            {
+                                OnBeforeWritingMinFile(file, minFile, bundle);
+                                File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
+                                OnAfterWritingMinFile(file, minFile, bundle);
+                            }
+                            else
+                            {
+                                AddAjaxminErrors(minifier, result);
+                            }
+                        }
 
                         result.SourceMap = writer.ToString();
                     }

@@ -26,6 +26,7 @@ namespace BundlerMinifierTest
             File.Delete("../../artifacts/" + _guid + ".json");
             File.Delete("../../artifacts/foo.js");
             File.Delete("../../artifacts/foo.min.js");
+            File.Delete("../../artifacts/foo.min.js.map");
             File.Delete("../../artifacts/foo.css");
             File.Delete("../../artifacts/foo.min.css");
             File.Delete("../../artifacts/foo.html");
@@ -95,7 +96,8 @@ namespace BundlerMinifierTest
 
             // JS
             string jsResult = File.ReadAllText(new FileInfo("../../artifacts/foo.min.js").FullName);
-            Assert.AreEqual("var file1=1,file2=2", jsResult);
+            Assert.IsTrue(jsResult.StartsWith("var file1=1,file2=2"));
+            Assert.IsTrue(new FileInfo("../../artifacts/foo.min.js.map").Exists);
 
             // CSS
             string cssResult = File.ReadAllText(new FileInfo("../../artifacts/foo.min.css").FullName);
