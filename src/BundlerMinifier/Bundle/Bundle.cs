@@ -26,9 +26,6 @@ namespace BundlerMinifier
         [JsonProperty("sourceMap")]
         public bool SourceMap { get; set; }
 
-        [JsonProperty("recursive")]
-        public bool Recursive { get; set; }
-
         internal string Output { get; set; }
 
         /// <summary>
@@ -40,7 +37,7 @@ namespace BundlerMinifier
             return Path.Combine(folder, OutputFileName.Replace("/", "\\"));
         }
 
-        public List<string> GetAbsoluteInputFiles()
+        internal List<string> GetAbsoluteInputFiles()
         {
             List<string> files = new List<string>();
             string folder = new DirectoryInfo(Path.GetDirectoryName(FileName)).FullName;
