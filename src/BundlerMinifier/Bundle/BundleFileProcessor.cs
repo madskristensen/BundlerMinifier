@@ -47,13 +47,9 @@ namespace BundlerMinifier
 
             foreach (Bundle bundle in bundles)
             {
-                foreach (string inputFile in bundle.InputFiles)
+                foreach (string input in bundle.GetAbsoluteInputFiles())
                 {
-                    string input = Path.Combine(bundleFileFolder, inputFile.Replace("/", "\\"));
-
-                    if (input.Equals(sourceFile, StringComparison.OrdinalIgnoreCase) ||
-                        input.Equals(sourceFileFolder, StringComparison.OrdinalIgnoreCase) ||
-                        (bundle.Recursive && sourceFileFolder.StartsWith(input, StringComparison.OrdinalIgnoreCase) && Directory.Exists(input)))
+                    if (input.Equals(sourceFile, StringComparison.OrdinalIgnoreCase) || input.Equals(sourceFileFolder, StringComparison.OrdinalIgnoreCase))
                         ProcessBundle(bundleFileFolder, bundle);
                 }
             }
@@ -72,7 +68,7 @@ namespace BundlerMinifier
                 DirectoryInfo outputFileDirectory = Directory.GetParent(outputFile);
                 outputFileDirectory.Create();
 
-                File.WriteAllText(outputFile, bundle.Output, new UTF8Encoding(true));
+                File.WriteAllText(outputFile, bundle.Output.Trim(), new UTF8Encoding(true));
 
                 OnAfterProcess(bundle, baseFolder);
             }

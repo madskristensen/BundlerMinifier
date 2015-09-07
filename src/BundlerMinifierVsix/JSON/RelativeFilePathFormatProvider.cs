@@ -22,7 +22,7 @@ namespace BundlerMinifierVsix.JSON
 
         public override IEnumerable<string> GetIssues(JSONDocument doc, string canonicalizedValue)
         {
-            if (string.IsNullOrEmpty(doc.DocumentLocation))
+            if (string.IsNullOrEmpty(doc.DocumentLocation) || canonicalizedValue.Contains("*"))
                 yield break;
 
             string fileName = Path.GetFileName(doc.DocumentLocation);

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.IO;
+using Minimatch;
 using Newtonsoft.Json;
 
 namespace BundlerMinifier
@@ -36,6 +38,51 @@ namespace BundlerMinifier
         {
             string folder = Path.GetDirectoryName(FileName);
             return Path.Combine(folder, OutputFileName.Replace("/", "\\"));
+        }
+
+        public List<string> GetAbsoluteInputFiles()
+        {
+            List<string> files = new List<string>();
+            string folder = new DirectoryInfo(Path.GetDirectoryName(FileName)).FullName;
+            string ext = Path.GetExtension(InputFiles.First());
+
+            foreach (string inputFile in InputFiles)
+            {
+                int globIndex = inputFile.IndexOf('*');
+
+                if (globIndex > -1)
+                {
+                    string relative = string.Empty;
+                    int last = inputFile.LastIndexOf('/', globIndex);
+
+                    if (last > -1)
+                        relative = inputFile.Substring(0, last + 1);
+
+                    string searchDir = new FileInfo(Path.Combine(folder, relative).Replace("/", "\\")).FullName;
+                    var allFiles = Directory.EnumerateFiles(searchDir, "*" + ext, SearchOption.AllDirectories).Select(f => f.Replace(folder + "\\", ""));
+
+                    var matches = Minimatcher.Filter(allFiles, inputFile, new Options { AllowWindowsPaths = true }).Select(f => Path.Combine(folder, f));
+                    files.AddRange(matches.Where(f => !files.Contains(f)));
+                }
+                else
+                {
+                    string fullPath = Path.Combine(folder, inputFile).Replace("/", "\\");
+
+                    if (Directory.Exists(fullPath))
+                    {
+                        DirectoryInfo dir = new DirectoryInfo(fullPath);
+                        SearchOption search = SearchOption.TopDirectoryOnly;
+                        var dirFiles = dir.GetFiles("*" + Path.GetExtension(OutputFileName), search);
+                        files.AddRange(dirFiles.Select(f => f.FullName).Where(f => !files.Contains(f)));
+                    }
+                    else
+                    {
+                        files.Add(fullPath);
+                    }
+                }
+            }
+
+            return files;
         }
 
         public override bool Equals(object obj)

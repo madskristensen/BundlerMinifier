@@ -164,7 +164,7 @@
           "default": true
         },
         "inputFiles": {
-          "description": "One or more relative file names to bundle.",
+          "description": "One or more relative file names or globbing patterns to bundle. Example: \"scripts/**/*.js\"",
           "type": "array",
 
           "items": {
@@ -192,10 +192,6 @@
           "type": "string",
           "format": "uri",
           "minLength": 1
-        },
-        "recursive": {
-          "description": "Set to true for recursive folder lookup.",
-          "type": "boolean"
         }
       },
 

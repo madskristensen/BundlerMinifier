@@ -124,7 +124,7 @@ namespace BundlerMinifierTest
             _processor.Process("../../artifacts/encoding/encoding.json");
 
             string jsResult = File.ReadAllText("../../artifacts/encoding/encoding.js");
-            Assert.AreEqual("var bom = 'àèéèùì';\r\nvar nobom = 'àèéèùì'\r\n", jsResult);
+            Assert.AreEqual("var bom = 'àèéèùì';\r\nvar nobom = 'àèéèùì'", jsResult);
         }
 
         [TestMethod]

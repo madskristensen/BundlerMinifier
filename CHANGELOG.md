@@ -3,6 +3,7 @@
 - [ ] Task Runner Explorer integration
 - [ ] Use FileSystemWatcher (#28)
 - [x] Universal Windows Apps support
+- [x] Globbing pattern support (#46)
 
 Features that have a checkmark are complete and available for
 download in the

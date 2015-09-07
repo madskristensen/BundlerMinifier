@@ -61,26 +61,22 @@ namespace BundlerMinifier
         public static void ProcessBundle(string baseFolder, Bundle bundle)
         {
             StringBuilder sb = new StringBuilder();
-            List<string> inputFiles = new List<string>();
-            string ext = Path.GetExtension(bundle.OutputFileName);
+            List<string> inputFiles = bundle.GetAbsoluteInputFiles();
+            //string ext = Path.GetExtension(bundle.OutputFileName);
 
             // Support both directories and specific files
-            foreach (string input in bundle.InputFiles)
-            {
-                string fullPath = Path.Combine(baseFolder, input);
+            //foreach (string input in bundle.InputFiles)
+            //{
+            //    string fullPath = Path.Combine(baseFolder, input);
 
-                if (Directory.Exists(fullPath))
-                {
-                    DirectoryInfo dir = new DirectoryInfo(fullPath);
-                    SearchOption search = bundle.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
-                    var files = dir.GetFiles("*" + ext, search);
-                    inputFiles.AddRange(files.Select(f => f.FullName));
-                }
-                else
-                {
-                    inputFiles.Add(fullPath);
-                }
-            }
+            //    if (Directory.Exists(fullPath))
+            //    {
+            //        DirectoryInfo dir = new DirectoryInfo(fullPath);
+            //        SearchOption search = bundle.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+            //        var files = dir.GetFiles("*" + ext, search);
+            //        inputFiles.AddRange(files.Select(f => f.FullName));
+            //    }
+            //}
 
             foreach (string input in inputFiles)
             {
