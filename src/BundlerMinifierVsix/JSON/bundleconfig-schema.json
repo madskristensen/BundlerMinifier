@@ -149,7 +149,7 @@
         "termSemicolons": {
           "description": "Forces all rules to be terminated with semicolons if set to true.",
           "type": "boolean",
-          "default": false
+          "default": true
         }
       }
     },
