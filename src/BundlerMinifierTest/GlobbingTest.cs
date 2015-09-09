@@ -28,7 +28,7 @@ namespace BundlerMinifierTest
             File.Delete("../../artifacts/globbing/out2.min.js");
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("Globbing")]
         public void OneFolder()
         {
             _processor.Process("../../artifacts/globbingOneFolder.json");
@@ -37,10 +37,10 @@ namespace BundlerMinifierTest
             Assert.AreEqual(out1, "var a = 1;");
 
             string out1Min = File.ReadAllText(new FileInfo("../../artifacts/globbing/out1.min.js").FullName);
-            Assert.AreEqual(out1Min, "var a=1");
+            Assert.AreEqual(out1Min, "var a=1;");
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("Globbing")]
         public void Subfolders()
         {
             _processor.Process("../../artifacts/globbingSubFolders.json");
@@ -49,7 +49,7 @@ namespace BundlerMinifierTest
             Assert.AreEqual(out2, "var a = 1;\r\nvar b = 2;");
 
             string out2Min = File.ReadAllText(new FileInfo("../../artifacts/globbing/out2.min.js").FullName);
-            Assert.AreEqual(out2Min, "var a=1,b=2");
+            Assert.AreEqual(out2Min, "var a=1,b=2;");
         }
     }
 }

@@ -7,7 +7,7 @@ namespace BundlerMinifier
         public static CssSettings GetSettings(Bundle bundle)
         {
             CssSettings settings = new CssSettings();
-            settings.TermSemicolons = GetValue(bundle, "termSemicolons") == "False" ? false : true;
+            settings.TermSemicolons = GetValue(bundle, "termSemicolons") == "True";
 
             string cssComment = GetValue(bundle, "commentMode");
 

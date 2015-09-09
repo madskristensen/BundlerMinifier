@@ -30,6 +30,11 @@
               "description": "JavaScript only. Controls if local variables should be shortened.",
               "type": "boolean",
               "default": true
+            },
+            "termSemicolons": {
+              "description": "Forces all rules to be terminated with semicolons if set to true.",
+              "type": "boolean",
+              "default": true
             }
           },
           "allOf": [ { "$ref": "#/definitions/ajaxminBaseSettings" } ]
@@ -59,6 +64,11 @@
               "description": "CSS only. Adjust relative paths inside the url() function.",
               "type": "boolean",
               "default": true
+            },
+            "termSemicolons": {
+              "description": "Forces all rules to be terminated with semicolons if set to true.",
+              "type": "boolean",
+              "default": false
             }
           },
           "allOf": [ { "$ref": "#/definitions/ajaxminBaseSettings" } ]
@@ -145,11 +155,6 @@
         "outputMode": {
           "description": "SingleLine minifies everything to a single line. MultipleLines breaks the minified code into multiple lines for easier reading.",
           "enum": [ "multipleLines", "singleLine", "none" ]
-        },
-        "termSemicolons": {
-          "description": "Forces all rules to be terminated with semicolons if set to true.",
-          "type": "boolean",
-          "default": true
         }
       }
     },
@@ -203,7 +208,7 @@
     }
   },
 
-	"items": {
-		"$ref": "#/definitions/bundle"
-	}
+  "items": {
+    "$ref": "#/definitions/bundle"
+  }
 }
