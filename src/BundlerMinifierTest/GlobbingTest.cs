@@ -51,5 +51,19 @@ namespace BundlerMinifierTest
             string out2Min = File.ReadAllText(new FileInfo("../../artifacts/globbing/out2.min.js").FullName);
             Assert.AreEqual(out2Min, "var a=1,b=2;");
         }
+
+        [TestMethod, TestCategory("Globbing")]
+        public void DontBundleOutputFile()
+        {
+            _processor.Process("../../artifacts/globbingSubFolders.json");
+            _processor.Process("../../artifacts/globbingSubFolders.json");
+
+            string out2 = File.ReadAllText(new FileInfo("../../artifacts/globbing/out2.js").FullName);
+            Assert.AreEqual(out2, "var a = 1;\r\nvar b = 2;");
+
+            string out2Min = File.ReadAllText(new FileInfo("../../artifacts/globbing/out2.min.js").FullName);
+            Assert.AreEqual(out2Min, "var a=1,b=2;");
+        }
+
     }
 }

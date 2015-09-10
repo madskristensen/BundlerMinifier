@@ -33,7 +33,7 @@ namespace BundlerMinifier
         /// </summary>
         public string GetAbsoluteOutputFile()
         {
-            string folder = Path.GetDirectoryName(FileName);
+            string folder = new FileInfo(FileName).DirectoryName;
             return Path.Combine(folder, OutputFileName.Replace("/", "\\"));
         }
 
@@ -55,10 +55,14 @@ namespace BundlerMinifier
                     if (last > -1)
                         relative = inputFile.Substring(0, last + 1);
 
+                    var output = GetAbsoluteOutputFile();
+                    var outputMin = BundleFileProcessor.GetMinFileName(output);
+
                     string searchDir = new FileInfo(Path.Combine(folder, relative).Replace("/", "\\")).FullName;
                     var allFiles = Directory.EnumerateFiles(searchDir, "*" + ext, SearchOption.AllDirectories).Select(f => f.Replace(folder + "\\", ""));
 
                     var matches = Minimatcher.Filter(allFiles, inputFile, new Options { AllowWindowsPaths = true }).Select(f => Path.Combine(folder, f));
+                    matches = matches.Where(match => match != output && match != outputMin);
                     files.AddRange(matches.Where(f => !files.Contains(f)));
                 }
                 else
