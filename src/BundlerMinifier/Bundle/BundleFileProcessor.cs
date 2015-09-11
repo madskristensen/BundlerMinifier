@@ -68,7 +68,7 @@ namespace BundlerMinifier
                 DirectoryInfo outputFileDirectory = Directory.GetParent(outputFile);
                 outputFileDirectory.Create();
 
-                File.WriteAllText(outputFile, bundle.Output.Trim(), new UTF8Encoding(true));
+                File.WriteAllText(outputFile, bundle.Output.Trim(), new UTF8Encoding(false));
 
                 OnAfterProcess(bundle, baseFolder);
             }
@@ -83,7 +83,7 @@ namespace BundlerMinifier
                     string mapFile = minFile + ".map";
 
                     OnBeforeWritingSourceMap(minFile, mapFile);
-                    File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(true));
+                    File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(false));
                     OnAfterWritingSourceMap(minFile, mapFile);
                 }
             }

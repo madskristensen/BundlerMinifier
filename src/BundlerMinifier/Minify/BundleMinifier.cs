@@ -57,7 +57,7 @@ namespace BundlerMinifier
                     if (!minifier.Errors.Any())
                     {
                         OnBeforeWritingMinFile(file, minFile, bundle);
-                        File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
+                        File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
                         OnAfterWritingMinFile(file, minFile, bundle);
                     }
                     else
@@ -80,7 +80,7 @@ namespace BundlerMinifier
                             if (!minifier.Errors.Any())
                             {
                                 OnBeforeWritingMinFile(file, minFile, bundle);
-                                File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
+                                File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
                                 OnAfterWritingMinFile(file, minFile, bundle);
                             }
                             else
@@ -126,7 +126,7 @@ namespace BundlerMinifier
                 if (!minifier.Errors.Any())
                 {
                     OnBeforeWritingMinFile(file, minFile, bundle);
-                    File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
+                    File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
                     OnAfterWritingMinFile(file, minFile, bundle);
 
                     GzipFile(minFile, bundle);
@@ -168,7 +168,7 @@ namespace BundlerMinifier
                 if (!result.Errors.Any())
                 {
                     OnBeforeWritingMinFile(file, minFile, bundle);
-                    File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(true));
+                    File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
                     OnAfterWritingMinFile(file, minFile, bundle);
 
                     GzipFile(minFile, bundle);
