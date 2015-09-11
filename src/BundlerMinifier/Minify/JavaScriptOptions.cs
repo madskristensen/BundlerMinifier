@@ -8,7 +8,7 @@ namespace BundlerMinifier
         {
             CodeSettings settings = new CodeSettings();
 
-            settings.PreserveImportantComments = GetValue(bundle, "preserveImportantComments") == "True";
+            settings.PreserveImportantComments = GetValue(bundle, "preserveImportantComments") == "False"? false : true;
             settings.TermSemicolons = GetValue(bundle, "termSemicolons") == "False" ? false : true;
 
             string evalTreatment = GetValue(bundle, "evanTreatment");

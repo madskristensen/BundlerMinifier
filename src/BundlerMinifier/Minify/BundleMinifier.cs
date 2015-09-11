@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -38,6 +39,7 @@ namespace BundlerMinifier
             return result;
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
         private static MinificationResult MinifyJavaScript(Bundle bundle)
         {
             string file = bundle.GetAbsoluteOutputFile();

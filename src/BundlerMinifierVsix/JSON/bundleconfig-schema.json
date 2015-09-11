@@ -24,7 +24,8 @@
             },
             "preserveImportantComments": {
               "description": "JavaScript only.",
-              "type": "boolean"
+              "type": "boolean",
+              "default": true
             },
             "renameLocals": {
               "description": "JavaScript only. Controls if local variables should be shortened.",
@@ -58,7 +59,7 @@
             "commentMode": {
               "description": "CSS only. How to treat comments in the code. The default is 'none', which will strip all comments except 'important' comments. 'all' will leave all comments, and 'hacks' will only leave certain known comment-based hacks.",
               "enum": [ "none", "all", "hacks", "important" ],
-              "default": "none"
+              "default": "important"
             },
             "adjustRelativePaths": {
               "description": "CSS only. Adjust relative paths inside the url() function.",
@@ -91,35 +92,43 @@
             },
             "collapseBooleanAttributes": {
               "description": "HTML only. Remove values from boolean attributes.",
-              "type": "boolean"
+              "type": "boolean",
+              "default": true
             },
             "customAngularDirectiveList": {
               "description": "HTML only. Specify array of names of custom Angular.js directives (e.g. [\"myDir\", \"btfCarousel\"]), that contain expressions.",
-              "type": "array"
+              "type": "array",
+              "default":  false
             },
             "minifyAngularBindingExpressions": {
               "description": "HTML only. Minify Angular.js binding expressions in double curly brackets and directives.",
-              "type": "boolean"
+              "type": "boolean",
+              "default": false
             },
             "minifyEmbeddedCssCode": {
               "description": "HTML only. Minify CSS code in style tags.",
-              "type": "boolean"
+              "type": "boolean",
+              "default": true
             },
             "minifyEmbeddedJsCode": {
               "description": "HTML only. Minify JS code in script tags.",
-              "type": "boolean"
+              "type": "boolean",
+              "default": true
             },
             "minifyInlineCssCode": {
               "description": "HTML only. Minify CSS code in style attributes.",
-              "type": "boolean"
+              "type": "boolean",
+              "default":  true
             },
             "minifyInlineJsCode": {
               "description": "HTML only. Minify JS code in event attributes and hyperlinks with javascript: pseudo-protocol.",
-              "type": "boolean"
+              "type": "boolean",
+              "default":  true
             },
             "minifyKnockoutBindingExpressions": {
               "description": "HTML only. Minify Knockout.js binding expressions in data-bind attributes and containerless comments.",
-              "type": "boolean"
+              "type": "boolean",
+              "default":  false
             },
             "processableScriptTypeList": {
               "description": "HTML only. Specify array of types of script tags, that are processed by minifier (e.g. [\"text/html\", \"text/ng-template\"]).",
@@ -127,19 +136,23 @@
             },
             "removeHtmlComments": {
               "description": "HTML only. Remove all HTML comments except conditional, noindex, Knockout.js containerless comments and Angular.js comment directives.",
-              "type": "boolean"
+              "type": "boolean",
+              "default": true
             },
             "removeOptionalEndTags": {
               "description": "HTML only. Remove optional end tags.",
-              "type": "boolean"
+              "type": "boolean",
+              "default": false
             },
             "removeRedundantAttributes": {
               "description": "HTML only. Remove redundant attributes.",
-              "type": "boolean"
+              "type": "boolean",
+              "default": false
             },
             "removeTagsWithoutContent": {
               "description": "HTML only. Remove tags without content (except for textarea, tr, th and td tags, and tags with class, id, name, role, src and data-* attributes).",
-              "type": "boolean"
+              "type": "boolean",
+              "default":  false
             }
           }
         }

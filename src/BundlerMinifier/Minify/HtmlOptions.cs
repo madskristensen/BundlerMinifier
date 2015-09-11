@@ -12,19 +12,19 @@ namespace BundlerMinifier
             settings.RemoveOptionalEndTags = GetValue(bundle, "removeOptionalEndTags") == "True";
             settings.RemoveRedundantAttributes = GetValue(bundle, "removeRedundantAttributes") == "True";
 
-            settings.CollapseBooleanAttributes = GetValue(bundle, "collapseBooleanAttributes") == "True";
+            settings.CollapseBooleanAttributes = GetValue(bundle, "collapseBooleanAttributes", true) == "True";
             settings.CustomAngularDirectiveList = GetValue(bundle, "customAngularDirectiveList");
             settings.MinifyAngularBindingExpressions = GetValue(bundle, "minifyAngularBindingExpressions") == "True";
-            settings.MinifyEmbeddedCssCode = GetValue(bundle, "minifyEmbeddedCssCode") == "True";
-            settings.MinifyEmbeddedJsCode= GetValue(bundle, "minifyEmbeddedJsCode") == "True";
-            settings.MinifyInlineCssCode = GetValue(bundle, "minifyInlineCssCode") == "True";
-            settings.MinifyInlineJsCode = GetValue(bundle, "minifyInlineJsCode") == "True";
+            settings.MinifyEmbeddedCssCode = GetValue(bundle, "minifyEmbeddedCssCode", true) == "True";
+            settings.MinifyEmbeddedJsCode= GetValue(bundle, "minifyEmbeddedJsCode", true) == "True";
+            settings.MinifyInlineCssCode = GetValue(bundle, "minifyInlineCssCode", true) == "True";
+            settings.MinifyInlineJsCode = GetValue(bundle, "minifyInlineJsCode", true) == "True";
             settings.MinifyKnockoutBindingExpressions = GetValue(bundle, "minifyKnockoutBindingExpressions") == "True";
             settings.ProcessableScriptTypeList = GetValue(bundle, "processableScriptTypeList");
-            settings.RemoveHtmlComments = GetValue(bundle, "removeHtmlComments") == "True";
+            settings.RemoveHtmlComments = GetValue(bundle, "removeHtmlComments", true) == "True";
             settings.RemoveTagsWithoutContent = GetValue(bundle, "removeTagsWithoutContent") == "True";
 
-            string quotes = GetValue(bundle, "attributeQuotesRemovalMode");
+            string quotes = GetValue(bundle, "attributeQuotesRemovalMode", "html5");
 
             if (quotes == "html4")
                 settings.AttributeQuotesRemovalMode = HtmlAttributeQuotesRemovalMode.Html4;
@@ -36,7 +36,7 @@ namespace BundlerMinifier
             return settings;
         }
 
-        internal static string GetValue(Bundle bundle, string key)
+        internal static string GetValue(Bundle bundle, string key, object defaultValue = null)
         {
             if (bundle.Minify.ContainsKey(key))
             {
@@ -50,6 +50,9 @@ namespace BundlerMinifier
                     return value.ToString();
                 }
             }
+
+            if (defaultValue != null)
+                return defaultValue.ToString();
 
             return string.Empty;
         }

@@ -117,21 +117,5 @@ namespace BundlerMinifierTest
             string jsResult = File.ReadAllText("../../artifacts/foo.min.js");
             Assert.AreEqual("var file1=1,file2=2;", jsResult);
         }
-
-        [TestMethod, TestCategory("Encoding")]
-        public void ProcessWithDifferentEncoding()
-        {
-            _processor.Process("../../artifacts/encoding/encoding.json");
-
-            string jsResult = File.ReadAllText("../../artifacts/encoding/encoding.js");
-            Assert.AreEqual("var bom = 'àèéèùì';\r\nvar nobom = 'àèéèùì'", jsResult);
-        }
-
-        [TestMethod, TestCategory("Encoding")]
-        public void Encoding()
-        {
-            string jsResult = BundleMinifier.ReadAllText("../../artifacts/encoding.js");
-            Assert.AreEqual("var test = 'æøå';", jsResult);
-        }
     }
 }
