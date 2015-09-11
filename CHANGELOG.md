@@ -4,6 +4,7 @@
 - [ ] Use FileSystemWatcher (#28)
 - [x] Universal Windows Apps support
 - [x] Globbing pattern support (#46)
+- [x] Support for files with spaces in the path (#55)
 
 Features that have a checkmark are complete and available for
 download in the
