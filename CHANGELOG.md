@@ -7,6 +7,7 @@
 - [x] Added ignore file pattern (#54)
   - InputFiles starting with `!` is ignored
 - [x] Support for files with spaces in the path (#55)
+- [x] Better minification default options
 
 Features that have a checkmark are complete and available for
 download in the
