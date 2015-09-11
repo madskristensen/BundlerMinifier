@@ -8,13 +8,13 @@ namespace BundlerMinifier
         {
             CodeSettings settings = new CodeSettings();
 
-            settings.PreserveImportantComments = GetValue(bundle, "preserveImportantComments") == "False"? false : true;
-            settings.TermSemicolons = GetValue(bundle, "termSemicolons") == "False" ? false : true;
+            settings.PreserveImportantComments = GetValue(bundle, "preserveImportantComments", true) == "True";
+            settings.TermSemicolons = GetValue(bundle, "termSemicolons", true) == "True";
 
-            string evalTreatment = GetValue(bundle, "evanTreatment");
-
-            if (GetValue(bundle, "renameLocals") == "False")
+            if (GetValue(bundle, "renameLocals", true) == "False")
                 settings.LocalRenaming = LocalRenaming.KeepAll;
+
+            string evalTreatment = GetValue(bundle, "evalTreatment", "ignore");
 
             if (evalTreatment == "ignore")
                 settings.EvalTreatment = EvalTreatment.Ignore;
@@ -23,7 +23,7 @@ namespace BundlerMinifier
             else if (evalTreatment == "makeImmediateSafe")
                 settings.EvalTreatment = EvalTreatment.MakeImmediateSafe;
 
-            string outputMode = GetValue(bundle, "outputMode");
+            string outputMode = GetValue(bundle, "outputMode", "singleLine");
 
             if (outputMode == "multipleLines")
                 settings.OutputMode = OutputMode.MultipleLines;
@@ -32,7 +32,7 @@ namespace BundlerMinifier
             else if (outputMode == "none")
                 settings.OutputMode = OutputMode.None;
 
-            string indentSize = GetValue(bundle, "indentSize");
+            string indentSize = GetValue(bundle, "indentSize", 2);
             int size;
             if (int.TryParse(indentSize, out size))
                 settings.IndentSize = size;
@@ -40,10 +40,13 @@ namespace BundlerMinifier
             return settings;
         }
 
-        internal static string GetValue(Bundle bundle, string key)
+        internal static string GetValue(Bundle bundle, string key, object defaultValue = null)
         {
             if (bundle.Minify.ContainsKey(key))
                 return bundle.Minify[key].ToString();
+
+            if (defaultValue != null)
+                return defaultValue.ToString();
 
             return string.Empty;
         }

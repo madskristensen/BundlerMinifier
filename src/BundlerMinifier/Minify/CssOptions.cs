@@ -31,7 +31,7 @@ namespace BundlerMinifier
             else if (colorNames == "strict")
                 settings.ColorNames = CssColor.Strict;
 
-            string outputMode = GetValue(bundle, "outputMode");
+            string outputMode = GetValue(bundle, "outputMode", "singleLine");
 
             if (outputMode == "multipleLines")
                 settings.OutputMode = OutputMode.MultipleLines;
@@ -40,7 +40,7 @@ namespace BundlerMinifier
             else if (outputMode == "none")
                 settings.OutputMode = OutputMode.None;
 
-            string indentSize = GetValue(bundle, "indentSize");
+            string indentSize = GetValue(bundle, "indentSize", 2);
             int size;
             if (int.TryParse(indentSize, out size))
                 settings.IndentSize = size;
@@ -48,10 +48,13 @@ namespace BundlerMinifier
             return settings;
         }
 
-        internal static string GetValue(Bundle bundle, string key)
+        internal static string GetValue(Bundle bundle, string key, object defaultValue = null)
         {
             if (bundle.Minify.ContainsKey(key))
                 return bundle.Minify[key].ToString();
+
+            if (defaultValue != null)
+                return defaultValue.ToString();
 
             return string.Empty;
         }

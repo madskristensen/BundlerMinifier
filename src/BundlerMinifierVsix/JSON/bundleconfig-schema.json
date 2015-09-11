@@ -20,7 +20,8 @@
           "properties": {
             "evalTreatment": {
               "description": "JavaScript only.",
-              "enum": [ "ignore", "makeAllSafe", "makeImmediateSafe" ]
+              "enum": [ "ignore", "makeAllSafe", "makeImmediateSafe" ],
+              "default": "ignore"
             },
             "preserveImportantComments": {
               "description": "JavaScript only.",
@@ -98,7 +99,7 @@
             "customAngularDirectiveList": {
               "description": "HTML only. Specify array of names of custom Angular.js directives (e.g. [\"myDir\", \"btfCarousel\"]), that contain expressions.",
               "type": "array",
-              "default":  false
+              "default": false
             },
             "minifyAngularBindingExpressions": {
               "description": "HTML only. Minify Angular.js binding expressions in double curly brackets and directives.",
@@ -118,17 +119,17 @@
             "minifyInlineCssCode": {
               "description": "HTML only. Minify CSS code in style attributes.",
               "type": "boolean",
-              "default":  true
+              "default": true
             },
             "minifyInlineJsCode": {
               "description": "HTML only. Minify JS code in event attributes and hyperlinks with javascript: pseudo-protocol.",
               "type": "boolean",
-              "default":  true
+              "default": true
             },
             "minifyKnockoutBindingExpressions": {
               "description": "HTML only. Minify Knockout.js binding expressions in data-bind attributes and containerless comments.",
               "type": "boolean",
-              "default":  false
+              "default": false
             },
             "processableScriptTypeList": {
               "description": "HTML only. Specify array of types of script tags, that are processed by minifier (e.g. [\"text/html\", \"text/ng-template\"]).",
@@ -152,7 +153,7 @@
             "removeTagsWithoutContent": {
               "description": "HTML only. Remove tags without content (except for textarea, tr, th and td tags, and tags with class, id, name, role, src and data-* attributes).",
               "type": "boolean",
-              "default":  false
+              "default": false
             }
           }
         }
@@ -163,11 +164,13 @@
       "properties": {
         "indentSize": {
           "description": "For the multi-line output feature, how many spaces to use when indenting a block (see outputMode).",
-          "type": "integer"
+          "type": "integer",
+          "default": 2
         },
         "outputMode": {
           "description": "SingleLine minifies everything to a single line. MultipleLines breaks the minified code into multiple lines for easier reading.",
-          "enum": [ "multipleLines", "singleLine", "none" ]
+          "enum": [ "multipleLines", "singleLine", "none" ],
+          "default": "singleLine"
         }
       }
     },
@@ -201,7 +204,8 @@
             },
             "gzip": {
               "description": "Produce a .gz file after minification.",
-              "type": "boolean"
+              "type": "boolean",
+              "default":  false
             }
           }
         },
