@@ -31,7 +31,7 @@ namespace BundlerMinifierVsix.JSON
                 yield break;
 
             string folder = Path.GetDirectoryName(doc.DocumentLocation);
-            string absolutePath = Path.Combine(folder, canonicalizedValue);
+            string absolutePath = Path.Combine(folder, canonicalizedValue).Replace("!", string.Empty);
 
             if (!File.Exists(absolutePath) && !Directory.Exists(absolutePath))
                 yield return $"The file or directory '{canonicalizedValue}' does not exist";

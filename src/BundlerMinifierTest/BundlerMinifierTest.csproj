@@ -77,6 +77,7 @@
     <Content Include="artifacts\file1.css" />
     <Content Include="artifacts\file2.js" />
     <Content Include="artifacts\file1.js" />
+    <Content Include="artifacts\globbing\b.js" />
     <Content Include="artifacts\globbing\a.js" />
     <Content Include="artifacts\globbing\sub\b.js" />
     <Content Include="artifacts\test2\foo.css" />

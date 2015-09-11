@@ -3,6 +3,7 @@ using System.Linq;
 using System.IO;
 using Minimatch;
 using Newtonsoft.Json;
+using System;
 
 namespace BundlerMinifier
 {
@@ -42,8 +43,9 @@ namespace BundlerMinifier
             List<string> files = new List<string>();
             string folder = new DirectoryInfo(Path.GetDirectoryName(FileName)).FullName;
             string ext = Path.GetExtension(InputFiles.First());
+            Options options = new Options { AllowWindowsPaths = true };
 
-            foreach (string inputFile in InputFiles)
+            foreach (string inputFile in InputFiles.Where(f => !f.StartsWith("!", StringComparison.Ordinal)))
             {
                 int globIndex = inputFile.IndexOf('*');
 
@@ -61,7 +63,7 @@ namespace BundlerMinifier
                     string searchDir = new FileInfo(Path.Combine(folder, relative).Replace("/", "\\")).FullName;
                     var allFiles = Directory.EnumerateFiles(searchDir, "*" + ext, SearchOption.AllDirectories).Select(f => f.Replace(folder + "\\", ""));
 
-                    var matches = Minimatcher.Filter(allFiles, inputFile, new Options { AllowWindowsPaths = true }).Select(f => Path.Combine(folder, f));
+                    var matches = Minimatcher.Filter(allFiles, inputFile, options).Select(f => Path.Combine(folder, f));
                     matches = matches.Where(match => match != output && match != outputMin);
                     files.AddRange(matches.Where(f => !files.Contains(f)));
                 }
@@ -80,6 +82,19 @@ namespace BundlerMinifier
                     {
                         files.Add(fullPath);
                     }
+                }
+            }
+
+            // Remove files starting with a !
+            foreach (string inputFile in InputFiles)
+            {
+                int globIndex = inputFile.IndexOf('!');
+
+                if (globIndex == 0)
+                {
+                    var allFiles = files.Select(f => f.Replace(folder + "\\", ""));
+                    var matches = Minimatcher.Filter(allFiles, inputFile, options).Select(f => Path.Combine(folder, f));
+                    files = matches.ToList();
                 }
             }
 

@@ -1,6 +1,6 @@
 ﻿[
   {
     "outputFileName": "globbing/out1.js",
-    "inputFiles": [ "globbing/*.js" ]
+    "inputFiles": [ "globbing/*.js", "!globbing/b.js" ]
   }
 ]
