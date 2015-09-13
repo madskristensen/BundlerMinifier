@@ -10,7 +10,7 @@ before_build:
   - ps: Vsix-TokenReplacement src\BundlerMinifierVsix\BundlerMinifierPackage.cs 'Version = "([0-9\\.]+)"' 'Version = "{version}"'
 
 build_script:
-  - nuget restore
+  - nuget restore -Verbosity quiet
   - msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
 
 after_test:
