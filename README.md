@@ -18,6 +18,7 @@ for changes and roadmap.
 
 - Bundles CSS, JavaScript or HTML files into a single output file
 - Saving a source file triggers re-bundling automatically
+- Support for globbing patterns
 - MSBuild support for CI scenarios supported
 - Minify individual or bundled CSS, JavaScript and HTML files
 - Minification options for each language is customizable
@@ -94,46 +95,32 @@ project which is used to configure all bundling.
 
 Here's an example of what that file looks like:
 
-```js
+```json
 [
   {
     "outputFileName": "output/bundle.css",
     "inputFiles": [
-      "input/file1.css",
-      "input/file2.css"
+      "css/lib/**/*.css", // globbing patterns are supported
+      "css/input/site.css"
     ],
     "minify": {
-			"enabled": true,
-			"commentMode": "all"
-    },
-    "includeInProject": true,
-    "sourceMaps": false
+        "enabled": true,
+        "commentMode": "all"
+    }
   },
   {
     "outputFileName": "output/all.js",
     "inputFiles": [
-      "input/file1.js",
-      "input/file2.js"
-    ],
-    "minify": {
-			"enabled": true,
-			"termSemicolons": true
-    },
-    "includeInProject": true,
-    "sourceMaps": false
+      "js/*.js",
+      "!js/ignore.js" // start with a ! to exclude files
+    ]
   },
   {
     "outputFileName": "output/app.js",
     "inputFiles": [
       "input/main.js",
-      "input/core/" // all .js files in input/core/
-    ],
-    "minify": {
-			"enabled": true,
-			"termSemicolons": true
-    },
-    "includeInProject": true,
-    "sourceMaps": false
+      "input/core/*.js" // all .js files in input/core/
+    ]
   }
 ]
 ```
