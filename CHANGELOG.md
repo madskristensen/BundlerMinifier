@@ -2,12 +2,6 @@
 
 - [ ] Task Runner Explorer integration
 - [ ] Use FileSystemWatcher (#28)
-- [x] Universal Windows Apps support
-- [x] Globbing pattern support (#46)
-- [x] Added ignore file pattern (#54)
-  - InputFiles starting with `!` is ignored
-- [x] Support for files with spaces in the path (#55)
-- [x] Better minification default options
 
 Features that have a checkmark are complete and available for
 download in the
@@ -17,6 +11,17 @@ download in the
 
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
+
+## 1.3
+
+**2015-09-13**
+
+- [x] Universal Windows Apps support
+- [x] Globbing pattern support (#46)
+- [x] Added ignore file pattern (#54)
+  - InputFiles starting with `!` is ignored
+- [x] Support for files with spaces in the path (#55)
+- [x] Better minification default options
 
 ## 1.2
 
