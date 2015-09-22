@@ -23,6 +23,8 @@ for changes and roadmap.
 - Minify individual or bundled CSS, JavaScript and HTML files
 - Minification options for each language is customizable
 - Shows a watermark when opening a generated file
+- Task Runner Explorer integration
+- Command line support
 - Shortcut to update all bundles in solution
 
 ### A note about encoding
@@ -87,6 +89,17 @@ Source maps are supported for JavaScript minification only at this time.
 A `.map` file is produced next to the `.min.js` file automatically,
 but if you manually delete the `.map` file, a new one will not be
 created on subsequent minifications.
+
+### Task Runner Explorer
+Get a quick overview of the files you've specified or execute a bundle
+directly in Task Runner Explorer.
+
+![Task Runner Explorer](art/task-runner-explorer.png)
+
+You can even set bindings so that bundling/minification happens automatically
+during certain Visual Studio events, such as BeforeBuild and Project Open.
+
+![Task Runner Bindings](art/task-runner-bindings.png)
 
 ### bundleconfig.json
 
