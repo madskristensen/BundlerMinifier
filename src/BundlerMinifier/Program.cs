@@ -41,10 +41,10 @@ namespace BundlerMinifier
             processor.BeforeProcess += (s, e) => { Console.WriteLine($"Processing \x1B[36m{e.Bundle.OutputFileName}"); FileHelpers.RemoveReadonlyFlagFromFile(e.Bundle.GetAbsoluteOutputFile()); };
             processor.AfterProcess += (s, e) => { Console.WriteLine($"  \x1B[32mBundled"); };
             processor.BeforeWritingSourceMap += (s, e) => { FileHelpers.RemoveReadonlyFlagFromFile(e.ResultFile); };
-            processor.AfterWritingSourceMap += (s, e) => { Console.WriteLine($"  \x1B[32mSourcemap"); };
+            processor.AfterWritingSourceMap += (s, e) => { Console.WriteLine($"  \x1B[32mSourcemapped"); };
 
             BundleMinifier.BeforeWritingMinFile += (s, e) => { FileHelpers.RemoveReadonlyFlagFromFile(e.ResultFile); };
-            BundleMinifier.AfterWritingMinFile += (s, e) => { Console.WriteLine($"  \x1B[32mMinified {Path.GetFileName(e.ResultFile)}"); };
+            BundleMinifier.AfterWritingMinFile += (s, e) => { Console.WriteLine($"  \x1B[32mMinified"); };
             BundleMinifier.BeforeWritingGzipFile += (s, e) => { FileHelpers.RemoveReadonlyFlagFromFile(e.ResultFile); };
             BundleMinifier.AfterWritingGzipFile += (s, e) => { Console.WriteLine($"  \x1B[32mGZipped"); };
             BundleMinifier.ErrorMinifyingFile += (s, e) => { Console.WriteLine($"{string.Join(Environment.NewLine, e.Result.Errors)}"); };
