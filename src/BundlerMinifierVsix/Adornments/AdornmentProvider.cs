@@ -40,7 +40,7 @@ namespace BundlerMinifierVsix
 
             LogoAdornment.VisibilityChanged += AdornmentVisibilityChanged;
 
-            _isVisible = store.GetBoolean(Constants.FILENAME, _propertyName, true);
+            _isVisible = store.GetBoolean(Constants.CONFIG_FILENAME, _propertyName, true);
         }
 
         private void AdornmentVisibilityChanged(object sender, bool isVisible)
@@ -48,10 +48,10 @@ namespace BundlerMinifierVsix
             WritableSettingsStore wstore = _settingsManager.GetWritableSettingsStore(SettingsScope.UserSettings);
             _isVisible = isVisible;
 
-            if (!wstore.CollectionExists(Constants.FILENAME))
-                wstore.CreateCollection(Constants.FILENAME);
+            if (!wstore.CollectionExists(Constants.CONFIG_FILENAME))
+                wstore.CreateCollection(Constants.CONFIG_FILENAME);
 
-            wstore.SetBoolean(Constants.FILENAME, _propertyName, isVisible);
+            wstore.SetBoolean(Constants.CONFIG_FILENAME, _propertyName, isVisible);
         }
 
         public void TextViewCreated(IWpfTextView textView)
@@ -75,7 +75,7 @@ namespace BundlerMinifierVsix
         {
             string fileName = document.FilePath;
 
-            if (Path.GetFileName(fileName) == Constants.FILENAME)
+            if (Path.GetFileName(fileName) == Constants.CONFIG_FILENAME)
             {
                 LogoAdornment highlighter = new LogoAdornment(textView, _isVisible, _initOpacity);
             }

@@ -28,10 +28,10 @@ namespace BundlerMinifier
             return true;
         }
 
-        public void Process(string fileName)
+        public void Process(string fileName, IEnumerable<Bundle> bundles = null)
         {
             FileInfo info = new FileInfo(fileName);
-            var bundles = BundleHandler.GetBundles(fileName);
+            bundles =  bundles ?? BundleHandler.GetBundles(fileName);
 
             foreach (Bundle bundle in bundles)
             {

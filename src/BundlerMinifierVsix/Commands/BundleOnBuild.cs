@@ -44,7 +44,7 @@ namespace BundlerMinifierVsix.Commands
                 return;
 
             var sourceFile = item.Properties.Item("FullPath").Value.ToString();
-            bool isConfigFile = Path.GetFileName(sourceFile).Equals(Constants.FILENAME, StringComparison.OrdinalIgnoreCase);
+            bool isConfigFile = Path.GetFileName(sourceFile).Equals(Constants.CONFIG_FILENAME, StringComparison.OrdinalIgnoreCase);
 
             if (!isConfigFile)
                 return;

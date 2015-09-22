@@ -30,5 +30,14 @@ namespace BundlerMinifier
         /// The column number in the source file where the error happened.
         /// </summary>
         public int ColumnNumber { get; set; }
+
+        /// <summary>
+        /// The string representation of this object.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return Message;
+        }
     }
 }

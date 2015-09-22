@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B714B5B9-27C4-443C-9517-FE5C5EF46EA2}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BundlerMinifier</RootNamespace>
     <AssemblyName>BundlerMinifier</AssemblyName>
@@ -31,6 +31,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AjaxMin, Version=5.14.5506.26196, Culture=neutral, PublicKeyToken=21ef50ce11b5d80f, processorArchitecture=MSIL">
@@ -63,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bundle\Bundle.cs" />
+    <Compile Include="Helpers\FileHelpers.cs" />
     <Compile Include="Minify\BundleMinifier.cs" />
     <Compile Include="Minify\CssRelativePathAdjuster.cs" />
     <Compile Include="Minify\HtmlOptions.cs" />
@@ -75,6 +83,7 @@
     <Compile Include="Bundle\BundleFileProcessor.cs" />
     <Compile Include="Minify\MinificationResult.cs" />
     <Compile Include="MSBuild\BundlerBuildTask.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

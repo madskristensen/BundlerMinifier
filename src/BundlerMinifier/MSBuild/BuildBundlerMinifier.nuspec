@@ -17,5 +17,6 @@
     <files>
         <file src="BuildBundlerMinifier.targets" target="build" />
         <file src="..\*.dll" target="tools" />
+        <file src="..\*.exe" target="tools" />
     </files>
 </package>

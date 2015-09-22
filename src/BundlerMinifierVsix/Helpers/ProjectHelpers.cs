@@ -53,7 +53,7 @@ namespace BundlerMinifierVsix
             if (string.IsNullOrEmpty(folder))
                 return null;
 
-            return Path.Combine(folder, Constants.FILENAME);
+            return Path.Combine(folder, Constants.CONFIG_FILENAME);
         }
 
         public static string GetRootFolder(this Project project)
@@ -198,6 +198,22 @@ namespace BundlerMinifierVsix
             }
 
             return null;
+        }
+
+        public static void DeleteFileFromProject(string file)
+        {
+            ProjectItem item = _dte.Solution.FindProjectItem(file);
+
+            if (item == null)
+                return;
+            try
+            {
+                item.Delete();
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex);
+            }
         }
     }
 }

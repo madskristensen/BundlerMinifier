@@ -82,7 +82,7 @@ namespace BundlerMinifierVsix.Commands
 
         private void RemoveConfig(object sender, EventArgs e)
         {
-            var question = MessageBox.Show($"This will remove the file from {Constants.FILENAME}.\r\rDo you want to continue?", Constants.VSIX_NAME, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            var question = MessageBox.Show($"This will remove the file from {Constants.CONFIG_FILENAME}.\r\rDo you want to continue?", Constants.VSIX_NAME, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
             if (question == DialogResult.Cancel)
                 return;
@@ -97,7 +97,7 @@ namespace BundlerMinifierVsix.Commands
             catch (Exception ex)
             {
                 Logger.Log(ex);
-                BundlerMinifierPackage._dte.StatusBar.Text = $"Could not update {Constants.FILENAME}. Make sure it's not write-protected or has syntax errors.";
+                BundlerMinifierPackage._dte.StatusBar.Text = $"Could not update {Constants.CONFIG_FILENAME}. Make sure it's not write-protected or has syntax errors.";
             }
         }
     }

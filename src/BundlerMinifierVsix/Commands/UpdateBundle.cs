@@ -51,7 +51,7 @@ namespace BundlerMinifierVsix.Commands
             }
             else
             {
-                button.Visible = files.Count() == 1 && Path.GetFileName(files.First()) == Constants.FILENAME;
+                button.Visible = files.Count() == 1 && Path.GetFileName(files.First()) == Constants.CONFIG_FILENAME;
             }
         }
 

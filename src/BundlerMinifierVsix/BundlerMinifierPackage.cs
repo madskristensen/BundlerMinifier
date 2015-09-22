@@ -46,5 +46,23 @@ namespace BundlerMinifierVsix
 
             base.Initialize();
         }
+
+        public static bool IsDocumentDirty(string documentPath, out IVsPersistDocData persistDocData)
+        {
+            var serviceProvider = new ServiceProvider((Microsoft.VisualStudio.OLE.Interop.IServiceProvider)_dte);
+
+            IVsHierarchy vsHierarchy;
+            uint itemId, docCookie;
+            VsShellUtilities.GetRDTDocumentInfo(
+                serviceProvider, documentPath, out vsHierarchy, out itemId, out persistDocData, out docCookie);
+            if (persistDocData != null)
+            {
+                int isDirty;
+                persistDocData.IsDocDataDirty(out isDirty);
+                return isDirty == 1;
+            }
+
+            return false;
+        }
     }
 }
