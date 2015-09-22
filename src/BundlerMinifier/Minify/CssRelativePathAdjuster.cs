@@ -30,13 +30,13 @@ namespace BundlerMinifier
                     if (relativePathToCss.StartsWith("/", StringComparison.Ordinal))
                         continue;
 
-                    //prevent querystring from causing error
+                    //prevent query string from causing error
                     var pathAndQuery = relativePathToCss.Split(new[] { '?' }, 2, StringSplitOptions.RemoveEmptyEntries);
                     var pathOnly = pathAndQuery[0];
                     var queryOnly = pathAndQuery.Length == 2 ? pathAndQuery[1] : string.Empty;
 
                     string absolutePath = GetAbsolutePath(cssDirectoryPath, pathOnly);
-                    string serverRelativeUrl = BundlerBuildTask.MakeRelative(absoluteOutputPath, absolutePath);
+                    string serverRelativeUrl = FileHelpers.MakeRelative(absoluteOutputPath, absolutePath);
 
                     if (!string.IsNullOrEmpty(queryOnly))
                         serverRelativeUrl += "?" + queryOnly;

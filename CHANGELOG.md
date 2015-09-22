@@ -3,6 +3,7 @@
 - [x] Task Runner Explorer integration
 - [x] Command line support
 - [ ] Use FileSystemWatcher (#28)
+- [ ] Don't check out files with no changes
 
 Features that have a checkmark are complete and available for
 download in the

@@ -13,6 +13,9 @@ namespace BundlerMinifier
         /// </summary>
         public static string MakeRelative(string baseFile, string file)
         {
+            if (string.IsNullOrEmpty(file))
+                return file;
+
             Uri baseUri = new Uri(baseFile, UriKind.RelativeOrAbsolute);
             Uri fileUri = new Uri(file, UriKind.RelativeOrAbsolute);
 

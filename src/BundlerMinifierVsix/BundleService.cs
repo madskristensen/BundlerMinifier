@@ -49,9 +49,9 @@ namespace BundlerMinifierVsix
                 if (_processor == null)
                 {
                     _processor = new BundleFileProcessor();
-                    _processor.AfterProcess += AfterProcess;
+                    _processor.AfterBundling += AfterProcess;
                     _processor.AfterWritingSourceMap += AfterWritingSourceMap;
-                    _processor.BeforeProcess += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.OutputFileName); ErrorList.CleanErrors(e.OutputFileName); };
+                    _processor.Processing += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.OutputFileName); ErrorList.CleanErrors(e.OutputFileName); };
                     _processor.BeforeWritingSourceMap += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile); };
                 }
 

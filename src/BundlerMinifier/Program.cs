@@ -38,8 +38,8 @@ namespace BundlerMinifier
         {
             // For console colors, see http://stackoverflow.com/questions/23975735/what-is-this-u001b9-syntax-of-choosing-what-color-text-appears-on-console
 
-            processor.BeforeProcess += (s, e) => { Console.WriteLine($"Processing \x1B[36m{e.Bundle.OutputFileName}"); FileHelpers.RemoveReadonlyFlagFromFile(e.Bundle.GetAbsoluteOutputFile()); };
-            processor.AfterProcess += (s, e) => { Console.WriteLine($"  \x1B[32mBundled"); };
+            processor.Processing += (s, e) => { Console.WriteLine($"Processing \x1B[36m{e.Bundle.OutputFileName}"); FileHelpers.RemoveReadonlyFlagFromFile(e.Bundle.GetAbsoluteOutputFile()); };
+            processor.AfterBundling += (s, e) => { Console.WriteLine($"  \x1B[32mBundled"); };
             processor.BeforeWritingSourceMap += (s, e) => { FileHelpers.RemoveReadonlyFlagFromFile(e.ResultFile); };
             processor.AfterWritingSourceMap += (s, e) => { Console.WriteLine($"  \x1B[32mSourcemapped"); };
 

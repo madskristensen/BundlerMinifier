@@ -74,7 +74,7 @@ namespace BundlerMinifierVsix.Commands
 
             string folder = item.ContainingProject.GetRootFolder();
             string configFile = Path.Combine(folder, Constants.CONFIG_FILENAME);
-            IEnumerable<string> files = ProjectHelpers.GetSelectedItemPaths().Select(f => MakeRelative(configFile, f));
+            IEnumerable<string> files = ProjectHelpers.GetSelectedItemPaths().Select(f => BundlerMinifier.FileHelpers.MakeRelative(configFile, f));
             string inputFile = item.Properties.Item("FullPath").Value.ToString();
             string outputFile = inputFile;
 
@@ -88,7 +88,7 @@ namespace BundlerMinifierVsix.Commands
 
             BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 0, 2);
 
-            string relativeOutputFile = MakeRelative(configFile, outputFile);
+            string relativeOutputFile = BundlerMinifier.FileHelpers.MakeRelative(configFile, outputFile);
             Bundle bundle = CreateBundleFile(files, relativeOutputFile);
 
             BundleHandler.AddBundle(configFile, bundle);
@@ -115,13 +115,13 @@ namespace BundlerMinifierVsix.Commands
             return bundle;
         }
 
-        private static string MakeRelative(string baseFile, string file)
-        {
-            Uri baseUri = new Uri(baseFile, UriKind.RelativeOrAbsolute);
-            Uri fileUri = new Uri(file, UriKind.RelativeOrAbsolute);
+        //private static string MakeRelative(string baseFile, string file)
+        //{
+        //    Uri baseUri = new Uri(baseFile, UriKind.RelativeOrAbsolute);
+        //    Uri fileUri = new Uri(file, UriKind.RelativeOrAbsolute);
 
-            return Uri.UnescapeDataString(baseUri.MakeRelativeUri(fileUri).ToString());
-        }
+        //    return Uri.UnescapeDataString(baseUri.MakeRelativeUri(fileUri).ToString());
+        //}
 
         private static string GetOutputFileName(string inputFile, string extension)
         {

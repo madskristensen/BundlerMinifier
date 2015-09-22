@@ -33,8 +33,8 @@ namespace BundlerMinifier
             }
 
             BundleFileProcessor processor = new BundleFileProcessor();
-            processor.BeforeProcess += (s, e) => { RemoveReadonlyFlagFromFile(e.Bundle.GetAbsoluteOutputFile()); };
-            processor.AfterProcess += Processor_AfterProcess;
+            processor.Processing += (s, e) => { RemoveReadonlyFlagFromFile(e.Bundle.GetAbsoluteOutputFile()); };
+            processor.AfterBundling += Processor_AfterProcess;
             processor.BeforeWritingSourceMap += (s, e) => { RemoveReadonlyFlagFromFile(e.ResultFile); };
             processor.AfterWritingSourceMap += Processor_AfterWritingSourceMap;
             BundleMinifier.ErrorMinifyingFile += BundleMinifier_ErrorMinifyingFile;
@@ -75,23 +75,12 @@ namespace BundlerMinifier
 
         private void Processor_AfterWritingSourceMap(object sender, MinifyFileEventArgs e)
         {
-            Log.LogMessage(MessageImportance.High, "\tSourceMap " + MakeRelative(FileName, e.ResultFile));
+            Log.LogMessage(MessageImportance.High, "\tSourceMap " + FileHelpers.MakeRelative(FileName, e.ResultFile));
         }
 
         private void FileMinifier_AfterWritingMinFile(object sender, MinifyFileEventArgs e)
         {
-            Log.LogMessage(MessageImportance.High, "\tMinified " + MakeRelative(FileName, e.ResultFile));
-        }
-
-        public static string MakeRelative(string baseFile, string file)
-        {
-            if (string.IsNullOrEmpty(file))
-                return file;
-
-            Uri baseUri = new Uri(baseFile, UriKind.RelativeOrAbsolute);
-            Uri fileUri = new Uri(file, UriKind.RelativeOrAbsolute);
-
-            return baseUri.MakeRelativeUri(fileUri).ToString();
+            Log.LogMessage(MessageImportance.High, "\tMinified " + FileHelpers.MakeRelative(FileName, e.ResultFile));
         }
     }
 }

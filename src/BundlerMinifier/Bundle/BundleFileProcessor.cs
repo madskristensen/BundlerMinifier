@@ -9,6 +9,7 @@ namespace BundlerMinifier
     public class BundleFileProcessor
     {
         private static string[] _supported = new[] { ".JS", ".CSS", ".HTML", ".HTM" };
+
         public static bool IsSupported(IEnumerable<string> files)
         {
             files = files.Where(f => !string.IsNullOrEmpty(f));
@@ -31,7 +32,7 @@ namespace BundlerMinifier
         public void Process(string fileName, IEnumerable<Bundle> bundles = null)
         {
             FileInfo info = new FileInfo(fileName);
-            bundles =  bundles ?? BundleHandler.GetBundles(fileName);
+            bundles = bundles ?? BundleHandler.GetBundles(fileName);
 
             foreach (Bundle bundle in bundles)
             {
@@ -57,20 +58,20 @@ namespace BundlerMinifier
 
         private void ProcessBundle(string baseFolder, Bundle bundle)
         {
-            if (bundle.InputFiles.Count > 1 || bundle.InputFiles.FirstOrDefault() != bundle.OutputFileName)
+            OnProcessing(bundle, baseFolder);
+
+            if (bundle.GetAbsoluteInputFiles().Count > 1 || bundle.InputFiles.FirstOrDefault() != bundle.OutputFileName)
             {
                 BundleHandler.ProcessBundle(baseFolder, bundle);
 
                 string outputFile = Path.Combine(baseFolder, bundle.OutputFileName);
-
-                OnBeforeProcess(bundle, baseFolder);
 
                 DirectoryInfo outputFileDirectory = Directory.GetParent(outputFile);
                 outputFileDirectory.Create();
 
                 File.WriteAllText(outputFile, bundle.Output.Trim(), new UTF8Encoding(false));
 
-                OnAfterProcess(bundle, baseFolder);
+                OnAfterBundling(bundle, baseFolder);
             }
 
             if (bundle.Minify.ContainsKey("enabled") && bundle.Minify["enabled"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
@@ -95,19 +96,19 @@ namespace BundlerMinifier
             return file.Substring(0, file.LastIndexOf(ext, StringComparison.OrdinalIgnoreCase)) + ".min" + ext;
         }
 
-        protected void OnBeforeProcess(Bundle bundle, string baseFolder)
+        protected void OnProcessing(Bundle bundle, string baseFolder)
         {
-            if (BeforeProcess != null)
+            if (Processing != null)
             {
-                BeforeProcess(this, new BundleFileEventArgs(bundle.GetAbsoluteOutputFile(), bundle, baseFolder));
+                Processing(this, new BundleFileEventArgs(bundle.GetAbsoluteOutputFile(), bundle, baseFolder));
             }
         }
 
-        protected void OnAfterProcess(Bundle bundle, string baseFolder)
+        protected void OnAfterBundling(Bundle bundle, string baseFolder)
         {
-            if (AfterProcess != null)
+            if (AfterBundling != null)
             {
-                AfterProcess(this, new BundleFileEventArgs(bundle.GetAbsoluteOutputFile(), bundle, baseFolder));
+                AfterBundling(this, new BundleFileEventArgs(bundle.GetAbsoluteOutputFile(), bundle, baseFolder));
             }
         }
 
@@ -127,8 +128,8 @@ namespace BundlerMinifier
             }
         }
 
-        public event EventHandler<BundleFileEventArgs> BeforeProcess;
-        public event EventHandler<BundleFileEventArgs> AfterProcess;
+        public event EventHandler<BundleFileEventArgs> Processing;
+        public event EventHandler<BundleFileEventArgs> AfterBundling;
 
         public event EventHandler<MinifyFileEventArgs> BeforeWritingSourceMap;
         public event EventHandler<MinifyFileEventArgs> AfterWritingSourceMap;
