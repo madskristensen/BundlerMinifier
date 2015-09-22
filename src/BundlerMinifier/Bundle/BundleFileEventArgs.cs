@@ -8,12 +8,15 @@ namespace BundlerMinifier
 {
     public class BundleFileEventArgs : EventArgs
     {
-        public BundleFileEventArgs(string outputFileName, Bundle bundle, string baseFolder)
+        public BundleFileEventArgs(string outputFileName, Bundle bundle, string baseFolder, bool containsChanges)
         {
+            ContainsChanges = containsChanges;
             OutputFileName = outputFileName;
             Bundle = bundle;
             BaseFolder = baseFolder;
         }
+
+        public bool ContainsChanges { get; set; }
 
         public Bundle Bundle { get; set; }
 

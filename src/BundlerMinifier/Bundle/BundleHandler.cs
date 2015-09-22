@@ -95,7 +95,7 @@ namespace BundlerMinifier
                 sb.AppendLine(content);
             }
 
-            bundle.Output = sb.ToString();
+            bundle.Output = sb.ToString().Trim();
         }
 
         private static bool AdjustRelativePaths(Bundle bundle)

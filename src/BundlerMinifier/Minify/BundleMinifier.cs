@@ -58,9 +58,18 @@ namespace BundlerMinifier
 
                     if (!minifier.Errors.Any())
                     {
-                        OnBeforeWritingMinFile(file, minFile, bundle);
-                        File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
-                        OnAfterWritingMinFile(file, minFile, bundle);
+                        bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
+
+                        OnBeforeWritingMinFile(file, minFile, bundle, containsChanges);
+
+                        if (containsChanges)
+                        {
+                            File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
+                        }
+
+                        GzipFile(minFile, bundle, containsChanges);
+
+                        OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
                     }
                     else
                     {
@@ -81,9 +90,18 @@ namespace BundlerMinifier
 
                             if (!minifier.Errors.Any())
                             {
-                                OnBeforeWritingMinFile(file, minFile, bundle);
-                                File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
-                                OnAfterWritingMinFile(file, minFile, bundle);
+                                bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
+
+                                OnBeforeWritingMinFile(file, minFile, bundle, containsChanges);
+
+                                if (containsChanges)
+                                {
+                                    File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
+                                }
+
+                                OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
+
+                                GzipFile(minFile, bundle, containsChanges);
                             }
                             else
                             {
@@ -94,8 +112,6 @@ namespace BundlerMinifier
                         result.SourceMap = writer.ToString();
                     }
                 }
-
-                GzipFile(minFile, bundle);
             }
             catch (Exception ex)
             {
@@ -127,11 +143,18 @@ namespace BundlerMinifier
 
                 if (!minifier.Errors.Any())
                 {
-                    OnBeforeWritingMinFile(file, minFile, bundle);
-                    File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
-                    OnAfterWritingMinFile(file, minFile, bundle);
+                    bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
 
-                    GzipFile(minFile, bundle);
+                    OnBeforeWritingMinFile(file, minFile, bundle, containsChanges);
+
+                    if (containsChanges)
+                    {
+                        File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
+                    }
+
+                    OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
+
+                    GzipFile(minFile, bundle, containsChanges);
                 }
                 else
                 {
@@ -169,11 +192,18 @@ namespace BundlerMinifier
 
                 if (!result.Errors.Any())
                 {
-                    OnBeforeWritingMinFile(file, minFile, bundle);
-                    File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
-                    OnAfterWritingMinFile(file, minFile, bundle);
+                    bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
 
-                    GzipFile(minFile, bundle);
+                    OnBeforeWritingMinFile(file, minFile, bundle, containsChanges);
+
+                    if (containsChanges)
+                    {
+                        File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
+                    }
+
+                    OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
+
+                    GzipFile(minFile, bundle, containsChanges);
                 }
                 else
                 {
@@ -203,22 +233,26 @@ namespace BundlerMinifier
             return minResult;
         }
 
-        private static void GzipFile(string sourceFile, Bundle bundle)
+        private static void GzipFile(string sourceFile, Bundle bundle, bool containsChanges)
         {
             if (!bundle.Minify.ContainsKey("gzip") || !bundle.Minify["gzip"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
                 return;
 
             var gzipFile = sourceFile + ".gz";
-            OnBeforeWritingGzipFile(sourceFile, gzipFile, bundle);
 
-            using (var sourceStream = File.OpenRead(sourceFile))
-            using (var targetStream = File.OpenWrite(gzipFile))
+            OnBeforeWritingGzipFile(sourceFile, gzipFile, bundle, containsChanges);
+
+            if (containsChanges)
             {
-                var gzipStream = new GZipStream(targetStream, CompressionMode.Compress);
-                sourceStream.CopyTo(gzipStream);
+                using (var sourceStream = File.OpenRead(sourceFile))
+                using (var targetStream = File.OpenWrite(gzipFile))
+                {
+                    var gzipStream = new GZipStream(targetStream, CompressionMode.Compress);
+                    sourceStream.CopyTo(gzipStream);
+                }
             }
 
-            OnAfterWritingGzipFile(sourceFile, gzipFile, bundle);
+            OnAfterWritingGzipFile(sourceFile, gzipFile, bundle, containsChanges);
         }
 
         internal static void AddAjaxminErrors(Minifier minifier, MinificationResult minResult)
@@ -251,35 +285,35 @@ namespace BundlerMinifier
             }
         }
 
-        public static void OnBeforeWritingMinFile(string file, string minFile, Bundle bundle)
+        public static void OnBeforeWritingMinFile(string file, string minFile, Bundle bundle, bool containsChanges)
         {
             if (BeforeWritingMinFile != null)
             {
-                BeforeWritingMinFile(null, new MinifyFileEventArgs(file, minFile, bundle));
+                BeforeWritingMinFile(null, new MinifyFileEventArgs(file, minFile, bundle, containsChanges));
             }
         }
 
-        public static void OnAfterWritingMinFile(string file, string minFile, Bundle bundle)
+        public static void OnAfterWritingMinFile(string file, string minFile, Bundle bundle, bool containsChanges)
         {
             if (AfterWritingMinFile != null)
             {
-                AfterWritingMinFile(null, new MinifyFileEventArgs(file, minFile, bundle));
+                AfterWritingMinFile(null, new MinifyFileEventArgs(file, minFile, bundle, containsChanges));
             }
         }
 
-        public static void OnBeforeWritingGzipFile(string minFile, string gzipFile, Bundle bundle)
+        public static void OnBeforeWritingGzipFile(string minFile, string gzipFile, Bundle bundle, bool containsChanges)
         {
             if (BeforeWritingGzipFile != null)
             {
-                BeforeWritingGzipFile(null, new MinifyFileEventArgs(minFile, gzipFile, bundle));
+                BeforeWritingGzipFile(null, new MinifyFileEventArgs(minFile, gzipFile, bundle, containsChanges));
             }
         }
 
-        public static void OnAfterWritingGzipFile(string minFile, string gzipFile, Bundle bundle)
+        public static void OnAfterWritingGzipFile(string minFile, string gzipFile, Bundle bundle, bool containsChanges)
         {
             if (AfterWritingGzipFile != null)
             {
-                AfterWritingGzipFile(null, new MinifyFileEventArgs(minFile, gzipFile, bundle));
+                AfterWritingGzipFile(null, new MinifyFileEventArgs(minFile, gzipFile, bundle, containsChanges));
             }
         }
 
@@ -287,7 +321,7 @@ namespace BundlerMinifier
         {
             if (ErrorMinifyingFile != null)
             {
-                var e = new MinifyFileEventArgs(result.FileName, null, null);
+                var e = new MinifyFileEventArgs(result.FileName, null, null, false);
                 e.Result = result;
 
                 ErrorMinifyingFile(null, e);

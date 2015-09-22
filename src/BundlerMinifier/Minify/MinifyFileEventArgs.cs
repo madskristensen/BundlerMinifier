@@ -4,17 +4,20 @@ namespace BundlerMinifier
 {
     public class MinifyFileEventArgs : EventArgs
     {
-        public MinifyFileEventArgs(string originalFile, string resultFile)
+        public MinifyFileEventArgs(string originalFile, string resultFile, bool containsChanges)
         {
+            ContainsChanges = containsChanges;
             OriginalFile = originalFile;
             ResultFile = resultFile;
         }
 
-        public MinifyFileEventArgs(string originalFile, string resultFile, Bundle bundle)
-            : this(originalFile, resultFile)
+        public MinifyFileEventArgs(string originalFile, string resultFile, Bundle bundle, bool containsChanges)
+            : this(originalFile, resultFile, containsChanges)
         {
             Bundle = bundle;
         }
+
+        public bool ContainsChanges { get; set; }
 
         public string OriginalFile { get; private set; }
 

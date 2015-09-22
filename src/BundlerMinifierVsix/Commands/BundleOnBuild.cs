@@ -50,8 +50,7 @@ namespace BundlerMinifierVsix.Commands
                 return;
 
             // Some projects don't have a .csproj file and will therefore not be able to execute the build task.
-            if (item.ContainingProject.Kind.Equals("{E24C65DC-7377-472B-9ABA-BC803B73C61A}", StringComparison.OrdinalIgnoreCase) || // Website Project
-                item.ContainingProject.Kind.Equals("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}", StringComparison.OrdinalIgnoreCase))   // ASP.NET 5
+            if (item.ContainingProject.IsKind(ProjectTypes.WEBSITE_PROJECT) || item.ContainingProject.IsKind(ProjectTypes.ASPNET_5))
             {
                 button.Visible = true;
                 button.Enabled = false;
