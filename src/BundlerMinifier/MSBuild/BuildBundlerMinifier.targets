@@ -3,7 +3,7 @@
 
     <UsingTask AssemblyFile="..\tools\BundlerMinifier.exe" TaskName="BundlerMinifier.BundlerBuildTask"/>
 
-    <Target Name="BundleMinify" AfterTargets="Build">
+    <Target Name="BundleMinify" AfterTargets="Build" Condition="'$(RunBundleMinify)' != 'False'">
         <BundlerMinifier.BundlerBuildTask FileName="$(MSBuildProjectDirectory)\bundleconfig.json" />
     </Target>
 
