@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
@@ -62,11 +63,33 @@ namespace BundlerMinifierVsix.Commands
 
             foreach (Project project in projects)
             {
-                string config = project.GetConfigFile();
+                string folder = Path.GetDirectoryName(project.GetRootFolder());
+                var configs = GetFiles(folder, Constants.CONFIG_FILENAME);
 
-                if (!string.IsNullOrEmpty(config))
-                    BundleService.Process(config);
+                foreach (string config in configs)
+                {
+                    if (!string.IsNullOrEmpty(config))
+                        BundleService.Process(config);
+                }
             }
+        }
+
+        private static List<string> GetFiles(string path, string pattern)
+        {
+            var files = new List<string>();
+
+            if (path.Contains("node_modules"))
+                return files;
+
+            try
+            {
+                files.AddRange(Directory.GetFiles(path, pattern, SearchOption.TopDirectoryOnly));
+                foreach (var directory in Directory.GetDirectories(path))
+                    files.AddRange(GetFiles(directory, pattern));
+            }
+            catch { }
+
+            return files;
         }
     }
 }
