@@ -1,11 +1,6 @@
 # Roadmap
 
 - [ ] Use FileSystemWatcher (#28)
-- [x] Task Runner Explorer integration
-- [x] Command line support
-- [x] Don't check out files with no changes
-- [x] Re-minify support for multiple config files (#49)
-- [x] MSBuild task now supports conditions
 
 Features that have a checkmark are complete and available for
 download in the
@@ -15,6 +10,16 @@ download in the
 
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
+
+## 1.4
+
+**2015-09-23**
+
+- [x] Task Runner Explorer integration
+- [x] Command line support
+- [x] Don't check out files with no changes
+- [x] Re-minify support for multiple config files (#49)
+- [x] MSBuild task now supports conditions
 
 ## 1.3
 
