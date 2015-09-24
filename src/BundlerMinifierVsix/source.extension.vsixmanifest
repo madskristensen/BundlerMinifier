@@ -5,6 +5,7 @@
         <DisplayName>Bundler &amp; Minifier</DisplayName>
         <Description xml:space="preserve">Adds support for bundling and minifying JavaScript, CSS and HTML files in any project.</Description>
         <License>Resources\LICENSE</License>
+        <ReleaseNotes>https://github.com/madskristensen/BundlerMinifier/blob/master/CHANGELOG.md</ReleaseNotes>
         <Icon>Resources\icon.png</Icon>
         <PreviewImage>Resources\preview.png</PreviewImage>
         <Tags>bundle, bundling, minify, minification, js, css, html</Tags>
