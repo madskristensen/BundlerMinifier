@@ -35,6 +35,7 @@ namespace BundlerMinifier
             BundleFileProcessor processor = new BundleFileProcessor();
             processor.Processing += (s, e) => { RemoveReadonlyFlagFromFile(e.Bundle.GetAbsoluteOutputFile()); };
             processor.AfterBundling += Processor_AfterProcess;
+            BundleMinifier.BeforeWritingMinFile += (s, e) => { RemoveReadonlyFlagFromFile(e.ResultFile); };
             processor.BeforeWritingSourceMap += (s, e) => { RemoveReadonlyFlagFromFile(e.ResultFile); };
             processor.AfterWritingSourceMap += Processor_AfterWritingSourceMap;
             BundleMinifier.ErrorMinifyingFile += BundleMinifier_ErrorMinifyingFile;
