@@ -8,6 +8,7 @@
         <owners>Mads Kristensen</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <projectUrl>https://github.com/madskristensen/BundlerMinifier</projectUrl>
+        <iconUrl>https://raw.githubusercontent.com/madskristensen/BundlerMinifier/master/src/BundlerMinifierVsix/Resources/icon.png</iconUrl>
         <description>Bundles and minifies CSS, JS and HTML files</description>
         <releaseNotes>Initial release.</releaseNotes>
         <copyright>Copyright 2015</copyright>
@@ -17,6 +18,7 @@
     <files>
         <file src="BuildBundlerMinifier.targets" target="build" />
         <file src="..\*.dll" target="tools" />
-        <file src="..\*.exe" target="tools" />
+        <file src="..\BundlerMinifier.exe" target="tools" />
+        <file src="..\BundlerMinifier.pdb" target="tools" />
     </files>
 </package>
