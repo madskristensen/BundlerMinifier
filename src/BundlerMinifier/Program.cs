@@ -9,6 +9,12 @@ namespace BundlerMinifier
     {
         static int Main(params string[] args)
         {
+            if (args.Length == 0)
+            {
+                Console.WriteLine("\x1B[33mUsage: BundlerMinifier <configPath> [configFile]");
+                return 0;
+            }
+
             string configPath = args[0];
             string file = args.Length > 1 ? args[1] : null;
             var configs = GetConfigs(configPath, file);
