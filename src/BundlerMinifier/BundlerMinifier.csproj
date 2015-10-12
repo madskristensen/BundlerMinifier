@@ -82,6 +82,7 @@
     <Compile Include="Bundle\BundleHandler.cs" />
     <Compile Include="Bundle\BundleFileProcessor.cs" />
     <Compile Include="Minify\MinificationResult.cs" />
+    <Compile Include="MSBuild\BundlerCleanTask.cs" />
     <Compile Include="MSBuild\BundlerBuildTask.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
