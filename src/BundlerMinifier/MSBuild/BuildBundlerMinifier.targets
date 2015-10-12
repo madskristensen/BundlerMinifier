@@ -9,9 +9,14 @@
     </PropertyGroup>
 
     <UsingTask AssemblyFile="..\tools\BundlerMinifier.exe" TaskName="BundlerMinifier.BundlerBuildTask"/>
+    <UsingTask AssemblyFile="..\tools\BundlerMinifier.exe" TaskName="BundlerMinifier.BundlerCleanTask"/>
 
-    <Target Name="BundleMinify" Condition="'$(RunBundleMinify)' != 'False'">
-        <BundlerMinifier.BundlerBuildTask FileName="$(MSBuildProjectDirectory)\bundleconfig.json" />
-    </Target>
+  <Target Name="BundleMinify" Condition="'$(RunBundleMinify)' != 'False'">
+    <BundlerMinifier.BundlerBuildTask FileName="$(MSBuildProjectDirectory)\bundleconfig.json" />
+  </Target>
+
+  <Target Name="BundleMinifyClean" AfterTargets="CoreClean" Condition="'$(RunBundleMinify)' != 'False'">
+    <BundlerMinifier.BundlerCleanTask FileName="$(MSBuildProjectDirectory)\bundleconfig.json" />
+  </Target>
 
 </Project>

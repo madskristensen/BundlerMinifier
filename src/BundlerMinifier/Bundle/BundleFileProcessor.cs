@@ -40,6 +40,21 @@ namespace BundlerMinifier
             }
         }
 
+        public void DeleteOutputFiles(string bundleFileName)
+        {
+            var bundles = BundleHandler.GetBundles(bundleFileName);
+            foreach (Bundle bundle in bundles)
+            {
+                var outputFile = bundle.GetAbsoluteOutputFile();
+                var minFile = BundleFileProcessor.GetMinFileName(outputFile);
+                var mapFile = minFile + ".map";
+
+                if (File.Exists(outputFile)) File.Delete(outputFile);
+                if (File.Exists(minFile)) File.Delete(minFile);
+                if (File.Exists(mapFile)) File.Delete(mapFile);
+            }
+        }
+
         public void SourceFileChanged(string bundleFile, string sourceFile)
         {
             var bundles = BundleHandler.GetBundles(bundleFile);
