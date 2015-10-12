@@ -60,7 +60,10 @@ namespace BundlerMinifier
         {
             OnProcessing(bundle, baseFolder);
 
-            if (bundle.GetAbsoluteInputFiles().Count > 1 || bundle.InputFiles.FirstOrDefault() != bundle.OutputFileName)
+            var inputLastModified = bundle.GetAbsoluteInputFiles().Concat(new[] { bundle.FileName }).Max(inputFile => File.GetLastWriteTimeUtc(inputFile));
+
+            if ((bundle.GetAbsoluteInputFiles().Count > 1 || bundle.InputFiles.FirstOrDefault() != bundle.OutputFileName)
+                && inputLastModified > File.GetLastWriteTimeUtc(bundle.OutputFileName))
             {
                 BundleHandler.ProcessBundle(baseFolder, bundle);
 
@@ -78,13 +81,15 @@ namespace BundlerMinifier
                 OnAfterBundling(bundle, baseFolder, containsChanges);
             }
 
-            if (bundle.Minify.ContainsKey("enabled") && bundle.Minify["enabled"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
+            string minFile = GetMinFileName(bundle.GetAbsoluteOutputFile());
+
+            if (bundle.Minify.ContainsKey("enabled") && bundle.Minify["enabled"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase)
+                && inputLastModified > File.GetLastWriteTimeUtc(minFile))
             {
                 var result = BundleMinifier.MinifyBundle(bundle);
 
                 if (result != null && bundle.SourceMap && !string.IsNullOrEmpty(result.SourceMap))
                 {
-                    string minFile = GetMinFileName(bundle.GetAbsoluteOutputFile());
                     string mapFile = minFile + ".map";
                     bool smChanges = FileHelpers.HasFileContentChanged(mapFile, result.SourceMap);
 
