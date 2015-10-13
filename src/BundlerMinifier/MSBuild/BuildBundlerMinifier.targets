@@ -3,8 +3,8 @@
 
     <PropertyGroup>
         <BuildDependsOn>
-            $(BuildDependsOn);
-            BundleMinify
+            BundleMinify;
+            $(BuildDependsOn)
         </BuildDependsOn>
     </PropertyGroup>
 
