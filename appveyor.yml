@@ -7,7 +7,7 @@ install:
 before_build:
   - ps: Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
   - ps: Vsix-IncrementNuspecVersion .\src\BundlerMinifier\MSBuild\*.nuspec
-  - ps: Vsix-TokenReplacement src\BundlerMinifierVsix\BundlerMinifierPackage.cs 'Version = "([0-9\\.]+)"' 'Version = "{version}"'
+  - ps: Vsix-TokenReplacement src\BundlerMinifier\Constants.cs 'VERSION = "([0-9\\.]+)"' 'VERSION = "{version}"'
 
 build_script:
   - nuget restore -Verbosity quiet

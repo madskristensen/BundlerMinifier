@@ -24,13 +24,14 @@ namespace BundlerMinifier
         {
             FileInfo configFile = new FileInfo(FileName);
 
-            Log.LogMessage(MessageImportance.High, Environment.NewLine + "Bundler: Begin processing " + configFile.Name);
-
             if (!configFile.Exists)
             {
                 Log.LogWarning(configFile.FullName + " does not exist");
                 return true;
             }
+
+            Log.LogMessage(MessageImportance.High, Environment.NewLine + "Bundler: Begin processing " + configFile.Name);
+            Telemetry.SetDeviceName("MSBuild");
 
             BundleFileProcessor processor = new BundleFileProcessor();
             processor.Processing += (s, e) => { RemoveReadonlyFlagFromFile(e.Bundle.GetAbsoluteOutputFile()); };

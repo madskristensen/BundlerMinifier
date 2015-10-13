@@ -53,6 +53,8 @@ namespace BundlerMinifier
                 if (File.Exists(minFile)) File.Delete(minFile);
                 if (File.Exists(mapFile)) File.Delete(mapFile);
             }
+
+            Telemetry.TrackEvent("Delete output files");
         }
 
         public void SourceFileChanged(string bundleFile, string sourceFile)
@@ -118,6 +120,8 @@ namespace BundlerMinifier
                     OnAfterWritingSourceMap(minFile, mapFile, smChanges);
                 }
             }
+
+            Telemetry.TrackCompile(bundle);
         }
 
         public static string GetMinFileName(string file)

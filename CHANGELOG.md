@@ -2,6 +2,8 @@
 
 - [ ] Use FileSystemWatcher (#28)
 - [x] MSBuild task now uses BuildDependsOn
+- [x] MSBuild: Clean task added
+- [x] No longer minifies unchanged files
 
 Features that have a checkmark are complete and available for
 download in the

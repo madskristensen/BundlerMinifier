@@ -15,6 +15,8 @@ namespace BundlerMinifier
                 return 0;
             }
 
+            Telemetry.SetDeviceName("Command line");
+
             string configPath = args[0];
             string file = args.Length > 1 ? args[1] : null;
             var configs = GetConfigs(configPath, file);
@@ -36,6 +38,7 @@ namespace BundlerMinifier
             catch (Exception ex)
             {
                 Console.WriteLine($"\x1B[33m{ex.Message}");
+                Telemetry.TrackException(ex);
                 return 1;
             }
         }

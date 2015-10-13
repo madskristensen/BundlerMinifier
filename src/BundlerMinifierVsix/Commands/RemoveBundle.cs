@@ -93,6 +93,8 @@ namespace BundlerMinifierVsix.Commands
                 {
                     BundleHandler.RemoveBundle(bundle.FileName, bundle);
                 }
+
+                Telemetry.TrackEvent("VS remove bundle");
             }
             catch (Exception ex)
             {

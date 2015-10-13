@@ -30,6 +30,8 @@ namespace BundlerMinifier
                 return true;
             }
 
+            Telemetry.SetDeviceName("MSBuild");
+
             BundleFileProcessor processor = new BundleFileProcessor();
             processor.DeleteOutputFiles(configFile.FullName);
 
@@ -37,6 +39,6 @@ namespace BundlerMinifier
 
             return true;
         }
-        
+
     }
 }

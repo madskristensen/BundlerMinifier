@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.IO;
-using System.Linq;
+using BundlerMinifier;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 
@@ -72,6 +72,8 @@ namespace BundlerMinifierVsix.Commands
                         BundleService.Process(config);
                 }
             }
+
+            Telemetry.TrackEvent("VS update all bundles");
         }
 
         private static List<string> GetFiles(string path, string pattern)

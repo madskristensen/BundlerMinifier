@@ -2,6 +2,7 @@
 using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
+using BundlerMinifier;
 using Microsoft.VisualStudio.Shell;
 
 namespace BundlerMinifierVsix.Commands
@@ -87,7 +88,10 @@ namespace BundlerMinifierVsix.Commands
             }
 
             if (!string.IsNullOrEmpty(file))
+            {
                 BundleService.Process(file);
+                Telemetry.TrackEvent("VS update bundle");
+            }
         }
     }
 }

@@ -44,6 +44,10 @@
       <HintPath>..\..\packages\AjaxMin.5.14.5506.26202\lib\net40\AjaxMin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=1.2.0.5639, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.ApplicationInsights.1.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="Minimatch, Version=1.1.0.0, Culture=neutral, PublicKeyToken=0cadeb0b849c27c0, processorArchitecture=MSIL">
@@ -70,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bundle\Bundle.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Helpers\FileHelpers.cs" />
     <Compile Include="Minify\BundleMinifier.cs" />
     <Compile Include="Minify\CssRelativePathAdjuster.cs" />
@@ -86,6 +91,7 @@
     <Compile Include="MSBuild\BundlerBuildTask.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Telemetry.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MSBuild\BuildBundlerMinifier.nuspec">
