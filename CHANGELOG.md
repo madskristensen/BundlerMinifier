@@ -1,9 +1,6 @@
 # Roadmap
 
 - [ ] Use FileSystemWatcher (#28)
-- [x] MSBuild task now uses BuildDependsOn
-- [x] MSBuild: Clean task added
-- [x] No longer minifies unchanged files
 
 Features that have a checkmark are complete and available for
 download in the
@@ -13,6 +10,14 @@ download in the
 
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
+
+## 1.5
+
+**2015-10-13**
+
+- [x] MSBuild task now uses BuildDependsOn
+- [x] MSBuild: Clean task added
+- [x] No longer minifies unchanged files
 
 ## 1.4
 
