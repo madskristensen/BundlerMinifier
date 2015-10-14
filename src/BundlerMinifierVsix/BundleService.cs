@@ -70,6 +70,9 @@ namespace BundlerMinifierVsix
         {
             List<Bundle> list = new List<Bundle>();
 
+            if (string.IsNullOrEmpty(configFile))
+                return list;
+
             try
             {
                 var bundles = BundleHandler.GetBundles(configFile);

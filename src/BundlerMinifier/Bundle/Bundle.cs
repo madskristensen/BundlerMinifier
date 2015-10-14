@@ -41,6 +41,10 @@ namespace BundlerMinifier
         internal List<string> GetAbsoluteInputFiles()
         {
             List<string> files = new List<string>();
+
+            if (!InputFiles.Any())
+                return files;
+
             string folder = new DirectoryInfo(Path.GetDirectoryName(FileName)).FullName;
             string ext = Path.GetExtension(InputFiles.First());
             Options options = new Options { AllowWindowsPaths = true };
