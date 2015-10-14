@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.VisualStudio.Text.Editor;
 
@@ -42,13 +43,14 @@ namespace BundlerMinifierVsix
             _adornment.Source = GetImage();
             _adornment.ToolTip = "Click to toggle visibility";
             _adornment.Opacity = _currentOpacity;
+            _adornment.SetValue(RenderOptions.BitmapScalingModeProperty, BitmapScalingMode.HighQuality);
 
             _adornment.MouseEnter += (s, e) => { _adornment.Opacity = 1D; };
             _adornment.MouseLeave += (s, e) => { _adornment.Opacity = _currentOpacity; };
             _adornment.MouseLeftButtonUp += (s, e) => { OnVisibilityChanged(_currentOpacity == 0); };
         }
 
-        private static BitmapFrame GetImage()
+        private static ImageSource GetImage()
         {
             string assembly = Assembly.GetExecutingAssembly().Location;
             string folder = Path.GetDirectoryName(assembly);
