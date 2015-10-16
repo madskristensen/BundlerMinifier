@@ -1,7 +1,6 @@
 # Roadmap
 
 - [ ] Use FileSystemWatcher (#28)
-- [x] Don't check unchanged output out of source control (#73)
 
 Features that have a checkmark are complete and available for
 download in the
@@ -14,11 +13,12 @@ on the official Visual Studio extension gallery.
 
 ## 1.5
 
-**2015-10-13**
+**2015-10-16**
 
 - [x] MSBuild task now uses BuildDependsOn
 - [x] MSBuild: Clean task added
 - [x] No longer minifies unchanged files
+- [x] Don't check unchanged output out of source control (#73)
 
 ## 1.4
 
