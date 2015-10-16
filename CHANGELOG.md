@@ -1,6 +1,7 @@
 # Roadmap
 
 - [ ] Use FileSystemWatcher (#28)
+- [x] Don't check unchanged output out of source control (#73)
 
 Features that have a checkmark are complete and available for
 download in the

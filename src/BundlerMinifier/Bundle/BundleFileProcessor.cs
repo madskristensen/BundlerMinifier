@@ -75,12 +75,10 @@ namespace BundlerMinifier
 
         private void ProcessBundle(string baseFolder, Bundle bundle)
         {
-            OnProcessing(bundle, baseFolder);
-
             var inputLastModified = bundle.GetAbsoluteInputFiles().Concat(new[] { bundle.FileName }).Max(inputFile => File.GetLastWriteTimeUtc(inputFile));
 
             if ((bundle.GetAbsoluteInputFiles().Count > 1 || bundle.InputFiles.FirstOrDefault() != bundle.OutputFileName)
-                && inputLastModified > File.GetLastWriteTimeUtc(bundle.OutputFileName))
+                && inputLastModified > File.GetLastWriteTimeUtc(bundle.GetAbsoluteOutputFile()))
             {
                 BundleHandler.ProcessBundle(baseFolder, bundle);
 
@@ -89,13 +87,13 @@ namespace BundlerMinifier
 
                 if (containsChanges)
                 {
+                    OnProcessing(bundle, baseFolder);
                     DirectoryInfo outputFileDirectory = Directory.GetParent(outputFile);
                     outputFileDirectory.Create();
 
                     File.WriteAllText(outputFile, bundle.Output, new UTF8Encoding(false));
+                    OnAfterBundling(bundle, baseFolder, containsChanges);
                 }
-
-                OnAfterBundling(bundle, baseFolder, containsChanges);
             }
 
             string minFile = GetMinFileName(bundle.GetAbsoluteOutputFile());
@@ -110,14 +108,12 @@ namespace BundlerMinifier
                     string mapFile = minFile + ".map";
                     bool smChanges = FileHelpers.HasFileContentChanged(mapFile, result.SourceMap);
 
-                    OnBeforeWritingSourceMap(minFile, mapFile, smChanges);
-
                     if (smChanges)
                     {
+                        OnBeforeWritingSourceMap(minFile, mapFile, smChanges);
                         File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(false));
+                        OnAfterWritingSourceMap(minFile, mapFile, smChanges);
                     }
-
-                    OnAfterWritingSourceMap(minFile, mapFile, smChanges);
                 }
             }
 

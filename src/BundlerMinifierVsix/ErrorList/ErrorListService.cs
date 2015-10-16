@@ -30,7 +30,7 @@ namespace BundlerMinifierVsix
                 else
                 {
                     ErrorList.CleanErrors(result.FileName);
-                    BundlerMinifierPackage._dte.StatusBar.Text = $"{Path.GetFileName(result.FileName)} compiled";
+                    BundlerMinifierPackage._dte.StatusBar.Text = $"{Path.GetFileName(result.FileName)} minified";
                 }
             }), DispatcherPriority.ApplicationIdle, null);
         }

@@ -44,6 +44,8 @@ namespace BundlerMinifierVsix
             _adornment.Foreground = Brushes.Gray;
             _adornment.ToolTip = "Click to toggle visibility";
             _adornment.Opacity = _currentOpacity;
+            _adornment.SetValue(TextOptions.TextRenderingModeProperty, TextRenderingMode.Aliased);
+            _adornment.SetValue(TextOptions.TextFormattingModeProperty, TextFormattingMode.Ideal);
 
             _adornment.MouseEnter += (s, e) => { _adornment.Opacity = 1; };
             _adornment.MouseLeave += (s, e) => { _adornment.Opacity = _currentOpacity; };

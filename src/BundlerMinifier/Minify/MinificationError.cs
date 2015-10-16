@@ -12,7 +12,7 @@ namespace BundlerMinifier
     public class MinificationError
     {
         /// <summary>
-        /// The absolute file path of the file being compiled.
+        /// The absolute file path of the file being minified.
         /// </summary>
         public string FileName { get; set; }
 
