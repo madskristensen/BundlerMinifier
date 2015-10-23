@@ -19,10 +19,19 @@ after_test:
 artifacts:
   - path: src\BundlerMinifier\**\*.nupkg
 
+before_deploy:
+  - ps: Vsix-CreateChocolatyPackage
+
 deploy:
-- provider: NuGet
-  api_key:
-    secure: 6xBu/05BWJDPa2PRkxEH3PHU/caLvy2lzf1eWdRBGXwSCTejHtI+6e0V4s2LaVri
+  - provider: NuGet
+    api_key:
+      secure: 6xBu/05BWJDPa2PRkxEH3PHU/caLvy2lzf1eWdRBGXwSCTejHtI+6e0V4s2LaVri
+
+  - provider: Environment
+    name: Chocolatey
+    on:
+      branch: master
+      appveyor_repo_commit_message_extended: /\[release\]/
 
 after_deploy:
   - ps: Vsix-PublishToGallery .\src\BundlerMinifierVsix\**\*.vsix
