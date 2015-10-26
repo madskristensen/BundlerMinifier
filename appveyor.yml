@@ -21,7 +21,7 @@ artifacts:
     name: NuGet package
 
 before_deploy:
-  - ps: Vsix-CreateChocolatyPackage
+  - ps: Vsix-CreateChocolatyPackage -packageId bundlerminifier
 
 deploy:
   - provider: NuGet
