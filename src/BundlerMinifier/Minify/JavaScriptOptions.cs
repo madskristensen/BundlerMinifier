@@ -7,6 +7,7 @@ namespace BundlerMinifier
         public static CodeSettings GetSettings(Bundle bundle)
         {
             CodeSettings settings = new CodeSettings();
+            settings.AlwaysEscapeNonAscii = true;
 
             settings.PreserveImportantComments = GetValue(bundle, "preserveImportantComments", true) == "True";
             settings.TermSemicolons = GetValue(bundle, "termSemicolons", true) == "True";
