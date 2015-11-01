@@ -9,13 +9,16 @@ namespace BundlerMinifier
 {
     public static class BundleHandler
     {
-        public static void AddBundle(string configFile, Bundle bundle)
+        public static void AddBundle(string configFile, Bundle newBundle)
         {
-            IEnumerable<Bundle> existing = GetBundles(configFile);
+            IEnumerable<Bundle> existing = GetBundles(configFile)
+                .Where(x => !x.OutputFileName.Equals(newBundle.OutputFileName));
+
             List<Bundle> bundles = new List<Bundle>();
+
             bundles.AddRange(existing);
-            bundles.Add(bundle);
-            bundle.FileName = configFile;
+            bundles.Add(newBundle);
+            newBundle.FileName = configFile;
 
             JsonSerializerSettings settings = new JsonSerializerSettings()
             {
