@@ -66,6 +66,7 @@
     <None Include="artifacts\encoding\encoding.json" />
     <None Include="artifacts\globbingSubFolders.json" />
     <None Include="artifacts\globbingOneFolder.json" />
+    <None Include="artifacts\error.json" />
     <None Include="artifacts\test2.json" />
     <None Include="artifacts\test1.json" />
   </ItemGroup>
@@ -73,6 +74,7 @@
     <Content Include="artifacts\encoding.js" />
     <Content Include="artifacts\encoding\utf-with-bom.js" />
     <Content Include="artifacts\encoding\utf-without-bom.js" />
+    <Content Include="artifacts\error.css" />
     <Content Include="artifacts\file2.html" />
     <Content Include="artifacts\file1.html" />
     <Content Include="artifacts\file2.css" />

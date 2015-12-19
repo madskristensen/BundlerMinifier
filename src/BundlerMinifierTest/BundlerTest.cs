@@ -117,5 +117,14 @@ namespace BundlerMinifierTest
             string jsResult = File.ReadAllText("../../artifacts/foo.min.js");
             Assert.AreEqual("var file1=1,file2=2;", jsResult);
         }
+
+        [TestMethod]
+        public void InvalidCss()
+        {
+            _processor.Process(TEST_BUNDLE.Replace("test1", "error"));
+
+            bool result = File.Exists("../../artifacts/error.min.css");
+            Assert.IsFalse(result);
+        }
     }
 }

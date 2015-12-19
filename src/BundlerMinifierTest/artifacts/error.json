@@ -1,0 +1,12 @@
+﻿[
+	{
+		"outputFileName": "error.css",
+		"inputFiles": [
+			"error.css"
+		],
+		"minify": {
+			"enabled": true
+		},
+		"includeInProject": true
+	}
+]
