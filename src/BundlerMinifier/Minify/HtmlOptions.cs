@@ -16,7 +16,7 @@ namespace BundlerMinifier
             settings.CustomAngularDirectiveList = GetValue(bundle, "customAngularDirectiveList");
             settings.MinifyAngularBindingExpressions = GetValue(bundle, "minifyAngularBindingExpressions") == "True";
             settings.MinifyEmbeddedCssCode = GetValue(bundle, "minifyEmbeddedCssCode", true) == "True";
-            settings.MinifyEmbeddedJsCode= GetValue(bundle, "minifyEmbeddedJsCode", true) == "True";
+            settings.MinifyEmbeddedJsCode = GetValue(bundle, "minifyEmbeddedJsCode", true) == "True";
             settings.MinifyInlineCssCode = GetValue(bundle, "minifyInlineCssCode", true) == "True";
             settings.MinifyInlineJsCode = GetValue(bundle, "minifyInlineJsCode", true) == "True";
             settings.MinifyKnockoutBindingExpressions = GetValue(bundle, "minifyKnockoutBindingExpressions") == "True";
@@ -32,6 +32,17 @@ namespace BundlerMinifier
                 settings.AttributeQuotesRemovalMode = HtmlAttributeQuotesRemovalMode.Html5;
             else if (quotes == "keepQuotes")
                 settings.AttributeQuotesRemovalMode = HtmlAttributeQuotesRemovalMode.KeepQuotes;
+
+            string whitespace = GetValue(bundle, "whitespaceMinificationMode", "medium");
+
+            if (whitespace == "aggressive")
+                settings.WhitespaceMinificationMode = WhitespaceMinificationMode.Aggressive;
+            else if (whitespace == "medium")
+                settings.WhitespaceMinificationMode = WhitespaceMinificationMode.Medium;
+            else if (whitespace == "none")
+                settings.WhitespaceMinificationMode = WhitespaceMinificationMode.None;
+            else if (whitespace == "safe")
+                settings.WhitespaceMinificationMode = WhitespaceMinificationMode.Safe;
 
             return settings;
         }

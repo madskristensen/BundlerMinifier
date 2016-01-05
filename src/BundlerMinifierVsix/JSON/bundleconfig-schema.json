@@ -154,6 +154,11 @@
               "description": "HTML only. Remove tags without content (except for textarea, tr, th and td tags, and tags with class, id, name, role, src and data-* attributes).",
               "type": "boolean",
               "default": false
+            },
+            "whitespaceMinificationMode": {
+              "description": "HTML only. Sets the whitespace minification mode of HTML.",
+              "enum": [ "aggressive", "medium", "none", "safe" ],
+              "default": "medium"
             }
           }
         }

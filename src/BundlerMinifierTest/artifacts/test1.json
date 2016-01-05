@@ -29,9 +29,10 @@
 			"file1.html",
 			"file2.html"
 		],
-		"minify": {
-			"enabled": true
-		},
+    "minify": {
+      "enabled": true,
+      "whitespaceMinificationMode":  "aggressive"
+    },
 		"includeInProject": true
 	}
 ]

@@ -105,7 +105,7 @@ namespace BundlerMinifierTest
 
             // HTML
             string htmlResult = File.ReadAllText("../../artifacts/foo.min.html");
-            Assert.AreEqual("<div>hatæ</div><span tabindex=2> <i> hat </i> </span>", htmlResult);
+            Assert.AreEqual("<div>hatæ</div><span tabindex=2><i>hat</i></span>", htmlResult);
         }
 
         [TestMethod]
