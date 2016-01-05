@@ -2,6 +2,7 @@
 
 - [ ] Use FileSystemWatcher (#28)
 - [x] Add WhitespaceMinificationMode option (#90)
+- [x] No duplicate entries on re-minify (#94)
 
 Features that have a checkmark are complete and available for
 download in the

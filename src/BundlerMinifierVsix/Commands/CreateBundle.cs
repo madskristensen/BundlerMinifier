@@ -82,6 +82,18 @@ namespace BundlerMinifierVsix.Commands
             {
                 outputFile = GetOutputFileName(inputFile, Path.GetExtension(files.First()));
             }
+            else
+            {
+                // Reminify file
+                var bundles = BundleFileProcessor.IsFileConfigured(configFile, inputFile);
+
+                if (bundles.Any())
+                {
+                    BundleService.SourceFileChanged(configFile, inputFile);
+                    Telemetry.TrackEvent("VS recompile config");
+                    return;
+                }
+            }
 
             if (string.IsNullOrEmpty(outputFile))
                 return;

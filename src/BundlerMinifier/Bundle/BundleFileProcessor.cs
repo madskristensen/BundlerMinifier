@@ -79,6 +79,33 @@ namespace BundlerMinifier
             }
         }
 
+        public static IEnumerable<Bundle> IsFileConfigured(string configFile, string sourceFile)
+        {
+            List<Bundle> list = new List<Bundle>();
+
+            try
+            {
+                var configs = BundleHandler.GetBundles(configFile);
+                string folder = Path.GetDirectoryName(configFile);
+
+                foreach (Bundle bundle in configs)
+                {
+                    foreach (string input in bundle.GetAbsoluteInputFiles())
+                    {
+                        if (input.Equals(sourceFile, StringComparison.OrdinalIgnoreCase) && !list.Contains(bundle))
+                            list.Add(bundle);
+                    }
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                Telemetry.TrackException(ex);
+                return list;
+            }
+        }
+
         private void ProcessBundle(string baseFolder, Bundle bundle)
         {
             var inputLastModified = bundle.GetAbsoluteInputFiles().Concat(new[] { bundle.FileName }).Max(inputFile => File.GetLastWriteTimeUtc(inputFile));
