@@ -52,6 +52,9 @@ namespace BundlerMinifierVsix.Listeners
 
         private void DocumentSaved(object sender, TextDocumentFileActionEventArgs e)
         {
+            if (!BundlerMinifierPackage.Options.ReRunOnSave)
+                return;
+
             if (e.FileActionType == FileActionTypes.ContentSavedToDisk)
             {
                 BundleService.Process(e.FilePath);

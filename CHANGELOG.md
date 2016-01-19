@@ -1,6 +1,7 @@
 # Roadmap
 
 - [ ] Use FileSystemWatcher (#28)
+- [x] Option to disable bundling on config change (#97)
 
 Features that have a checkmark are complete and available for
 download in the

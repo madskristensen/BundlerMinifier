@@ -16,19 +16,21 @@ namespace BundlerMinifierVsix
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(PackageGuids.guidBundlerPackageString)]
     [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
-    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
+    [ProvideOptionPage(typeof(Options), "Web", Constants.VSIX_NAME, 101, 100, true, new[] { "bundleconfig.json" }, ProvidesLocalizedCategoryName = false)]
     public sealed class BundlerMinifierPackage : Package
     {
         public static DTE2 _dte;
         public static Dispatcher _dispatcher;
         public static Package Package;
-        private SolutionEvents _solutionEvents;
+        public static Options Options;
+        SolutionEvents _solutionEvents;
 
         protected override void Initialize()
         {
             _dte = GetService(typeof(DTE)) as DTE2;
             _dispatcher = Dispatcher.CurrentDispatcher;
             Package = this;
+            Options = (Options)GetDialogPage(typeof(Options));
 
             Logger.Initialize(this, Constants.VSIX_NAME);
             Telemetry.SetDeviceName(_dte.Edition);
