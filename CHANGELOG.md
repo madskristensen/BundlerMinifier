@@ -14,6 +14,7 @@ on the official Visual Studio extension gallery.
 ## 1.8
 
 **2016-02-05**
+
 - [x] Fixed issue with dynamic .js source files (#99)
 - [x] Compiled VSIX for .NET 4.6
 
