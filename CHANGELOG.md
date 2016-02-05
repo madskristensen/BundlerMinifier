@@ -1,8 +1,6 @@
 # Roadmap
 
 - [ ] Use FileSystemWatcher (#28)
-- [x] Fixed issue with dynamic .js source files (#99)
-- [x] Compiled VSIX for .NET 4.6
 
 Features that have a checkmark are complete and available for
 download in the
@@ -12,6 +10,12 @@ download in the
 
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
+
+## 1.8
+
+**2016-02-05**
+- [x] Fixed issue with dynamic .js source files (#99)
+- [x] Compiled VSIX for .NET 4.6
 
 ## 1.7
 
