@@ -1,6 +1,8 @@
 # Roadmap
 
 - [ ] Use FileSystemWatcher (#28)
+- [x] Fixed issue with dynamic .js source files (#99)
+- [x] Compiled VSIX for .NET 4.6
 
 Features that have a checkmark are complete and available for
 download in the

@@ -79,7 +79,7 @@ namespace BundlerMinifierVsix
             {
                 LogoAdornment highlighter = new LogoAdornment(textView, _isVisible, _initOpacity);
             }
-            else
+            else if (Path.IsPathRooted(fileName)) // Check that it's not a dynamic generated file
             {
                 var item = BundlerMinifierPackage._dte.Solution.FindProjectItem(fileName);
 
@@ -94,7 +94,8 @@ namespace BundlerMinifierVsix
                 string extension = Path.GetExtension(fileName.Replace(".map", ""));
                 string normalizedFilePath = fileName.Replace(".map", "").Replace(".min" + extension, extension);
 
-                try {
+                try
+                {
                     var bundles = BundleHandler.GetBundles(configFile);
 
                     foreach (Bundle bundle in bundles)
