@@ -44,7 +44,7 @@ namespace BundlerMinifierVsix
 
         private ITaskRunnerNode LoadHierarchy(string configPath)
         {
-            ITaskRunnerNode root = new TaskRunnerNode(Constants.VSIX_NAME);
+            ITaskRunnerNode root = new TaskRunnerNode(Vsix.Name);
             TaskRunnerNode tasks = new TaskRunnerNode("All files", true)
             {
                 Description = $"Bundles all files listed in {Constants.CONFIG_FILENAME}",

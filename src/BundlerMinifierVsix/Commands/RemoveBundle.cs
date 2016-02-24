@@ -82,7 +82,7 @@ namespace BundlerMinifierVsix.Commands
 
         private void RemoveConfig(object sender, EventArgs e)
         {
-            var question = MessageBox.Show($"This will remove the file from {Constants.CONFIG_FILENAME}.\r\rDo you want to continue?", Constants.VSIX_NAME, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            var question = MessageBox.Show($"This will remove the file from {Constants.CONFIG_FILENAME}.\r\rDo you want to continue?", Vsix.Name, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
             if (question == DialogResult.Cancel)
                 return;
