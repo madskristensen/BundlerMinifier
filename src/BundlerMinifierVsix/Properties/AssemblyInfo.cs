@@ -9,7 +9,7 @@ using BundlerMinifierVsix;
 [assembly: AssemblyProduct(Vsix.Name)]
 [assembly: AssemblyCopyright(Vsix.Author)]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("en-US")]
+[assembly: AssemblyCulture(Vsix.Language)]
 [assembly: ComVisible(false)]
 
 [assembly: AssemblyVersion(BundlerMinifier.Constants.VERSION)]
