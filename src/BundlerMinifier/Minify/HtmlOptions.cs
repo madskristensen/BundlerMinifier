@@ -20,6 +20,7 @@ namespace BundlerMinifier
             settings.MinifyInlineCssCode = GetValue(bundle, "minifyInlineCssCode", true) == "True";
             settings.MinifyInlineJsCode = GetValue(bundle, "minifyInlineJsCode", true) == "True";
             settings.MinifyKnockoutBindingExpressions = GetValue(bundle, "minifyKnockoutBindingExpressions") == "True";
+            settings.PreserveCase = GetValue(bundle, "preserveCase") == "True";
             settings.ProcessableScriptTypeList = GetValue(bundle, "processableScriptTypeList");
             settings.RemoveHtmlComments = GetValue(bundle, "removeHtmlComments", true) == "True";
             settings.RemoveTagsWithoutContent = GetValue(bundle, "removeTagsWithoutContent") == "True";
