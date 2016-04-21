@@ -62,7 +62,7 @@ namespace BundlerMinifierVsix.Commands
             else
                 button.Text = "Bundle and Minify Files";
 
-            button.Visible = BundleFileProcessor.IsSupported(files);
+            button.Visible = BundleFileProcessor.IsSupported(files.ToArray());
         }
 
         private void AddBundle(object sender, EventArgs e)
@@ -113,6 +113,8 @@ namespace BundlerMinifierVsix.Commands
             BundleService.Process(configFile);
             BundlerMinifierPackage._dte.StatusBar.Progress(false, "Creating bundle");
             BundlerMinifierPackage._dte.StatusBar.Text = "Bundle created";
+
+            ProjectEventCommand.Instance.EnsureProjectIsActive(item.ContainingProject);
 
             Telemetry.TrackEvent("VS create bundle");
         }

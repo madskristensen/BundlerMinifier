@@ -57,6 +57,7 @@
     <Compile Include="Adornments\AdornmentProvider.cs" />
     <Compile Include="BundleService.cs" />
     <Compile Include="Commands\BundleOnBuild.cs" />
+    <Compile Include="Commands\ProjectEventCommand.cs" />
     <Compile Include="Commands\RemoveBundle.cs" />
     <Compile Include="Commands\UpdateAllFiles.cs" />
     <Compile Include="Commands\UpdateBundle.cs" />

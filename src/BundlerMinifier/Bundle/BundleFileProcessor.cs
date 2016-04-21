@@ -10,9 +10,9 @@ namespace BundlerMinifier
     {
         private static string[] _supported = new[] { ".JS", ".CSS", ".HTML", ".HTM" };
 
-        public static bool IsSupported(IEnumerable<string> files)
+        public static bool IsSupported(params string[] files)
         {
-            files = files.Where(f => !string.IsNullOrEmpty(f));
+            files = files.Where(f => !string.IsNullOrEmpty(f)).ToArray();
 
             if (!files.Any()) return false;
 

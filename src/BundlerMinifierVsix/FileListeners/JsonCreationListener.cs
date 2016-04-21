@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.IO;
+using BundlerMinifierVsix.Commands;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
@@ -54,6 +55,12 @@ namespace BundlerMinifierVsix.Listeners
         {
             if (!BundlerMinifierPackage.Options.ReRunOnSave)
                 return;
+
+            if (ProjectEventCommand.Instance != null)
+            {
+                var project = BundlerMinifierPackage._dte.Solution?.FindProjectItem(e.FilePath)?.ContainingProject;
+                ProjectEventCommand.Instance.EnsureProjectIsActive(project);
+            }
 
             if (e.FileActionType == FileActionTypes.ContentSavedToDisk)
             {

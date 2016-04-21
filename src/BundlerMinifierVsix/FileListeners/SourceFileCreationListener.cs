@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.Utilities;
 
 namespace BundlerMinifierVsix.Listeners
 {
-    [Export(typeof(IVsTextViewCreationListener))]
+    //[Export(typeof(IVsTextViewCreationListener))]
     [ContentType("javascript")]
     [ContentType("css")]
     [ContentType("htmlx")]

@@ -1,6 +1,7 @@
 # Roadmap
 
-- [ ] Use FileSystemWatcher (#28)
+- [x] Use FileSystemWatcher (#105)
+- [x] Make compatible with Web Compiler (#114)
 
 Features that have a checkmark are complete and available for
 download in the

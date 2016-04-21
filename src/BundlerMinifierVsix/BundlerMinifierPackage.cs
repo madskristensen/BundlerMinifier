@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using BundlerMinifier;
@@ -46,6 +45,7 @@ namespace BundlerMinifierVsix
             UpdateAllFiles.Initialize(this);
             BundleOnBuild.Initialize(this);
             RemoveBundle.Initialize(this);
+            ProjectEventCommand.Initialize(this);
 
             base.Initialize();
         }
