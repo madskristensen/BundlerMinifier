@@ -68,7 +68,6 @@
     <Compile Include="ErrorList\ErrorListService.cs" />
     <Compile Include="Helpers\FileHelpers.cs" />
     <Compile Include="Helpers\ProjectHelpers.cs" />
-    <Compile Include="FileListeners\SourceFileCreationListener.cs" />
     <Compile Include="FileListeners\JsonCreationListener.cs" />
     <Compile Include="JSON\BundleConfigSchemaSelector.cs" />
     <Compile Include="JSON\RelativeFilePathFormatProvider.cs" />
