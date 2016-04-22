@@ -40,29 +40,6 @@ namespace BundlerMinifier
             }
         }
 
-        public void DeleteOutputFiles(string bundleFileName)
-        {
-            var bundles = BundleHandler.GetBundles(bundleFileName);
-            foreach (Bundle bundle in bundles)
-            {
-                var outputFile = bundle.GetAbsoluteOutputFile();
-                var inputFiles = bundle.GetAbsoluteInputFiles();
-
-                var minFile = GetMinFileName(outputFile);
-                var mapFile = minFile + ".map";
-                var gzipFile = minFile + ".gz";
-
-                if (!inputFiles.Contains(outputFile))
-                    if (File.Exists(outputFile)) File.Delete(outputFile);
-
-                if (File.Exists(minFile)) File.Delete(minFile);
-                if (File.Exists(mapFile)) File.Delete(mapFile);
-                if (File.Exists(gzipFile)) File.Delete(gzipFile);
-            }
-
-            Telemetry.TrackEvent("Delete output files");
-        }
-
         public void SourceFileChanged(string bundleFile, string sourceFile)
         {
             var bundles = BundleHandler.GetBundles(bundleFile);
