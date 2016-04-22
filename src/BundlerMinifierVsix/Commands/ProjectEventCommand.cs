@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -13,7 +12,7 @@ namespace BundlerMinifierVsix.Commands
     class ProjectEventCommand
     {
         private IServiceProvider _provider;
-        private Dictionary<Project, FileSystemWatcher> _listeners;
+        private ConcurrentDictionary<Project, FileSystemWatcher> _listeners;
         private SolutionEvents _events;
         private string[] _ignorePatterns = { "\\node_modules\\", "\\bower_components\\", "\\jspm_packages\\" };
         Timer _timer;
@@ -22,7 +21,7 @@ namespace BundlerMinifierVsix.Commands
         private ProjectEventCommand(IServiceProvider provider)
         {
             _provider = provider;
-            _listeners = new Dictionary<Project, FileSystemWatcher>();
+            _listeners = new ConcurrentDictionary<Project, FileSystemWatcher>();
 
             var dte = (DTE2)provider.GetService(typeof(DTE));
             _events = dte.Events.SolutionEvents;
@@ -78,7 +77,7 @@ namespace BundlerMinifierVsix.Commands
                     fsw.NotifyFilter = NotifyFilters.Size | NotifyFilters.CreationTime;
                     fsw.EnableRaisingEvents = true;
 
-                    _listeners.Add(project, fsw);
+                    _listeners.TryAdd(project, fsw);
                 }
             }
             catch (Exception ex)
@@ -92,48 +91,85 @@ namespace BundlerMinifierVsix.Commands
             if (project == null || !_listeners.ContainsKey(project))
                 return;
 
+            FileSystemWatcher fsw;
+
             _listeners[project].Dispose();
-            _listeners.Remove(project);
+            _listeners.TryRemove(project, out fsw);
         }
 
         void FileChanged(object sender, FileSystemEventArgs e)
         {
-            string fileName = Path.GetFileName(e.FullPath);
+            try
+            {
+                if (!IsFileValid(e.FullPath))
+                    return;
+
+                var fsw = (FileSystemWatcher)sender;
+                fsw.EnableRaisingEvents = false;
+
+                var project = _listeners.Keys.FirstOrDefault(p => e.FullPath.StartsWith(p.GetRootFolder()));
+
+                if (project != null)
+                {
+                    string configFile = project.GetConfigFile();
+                    _queue[e.FullPath] = new QueueItem { ConfigFile = configFile };
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex);
+            }
+        }
+
+        private bool IsFileValid(string file)
+        {
+            string fileName = Path.GetFileName(file);
 
             // VS adds ~ to temp file names so let's ignore those
             if (fileName.Contains('~') || fileName.Contains(".min."))
-                return;
+                return false;
 
-            string file = e.FullPath.ToLowerInvariant();
-
-            if (!BundleFileProcessor.IsSupported(e.FullPath) || _ignorePatterns.Any(p => file.Contains(p)))
-                return;
-
-            var project = _listeners.Keys.FirstOrDefault(p => e.FullPath.StartsWith(p.GetRootFolder()));
-
-            if (project != null)
+            if (_ignorePatterns.Any(p => file.IndexOf(p) > -1))
             {
-                string configFile = project.GetConfigFile();
-                _queue[e.FullPath] = new QueueItem { ConfigFile = configFile };
+                //var fsw = (FileSystemWatcher)sender;
+                //fsw.EnableRaisingEvents = false;
+                return false;
             }
+
+            if (!BundleFileProcessor.IsSupported(file))
+                return false;
+
+            return true;
         }
 
         void TimerElapsed(object state)
         {
-            var items = _queue.Where(i => i.Value.Timestamp < DateTime.Now.AddMilliseconds(-250));
-
-            foreach (var item in items)
+            try
             {
-                BundleService.SourceFileChanged(item.Value.ConfigFile, item.Key);
-            }
+                var items = _queue.Where(i => i.Value.Timestamp < DateTime.Now.AddMilliseconds(-250));
 
-            foreach (var item in _queue)
-            {
-                QueueItem old;
-                if (item.Value.Timestamp < DateTime.Now.AddMilliseconds(-250))
+                foreach (var item in items)
                 {
-                    _queue.TryRemove(item.Key, out old);
+                    BundleService.SourceFileChanged(item.Value.ConfigFile, item.Key);
                 }
+
+                foreach (var item in _queue)
+                {
+                    QueueItem old;
+                    if (item.Value.Timestamp < DateTime.Now.AddMilliseconds(-250))
+                    {
+                        _queue.TryRemove(item.Key, out old);
+                    }
+                }
+
+                foreach (var fsw in _listeners.Values)
+                {
+                    fsw.EnableRaisingEvents = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex);
             }
         }
 
