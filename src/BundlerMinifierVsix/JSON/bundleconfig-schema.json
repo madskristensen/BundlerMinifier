@@ -131,6 +131,11 @@
               "type": "boolean",
               "default": false
             },
+            "preserveCase": {
+              "description": "HTML only. Preserve case of tag and attribute names.",
+              "type": "boolean",
+              "default": false
+            },
             "processableScriptTypeList": {
               "description": "HTML only. Specify array of types of script tags, that are processed by minifier (e.g. [\"text/html\", \"text/ng-template\"]).",
               "type": "array"
