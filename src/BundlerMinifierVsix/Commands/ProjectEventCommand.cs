@@ -74,8 +74,6 @@ namespace BundlerMinifierVsix.Commands
                     var fsw = new FileSystemWatcher(project.GetRootFolder());
 
                     fsw.Changed += FileChanged;
-                    fsw.Created += FileChanged;
-                    fsw.Deleted += FileChanged;
                     fsw.Renamed += FileChanged;
 
                     fsw.IncludeSubdirectories = true;
