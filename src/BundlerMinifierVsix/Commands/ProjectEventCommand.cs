@@ -72,9 +72,14 @@ namespace BundlerMinifierVsix.Commands
                 if (!string.IsNullOrEmpty(config) && File.Exists(config))
                 {
                     var fsw = new FileSystemWatcher(project.GetRootFolder());
+
                     fsw.Changed += FileChanged;
+                    fsw.Created += FileChanged;
+                    fsw.Deleted += FileChanged;
+                    fsw.Renamed += FileChanged;
+
                     fsw.IncludeSubdirectories = true;
-                    fsw.NotifyFilter = NotifyFilters.Size | NotifyFilters.CreationTime;
+                    fsw.NotifyFilter = NotifyFilters.Size | NotifyFilters.CreationTime | NotifyFilters.FileName;
                     fsw.EnableRaisingEvents = true;
 
                     _listeners.TryAdd(project, fsw);
@@ -84,6 +89,7 @@ namespace BundlerMinifierVsix.Commands
             {
                 Logger.Log(ex);
             }
+
         }
 
         private void OnProjectRemoved(Project project)
