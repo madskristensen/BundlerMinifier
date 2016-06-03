@@ -90,7 +90,6 @@ namespace BundlerMinifierVsix.Commands
             if (!string.IsNullOrEmpty(file))
             {
                 BundleService.Process(file);
-                Telemetry.TrackEvent("VS update bundle");
             }
         }
     }

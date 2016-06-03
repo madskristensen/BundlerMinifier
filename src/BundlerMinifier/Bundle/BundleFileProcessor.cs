@@ -76,9 +76,8 @@ namespace BundlerMinifier
 
                 return list;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Telemetry.TrackException(ex);
                 return list;
             }
         }
@@ -126,8 +125,6 @@ namespace BundlerMinifier
                     }
                 }
             }
-
-            Telemetry.TrackCompile(bundle);
         }
 
         public static string GetMinFileName(string file)

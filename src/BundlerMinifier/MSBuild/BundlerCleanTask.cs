@@ -21,8 +21,6 @@ namespace BundlerMinifier
                 return true;
             }
 
-            Telemetry.SetDeviceName("MSBuild");
-
             var bundles = BundleHandler.GetBundles(configFile.FullName);
 
             foreach (Bundle bundle in bundles)
@@ -41,8 +39,7 @@ namespace BundlerMinifier
                 Deletefile(mapFile);
                 Deletefile(gzipFile);
             }
-
-            Telemetry.TrackEvent("Delete output files");
+            
             Log.LogMessage(MessageImportance.High, "Bundler: Done cleaning output file from " + configFile.Name);
 
             return true;

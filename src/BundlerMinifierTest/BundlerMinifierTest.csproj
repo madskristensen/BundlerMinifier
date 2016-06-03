@@ -50,7 +50,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AssemblyLoad.cs" />
     <Compile Include="EncodingTest.cs" />
     <Compile Include="GlobbingTest.cs" />
     <Compile Include="BundlerTest.cs" />

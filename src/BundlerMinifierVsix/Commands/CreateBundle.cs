@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.IO;
@@ -90,7 +89,6 @@ namespace BundlerMinifierVsix.Commands
                 if (bundles.Any())
                 {
                     BundleService.SourceFileChanged(configFile, inputFile);
-                    Telemetry.TrackEvent("VS recompile config");
                     return;
                 }
             }
@@ -115,8 +113,6 @@ namespace BundlerMinifierVsix.Commands
             BundlerMinifierPackage._dte.StatusBar.Text = "Bundle created";
 
             ProjectEventCommand.Instance.EnsureProjectIsActive(item.ContainingProject);
-
-            Telemetry.TrackEvent("VS create bundle");
         }
 
         private static Bundle CreateBundleFile(IEnumerable<string> files, string outputFile)

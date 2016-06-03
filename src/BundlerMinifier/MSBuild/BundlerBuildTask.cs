@@ -31,7 +31,6 @@ namespace BundlerMinifier
             }
 
             Log.LogMessage(MessageImportance.High, Environment.NewLine + "Bundler: Begin processing " + configFile.Name);
-            Telemetry.SetDeviceName("MSBuild");
 
             BundleFileProcessor processor = new BundleFileProcessor();
             processor.Processing += (s, e) => { RemoveReadonlyFlagFromFile(e.Bundle.GetAbsoluteOutputFile()); };

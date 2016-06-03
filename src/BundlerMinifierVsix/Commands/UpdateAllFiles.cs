@@ -72,8 +72,6 @@ namespace BundlerMinifierVsix.Commands
                         BundleService.Process(config);
                 }
             }
-
-            Telemetry.TrackEvent("VS update all bundles");
         }
 
         private static List<string> GetFiles(string path, string pattern)

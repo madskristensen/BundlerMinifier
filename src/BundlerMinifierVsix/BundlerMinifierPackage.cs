@@ -32,7 +32,6 @@ namespace BundlerMinifierVsix
             Options = (Options)GetDialogPage(typeof(Options));
 
             Logger.Initialize(this, Vsix.Name);
-            Telemetry.SetDeviceName(_dte.Edition);
 
             Events2 events = _dte.Events as Events2;
             _solutionEvents = events.SolutionEvents;
