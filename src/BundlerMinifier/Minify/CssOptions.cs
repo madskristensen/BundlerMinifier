@@ -1,4 +1,5 @@
-﻿using Microsoft.Ajax.Utilities;
+﻿using NUglify;
+using NUglify.Css;
 
 namespace BundlerMinifier
 {

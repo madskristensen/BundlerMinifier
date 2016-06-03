@@ -1,49 +1,32 @@
 ﻿using Newtonsoft.Json.Linq;
-using WebMarkupMin.Core;
-using WebMarkupMin.Core.Settings;
+using NUglify.Html;
 
 namespace BundlerMinifier
 {
     static class HtmlOptions
     {
-        public static HtmlMinificationSettings GetSettings(Bundle bundle)
+        public static HtmlSettings GetSettings(Bundle bundle)
         {
-            HtmlMinificationSettings settings = new HtmlMinificationSettings();
-            settings.RemoveOptionalEndTags = GetValue(bundle, "removeOptionalEndTags") == "True";
-            settings.RemoveRedundantAttributes = GetValue(bundle, "removeRedundantAttributes") == "True";
+            var settings = new HtmlSettings();
+            settings.RemoveOptionalTags = GetValue(bundle, "removeOptionalEndTags") == "True";
+            //settings.RemoveRedundantAttributes = GetValue(bundle, "removeRedundantAttributes") == "True";
 
-            settings.CollapseBooleanAttributes = GetValue(bundle, "collapseBooleanAttributes", true) == "True";
-            settings.CustomAngularDirectiveList = GetValue(bundle, "customAngularDirectiveList");
-            settings.MinifyAngularBindingExpressions = GetValue(bundle, "minifyAngularBindingExpressions") == "True";
-            settings.MinifyEmbeddedCssCode = GetValue(bundle, "minifyEmbeddedCssCode", true) == "True";
-            settings.MinifyEmbeddedJsCode = GetValue(bundle, "minifyEmbeddedJsCode", true) == "True";
-            settings.MinifyInlineCssCode = GetValue(bundle, "minifyInlineCssCode", true) == "True";
-            settings.MinifyInlineJsCode = GetValue(bundle, "minifyInlineJsCode", true) == "True";
-            settings.MinifyKnockoutBindingExpressions = GetValue(bundle, "minifyKnockoutBindingExpressions") == "True";
-            settings.PreserveCase = GetValue(bundle, "preserveCase") == "True";
-            settings.ProcessableScriptTypeList = GetValue(bundle, "processableScriptTypeList");
-            settings.RemoveHtmlComments = GetValue(bundle, "removeHtmlComments", true) == "True";
-            settings.RemoveTagsWithoutContent = GetValue(bundle, "removeTagsWithoutContent") == "True";
+            settings.ShortBooleanAttribute = GetValue(bundle, "collapseBooleanAttributes", true) == "True";
+            //settings.CustomAngularDirectiveList = GetValue(bundle, "customAngularDirectiveList");
+            //settings.MinifyAngularBindingExpressions = GetValue(bundle, "minifyAngularBindingExpressions") == "True";
+            settings.MinifyCss = GetValue(bundle, "minifyEmbeddedCssCode", true) == "True";
+            settings.MinifyJs = GetValue(bundle, "minifyEmbeddedJsCode", true) == "True";
+            settings.MinifyCssAttributes = GetValue(bundle, "minifyInlineCssCode", true) == "True";
+            //settings.MinifyInlineJsCode = GetValue(bundle, "minifyInlineJsCode", true) == "True";
+            //settings.MinifyKnockoutBindingExpressions = GetValue(bundle, "minifyKnockoutBindingExpressions") == "True";
+            settings.AttributesCaseSensitive = GetValue(bundle, "preserveCase") == "True";
+            //settings.ProcessableScriptTypeList = GetValue(bundle, "processableScriptTypeList");
+            settings.RemoveComments = GetValue(bundle, "removeHtmlComments", true) == "True";
+            //settings.RemoveTagsWithoutContent = GetValue(bundle, "removeTagsWithoutContent") == "True";
 
-            string quotes = GetValue(bundle, "attributeQuotesRemovalMode", "html5");
-
-            if (quotes == "html4")
-                settings.AttributeQuotesRemovalMode = HtmlAttributeQuotesRemovalMode.Html4;
-            else if (quotes == "html5")
-                settings.AttributeQuotesRemovalMode = HtmlAttributeQuotesRemovalMode.Html5;
-            else if (quotes == "keepQuotes")
-                settings.AttributeQuotesRemovalMode = HtmlAttributeQuotesRemovalMode.KeepQuotes;
-
-            string whitespace = GetValue(bundle, "whitespaceMinificationMode", "medium");
-
-            if (whitespace == "aggressive")
-                settings.WhitespaceMinificationMode = WhitespaceMinificationMode.Aggressive;
-            else if (whitespace == "medium")
-                settings.WhitespaceMinificationMode = WhitespaceMinificationMode.Medium;
-            else if (whitespace == "none")
-                settings.WhitespaceMinificationMode = WhitespaceMinificationMode.None;
-            else if (whitespace == "safe")
-                settings.WhitespaceMinificationMode = WhitespaceMinificationMode.Safe;
+            settings.RemoveQuotedAttributes = GetValue(bundle, "attributeQuotesRemovalMode", "html5") != "keepQuotes";
+            settings.CollapseWhitespaces = GetValue(bundle, "whitespaceMinificationMode", "medium") != "none";
+            settings.IsFragmentOnly = true;
 
             return settings;
         }

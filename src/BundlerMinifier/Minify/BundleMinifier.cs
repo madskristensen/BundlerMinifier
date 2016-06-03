@@ -2,10 +2,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Text;
-using Microsoft.Ajax.Utilities;
-using WebMarkupMin.Core.Minifiers;
+using NUglify;
+using NUglify.JavaScript;
 
 namespace BundlerMinifier
 {
@@ -44,7 +43,6 @@ namespace BundlerMinifier
         {
             string file = bundle.GetAbsoluteOutputFile();
             var settings = JavaScriptOptions.GetSettings(bundle);
-            var minifier = new Minifier();
             var result = new MinificationResult(file, null, null);
 
             string minFile = GetMinFileName(file);
@@ -54,9 +52,10 @@ namespace BundlerMinifier
             {
                 if (!bundle.SourceMap)
                 {
-                    result.MinifiedContent = minifier.MinifyJavaScript(ReadAllText(file), settings).Trim();
+                    var uglifyResult = Uglify.Js(ReadAllText(file), settings);
+                    result.MinifiedContent = uglifyResult.Code.Trim();
 
-                    if (!minifier.Errors.Any())
+                    if (!uglifyResult.HasErrors)
                     {
                         bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
 
@@ -73,7 +72,7 @@ namespace BundlerMinifier
                     }
                     else
                     {
-                        AddAjaxminErrors(minifier, result);
+                        AddAjaxminErrors(uglifyResult, result);
                     }
                 }
                 else
@@ -85,10 +84,10 @@ namespace BundlerMinifier
                             settings.SymbolsMap = sourceMap;
                             sourceMap.StartPackage(minFile, mapFile);
 
-                            minifier.FileName = file;
-                            result.MinifiedContent = minifier.MinifyJavaScript(ReadAllText(file), settings).Trim();
+                            var uglifyResult = Uglify.Js(ReadAllText(file), file, settings);
+                            result.MinifiedContent = uglifyResult.Code.Trim();
 
-                            if (!minifier.Errors.Any())
+                            if (!uglifyResult.HasErrors)
                             {
                                 bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
 
@@ -105,7 +104,7 @@ namespace BundlerMinifier
                             }
                             else
                             {
-                                AddAjaxminErrors(minifier, result);
+                                AddAjaxminErrors(uglifyResult, result);
                             }
                         }
 
@@ -133,15 +132,14 @@ namespace BundlerMinifier
             string content = ReadAllText(file);
             var settings = CssOptions.GetSettings(bundle);
             string minFile = GetMinFileName(file);
-
-            var minifier = new Minifier();
             var result = new MinificationResult(file, null, null);
 
             try
             {
-                result.MinifiedContent = minifier.MinifyStyleSheet(content, settings).Trim();
+                var uglifyResult = Uglify.Css(content, file, settings);
+                result.MinifiedContent = uglifyResult.Code.Trim();
 
-                if (!minifier.Errors.Any())
+                if (!uglifyResult.HasErrors)
                 {
                     bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
 
@@ -158,7 +156,7 @@ namespace BundlerMinifier
                 }
                 else
                 {
-                    AddAjaxminErrors(minifier, result);
+                    AddAjaxminErrors(uglifyResult, result);
                 }
             }
             catch (Exception ex)
@@ -182,23 +180,22 @@ namespace BundlerMinifier
             var settings = HtmlOptions.GetSettings(bundle);
             string minFile = GetMinFileName(file);
 
-            var minifier = new HtmlMinifier(settings);
             var minResult = new MinificationResult(file, null, null);
 
             try
             {
-                MarkupMinificationResult result = minifier.Minify(content, generateStatistics: true);
-                minResult.MinifiedContent = result.MinifiedContent.Trim();
+                var uglifyResult = Uglify.Html(content, settings, file);
+                minResult.MinifiedContent = uglifyResult.Code.Trim();
 
-                if (!result.Errors.Any())
+                if (!uglifyResult.HasErrors)
                 {
-                    bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
+                    bool containsChanges = FileHelpers.HasFileContentChanged(minFile, uglifyResult.Code);
 
                     OnBeforeWritingMinFile(file, minFile, bundle, containsChanges);
 
                     if (containsChanges)
                     {
-                        File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
+                        File.WriteAllText(minFile, uglifyResult.Code, new UTF8Encoding(false));
                     }
 
                     OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
@@ -207,14 +204,14 @@ namespace BundlerMinifier
                 }
                 else
                 {
-                    foreach (var error in result.Errors)
+                    foreach (var error in uglifyResult.Errors)
                     {
                         minResult.Errors.Add(new MinificationError
                         {
                             FileName = file,
                             Message = error.Message,
-                            LineNumber = error.LineNumber,
-                            ColumnNumber = error.ColumnNumber
+                            LineNumber = error.StartLine,
+                            ColumnNumber = error.StartColumn
                         });
                     }
                 }
@@ -255,9 +252,9 @@ namespace BundlerMinifier
             OnAfterWritingGzipFile(sourceFile, gzipFile, bundle, containsChanges);
         }
 
-        internal static void AddAjaxminErrors(Minifier minifier, MinificationResult minResult)
+        internal static void AddAjaxminErrors(UgliflyResult minifier, MinificationResult minResult)
         {
-            foreach (var error in minifier.ErrorList)
+            foreach (var error in minifier.Errors)
             {
                 var minError = new MinificationError
                 {

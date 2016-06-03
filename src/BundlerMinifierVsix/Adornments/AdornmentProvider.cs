@@ -16,6 +16,7 @@ namespace BundlerMinifierVsix
     [ContentType("json")]
     [ContentType("javascript")]
     [ContentType("CSS")]
+    [ContentType("htmlx")]
     [TextViewRole(PredefinedTextViewRoles.Document)]
     class AdornmentProvider : IWpfTextViewCreationListener
     {
