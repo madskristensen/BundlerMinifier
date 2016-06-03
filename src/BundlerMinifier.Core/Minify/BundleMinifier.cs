@@ -276,7 +276,8 @@ namespace BundlerMinifier
 
         public static string ReadAllText(string file)
         {
-            using (StreamReader reader = new StreamReader(file, Encoding.UTF8, true))
+            using (FileStream stream = File.OpenRead(file))
+            using (StreamReader reader = new StreamReader(stream, Encoding.UTF8, true, 8192, true))
             {
                 return reader.ReadToEnd();
             }
