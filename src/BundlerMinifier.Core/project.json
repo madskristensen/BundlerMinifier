@@ -1,12 +1,14 @@
 ﻿{
   "version": "1.0.0-*",
   "buildOptions": {
-    "emitEntryPoint": true
+    "emitEntryPoint": true,
+    "outputName": "dotnet-bundlerminifier"
   },
 
   "dependencies": {
     "NUglify": "1.4.0",
     "Newtonsoft.Json": "8.0.3",
+    "System.Runtime.Serialization.Primitives": "4.1.1-rc2-24027",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.0-rc2-3002702"
