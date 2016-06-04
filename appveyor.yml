@@ -6,11 +6,15 @@ install:
 before_build:
   - ps: Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
   - ps: Vsix-IncrementNuspecVersion .\src\BundlerMinifier\MSBuild\*.nuspec
-  - ps: Vsix-TokenReplacement src\BundlerMinifier\Constants.cs 'VERSION = "([0-9\\.]+)"' 'VERSION = "{version}"'
+  - ps: Vsix-TokenReplacement src\BundlerMinifier.Core\Constants.cs 'VERSION = "([0-9\\.]+)"' 'VERSION = "{version}"'
 
 build_script:
-  - nuget restore -Verbosity quiet
-  - msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
+  - powershell -NoProfile -ExecutionPolicy unrestricted -Command "&{iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0/scripts/obtain/dotnet-install.ps1'))}"
+  - nuget restore .\src\BundlerMinifier -Verbosity quiet -PackagesDirectory .\Packages
+  - nuget restore .\src\BundlerMinifierVSIX -Verbosity quiet -PackagesDirectory .\Packages
+  - msbuild .\src\BundlerMinifierVSIX\BundlerMinifierVSIX.csproj /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
+  - dotnet restore .\src\BundlerMinifier.Core --ignore-failed-sources
+  - dotnet build .\src\BundlerMinifier.Core
 
 after_test:
   - ps: Vsix-PushArtifacts
