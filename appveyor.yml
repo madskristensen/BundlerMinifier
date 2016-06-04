@@ -9,8 +9,11 @@ before_build:
   - ps: Vsix-TokenReplacement src\BundlerMinifier\Constants.cs 'VERSION = "([0-9\\.]+)"' 'VERSION = "{version}"'
 
 build_script:
+  - powershell -NoProfile -ExecutionPolicy unrestricted -Command "&{iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0/scripts/obtain/dotnet-install.ps1'))}"
   - nuget restore -Verbosity quiet
-  - msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
+  - msbuild .\src\BundlerMinifierVSIX\BundlerMinifierVSIX.csproj /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
+  - dotnet restore .\src\BundlerMinifier.Core
+  - dotnet build .\src\BundlerMinifier.Core
 
 after_test:
   - ps: Vsix-PushArtifacts

@@ -7,7 +7,6 @@
   "dependencies": {
     "NUglify": "1.4.0",
     "Newtonsoft.Json": "8.0.3",
-    "Minimatch": "1.1.0",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.0-rc3-004338"

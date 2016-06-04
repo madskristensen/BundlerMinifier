@@ -23,3 +23,4 @@ x64/
 *.ncrunchproject
 _NCrunch_WebCompiler
 src/BundlerMinifier.Core/project.lock.json
+src/BundlerMinifier.Core/project.lock.json

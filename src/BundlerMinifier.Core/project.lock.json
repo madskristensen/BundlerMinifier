@@ -258,9 +258,6 @@
           }
         }
       },
-      "Minimatch/1.1.0": {
-        "type": "package"
-      },
       "NETStandard.Library/1.6.0-rc3-24128-00": {
         "type": "package",
         "dependencies": {
@@ -2375,17 +2372,6 @@
         "runtimes/win/lib/net46/Microsoft.Win32.Registry.dll",
         "runtimes/win/lib/netcore50/_._",
         "runtimes/win/lib/netstandard1.3/Microsoft.Win32.Registry.dll"
-      ]
-    },
-    "Minimatch/1.1.0": {
-      "sha512": "buC94fFTIwRyCZ+IaOyWQRysO9U/pgJ8DuEES9dMu7vSjA8BGcATGuln3aWEYScxZjBaMCWTLoUPILYDAK8oYQ==",
-      "type": "package",
-      "path": "Minimatch/1.1.0",
-      "files": [
-        "Minimatch.1.1.0.nupkg.sha512",
-        "Minimatch.nuspec",
-        "lib/portable-net40+sl50+win+wp80/Minimatch.XML",
-        "lib/portable-net40+sl50+win+wp80/Minimatch.dll"
       ]
     },
     "NETStandard.Library/1.6.0-rc3-24128-00": {
@@ -6660,7 +6646,6 @@
   "projectFileDependencyGroups": {
     "": [
       "Microsoft.NETCore.App >= 1.0.0-rc3-004338",
-      "Minimatch >= 1.1.0",
       "NUglify >= 1.4.0",
       "Newtonsoft.Json >= 8.0.3"
     ],
