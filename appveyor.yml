@@ -10,9 +10,10 @@ before_build:
 
 build_script:
   - powershell -NoProfile -ExecutionPolicy unrestricted -Command "&{iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0/scripts/obtain/dotnet-install.ps1'))}"
-  - nuget restore -Verbosity quiet
+  - nuget restore .\src\BundlerMinifier -Verbosity quiet
+  - nuget restore .\src\BundlerMinifierVSIX -Verbosity quiet
   - msbuild .\src\BundlerMinifierVSIX\BundlerMinifierVSIX.csproj /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
-  - dotnet restore .\src\BundlerMinifier.Core
+  - dotnet restore .\src\BundlerMinifier.Core --ignore-failed-sources
   - dotnet build .\src\BundlerMinifier.Core
 
 after_test:
