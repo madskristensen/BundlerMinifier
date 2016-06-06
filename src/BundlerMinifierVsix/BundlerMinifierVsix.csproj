@@ -69,8 +69,6 @@
     <Compile Include="Helpers\FileHelpers.cs" />
     <Compile Include="Helpers\ProjectHelpers.cs" />
     <Compile Include="FileListeners\JsonCreationListener.cs" />
-    <Compile Include="JSON\BundleConfigSchemaSelector.cs" />
-    <Compile Include="JSON\RelativeFilePathFormatProvider.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Options.cs">
       <SubType>Component</SubType>
@@ -102,13 +100,9 @@
     <Content Include="Resources\preview.png">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="JSON\bundleconfig-schema.json">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="source.extension.ico">
       <DependentUpon>source.extension.vsixmanifest</DependentUpon>
     </Content>
-    <None Include="JSON\bundleconfig.json" />
     <None Include="packages.config" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>

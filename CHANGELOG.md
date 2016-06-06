@@ -2,11 +2,11 @@
 
 - [x] Add .NET Core compatible bundle engine
 - [x] Improve the CLI story
+- [x] Move JSON schema to SchemaStore.org
 - [ ] Add a "watch" command to CLI
 - [ ] Add button to delete all output files
 - [ ] Add button to re-bundle all bundles
 - [ ] Move all strings to .resx files
-- [ ] Move JSON schema to SchemaStore.org
 
 Features that have a checkmark are complete and available for
 download in the
