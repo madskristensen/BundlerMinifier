@@ -40,6 +40,17 @@ namespace BundlerMinifier
             }
         }
 
+        public void Clean(string fileName, IEnumerable<Bundle> bundles = null)
+        {
+            FileInfo info = new FileInfo(fileName);
+            bundles = bundles ?? BundleHandler.GetBundles(fileName);
+
+            foreach (Bundle bundle in bundles)
+            {
+                CleanBundle(info.Directory.FullName, bundle);
+            }
+        }
+
         public void SourceFileChanged(string bundleFile, string sourceFile)
         {
             var bundles = BundleHandler.GetBundles(bundleFile);
@@ -84,6 +95,7 @@ namespace BundlerMinifier
 
         private void ProcessBundle(string baseFolder, Bundle bundle)
         {
+            OnProcessing(bundle, baseFolder);
             var inputs = bundle.GetAbsoluteInputFiles();
             var inputLastModified = inputs.Count > 0 ? inputs.Max(inputFile => File.GetLastWriteTimeUtc(inputFile)) : DateTime.MaxValue;
 
@@ -97,7 +109,6 @@ namespace BundlerMinifier
 
                 if (containsChanges)
                 {
-                    OnProcessing(bundle, baseFolder);
                     DirectoryInfo outputFileDirectory = Directory.GetParent(outputFile);
                     outputFileDirectory.Create();
 
@@ -125,6 +136,42 @@ namespace BundlerMinifier
                         OnAfterWritingSourceMap(minFile, mapFile, smChanges);
                     }
                 }
+            }
+        }
+
+        private void CleanBundle(string baseFolder, Bundle bundle)
+        {
+            string bundleFile = bundle.GetAbsoluteOutputFile();
+
+            if (!bundle.GetAbsoluteInputFiles().Contains(bundleFile, StringComparer.OrdinalIgnoreCase))
+            {
+                if (File.Exists(bundleFile))
+                {
+                    File.Delete(bundleFile);
+                    Console.WriteLine($"Deleted {bundleFile.Cyan().Bright()}");
+                }
+            }
+
+            string minFile = GetMinFileName(bundle.GetAbsoluteOutputFile());
+            string mapFile = minFile + ".map";
+            string gzFile = minFile + ".gz";
+
+            if (File.Exists(minFile))
+            {
+                File.Delete(minFile);
+                Console.WriteLine($"Deleted {minFile.Cyan().Bright()}");
+            }
+
+            if (File.Exists(mapFile))
+            {
+                File.Delete(mapFile);
+                Console.WriteLine($"Deleted {mapFile.Cyan().Bright()}");
+            }
+
+            if (File.Exists(gzFile))
+            {
+                File.Delete(gzFile);
+                Console.WriteLine($"Deleted {gzFile.Cyan().Bright()}");
             }
         }
 
