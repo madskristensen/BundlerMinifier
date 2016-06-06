@@ -44,21 +44,45 @@ namespace BundlerMinifier
 
             if (configPath == null)
             {
-                Console.WriteLine("\x1B[33mUsage: BundlerMinifier [[patterns]] [configPath]");
-                Console.WriteLine("\x1B[33mNote:  configPath doesn't need to be specified if bundlerconfig.json exists in the working directory");
+                Console.WriteLine("Usage: BundlerMinifier [[patterns]] [configPath]".Orange().Bright());
+                Console.WriteLine("Note:  configPath doesn't need to be specified if bundlerconfig.json exists in the working directory".Orange().Bright());
                 return 0;
             }
 
-            Console.WriteLine($"Running with configuration from {configPath}");
+            Console.WriteLine($"Running with configuration from {configPath}".Green().Bright());
 
-            if (readConfigsUntilIndex <= 0)
-            {
-                return Run(configPath, null);
-            }
+            List<string> configurations = new List<string>();
+            bool isClean = false;
 
             for (int i = 0; i < readConfigsUntilIndex; ++i)
             {
-                int runResult = Run(configPath, args[i]);
+                bool currentArgIsClean = string.Equals(args[i], "clean", StringComparison.OrdinalIgnoreCase);
+
+                if (!currentArgIsClean)
+                {
+                    configurations.Add(args[i]);
+                }
+                else
+                {
+                    isClean = true;
+                }
+            }
+
+            if (configurations.Count == 0)
+            {
+                //int cleanResult = Run(configPath, null);
+
+                //if(cleanResult != 0)
+                //{
+                //    return cleanResult;
+                //}
+
+                return Run(configPath, null);
+            }
+
+            foreach(string config in configurations)
+            {
+                int runResult = Run(configPath, config);
 
                 if(runResult < 0)
                 {
@@ -73,9 +97,9 @@ namespace BundlerMinifier
         {
             var configs = GetConfigs(configPath, file);
 
-            if (configs == null)
+            if (configs == null || !configs.Any())
             {
-                Console.WriteLine("\x1B[33mNo configurations matched");
+                Console.WriteLine("No configurations matched".Orange().Bright());
                 return -1;
             }
 
@@ -89,7 +113,7 @@ namespace BundlerMinifier
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"\x1B[33m{ex.Message}");
+                Console.WriteLine($"{ex.Message}".Red().Bright());
                 return -1;
             }
         }
@@ -98,15 +122,15 @@ namespace BundlerMinifier
         {
             // For console colors, see http://stackoverflow.com/questions/23975735/what-is-this-u001b9-syntax-of-choosing-what-color-text-appears-on-console
 
-            processor.Processing += (s, e) => { Console.WriteLine($"Processing \x1B[36m{e.Bundle.OutputFileName}"); FileHelpers.RemoveReadonlyFlagFromFile(e.Bundle.GetAbsoluteOutputFile()); };
-            processor.AfterBundling += (s, e) => { Console.WriteLine($"  \x1B[32mBundled"); };
+            processor.Processing += (s, e) => { Console.WriteLine($"Processing {e.Bundle.OutputFileName.Cyan().Bright()}"); FileHelpers.RemoveReadonlyFlagFromFile(e.Bundle.GetAbsoluteOutputFile()); };
+            processor.AfterBundling += (s, e) => { Console.WriteLine($"  Bundled".Green().Bright()); };
             processor.BeforeWritingSourceMap += (s, e) => { FileHelpers.RemoveReadonlyFlagFromFile(e.ResultFile); };
-            processor.AfterWritingSourceMap += (s, e) => { Console.WriteLine($"  \x1B[32mSourcemapped"); };
+            processor.AfterWritingSourceMap += (s, e) => { Console.WriteLine($"  Sourcemapped".Green().Bright()); };
 
             BundleMinifier.BeforeWritingMinFile += (s, e) => { FileHelpers.RemoveReadonlyFlagFromFile(e.ResultFile); };
-            BundleMinifier.AfterWritingMinFile += (s, e) => { Console.WriteLine($"  \x1B[32mMinified"); };
+            BundleMinifier.AfterWritingMinFile += (s, e) => { Console.WriteLine($"  Minified".Green().Bright()); };
             BundleMinifier.BeforeWritingGzipFile += (s, e) => { FileHelpers.RemoveReadonlyFlagFromFile(e.ResultFile); };
-            BundleMinifier.AfterWritingGzipFile += (s, e) => { Console.WriteLine($"  \x1B[32mGZipped"); };
+            BundleMinifier.AfterWritingGzipFile += (s, e) => { Console.WriteLine($"  GZipped".Green().Bright()); };
             BundleMinifier.ErrorMinifyingFile += (s, e) => { Console.WriteLine($"{string.Join(Environment.NewLine, e.Result.Errors)}"); };
         }
 
