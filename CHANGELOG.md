@@ -7,6 +7,8 @@
 - [ ] Add button to delete all output files
 - [ ] Add button to re-bundle all bundles
 - [ ] Move all strings to .resx files
+- [ ] Add a dependency on TRX package
+- [ ] Support for VS15
 
 Features that have a checkmark are complete and available for
 download in the
