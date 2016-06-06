@@ -17,6 +17,11 @@ build_script:
   - dotnet restore .\src\BundlerMinifier.Core --ignore-failed-sources -v Error
   - dotnet pack src\BundlerMinifier.Core -c Release
 
+test:
+  assemblies:
+    - '**\BundlerMinifierTest.dll'
+
+
 after_test:
   - ps: Vsix-PushArtifacts
 
