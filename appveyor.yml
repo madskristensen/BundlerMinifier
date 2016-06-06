@@ -7,6 +7,7 @@ before_build:
   - ps: Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
   - ps: Vsix-IncrementNuspecVersion .\src\BundlerMinifier\MSBuild\*.nuspec
   - ps: Vsix-TokenReplacement src\BundlerMinifier.Core\Constants.cs 'VERSION = "([0-9\\.]+)"' 'VERSION = "{version}"'
+  - ps: Vsix-TokenReplacement src\BundlerMinifier.Core\project.json '"(1\.0\.0-\*)"' '"{version}"'
 
 build_script:
   - powershell -NoProfile -ExecutionPolicy unrestricted -Command "&{iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0/scripts/obtain/dotnet-install.ps1'))}"
@@ -14,29 +15,29 @@ build_script:
   - nuget restore .\src\BundlerMinifierVSIX -Verbosity quiet -PackagesDirectory .\Packages
   - msbuild .\src\BundlerMinifierVSIX\BundlerMinifierVSIX.csproj /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
   - dotnet restore .\src\BundlerMinifier.Core --ignore-failed-sources
-  - dotnet build .\src\BundlerMinifier.Core
+  - dotnet pack src\BundlerMinifier.Core -c Release
 
 after_test:
   - ps: Vsix-PushArtifacts
 
 artifacts:
-  - path: src\BundlerMinifier\**\*.nupkg
+  - path: src\**\*.nupkg
     name: NuGet package
 
 before_deploy:
   - ps: Vsix-CreateChocolatyPackage -packageId bundlerminifier
 
-deploy:
-  - provider: NuGet
-    artifact: /NuGet/
-    api_key:
-      secure: 6xBu/05BWJDPa2PRkxEH3PHU/caLvy2lzf1eWdRBGXwSCTejHtI+6e0V4s2LaVri
-
-  - provider: Environment
-    name: Chocolatey
-    on:
-      branch: master
-      appveyor_repo_commit_message_extended: /\[release\]/
-
-after_deploy:
-  - ps: Vsix-PublishToGallery .\src\BundlerMinifierVsix\**\*.vsix
+#deploy:
+#  - provider: NuGet
+#    artifact: /NuGet/
+#    api_key:
+#      secure: 6xBu/05BWJDPa2PRkxEH3PHU/caLvy2lzf1eWdRBGXwSCTejHtI+6e0V4s2LaVri
+#
+#  - provider: Environment
+#    name: Chocolatey
+#    on:
+#      branch: master
+#      appveyor_repo_commit_message_extended: /\[release\]/
+#
+#after_deploy:
+#  - ps: Vsix-PublishToGallery .\src\BundlerMinifierVsix\**\*.vsix
