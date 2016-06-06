@@ -17,9 +17,8 @@ build_script:
   - dotnet restore .\src\BundlerMinifier.Core --ignore-failed-sources -v Error
   - dotnet pack src\BundlerMinifier.Core -c Release
 
-test:
-  assemblies:
-    - '**\BundlerMinifierTest.dll'
+test_script:
+  - vstest.console /logger:Appveyor "src\BundlerMinifierTest\bin\release\BundlerMinifierTest.dll"
 
 
 after_test:
