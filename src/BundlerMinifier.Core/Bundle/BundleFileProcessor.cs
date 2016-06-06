@@ -147,6 +147,7 @@ namespace BundlerMinifier
             {
                 if (File.Exists(bundleFile))
                 {
+                    new FileInfo(bundleFile).IsReadOnly = false;
                     File.Delete(bundleFile);
                     Console.WriteLine($"Deleted {bundleFile.Cyan().Bright()}");
                 }
@@ -158,18 +159,21 @@ namespace BundlerMinifier
 
             if (File.Exists(minFile))
             {
+                new FileInfo(minFile).IsReadOnly = false;
                 File.Delete(minFile);
                 Console.WriteLine($"Deleted {minFile.Cyan().Bright()}");
             }
 
             if (File.Exists(mapFile))
             {
+                new FileInfo(mapFile).IsReadOnly = false;
                 File.Delete(mapFile);
                 Console.WriteLine($"Deleted {mapFile.Cyan().Bright()}");
             }
 
             if (File.Exists(gzFile))
             {
+                new FileInfo(gzFile).IsReadOnly = false;
                 File.Delete(gzFile);
                 Console.WriteLine($"Deleted {gzFile.Cyan().Bright()}");
             }
