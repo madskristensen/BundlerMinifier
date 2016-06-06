@@ -1,5 +1,12 @@
 ﻿{
   "version": "1.0.0-*",
+  "packOptions": {
+    "owners": [ "Mads Kristensen" ],
+    "iconUrl": "https://raw.githubusercontent.com/madskristensen/BundlerMinifier/master/src/BundlerMinifierVsix/Resources/icon.png",
+    "summary": "Bundles and minifies CSS, JS and HTML files",
+    "tags": [ "concat", "bundle", "minify", "minification", "css", "js", "html" ],
+    "requireLicenseAcceptance": false
+  },
   "buildOptions": {
     "emitEntryPoint": true,
     "outputName": "dotnet-bundlerminifier"
