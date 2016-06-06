@@ -69,8 +69,6 @@
     <Compile Include="Helpers\FileHelpers.cs" />
     <Compile Include="Helpers\ProjectHelpers.cs" />
     <Compile Include="FileListeners\JsonCreationListener.cs" />
-    <Compile Include="JSON\BundleConfigSchemaSelector.cs" />
-    <Compile Include="JSON\RelativeFilePathFormatProvider.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Options.cs">
       <SubType>Component</SubType>
@@ -102,13 +100,9 @@
     <Content Include="Resources\preview.png">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="JSON\bundleconfig-schema.json">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="source.extension.ico">
       <DependentUpon>source.extension.vsixmanifest</DependentUpon>
     </Content>
-    <None Include="JSON\bundleconfig.json" />
     <None Include="packages.config" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
@@ -153,11 +147,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.JSON.Core, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Microsoft.JSON.Core.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Microsoft.VisualStudio.CommandBars, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
       <Private>False</Private>
