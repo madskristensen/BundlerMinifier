@@ -9,6 +9,7 @@
 - [ ] Add a "watch" command to CLI
 - [ ] Move all strings to .resx files
 - [ ] Add a dependency on TRX package
+- [ ] Move context menu commands into flyout menu
 
 Features that have a checkmark are complete and available for
 download in the
