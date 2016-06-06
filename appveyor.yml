@@ -2,6 +2,7 @@ image: Visual Studio 2015
 
 install:
   - ps: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
+  - ps: (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0/scripts/obtain/dotnet-install.ps1") | iex
 
 before_build:
   - ps: Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
@@ -10,12 +11,12 @@ before_build:
   - ps: Vsix-TokenReplacement src\BundlerMinifier.Core\project.json '"(1\.0\.0-\*)"' '"{version}"'
 
 build_script:
-  - powershell -NoProfile -ExecutionPolicy unrestricted -Command "&{iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0/scripts/obtain/dotnet-install.ps1'))}"
   - nuget restore .\src\BundlerMinifier -Verbosity quiet -PackagesDirectory .\Packages
   - nuget restore .\src\BundlerMinifierVSIX -Verbosity quiet -PackagesDirectory .\Packages
+  - msbuild .\src\BundlerMinifierVSIX\BundlerMinifierVSIX.csproj /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
+  - msbuild .\src\BundlerMinifierTest\BundlerMinifierTest.csproj /p:configuration=Release /v:m
   - dotnet restore .\src\BundlerMinifier.Core --ignore-failed-sources -v Error
   - dotnet pack src\BundlerMinifier.Core -c Release
-  - msbuild .\src\BundlerMinifierVSIX\BundlerMinifierVSIX.csproj /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
 
 after_test:
   - ps: Vsix-PushArtifacts
