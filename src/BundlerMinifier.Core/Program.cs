@@ -70,19 +70,12 @@ namespace BundlerMinifier
 
             if (configurations.Count == 0)
             {
-                //int cleanResult = Run(configPath, null);
-
-                //if(cleanResult != 0)
-                //{
-                //    return cleanResult;
-                //}
-
-                return Run(configPath, null);
+                return Run(configPath, null, isClean);
             }
 
             foreach(string config in configurations)
             {
-                int runResult = Run(configPath, config);
+                int runResult = Run(configPath, config, isClean);
 
                 if(runResult < 0)
                 {
@@ -93,7 +86,7 @@ namespace BundlerMinifier
             return 0;
         }
 
-        private static int Run(string configPath, string file)
+        private static int Run(string configPath, string file, bool isClean)
         {
             var configs = GetConfigs(configPath, file);
 
@@ -108,7 +101,15 @@ namespace BundlerMinifier
 
             try
             {
-                processor.Process(configPath, configs);
+                if (isClean)
+                {
+                    processor.Clean(configPath, configs);
+                }
+                else
+                {
+                    processor.Process(configPath, configs);
+                }
+
                 return 0;
             }
             catch (Exception ex)
