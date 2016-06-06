@@ -21,7 +21,7 @@ after_test:
   - ps: Vsix-PushArtifacts
 
 artifacts:
-  - path: src\**\*{version}.nupkg
+  - path: src\**\*{build}.nupkg
     name: NuGet package
 
 before_deploy:
