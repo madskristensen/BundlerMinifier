@@ -13,13 +13,9 @@ build_script:
   - powershell -NoProfile -ExecutionPolicy unrestricted -Command "&{iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0/scripts/obtain/dotnet-install.ps1'))}"
   - nuget restore .\src\BundlerMinifier -Verbosity quiet -PackagesDirectory .\Packages
   - nuget restore .\src\BundlerMinifierVSIX -Verbosity quiet -PackagesDirectory .\Packages
-  - msbuild .\src\BundlerMinifierVSIX\BundlerMinifierVSIX.csproj /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
   - dotnet restore .\src\BundlerMinifier.Core --ignore-failed-sources -v Error
   - dotnet pack src\BundlerMinifier.Core -c Release
-
-test_script:
-  - vstest.console /logger:Appveyor "src\BundlerMinifierTest\bin\release\BundlerMinifierTest.dll"
-
+  - msbuild .\src\BundlerMinifierVSIX\BundlerMinifierVSIX.csproj /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
 
 after_test:
   - ps: Vsix-PushArtifacts
