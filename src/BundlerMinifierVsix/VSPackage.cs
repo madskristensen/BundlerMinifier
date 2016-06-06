@@ -29,5 +29,6 @@ namespace BundlerMinifierVsix
         public const int BundleOnBuild = 0x0400;
         public const int RemoveBundle = 0x0500;
         public const int UpdateSolution = 0x0600;
+        public const int ClearOutputFiles = 0x0700;
     }
 }
