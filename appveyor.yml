@@ -14,14 +14,14 @@ build_script:
   - nuget restore .\src\BundlerMinifier -Verbosity quiet -PackagesDirectory .\Packages
   - nuget restore .\src\BundlerMinifierVSIX -Verbosity quiet -PackagesDirectory .\Packages
   - msbuild .\src\BundlerMinifierVSIX\BundlerMinifierVSIX.csproj /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
-  - dotnet restore .\src\BundlerMinifier.Core --ignore-failed-sources
+  - dotnet restore .\src\BundlerMinifier.Core --ignore-failed-sources -v Error
   - dotnet pack src\BundlerMinifier.Core -c Release
 
 after_test:
   - ps: Vsix-PushArtifacts
 
 artifacts:
-  - path: src\**\*.nupkg
+  - path: src\**\*{version}.nupkg
     name: NuGet package
 
 before_deploy:
