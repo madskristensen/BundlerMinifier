@@ -4,9 +4,9 @@
 - [x] Improve the CLI story
 - [x] Move JSON schema to SchemaStore.org
 - [x] Support for VS15
+- [x] Add button to re-bundle all bundles
 - [ ] Add a "watch" command to CLI
 - [ ] Add button to delete all output files
-- [ ] Add button to re-bundle all bundles
 - [ ] Move all strings to .resx files
 - [ ] Add a dependency on TRX package
 
