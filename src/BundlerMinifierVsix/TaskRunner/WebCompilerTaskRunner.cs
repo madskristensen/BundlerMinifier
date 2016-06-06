@@ -79,14 +79,14 @@ namespace BundlerMinifierVsix
 
             TaskRunnerNode type = new TaskRunnerNode(friendlyName, true)
             {
-                Command = GetCommand(cwd, $"\"{configPath}\"  *{extension}")
+                Command = GetCommand(cwd, $"*{extension} \"{configPath}\"")
             };
 
             foreach (var config in types)
             {
                 TaskRunnerNode child = new TaskRunnerNode(config.OutputFileName, true)
                 {
-                    Command = GetCommand(cwd, $"\"{configPath}\" \"{config.OutputFileName}\"")
+                    Command = GetCommand(cwd, $"\"{config.OutputFileName}\" \"{configPath}\"")
                 };
 
                 type.Children.Add(child);

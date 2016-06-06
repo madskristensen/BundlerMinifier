@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace BundlerMinifier
 {
@@ -43,24 +44,38 @@ namespace BundlerMinifier
             }
         }
 
+        public static bool TryGetBundles(string configFile, out IEnumerable<Bundle> bundles)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(configFile) || !File.Exists(configFile))
+                {
+                    bundles = Enumerable.Empty<Bundle>();
+                    return false;
+                }
+
+                configFile = new FileInfo(configFile).FullName;
+                string content = File.ReadAllText(configFile);
+                bundles = JArray.Parse(content).ToObject<Bundle[]>();
+
+                foreach (Bundle bundle in bundles)
+                {
+                    bundle.FileName = configFile;
+                }
+
+                return true;
+            }
+            catch
+            {
+                bundles = Enumerable.Empty<Bundle>();
+                return false;
+            }
+        }
+
         public static IEnumerable<Bundle> GetBundles(string configFile)
         {
-            if (string.IsNullOrEmpty(configFile))
-                return Enumerable.Empty<Bundle>();
-
-            FileInfo file = new FileInfo(configFile);
-
-            if (!file.Exists)
-                return Enumerable.Empty<Bundle>();
-
-            string content = File.ReadAllText(configFile);
-            var bundles = JsonConvert.DeserializeObject<IEnumerable<Bundle>>(content);
-
-            foreach (Bundle bundle in bundles)
-            {
-                bundle.FileName = configFile;
-            }
-
+            IEnumerable<Bundle> bundles;
+            TryGetBundles(configFile, out bundles);
             return bundles;
         }
 

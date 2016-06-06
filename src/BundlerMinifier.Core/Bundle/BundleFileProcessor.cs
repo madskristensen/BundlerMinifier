@@ -84,7 +84,8 @@ namespace BundlerMinifier
 
         private void ProcessBundle(string baseFolder, Bundle bundle)
         {
-            var inputLastModified = bundle.GetAbsoluteInputFiles().Max(inputFile => File.GetLastWriteTimeUtc(inputFile));
+            var inputs = bundle.GetAbsoluteInputFiles();
+            var inputLastModified = inputs.Count > 0 ? inputs.Max(inputFile => File.GetLastWriteTimeUtc(inputFile)) : DateTime.MaxValue;
 
             if ((bundle.GetAbsoluteInputFiles().Count > 1 || bundle.InputFiles.FirstOrDefault() != bundle.OutputFileName)
                 && inputLastModified > File.GetLastWriteTimeUtc(bundle.GetAbsoluteOutputFile()))
