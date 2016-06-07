@@ -77,9 +77,15 @@ namespace BundlerMinifier
                 }
             }
 
+            if (isClean && isWatch)
+            {
+                Console.WriteLine("The clean and watch options may not be used together.".Red().Bright());
+                return -1;
+            }
+
             if (isWatch)
             {
-                bool isWatching = Watcher.Configure(processor, configurations, configPath, isClean);
+                bool isWatching = Watcher.Configure(processor, configurations, configPath);
 
                 if(!isWatching)
                 {

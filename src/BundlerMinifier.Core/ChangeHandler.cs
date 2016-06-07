@@ -9,15 +9,13 @@ namespace BundlerMinifier
         private static string[] _ignorePatterns = { "\\node_modules\\", "\\bower_components\\", "\\jspm_packages\\" };
         private readonly Bundle _bundle;
         private readonly string _configFile;
-        private readonly bool _isClean;
         private readonly BundleFileProcessor _processor;
 
-        public ChangeHandler(BundleFileProcessor processor, string configFile, Bundle bundle, bool isClean)
+        public ChangeHandler(BundleFileProcessor processor, string configFile, Bundle bundle)
         {
             _processor = processor;
             _configFile = configFile;
             _bundle = bundle;
-            _isClean = isClean;
         }
 
         public bool FilesChanged(FileSystemEventArgs e)
@@ -38,14 +36,7 @@ namespace BundlerMinifier
             if ((_bundle.GetAbsoluteInputFiles().Count > 1 || _bundle.InputFiles.FirstOrDefault() != _bundle.OutputFileName)
                 && inputLastModified > File.GetLastWriteTimeUtc(_bundle.GetAbsoluteOutputFile()))
             {
-                if (_isClean)
-                {
-                    _processor.Clean(_configFile, new Bundle[] { _bundle });
-                }
-                else
-                {
-                    _processor.Process(_configFile, new Bundle[] { _bundle });
-                }
+                _processor.Process(_configFile, new Bundle[] { _bundle });
             }
 
             return true;

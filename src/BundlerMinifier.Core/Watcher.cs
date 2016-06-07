@@ -10,7 +10,7 @@ namespace BundlerMinifier
         private static readonly List<ChangeHandler> ChangeHandlers = new List<ChangeHandler>();
         private static FileSystemWatcher _listener;
 
-        internal static bool Configure(BundleFileProcessor processor, List<string> configurations, string configPath, bool isClean)
+        internal static bool Configure(BundleFileProcessor processor, List<string> configurations, string configPath)
         {
             IEnumerable<Bundle> bundles;
 
@@ -27,7 +27,7 @@ namespace BundlerMinifier
 
                     if (bundle != null)
                     {
-                        ChangeHandlers.Add(new ChangeHandler(processor, configPath, bundle, isClean));
+                        ChangeHandlers.Add(new ChangeHandler(processor, configPath, bundle));
                     }
                 }
             }
@@ -35,7 +35,7 @@ namespace BundlerMinifier
             {
                 foreach (Bundle bundle in bundles)
                 {
-                    ChangeHandlers.Add(new ChangeHandler(processor, configPath, bundle, isClean));
+                    ChangeHandlers.Add(new ChangeHandler(processor, configPath, bundle));
                 }
             }
 
