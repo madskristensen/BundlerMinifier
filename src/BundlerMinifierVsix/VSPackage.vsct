@@ -73,7 +73,7 @@
         <CommandFlag>DynamicVisibility</CommandFlag>
         <CommandFlag>DefaultInvisible</CommandFlag>
         <Strings>
-          <ButtonText>Re-Minify all bundles in solution</ButtonText>
+          <ButtonText>Update All Bundles</ButtonText>
         </Strings>
       </Button>
     </Buttons>

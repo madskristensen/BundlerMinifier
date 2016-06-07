@@ -140,15 +140,15 @@ namespace BundlerMinifier
 
         private void CleanBundle(string baseFolder, Bundle bundle)
         {
-            string bundleFile = bundle.GetAbsoluteOutputFile();
-
-            if (!bundle.GetAbsoluteInputFiles().Contains(bundleFile, StringComparer.OrdinalIgnoreCase))
+            string outputFile = bundle.GetAbsoluteOutputFile();
+            baseFolder = baseFolder.TrimEnd('\\') + "\\";
+            if (!bundle.GetAbsoluteInputFiles().Contains(outputFile, StringComparer.OrdinalIgnoreCase))
             {
-                if (File.Exists(bundleFile))
+                if (File.Exists(outputFile))
                 {
-                    new FileInfo(bundleFile).IsReadOnly = false;
-                    File.Delete(bundleFile);
-                    Console.WriteLine($"Deleted {bundleFile.Cyan().Bright()}");
+                    new FileInfo(outputFile).IsReadOnly = false;
+                    File.Delete(outputFile);
+                    Console.WriteLine($"Deleted {FileHelpers.MakeRelative(baseFolder, outputFile).Cyan().Bright()}");
                 }
             }
 
@@ -160,7 +160,7 @@ namespace BundlerMinifier
             {
                 new FileInfo(minFile).IsReadOnly = false;
                 File.Delete(minFile);
-                Console.WriteLine($"Deleted {minFile.Cyan().Bright()}");
+                Console.WriteLine($"Deleted {FileHelpers.MakeRelative(baseFolder, minFile).Cyan().Bright()}");
             }
 
             if (File.Exists(mapFile))
@@ -177,7 +177,7 @@ namespace BundlerMinifier
                 Console.WriteLine($"Deleted {gzFile.Cyan().Bright()}");
             }
         }
-        
+
         protected void OnProcessing(Bundle bundle, string baseFolder)
         {
             if (Processing != null)
