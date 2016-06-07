@@ -97,7 +97,7 @@ namespace BundlerMinifierVsix.Commands
             string configFile = Path.Combine(folder, Constants.CONFIG_FILENAME);
             IEnumerable<string> files = ProjectHelpers.GetSelectedItemPaths().Select(f => BundlerMinifier.FileHelpers.MakeRelative(configFile, f));
             string inputFile = item.Properties.Item("FullPath").Value.ToString();
-            string outputFile = inputFile;
+            string outputFile = FileHelpers.GetMinFileName(inputFile);
 
             if (files.Count() > 1)
             {

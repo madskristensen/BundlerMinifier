@@ -272,7 +272,7 @@ namespace BundlerMinifier
         {
             string fileName = Path.GetFileName(file);
 
-            if (fileName.IndexOf(".min.", StringComparison.OrdinalIgnoreCase) > 1)
+            if (fileName.IndexOf(".min.", StringComparison.OrdinalIgnoreCase) > 0)
                 return file;
 
             string ext = Path.GetExtension(file);
