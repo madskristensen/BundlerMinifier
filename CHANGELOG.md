@@ -8,6 +8,7 @@
 - [x] Add button to delete all output files
 - [x] Add "Clean" command to Task Runner Explorer
 - [ ] Add a "watch" command to CLI
+- [ ] Write documentation for the CLI
 - [ ] Move all strings to .resx files
 - [ ] Add a dependency on TRX package
 - [ ] Move context menu commands into flyout menu
