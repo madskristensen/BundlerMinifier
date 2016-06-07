@@ -9,7 +9,7 @@
   },
   "buildOptions": {
     "emitEntryPoint": true,
-    "outputName": "dotnet-bundlerminifier"
+    "outputName": "dotnet-bundle"
   },
 
   "dependencies": {
