@@ -6,7 +6,7 @@ namespace BundlerMinifier
 {
     internal class ChangeHandler
     {
-        private static string[] _ignorePatterns = { "\\node_modules\\", "\\bower_components\\", "\\jspm_packages\\" };
+        private static string[] _ignorePatterns = { "node_modules".AsPathSegment(), "bower_components".AsPathSegment(), "jspm_packages".AsPathSegment() };
         private readonly Bundle _bundle;
         private readonly string _configFile;
         private readonly BundleFileProcessor _processor;

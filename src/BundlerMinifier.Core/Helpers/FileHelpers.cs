@@ -53,5 +53,55 @@ namespace BundlerMinifier
 
             return oldContent != newContent;
         }
+
+        public static bool IsUnixPathPreferred
+        {
+            get
+            {
+                return Directory.GetCurrentDirectory().IndexOf('/') > -1;
+            }
+        }
+
+        public static char PathSeparatorChar
+        {
+            get { return IsUnixPathPreferred ? '/' : '\\'; }
+        }
+
+        public static string NormalizePath(this string path)
+        {
+            bool nix = IsUnixPathPreferred;
+
+            if (nix)
+            {
+                return path.Replace("\\", "/").Replace("/ ", "\\ ");
+            }
+            else
+            {
+                return path.Replace("/", "\\");
+            }
+        }
+
+        public static string TrimTrailingPathSeparatorChar(this string path)
+        {
+            bool nix = IsUnixPathPreferred;
+            char toTrim = '\\';
+
+            if (nix)
+            {
+                toTrim = '/';
+            }
+
+            return path.NormalizePath().TrimEnd(toTrim);
+        }
+
+        public static string DemandTrailingPathSeparatorChar(this string path)
+        {
+            return path.TrimTrailingPathSeparatorChar() + PathSeparatorChar;
+        }
+
+        public static string AsPathSegment(this string path)
+        {
+            return $"{PathSeparatorChar}{path}{PathSeparatorChar}";
+        }
     }
 }

@@ -141,7 +141,7 @@ namespace BundlerMinifier
         private void CleanBundle(string baseFolder, Bundle bundle)
         {
             string outputFile = bundle.GetAbsoluteOutputFile();
-            baseFolder = baseFolder.TrimEnd('\\') + "\\";
+            baseFolder = baseFolder.DemandTrailingPathSeparatorChar();
             if (!bundle.GetAbsoluteInputFiles().Contains(outputFile, StringComparer.OrdinalIgnoreCase))
             {
                 if (File.Exists(outputFile))

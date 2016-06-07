@@ -35,7 +35,7 @@ namespace BundlerMinifier
         public string GetAbsoluteOutputFile()
         {
             string folder = new FileInfo(FileName).DirectoryName;
-            return Path.Combine(folder, OutputFileName.Replace("/", "\\"));
+            return Path.Combine(folder, OutputFileName.NormalizePath());
         }
 
         internal List<string> GetAbsoluteInputFiles()
@@ -64,8 +64,8 @@ namespace BundlerMinifier
                     var output = GetAbsoluteOutputFile();
                     var outputMin = BundleMinifier.GetMinFileName(output);
 
-                    string searchDir = new FileInfo(Path.Combine(folder, relative).Replace("/", "\\")).FullName;
-                    var allFiles = Directory.EnumerateFiles(searchDir, "*" + ext, SearchOption.AllDirectories).Select(f => f.Replace(folder + "\\", ""));
+                    string searchDir = new FileInfo(Path.Combine(folder, relative).NormalizePath()).FullName;
+                    var allFiles = Directory.EnumerateFiles(searchDir, "*" + ext, SearchOption.AllDirectories).Select(f => f.Replace(folder + FileHelpers.PathSeparatorChar, ""));
 
                     var matches = Minimatcher.Filter(allFiles, inputFile, options).Select(f => Path.Combine(folder, f));
                     matches = matches.Where(match => match != output && match != outputMin);
@@ -73,7 +73,7 @@ namespace BundlerMinifier
                 }
                 else
                 {
-                    string fullPath = Path.Combine(folder, inputFile).Replace("/", "\\");
+                    string fullPath = Path.Combine(folder, inputFile.NormalizePath());
 
                     if (Directory.Exists(fullPath))
                     {
@@ -96,7 +96,7 @@ namespace BundlerMinifier
 
                 if (globIndex == 0)
                 {
-                    var allFiles = files.Select(f => f.Replace(folder + "\\", ""));
+                    var allFiles = files.Select(f => f.Replace(folder + FileHelpers.PathSeparatorChar, ""));
                     var matches = Minimatcher.Filter(allFiles, inputFile, options).Select(f => Path.Combine(folder, f));
                     files = matches.ToList();
                 }
