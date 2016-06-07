@@ -19,7 +19,14 @@ namespace BundlerMinifier
             Uri baseUri = new Uri(baseFile, UriKind.RelativeOrAbsolute);
             Uri fileUri = new Uri(file, UriKind.RelativeOrAbsolute);
 
-            return Uri.UnescapeDataString(baseUri.MakeRelativeUri(fileUri).ToString());
+            if (baseUri.IsAbsoluteUri)
+            {
+                return Uri.UnescapeDataString(baseUri.MakeRelativeUri(fileUri).ToString());
+            }
+            else
+            {
+                return baseUri.ToString();
+            }
         }
 
         /// <summary>

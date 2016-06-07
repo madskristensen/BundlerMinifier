@@ -51,31 +51,56 @@ namespace BundlerMinifier
 
             Console.WriteLine($"Running with configuration from {configPath}".Green().Bright());
 
+            BundleFileProcessor processor = new BundleFileProcessor();
+            EventHookups(processor, configPath);
+
             List<string> configurations = new List<string>();
             bool isClean = false;
+            bool isWatch = false;
 
             for (int i = 0; i < readConfigsUntilIndex; ++i)
             {
                 bool currentArgIsClean = string.Equals(args[i], "clean", StringComparison.OrdinalIgnoreCase);
+                bool currentArgIsWatch = string.Equals(args[i], "watch", StringComparison.OrdinalIgnoreCase);
 
-                if (!currentArgIsClean)
+                if (!currentArgIsClean && !currentArgIsWatch)
                 {
                     configurations.Add(args[i]);
                 }
-                else
+                else if(currentArgIsClean)
                 {
                     isClean = true;
                 }
+                else
+                {
+                    isWatch = true;
+                }
+            }
+
+            if (isWatch)
+            {
+                bool isWatching = Watcher.Configure(processor, configurations, configPath, isClean);
+
+                if(!isWatching)
+                {
+                    Console.WriteLine("No output file names were matched".Red().Bright());
+                    return -1;
+                }
+
+                Console.WriteLine("Watching... Press [Enter] to stop".LightGray().Bright());
+                Console.ReadLine();
+                Watcher.Stop();
+                return 0;
             }
 
             if (configurations.Count == 0)
             {
-                return Run(configPath, null, isClean);
+                return Run(processor, configPath, null, isClean);
             }
 
             foreach(string config in configurations)
             {
-                int runResult = Run(configPath, config, isClean);
+                int runResult = Run(processor, configPath, config, isClean);
 
                 if(runResult < 0)
                 {
@@ -86,7 +111,7 @@ namespace BundlerMinifier
             return 0;
         }
 
-        private static int Run(string configPath, string file, bool isClean)
+        private static int Run(BundleFileProcessor processor, string configPath, string file, bool isClean)
         {
             var configs = GetConfigs(configPath, file);
 
@@ -95,9 +120,6 @@ namespace BundlerMinifier
                 Console.WriteLine("No configurations matched".Orange().Bright());
                 return -1;
             }
-
-            BundleFileProcessor processor = new BundleFileProcessor();
-            EventHookups(processor, configPath);
 
             try
             {
