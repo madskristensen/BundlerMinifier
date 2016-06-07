@@ -45,7 +45,7 @@
         <CommandFlag>DynamicVisibility</CommandFlag>
         <CommandFlag>DefaultInvisible</CommandFlag>
         <Strings>
-          <ButtonText>Delete All Output Files...</ButtonText>
+          <ButtonText>Delete All Output Files</ButtonText>
         </Strings>
       </Button>
       <Button guid="guidBundlerCmdSet" id="BundleOnBuild" priority="0x0300" type="Button">

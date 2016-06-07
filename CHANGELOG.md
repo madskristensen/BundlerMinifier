@@ -6,6 +6,7 @@
 - [x] Support for VS15
 - [x] Add button to re-bundle all bundles
 - [x] Add button to delete all output files
+- [x] Add "Clean" command to Task Runner Explorer
 - [ ] Add a "watch" command to CLI
 - [ ] Move all strings to .resx files
 - [ ] Add a dependency on TRX package

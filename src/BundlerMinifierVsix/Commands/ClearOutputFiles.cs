@@ -86,21 +86,8 @@ namespace BundlerMinifierVsix.Commands
 
             var bundles = BundleHandler.GetBundles(configFile);
 
-            foreach (Bundle bundle in bundles)
-            {
-                var outputFile = bundle.GetAbsoluteOutputFile();
-
-                var minFile = BundleFileProcessor.GetMinFileName(outputFile);
-                var mapFile = minFile + ".map";
-                var gzipFile = minFile + ".gz";
-
-                if (!BundleFileProcessor.IsFileConfigured(configFile, outputFile).Any())
-                    Deletefile(outputFile);
-
-                Deletefile(minFile);
-                Deletefile(mapFile);
-                Deletefile(gzipFile);
-            }
+            BundleFileProcessor processor = new BundleFileProcessor();
+            processor.Clean(configFile, bundles);
         }
 
         private void Deletefile(string file)
