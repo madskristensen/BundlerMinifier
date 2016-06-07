@@ -28,7 +28,7 @@ namespace BundlerMinifier
             };
 
             string content = JsonConvert.SerializeObject(bundles, settings);
-            File.WriteAllText(configFile, content);
+            File.WriteAllText(configFile, content + Environment.NewLine);
         }
 
         public static void RemoveBundle(string configFile, Bundle bundleToRemove)
