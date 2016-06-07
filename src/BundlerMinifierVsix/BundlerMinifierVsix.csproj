@@ -60,6 +60,7 @@
     <Compile Include="Commands\ProjectEventCommand.cs" />
     <Compile Include="Commands\RemoveBundle.cs" />
     <Compile Include="Commands\UpdateAllFiles.cs" />
+    <Compile Include="Commands\ClearOutputFiles.cs" />
     <Compile Include="Commands\UpdateBundle.cs" />
     <Compile Include="Commands\CreateBundle.cs" />
     <Compile Include="BundlerMinifierPackage.cs" />

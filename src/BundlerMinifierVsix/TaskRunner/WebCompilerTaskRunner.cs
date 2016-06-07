@@ -44,15 +44,20 @@ namespace BundlerMinifierVsix
 
         private ITaskRunnerNode LoadHierarchy(string configPath)
         {
-            ITaskRunnerNode root = new TaskRunnerNode(Vsix.Name);
-            TaskRunnerNode tasks = new TaskRunnerNode("All files", true)
-            {
-                Description = $"Bundles all files listed in {Constants.CONFIG_FILENAME}",
-                Command = GetCommand(Path.GetDirectoryName(configPath), $"\"{configPath}\"")
-            };
+            var root = new TaskRunnerNode(Vsix.Name);
+            var cwd = Path.GetDirectoryName(configPath);
 
-            tasks.Description = $"Bundle configs specified in {Constants.CONFIG_FILENAME}.";
-            root.Children.Add(tasks);
+            root.Children.Add(new TaskRunnerNode("Update all files", true)
+            {
+                Description = $"Bundle configs specified in {Constants.CONFIG_FILENAME}.",
+                Command = GetCommand(cwd, $"\"{configPath}\"")
+            });
+
+            root.Children.Add(new TaskRunnerNode("Clean output files", true)
+            {
+                Description = $"Clean all output files",
+                Command = GetCommand(cwd, $"clean \"{configPath}\"")
+            });
 
             var list = new List<ITaskRunnerNode> {
                 GetFileType(configPath, ".js"),

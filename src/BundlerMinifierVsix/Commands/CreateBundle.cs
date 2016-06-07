@@ -54,14 +54,36 @@ namespace BundlerMinifierVsix.Commands
         private void BeforeQueryStatus(object sender, EventArgs e)
         {
             var button = (OleMenuCommand)sender;
+            button.Enabled = button.Visible = false;
+
             var files = ProjectHelpers.GetSelectedItemPaths();
+            var supported = BundleFileProcessor.IsSupported(files.ToArray());
 
-            if (files.Count() == 1)
-                button.Text = "Minify File";
-            else
-                button.Text = "Bundle and Minify Files";
+            if (supported)
+            {
+                if (files.Count() == 1)
+                {
+                    var project = BundlerMinifierPackage._dte.Solution.FindProjectItem(files.First())?.ContainingProject;
+                    var configFile = project.GetConfigFile();
 
-            button.Visible = BundleFileProcessor.IsSupported(files.ToArray());
+                    var bundles = BundleFileProcessor.IsFileConfigured(configFile, files.First());
+
+                    if (bundles.Any())
+                    {
+                        button.Text = "Re-bundle File";
+                    }
+                    else
+                    {
+                        button.Text = "Minify File";
+                    }
+                }
+                else
+                {
+                    button.Text = "Bundle and Minify Files";
+                }
+
+                button.Visible = button.Enabled = supported;
+            }
         }
 
         private void AddBundle(object sender, EventArgs e)

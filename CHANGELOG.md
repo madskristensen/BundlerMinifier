@@ -4,11 +4,14 @@
 - [x] Improve the CLI story
 - [x] Move JSON schema to SchemaStore.org
 - [x] Support for VS15
+- [x] Add button to re-bundle all bundles
+- [x] Add button to delete all output files
+- [x] Add "Clean" command to Task Runner Explorer
 - [ ] Add a "watch" command to CLI
-- [ ] Add button to delete all output files
-- [ ] Add button to re-bundle all bundles
+- [ ] Write documentation for the CLI
 - [ ] Move all strings to .resx files
 - [ ] Add a dependency on TRX package
+- [ ] Move context menu commands into flyout menu
 
 Features that have a checkmark are complete and available for
 download in the

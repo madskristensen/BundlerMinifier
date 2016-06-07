@@ -45,6 +45,7 @@ namespace BundlerMinifierVsix
             BundleOnBuild.Initialize(this);
             RemoveBundle.Initialize(this);
             ProjectEventCommand.Initialize(this);
+            ClearOutputFiles.Initialize(this);
 
             base.Initialize();
         }

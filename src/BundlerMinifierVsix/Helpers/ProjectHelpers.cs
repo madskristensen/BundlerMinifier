@@ -204,19 +204,22 @@ namespace BundlerMinifierVsix
             return null;
         }
 
-        public static void DeleteFileFromProject(string file)
+        public static bool DeleteFileFromProject(string file)
         {
             ProjectItem item = _dte.Solution.FindProjectItem(file);
 
             if (item == null)
-                return;
+                return false;
+
             try
             {
                 item.Delete();
+                return true;
             }
             catch (Exception ex)
             {
                 Logger.Log(ex);
+                return false;
             }
         }
     }
