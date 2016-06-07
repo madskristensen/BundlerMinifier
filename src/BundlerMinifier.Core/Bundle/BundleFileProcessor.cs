@@ -97,10 +97,8 @@ namespace BundlerMinifier
         {
             OnProcessing(bundle, baseFolder);
             var inputs = bundle.GetAbsoluteInputFiles();
-            var inputLastModified = inputs.Count > 0 ? inputs.Max(inputFile => File.GetLastWriteTimeUtc(inputFile)) : DateTime.MaxValue;
 
-            if ((bundle.GetAbsoluteInputFiles().Count > 1 || bundle.InputFiles.FirstOrDefault() != bundle.OutputFileName)
-                && inputLastModified > File.GetLastWriteTimeUtc(bundle.GetAbsoluteOutputFile()))
+            if (bundle.GetAbsoluteInputFiles().Count > 1 || bundle.InputFiles.FirstOrDefault() != bundle.OutputFileName)
             {
                 BundleHandler.ProcessBundle(baseFolder, bundle);
 
@@ -146,7 +144,7 @@ namespace BundlerMinifier
             {
                 if (File.Exists(outputFile))
                 {
-                    new FileInfo(outputFile).IsReadOnly = false;
+                    FileHelpers.RemoveReadonlyFlagFromFile(outputFile);
                     File.Delete(outputFile);
                     Console.WriteLine($"Deleted {FileHelpers.MakeRelative(baseFolder, outputFile).Cyan().Bright()}");
                 }
@@ -158,21 +156,21 @@ namespace BundlerMinifier
 
             if (File.Exists(minFile))
             {
-                new FileInfo(minFile).IsReadOnly = false;
+                FileHelpers.RemoveReadonlyFlagFromFile(minFile);
                 File.Delete(minFile);
                 Console.WriteLine($"Deleted {FileHelpers.MakeRelative(baseFolder, minFile).Cyan().Bright()}");
             }
 
             if (File.Exists(mapFile))
             {
-                new FileInfo(mapFile).IsReadOnly = false;
+                FileHelpers.RemoveReadonlyFlagFromFile(mapFile);
                 File.Delete(mapFile);
                 Console.WriteLine($"Deleted {mapFile.Cyan().Bright()}");
             }
 
             if (File.Exists(gzFile))
             {
-                new FileInfo(gzFile).IsReadOnly = false;
+                FileHelpers.RemoveReadonlyFlagFromFile(gzFile);
                 File.Delete(gzFile);
                 Console.WriteLine($"Deleted {gzFile.Cyan().Bright()}");
             }

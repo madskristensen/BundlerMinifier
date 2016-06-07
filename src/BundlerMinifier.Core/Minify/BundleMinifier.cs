@@ -64,11 +64,10 @@ namespace BundlerMinifier
                         if (containsChanges)
                         {
                             File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
+                            OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
                         }
 
                         GzipFile(minFile, bundle, containsChanges);
-
-                        OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
                     }
                     else
                     {
@@ -96,9 +95,9 @@ namespace BundlerMinifier
                                 if (containsChanges)
                                 {
                                     File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
+                                    OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
                                 }
 
-                                OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
 
                                 GzipFile(minFile, bundle, containsChanges);
                             }
@@ -148,10 +147,9 @@ namespace BundlerMinifier
                     if (containsChanges)
                     {
                         File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
+                        OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
                     }
-
-                    OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
-
+                    
                     GzipFile(minFile, bundle, containsChanges);
                 }
                 else
@@ -196,9 +194,8 @@ namespace BundlerMinifier
                     if (containsChanges)
                     {
                         File.WriteAllText(minFile, uglifyResult.Code, new UTF8Encoding(false));
+                        OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
                     }
-
-                    OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
 
                     GzipFile(minFile, bundle, containsChanges);
                 }
@@ -247,9 +244,10 @@ namespace BundlerMinifier
                     var gzipStream = new GZipStream(targetStream, CompressionMode.Compress);
                     sourceStream.CopyTo(gzipStream);
                 }
+
+                OnAfterWritingGzipFile(sourceFile, gzipFile, bundle, containsChanges);
             }
 
-            OnAfterWritingGzipFile(sourceFile, gzipFile, bundle, containsChanges);
         }
 
         internal static void AddAjaxminErrors(UgliflyResult minifier, MinificationResult minResult)
