@@ -117,10 +117,9 @@ namespace BundlerMinifier
                 }
             }
 
-            string minFile = GetMinFileName(bundle.GetAbsoluteOutputFile());
+            string minFile = BundleMinifier.GetMinFileName(bundle.GetAbsoluteOutputFile());
 
-            if (bundle.Minify.ContainsKey("enabled") && bundle.Minify["enabled"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase)
-                && inputLastModified > File.GetLastWriteTimeUtc(minFile))
+            if (bundle.Minify.ContainsKey("enabled") && bundle.Minify["enabled"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
             {
                 var result = BundleMinifier.MinifyBundle(bundle);
 
@@ -153,7 +152,7 @@ namespace BundlerMinifier
                 }
             }
 
-            string minFile = GetMinFileName(bundle.GetAbsoluteOutputFile());
+            string minFile = BundleMinifier.GetMinFileName(bundle.GetAbsoluteOutputFile());
             string mapFile = minFile + ".map";
             string gzFile = minFile + ".gz";
 
@@ -178,13 +177,7 @@ namespace BundlerMinifier
                 Console.WriteLine($"Deleted {gzFile.Cyan().Bright()}");
             }
         }
-
-        public static string GetMinFileName(string file)
-        {
-            string ext = Path.GetExtension(file);
-            return file.Substring(0, file.LastIndexOf(ext, StringComparison.OrdinalIgnoreCase)) + ".min" + ext;
-        }
-
+        
         protected void OnProcessing(Bundle bundle, string baseFolder)
         {
             if (Processing != null)

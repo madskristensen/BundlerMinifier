@@ -31,6 +31,7 @@ namespace BundlerMinifierTest
             File.Delete("../../artifacts/foo.min.css");
             File.Delete("../../artifacts/foo.html");
             File.Delete("../../artifacts/foo.min.html");
+            File.Delete("../../artifacts/minify.min.css");
             File.Delete("../../artifacts/encoding/encoding.js");
             File.Delete("../../artifacts/encoding/encoding.min.js");
         }
@@ -55,7 +56,7 @@ namespace BundlerMinifierTest
         public void GetBundles()
         {
             var bundles = BundleHandler.GetBundles(TEST_BUNDLE);
-            Assert.AreEqual(3, bundles.Count());
+            Assert.AreEqual(4, bundles.Count());
         }
 
         [TestMethod]
@@ -86,7 +87,7 @@ namespace BundlerMinifierTest
             BundleHandler.AddBundle(filePath, bundle);
 
             var bundles = BundleHandler.GetBundles(filePath);
-            Assert.AreEqual(4, bundles.Count());
+            Assert.AreEqual(5, bundles.Count());
         }
 
         [TestMethod]
@@ -106,6 +107,16 @@ namespace BundlerMinifierTest
             // HTML
             string htmlResult = File.ReadAllText("../../artifacts/foo.min.html");
             Assert.AreEqual("<div>hatæ</div><span tabindex=2><i>hat</i></span>", htmlResult);
+        }
+
+        [TestMethod]
+        public void Minify()
+        {
+            var bundles = BundleHandler.GetBundles(TEST_BUNDLE);
+            _processor.Process(TEST_BUNDLE, bundles.Where(b => b.OutputFileName == "minify.min.css"));
+
+            string cssResult = File.ReadAllText(new FileInfo("../../artifacts/minify.min.css").FullName);
+            Assert.AreEqual("body{display:compact}", cssResult);
         }
 
         [TestMethod]

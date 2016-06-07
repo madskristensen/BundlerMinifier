@@ -62,7 +62,7 @@ namespace BundlerMinifier
                         relative = inputFile.Substring(0, last + 1);
 
                     var output = GetAbsoluteOutputFile();
-                    var outputMin = BundleFileProcessor.GetMinFileName(output);
+                    var outputMin = BundleMinifier.GetMinFileName(output);
 
                     string searchDir = new FileInfo(Path.Combine(folder, relative).Replace("/", "\\")).FullName;
                     var allFiles = Directory.EnumerateFiles(searchDir, "*" + ext, SearchOption.AllDirectories).Select(f => f.Replace(folder + "\\", ""));

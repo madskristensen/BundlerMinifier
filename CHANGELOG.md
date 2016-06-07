@@ -8,6 +8,7 @@
 - [x] Add button to delete all output files
 - [x] Add "Clean" command to Task Runner Explorer
 - [x] Updated command name to "dotnet bundle"
+- [x] Support for outputFileNames containing .min.&lt;ext&gt;
 - [ ] Add a "watch" command to CLI
 - [ ] Write documentation for the CLI
 - [ ] Move all strings to .resx files

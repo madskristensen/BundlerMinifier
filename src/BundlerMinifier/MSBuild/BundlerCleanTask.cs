@@ -28,7 +28,7 @@ namespace BundlerMinifier
                 var outputFile = bundle.GetAbsoluteOutputFile();
                 var inputFiles = bundle.GetAbsoluteInputFiles();
 
-                var minFile = BundleFileProcessor.GetMinFileName(outputFile);
+                var minFile = BundleMinifier.GetMinFileName(outputFile);
                 var mapFile = minFile + ".map";
                 var gzipFile = minFile + ".gz";
 
@@ -39,7 +39,7 @@ namespace BundlerMinifier
                 Deletefile(mapFile);
                 Deletefile(gzipFile);
             }
-            
+
             Log.LogMessage(MessageImportance.High, "Bundler: Done cleaning output file from " + configFile.Name);
 
             return true;

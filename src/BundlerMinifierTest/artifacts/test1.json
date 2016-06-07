@@ -23,16 +23,22 @@
 		},
 		"includeInProject": true
 	},
-	{
-		"outputFileName": "foo.html",
-		"inputFiles": [
-			"file1.html",
-			"file2.html"
-		],
+  {
+    "outputFileName": "foo.html",
+    "inputFiles": [
+      "file1.html",
+      "file2.html"
+    ],
     "minify": {
       "enabled": true,
-      "whitespaceMinificationMode":  "aggressive"
+      "whitespaceMinificationMode": "aggressive"
     },
-		"includeInProject": true
-	}
+    "includeInProject": true
+  },
+  {
+    "outputFileName": "minify.min.css",
+    "inputFiles": [
+      "minify.css"
+    ]
+  }
 ]

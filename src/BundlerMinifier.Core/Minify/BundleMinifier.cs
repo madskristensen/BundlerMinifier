@@ -270,8 +270,13 @@ namespace BundlerMinifier
 
         public static string GetMinFileName(string file)
         {
+            string fileName = Path.GetFileName(file);
+
+            if (fileName.IndexOf(".min.", StringComparison.OrdinalIgnoreCase) > 1)
+                return file;
+
             string ext = Path.GetExtension(file);
-            return file.Substring(0, file.LastIndexOf(ext)) + ".min" + ext;
+            return file.Substring(0, file.LastIndexOf(ext, StringComparison.OrdinalIgnoreCase)) + ".min" + ext;
         }
 
         public static string ReadAllText(string file)
