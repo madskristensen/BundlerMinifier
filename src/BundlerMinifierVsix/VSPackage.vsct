@@ -40,12 +40,12 @@
       </Button>
       <Button guid="guidBundlerCmdSet" id="ClearOutputFiles" priority="0x0200" type="Button">
         <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
-        <Icon guid="ImageCatalogGuid" id="ClearWindowContent" />
+        <Icon guid="ImageCatalogGuid" id="Cancel" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
         <CommandFlag>DefaultInvisible</CommandFlag>
         <Strings>
-          <ButtonText>Delete All Output Files</ButtonText>
+          <ButtonText>Delete Bundle Output Files</ButtonText>
         </Strings>
       </Button>
       <Button guid="guidBundlerCmdSet" id="BundleOnBuild" priority="0x0300" type="Button">

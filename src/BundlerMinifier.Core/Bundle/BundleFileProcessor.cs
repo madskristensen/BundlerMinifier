@@ -104,7 +104,7 @@ namespace BundlerMinifier
             {
                 BundleHandler.ProcessBundle(baseFolder, bundle);
 
-                string outputFile = Path.Combine(baseFolder, bundle.OutputFileName);
+                string outputFile = bundle.GetAbsoluteOutputFile();
                 bool containsChanges = FileHelpers.HasFileContentChanged(outputFile, bundle.Output);
 
                 if (containsChanges)
