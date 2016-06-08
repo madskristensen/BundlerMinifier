@@ -149,7 +149,7 @@ namespace BundlerMinifier
                         File.WriteAllText(minFile, result.MinifiedContent, new UTF8Encoding(false));
                         OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
                     }
-                    
+
                     GzipFile(minFile, bundle, containsChanges);
                 }
                 else

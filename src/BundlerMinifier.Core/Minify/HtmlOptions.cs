@@ -7,26 +7,19 @@ namespace BundlerMinifier
     {
         public static HtmlSettings GetSettings(Bundle bundle)
         {
-            var settings = new HtmlSettings();
-            settings.RemoveOptionalTags = GetValue(bundle, "removeOptionalEndTags") == "True";
-            //settings.RemoveRedundantAttributes = GetValue(bundle, "removeRedundantAttributes") == "True";
-
-            settings.ShortBooleanAttribute = GetValue(bundle, "collapseBooleanAttributes", true) == "True";
-            //settings.CustomAngularDirectiveList = GetValue(bundle, "customAngularDirectiveList");
-            //settings.MinifyAngularBindingExpressions = GetValue(bundle, "minifyAngularBindingExpressions") == "True";
-            settings.MinifyCss = GetValue(bundle, "minifyEmbeddedCssCode", true) == "True";
-            settings.MinifyJs = GetValue(bundle, "minifyEmbeddedJsCode", true) == "True";
-            settings.MinifyCssAttributes = GetValue(bundle, "minifyInlineCssCode", true) == "True";
-            //settings.MinifyInlineJsCode = GetValue(bundle, "minifyInlineJsCode", true) == "True";
-            //settings.MinifyKnockoutBindingExpressions = GetValue(bundle, "minifyKnockoutBindingExpressions") == "True";
-            settings.AttributesCaseSensitive = GetValue(bundle, "preserveCase") == "True";
-            //settings.ProcessableScriptTypeList = GetValue(bundle, "processableScriptTypeList");
-            settings.RemoveComments = GetValue(bundle, "removeHtmlComments", true) == "True";
-            //settings.RemoveTagsWithoutContent = GetValue(bundle, "removeTagsWithoutContent") == "True";
-
-            settings.RemoveQuotedAttributes = GetValue(bundle, "attributeQuotesRemovalMode", "html5") != "keepQuotes";
-            settings.CollapseWhitespaces = GetValue(bundle, "whitespaceMinificationMode", "medium") != "none";
-            settings.IsFragmentOnly = true;
+            var settings = new HtmlSettings
+            {
+                RemoveOptionalTags = GetValue(bundle, "removeOptionalEndTags") == "True",
+                ShortBooleanAttribute = GetValue(bundle, "collapseBooleanAttributes", true) == "True",
+                MinifyCss = GetValue(bundle, "minifyEmbeddedCssCode", true) == "True",
+                MinifyJs = GetValue(bundle, "minifyEmbeddedJsCode", true) == "True",
+                MinifyCssAttributes = GetValue(bundle, "minifyInlineCssCode", true) == "True",
+                AttributesCaseSensitive = GetValue(bundle, "preserveCase") == "True",
+                RemoveComments = GetValue(bundle, "removeHtmlComments", true) == "True",
+                RemoveQuotedAttributes = GetValue(bundle, "removeQuotedAttributes", true) == "True",
+                CollapseWhitespaces = GetValue(bundle, "collapseWhitespace", true) == "True",
+                IsFragmentOnly = GetValue(bundle, "isFragmentOnly", true) == "True"
+            };
 
             return settings;
         }
