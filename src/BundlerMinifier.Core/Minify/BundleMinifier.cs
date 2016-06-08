@@ -55,7 +55,7 @@ namespace BundlerMinifier
                     var uglifyResult = Uglify.Js(ReadAllText(file), settings);
                     result.MinifiedContent = uglifyResult.Code.Trim();
 
-                    if (!uglifyResult.HasErrors)
+                    if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(result.MinifiedContent))
                     {
                         bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
 
@@ -86,7 +86,7 @@ namespace BundlerMinifier
                             var uglifyResult = Uglify.Js(ReadAllText(file), file, settings);
                             result.MinifiedContent = uglifyResult.Code.Trim();
 
-                            if (!uglifyResult.HasErrors)
+                            if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(result.MinifiedContent))
                             {
                                 bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
 
@@ -138,7 +138,7 @@ namespace BundlerMinifier
                 var uglifyResult = Uglify.Css(content, file, settings);
                 result.MinifiedContent = uglifyResult.Code.Trim();
 
-                if (!uglifyResult.HasErrors)
+                if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(result.MinifiedContent))
                 {
                     bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
 
@@ -185,15 +185,15 @@ namespace BundlerMinifier
                 var uglifyResult = Uglify.Html(content, settings, file);
                 minResult.MinifiedContent = uglifyResult.Code.Trim();
 
-                if (!uglifyResult.HasErrors)
+                if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(minResult.MinifiedContent))
                 {
-                    bool containsChanges = FileHelpers.HasFileContentChanged(minFile, uglifyResult.Code);
+                    bool containsChanges = FileHelpers.HasFileContentChanged(minFile, minResult.MinifiedContent);
 
                     OnBeforeWritingMinFile(file, minFile, bundle, containsChanges);
 
                     if (containsChanges)
                     {
-                        File.WriteAllText(minFile, uglifyResult.Code, new UTF8Encoding(false));
+                        File.WriteAllText(minFile, minResult.MinifiedContent, new UTF8Encoding(false));
                         OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
                     }
 
