@@ -16,6 +16,7 @@
 - [ ] Add a dependency on TRX package
 - [ ] Move context menu commands into flyout menu
 
+
 Features that have a checkmark are complete and available for
 download in the
 [nightly build](http://vsixgallery.com/extension/a0ae318b-4f07-4f71-93cb-f21d3f03c6d3/).
