@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BundlerMinifier
 {
@@ -81,22 +82,38 @@ namespace BundlerMinifier
             }
         }
 
-        private static void FilesChanged(object sender, FileSystemEventArgs e)
+        private static async void FilesChanged(object sender, FileSystemEventArgs e)
         {
             var fsw = (FileSystemWatcher)sender;
             fsw.EnableRaisingEvents = false;
-            bool anyRan = false;
+            int retries = 0;
 
-            foreach (ChangeHandler handler in ChangeHandlers)
+            while (retries < 10)
             {
-                anyRan |= handler.FilesChanged(e);
-            }
+                await Task.Delay(100);
 
-            fsw.EnableRaisingEvents = true;
+                try
+                {
+                    bool anyRan = false;
 
-            if (anyRan)
-            {
-                Console.WriteLine("Watching... Press [Enter] to stop".LightGray().Bright());
+                    foreach (ChangeHandler handler in ChangeHandlers)
+                    {
+                        anyRan |= handler.FilesChanged(e);
+                    }
+
+                    fsw.EnableRaisingEvents = true;
+
+                    if (anyRan)
+                    {
+                        Console.WriteLine("Watching... Press [Enter] to stop".LightGray().Bright());
+                    }
+
+                    break;
+                }
+                catch
+                {
+                    ++retries;
+                }
             }
         }
     }
