@@ -1,5 +1,6 @@
 # Roadmap
 
+- [x] Breaking changes to HTML minification settings
 - [x] .NET Core compatible CLI engine
 - [x] Brand new CLI story
 - [x] JSON schema moved to SchemaStore.org
@@ -10,7 +11,7 @@
 - [x] *watch* command available in CLI
 - [x] Support for outputFileNames containing .min.&lt;ext&gt;
 - [x] New [wiki](https://github.com/madskristensen/BundlerMinifier/wiki) content available
-- [ ] CLI tested on Mac and Linux
+- [x] CLI tested on Mac and Linux
 - [ ] Move all strings to .resx files
 - [ ] Add a dependency on TRX package
 - [ ] Move context menu commands into flyout menu
