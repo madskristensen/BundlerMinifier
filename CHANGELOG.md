@@ -1,16 +1,16 @@
 # Roadmap
 
-- [x] Add .NET Core compatible bundle engine
-- [x] Improve the CLI story
-- [x] Move JSON schema to SchemaStore.org
+- [x] .NET Core compatible CLI engine
+- [x] Brand new CLI story
+- [x] JSON schema moved to SchemaStore.org
 - [x] Support for VS15
-- [x] Add button to re-bundle all bundles
-- [x] Add button to delete all output files
-- [x] Add "Clean" command to Task Runner Explorer
-- [x] Updated command name to "dotnet bundle"
+- [x] New button to re-bundle all bundles
+- [x] New button to delete all output files
+- [x] *Clean* command added to Task Runner Explorer
+- [x] *watch* command available in CLI
 - [x] Support for outputFileNames containing .min.&lt;ext&gt;
-- [x] Add a "watch" command to CLI
-- [ ] Write documentation for the CLI
+- [x] New [wiki](https://github.com/madskristensen/BundlerMinifier/wiki) content available
+- [ ] CLI tested on Mac and Linux
 - [ ] Move all strings to .resx files
 - [ ] Add a dependency on TRX package
 - [ ] Move context menu commands into flyout menu
