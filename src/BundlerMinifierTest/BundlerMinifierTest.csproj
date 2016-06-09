@@ -84,7 +84,7 @@
     <Content Include="artifacts\globbing\test.a.js" />
     <Content Include="artifacts\globbing\a.js" />
     <Content Include="artifacts\globbing\sub\b.js" />
-    <Content Include="artifacts\minify.css" />
+    <Content Include="artifacts\minify.js" />
     <Content Include="artifacts\test2\foo.css" />
     <Content Include="artifacts\test2\file1.js" />
     <Content Include="artifacts\test2\file2.js" />

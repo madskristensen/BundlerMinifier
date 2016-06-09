@@ -36,9 +36,10 @@
     "includeInProject": true
   },
   {
-    "outputFileName": "minify.min.css",
+    "outputFileName": "minify.min.js",
     "inputFiles": [
-      "minify.css"
-    ]
+      "minify.js"
+    ],
+    "sourceMap": true
   }
 ]

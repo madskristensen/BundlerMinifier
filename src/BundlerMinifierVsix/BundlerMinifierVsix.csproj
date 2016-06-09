@@ -70,7 +70,7 @@
     <Compile Include="Helpers\FileHelpers.cs" />
     <Compile Include="Helpers\ProjectHelpers.cs" />
     <Compile Include="FileListeners\JsonCreationListener.cs" />
-    <Compile Include="Logger.cs" />
+    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Options.cs">
       <SubType>Component</SubType>
     </Compile>

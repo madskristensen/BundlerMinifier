@@ -31,7 +31,7 @@ namespace BundlerMinifierTest
             File.Delete("../../artifacts/foo.min.css");
             File.Delete("../../artifacts/foo.html");
             File.Delete("../../artifacts/foo.min.html");
-            File.Delete("../../artifacts/minify.min.css");
+            File.Delete("../../artifacts/minify.min.js");
             File.Delete("../../artifacts/encoding/encoding.js");
             File.Delete("../../artifacts/encoding/encoding.min.js");
         }
@@ -113,10 +113,13 @@ namespace BundlerMinifierTest
         public void Minify()
         {
             var bundles = BundleHandler.GetBundles(TEST_BUNDLE);
-            _processor.Process(TEST_BUNDLE, bundles.Where(b => b.OutputFileName == "minify.min.css"));
+            _processor.Process(TEST_BUNDLE, bundles.Where(b => b.OutputFileName == "minify.min.js"));
 
-            string cssResult = File.ReadAllText(new FileInfo("../../artifacts/minify.min.css").FullName);
-            Assert.AreEqual("body{display:compact}", cssResult);
+            string cssResult = File.ReadAllText(new FileInfo("../../artifacts/minify.min.js").FullName);
+            Assert.AreEqual("var i=1,y=3;\n//# sourceMappingURL=minify.min.js.map", cssResult);
+
+            string map = File.ReadAllText(new FileInfo("../../artifacts/minify.min.js.map").FullName);
+            Assert.IsTrue(map.Contains("minify.js"));
         }
 
         [TestMethod]

@@ -83,6 +83,14 @@ namespace BundlerMinifier
                             settings.SymbolsMap = sourceMap;
                             sourceMap.StartPackage(minFile, mapFile);
 
+                            if (file.EndsWith(".min.js"))
+                            {
+                                var inputs = bundle.GetAbsoluteInputFiles();
+
+                                if (inputs.Count == 1 && inputs[0] == file.Replace(".min.js", ".js"))
+                                    file = inputs[0];
+                            }
+
                             var uglifyResult = Uglify.Js(ReadAllText(file), file, settings);
                             result.MinifiedContent = uglifyResult.Code.Trim();
 
