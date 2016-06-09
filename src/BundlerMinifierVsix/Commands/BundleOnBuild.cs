@@ -38,7 +38,7 @@ namespace BundlerMinifierVsix.Commands
         {
             var button = (OleMenuCommand)sender;
             var item = ProjectHelpers.GetSelectedItems().FirstOrDefault();
-            button.Visible = false;
+            button.Visible = button.Enabled = false;
 
             if (item == null || item.ContainingProject == null || item.Properties == null)
                 return;
@@ -56,7 +56,7 @@ namespace BundlerMinifierVsix.Commands
                 return;
             }
 
-            button.Visible = isConfigFile;
+            button.Visible = button.Enabled = isConfigFile;
 
             if (button.Visible)
             {

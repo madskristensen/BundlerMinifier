@@ -118,7 +118,7 @@ namespace BundlerMinifierVsix
             }
         }
 
-        public static void AddNestedFile(string parentFile, string newFile)
+        public static void AddNestedFile(string parentFile, string newFile, bool force = false)
         {
             ProjectItem item = _dte.Solution.FindProjectItem(parentFile);
 
@@ -133,7 +133,7 @@ namespace BundlerMinifierVsix
                 {
                     item.ContainingProject.AddFileToProject(newFile);
                 }
-                else if (_dte.Solution.FindProjectItem(newFile) == null)
+                else if (_dte.Solution.FindProjectItem(newFile) == null || force)
                 {
                     item.ProjectItems.AddFromFile(newFile);
                 }

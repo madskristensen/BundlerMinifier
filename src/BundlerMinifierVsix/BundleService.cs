@@ -31,9 +31,19 @@ namespace BundlerMinifierVsix
         {
             if (e.Bundle != null)
             {
+                var sourceFile = e.OriginalFile;
+
+                if (Path.GetFileName(sourceFile).Contains(".min."))
+                {
+                    string ext = Path.GetExtension(sourceFile);
+                    var unMinFile = sourceFile.Replace(".min" + ext, ext);
+                    if (File.Exists(unMinFile))
+                        sourceFile = unMinFile;
+                }
+
                 // Bundle file minification
                 if (e.Bundle.IncludeInProject)
-                    ProjectHelpers.AddNestedFile(e.OriginalFile, e.ResultFile);
+                    ProjectHelpers.AddNestedFile(sourceFile, e.ResultFile, true);
             }
             else
             {

@@ -70,6 +70,12 @@ namespace BundlerMinifierVsix.Commands
                     var bundles = BundleService.IsOutputConfigered(configFile, sourceFile);
                     bool isMinFile = Path.GetFileName(sourceFile).Contains(".min.");
 
+                    if (!bundles.Any() && !isMinFile)
+                    {
+                        var minFileName = FileHelpers.GetMinFileName(sourceFile);
+                        bundles = BundleService.IsOutputConfigered(configFile, minFileName);
+                    }
+
                     if (bundles.Any())
                     {
                         if (isMinFile)
