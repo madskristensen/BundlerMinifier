@@ -91,13 +91,18 @@ namespace BundlerMinifierVsix
             return list;
         }
 
-        public static void Process(string conigFile)
+        public static void Process(string configFile)
+        {
+            Process(configFile, null);
+        }
+
+        public static void Process(string configFile, IEnumerable<Bundle> bundles)
         {
             ThreadPool.QueueUserWorkItem((o) =>
             {
                 try
                 {
-                    Processor.Process(conigFile);
+                    Processor.Process(configFile, bundles);
                 }
                 catch (Exception ex)
                 {

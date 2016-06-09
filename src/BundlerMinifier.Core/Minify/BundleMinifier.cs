@@ -277,6 +277,7 @@ namespace BundlerMinifier
             return file.Substring(0, file.LastIndexOf(ext, StringComparison.OrdinalIgnoreCase)) + ".min" + ext;
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
         public static string ReadAllText(string file)
         {
             using (FileStream stream = File.OpenRead(file))

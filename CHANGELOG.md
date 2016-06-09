@@ -13,6 +13,7 @@
 - [x] New [wiki](https://github.com/madskristensen/BundlerMinifier/wiki) content available
 - [x] CLI tested on Mac and Linux
 - [x] Takes dependency on ASP.NET and Web Tools
+- [x] New context menu icons
 - [ ] Move all strings to .resx files
 - [ ] New up-to-date screenshots on readme
 

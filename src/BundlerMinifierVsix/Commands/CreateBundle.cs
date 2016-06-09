@@ -63,16 +63,29 @@ namespace BundlerMinifierVsix.Commands
             {
                 if (files.Count() == 1)
                 {
-                    var project = BundlerMinifierPackage._dte.Solution.FindProjectItem(files.First())?.ContainingProject;
+                    var sourceFile = files.First();
+                    var project = BundlerMinifierPackage._dte.Solution.FindProjectItem(sourceFile)?.ContainingProject;
                     var configFile = project.GetConfigFile();
 
-                    var bundles = BundleFileProcessor.IsFileConfigured(configFile, files.First());
+                    var bundles = BundleService.IsOutputConfigered(configFile, sourceFile);
+                    bool isMinFile = Path.GetFileName(sourceFile).Contains(".min.");
 
                     if (bundles.Any())
                     {
-                        button.Text = "Re-bundle File";
+                        if (isMinFile)
+                        {
+                            button.Text = "Re-minify File";
+                        }
+                        else
+                        {
+                            button.Text = "Re-bundle File";
+                        }
                     }
-                    else
+                    else if (BundleFileProcessor.IsFileConfigured(configFile, sourceFile).Any())
+                    {
+                        supported = false;
+                    }
+                    else if (!isMinFile)
                     {
                         button.Text = "Minify File";
                     }
@@ -111,6 +124,14 @@ namespace BundlerMinifierVsix.Commands
                 if (bundles.Any())
                 {
                     BundleService.SourceFileChanged(configFile, inputFile);
+                    return;
+                }
+
+                var bundles2 = BundleService.IsOutputConfigered(configFile, inputFile);
+
+                if (bundles2.Any())
+                {
+                    BundleService.Process(configFile, bundles2);
                     return;
                 }
             }
