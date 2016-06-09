@@ -1,4 +1,4 @@
-## Bundler and Minifier
+# Bundler and Minifier
 
 A Visual Studio extension that let's you configure bundling and
 minification of JS, CSS and HTML files.
@@ -19,7 +19,7 @@ for changes and roadmap and the
 [wiki](https://github.com/madskristensen/BundlerMinifier/wiki)
 for more details.
 
-### Features
+## Features
 
 - Bundles CSS, JavaScript or HTML files into a single output file
 - Saving a source file triggers re-bundling automatically
@@ -142,3 +142,16 @@ Here's an example of what that file looks like:
   }
 ]
 ```
+
+## Contribute
+Check out the [contribution guidelines](.github/CONTRIBUTING.md)
+if you want to contribute to this project.
+
+For cloning and building this project yourself, make sure
+to install the
+[Extensibility Tools 2015](https://visualstudiogallery.msdn.microsoft.com/ab39a092-1343-46e2-b0f1-6a3f91155aa6)
+extension for Visual Studio which enables some features
+used by this project.
+
+## License
+[Apache 2.0](LICENSE)
