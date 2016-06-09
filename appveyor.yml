@@ -19,7 +19,7 @@ build_script:
   - dotnet pack src\BundlerMinifier.Core -c Release
 
 after_test:
-  - ps: Vsix-PushArtifacts
+  - ps: Vsix-PushArtifacts | Vsix-PublishToGallery .\src\BundlerMinifierVsix\**\*.vsix
 
 artifacts:
   - path: src\**\*.nupkg
@@ -42,6 +42,3 @@ deploy:
     on:
       branch: master
       appveyor_repo_commit_message_extended: /\[release\]/
-
-after_deploy:
-  - ps: Vsix-PublishToGallery .\src\BundlerMinifierVsix\**\*.vsix
