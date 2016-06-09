@@ -82,12 +82,13 @@ namespace BundlerMinifier
                         {
                             settings.SymbolsMap = sourceMap;
                             sourceMap.StartPackage(minFile, mapFile);
+                            sourceMap.SourceRoot = bundle.SourceMapRootPath;
 
                             if (file.EndsWith(".min.js"))
                             {
                                 var inputs = bundle.GetAbsoluteInputFiles();
 
-                                if (inputs.Count == 1 && inputs[0] == file.Replace(".min.js", ".js"))
+                                if (inputs.Count == 1)
                                     file = inputs[0];
                             }
 

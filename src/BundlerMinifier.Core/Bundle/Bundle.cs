@@ -27,6 +27,9 @@ namespace BundlerMinifier
         [JsonProperty("sourceMap")]
         public bool SourceMap { get; set; }
 
+        [JsonProperty("sourceMapRootPath")]
+        public string SourceMapRootPath { get; set; }
+
         internal string Output { get; set; }
 
         /// <summary>
