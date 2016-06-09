@@ -12,10 +12,8 @@
 - [x] Support for outputFileNames containing .min.&lt;ext&gt;
 - [x] New [wiki](https://github.com/madskristensen/BundlerMinifier/wiki) content available
 - [x] CLI tested on Mac and Linux
+- [x] Takes dependency on ASP.NET and Web Tools
 - [ ] Move all strings to .resx files
-- [ ] Add a dependency on TRX package
-- [ ] Move context menu commands into flyout menu
-
 
 Features that have a checkmark are complete and available for
 download in the
