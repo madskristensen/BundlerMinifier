@@ -14,6 +14,7 @@
 - [x] CLI tested on Mac and Linux
 - [x] Takes dependency on ASP.NET and Web Tools
 - [ ] Move all strings to .resx files
+- [ ] New up-to-date screenshots on readme
 
 Features that have a checkmark are complete and available for
 download in the

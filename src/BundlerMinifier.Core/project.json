@@ -5,7 +5,12 @@
     "owners": [ "Mads Kristensen" ],
     "iconUrl": "https://raw.githubusercontent.com/madskristensen/BundlerMinifier/master/src/BundlerMinifierVsix/Resources/icon.png",
     "tags": [ "concat", "bundle", "minify", "minification", "css", "js", "html" ],
-    "requireLicenseAcceptance": false
+    "licenseUrl": "https://github.com/madskristensen/BundlerMinifier/blob/master/LICENSE",
+    "requireLicenseAcceptance": false,
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/madskristensen/BundlerMinifier"
+    }
   },
   "buildOptions": {
     "emitEntryPoint": true,
