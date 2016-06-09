@@ -14,8 +14,9 @@
 - [x] CLI tested on Mac and Linux
 - [x] Takes dependency on ASP.NET and Web Tools
 - [x] New context menu icons
+- [x] New up-to-date screenshots on readme
 - [ ] Move all strings to .resx files
-- [ ] New up-to-date screenshots on readme
+- [ ] Create additional source map for the bundle files
 
 Features that have a checkmark are complete and available for
 download in the
