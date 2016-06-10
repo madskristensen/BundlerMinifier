@@ -2,7 +2,6 @@
 using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
-using BundlerMinifier;
 using Microsoft.VisualStudio.Shell;
 
 namespace BundlerMinifierVsix.Commands
@@ -13,14 +12,9 @@ namespace BundlerMinifierVsix.Commands
 
         private UpdateBundle(Package package)
         {
-            if (package == null)
-            {
-                throw new ArgumentNullException("package");
-            }
-
             _package = package;
 
-            OleMenuCommandService commandService = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            var commandService = (OleMenuCommandService)ServiceProvider.GetService(typeof(IMenuCommandService));
             if (commandService != null)
             {
                 var menuCommandID = new CommandID(PackageGuids.guidBundlerCmdSet, PackageIds.UpdateBundle);

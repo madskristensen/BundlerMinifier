@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
-using BundlerMinifier;
 using BundlerMinifierVsix.Commands;
 using EnvDTE;
 using EnvDTE80;
@@ -15,7 +14,7 @@ namespace BundlerMinifierVsix
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(PackageGuids.guidBundlerPackageString)]
     [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
-    [ProvideOptionPage(typeof(Options), "Web", Vsix.Name, 101, 100, true, new[] { "bundleconfig.json" }, ProvidesLocalizedCategoryName = false)]
+    [ProvideOptionPage(typeof(Options), "Web", Vsix.Name, 101, 100, true, new[] { Constants.CONFIG_FILENAME }, ProvidesLocalizedCategoryName = false)]
     public sealed class BundlerMinifierPackage : Package
     {
         public static DTE2 _dte;

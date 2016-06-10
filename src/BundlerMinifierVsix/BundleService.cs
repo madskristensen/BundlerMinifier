@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
-using System.Windows.Forms;
 using BundlerMinifier;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
@@ -15,7 +13,6 @@ namespace BundlerMinifierVsix
     {
         private static BundleFileProcessor _processor;
         private static DTE2 _dte;
-        private static string[] _supported = new[] { ".JS", ".CSS", ".HTML", ".HTM" };
 
         static BundleService()
         {
@@ -68,13 +65,6 @@ namespace BundlerMinifierVsix
 
                 return _processor;
             }
-        }
-
-        public static bool IsSupported(string fileName)
-        {
-            string ext = Path.GetExtension(fileName).ToUpperInvariant();
-
-            return _supported.Contains(ext);
         }
 
         internal static IEnumerable<Bundle> IsOutputConfigered(string configFile, string sourceFile)
@@ -140,7 +130,7 @@ namespace BundlerMinifierVsix
         private static void HandleProcessingException(string configFile, Exception ex)
         {
             Logger.Log(ex);
-            string message = $"There is an error in the {Constants.CONFIG_FILENAME} file. This could be due to a change in the format after this extension was updated.";
+            string message = string.Format(Resources.Text.ErrorConfigFile, Constants.CONFIG_FILENAME);
 
             VsShellUtilities.ShowMessageBox(
                         BundlerMinifierPackage._instance,
@@ -165,7 +155,7 @@ namespace BundlerMinifierVsix
                 return;
 
             item.ContainingProject.AddFileToProject(e.OutputFileName);
-            _dte.StatusBar.Text = "Bundle updated";
+            _dte.StatusBar.Text = Resources.Text.statusBundleUpdated;
         }
 
         private static void AfterWritingSourceMap(object sender, MinifyFileEventArgs e)
@@ -181,7 +171,7 @@ namespace BundlerMinifierVsix
         private static void ErrorMinifyingFile(object sender, MinifyFileEventArgs e)
         {
             ErrorListService.ProcessCompilerResults(e.Result);
-            BundlerMinifierPackage._dte.StatusBar.Text = $"There was an error minifying {Path.GetFileName(e.OriginalFile)}. See Error List for details";
+            BundlerMinifierPackage._dte.StatusBar.Text = string.Format(Resources.Text.ErrorMinifying, Path.GetFileName(e.OriginalFile));
         }
     }
 }

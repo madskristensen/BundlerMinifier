@@ -88,7 +88,7 @@ namespace BundlerMinifierVsix
         public static void AddHierarchyItem(ErrorTask task, EnvDTE.Project project)
         {
             IVsHierarchy hierarchyItem = null;
-            IVsSolution solution = BundlerMinifierPackage.GetGlobalService(typeof(SVsSolution)) as IVsSolution;
+            IVsSolution solution = Package.GetGlobalService(typeof(SVsSolution)) as IVsSolution;
 
             if (solution != null && project != null)
             {

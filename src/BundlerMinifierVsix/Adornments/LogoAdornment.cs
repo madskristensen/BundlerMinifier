@@ -15,7 +15,7 @@ namespace BundlerMinifierVsix
         private readonly double _initOpacity;
         private double _currentOpacity;
 
-        public LogoAdornment(IWpfTextView view,  bool isVisible, double initOpacity)
+        public LogoAdornment(IWpfTextView view, bool isVisible, double initOpacity)
         {
             _adornmentLayer = view.GetAdornmentLayer(AdornmentLayer.LayerName);
             _currentOpacity = isVisible ? initOpacity : 0;
@@ -41,7 +41,7 @@ namespace BundlerMinifierVsix
         {
             _adornment = new Image();
             _adornment.Source = GetImage();
-            _adornment.ToolTip = "Click to toggle visibility";
+            _adornment.ToolTip = Resources.Text.AdornmentTooltip;
             _adornment.Opacity = _currentOpacity;
             _adornment.SetValue(RenderOptions.BitmapScalingModeProperty, BitmapScalingMode.HighQuality);
 
@@ -54,9 +54,9 @@ namespace BundlerMinifierVsix
         {
             string assembly = Assembly.GetExecutingAssembly().Location;
             string folder = Path.GetDirectoryName(assembly);
-            string file =  Path.Combine(folder, "Resources\\icon.png");
+            string file = Path.Combine(folder, "Resources\\icon.png");
 
-            Uri url =  new Uri(file, UriKind.Absolute);
+            Uri url = new Uri(file, UriKind.Absolute);
             return BitmapFrame.Create(url);
         }
 
@@ -71,8 +71,7 @@ namespace BundlerMinifierVsix
 
         internal static void OnVisibilityChanged(bool isVisible)
         {
-            if (VisibilityChanged != null)
-                VisibilityChanged(null, isVisible);
+            VisibilityChanged?.Invoke(null, isVisible);
         }
     }
 }

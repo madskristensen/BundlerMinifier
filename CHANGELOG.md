@@ -15,8 +15,9 @@
 - [x] Takes dependency on ASP.NET and Web Tools
 - [x] New context menu icons
 - [x] New up-to-date screenshots on readme
-- [ ] Move all strings to .resx files
+- [x] Move all strings to .resx files in VSIX project
 - [ ] Create additional source map for the bundle files
+- [ ] Better error messages
 
 Features that have a checkmark are complete and available for
 download in the

@@ -15,14 +15,9 @@ namespace BundlerMinifierVsix.Commands
 
         private CreateBundle(Package package)
         {
-            if (package == null)
-            {
-                throw new ArgumentNullException("package");
-            }
-
             _package = package;
 
-            OleMenuCommandService commandService = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            var commandService = (OleMenuCommandService)ServiceProvider.GetService(typeof(IMenuCommandService));
             if (commandService != null)
             {
                 var menuCommandID = new CommandID(PackageGuids.guidBundlerCmdSet, PackageIds.CreateBundleId);
@@ -80,11 +75,11 @@ namespace BundlerMinifierVsix.Commands
                     {
                         if (isMinFile)
                         {
-                            button.Text = "Re-minify File";
+                            button.Text = Resources.Text.ButtonReMinify;
                         }
                         else
                         {
-                            button.Text = "Re-bundle File";
+                            button.Text = Resources.Text.ButtonReBundle;
                         }
                     }
                     else if (BundleFileProcessor.IsFileConfigured(configFile, sourceFile).Any())
@@ -93,12 +88,12 @@ namespace BundlerMinifierVsix.Commands
                     }
                     else if (!isMinFile)
                     {
-                        button.Text = "Minify File";
+                        button.Text = Resources.Text.ButtonMinify;
                     }
                 }
                 else
                 {
-                    button.Text = "Bundle and Minify Files";
+                    button.Text = Resources.Text.ButtonBundle;
                 }
 
                 button.Visible = button.Enabled = supported;
@@ -145,21 +140,21 @@ namespace BundlerMinifierVsix.Commands
             if (string.IsNullOrEmpty(outputFile))
                 return;
 
-            BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 0, 2);
+            BundlerMinifierPackage._dte.StatusBar.Progress(true, Resources.Text.StatusCreatingBundle, 0, 2);
 
             string relativeOutputFile = BundlerMinifier.FileHelpers.MakeRelative(configFile, outputFile);
             Bundle bundle = CreateBundleFile(files, relativeOutputFile);
 
             BundleHandler.AddBundle(configFile, bundle);
 
-            BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 1, 2);
+            BundlerMinifierPackage._dte.StatusBar.Progress(true, Resources.Text.StatusCreatingBundle, 1, 2);
 
             item.ContainingProject.AddFileToProject(configFile, "None");
-            BundlerMinifierPackage._dte.StatusBar.Progress(true, "Creating bundle", 2, 2);
+            BundlerMinifierPackage._dte.StatusBar.Progress(true, Resources.Text.StatusCreatingBundle, 2, 2);
 
             BundleService.Process(configFile);
-            BundlerMinifierPackage._dte.StatusBar.Progress(false, "Creating bundle");
-            BundlerMinifierPackage._dte.StatusBar.Text = "Bundle created";
+            BundlerMinifierPackage._dte.StatusBar.Progress(false, Resources.Text.StatusCreatingBundle);
+            BundlerMinifierPackage._dte.StatusBar.Text = Resources.Text.StatusBundleCreated;
 
             ProjectEventCommand.Instance.EnsureProjectIsActive(item.ContainingProject);
         }
@@ -175,15 +170,7 @@ namespace BundlerMinifierVsix.Commands
             bundle.InputFiles.AddRange(files);
             return bundle;
         }
-
-        //private static string MakeRelative(string baseFile, string file)
-        //{
-        //    Uri baseUri = new Uri(baseFile, UriKind.RelativeOrAbsolute);
-        //    Uri fileUri = new Uri(file, UriKind.RelativeOrAbsolute);
-
-        //    return Uri.UnescapeDataString(baseUri.MakeRelativeUri(fileUri).ToString());
-        //}
-
+        
         private static string GetOutputFileName(string inputFile, string extension)
         {
             string ext = extension.TrimStart('.');

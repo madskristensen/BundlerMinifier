@@ -38,11 +38,11 @@ namespace BundlerMinifierVsix
         private void CreateImage()
         {
             _adornment = new TextBlock();
-            _adornment.Text = "Generated";
+            _adornment.Text = Resources.Text.AdornmentGenerated;
             _adornment.FontSize = 75;
             _adornment.FontWeight = FontWeights.Bold;
             _adornment.Foreground = Brushes.Gray;
-            _adornment.ToolTip = "Click to toggle visibility";
+            _adornment.ToolTip = Resources.Text.AdornmentTooltip;
             _adornment.Opacity = _currentOpacity;
             _adornment.SetValue(TextOptions.TextRenderingModeProperty, TextRenderingMode.Aliased);
             _adornment.SetValue(TextOptions.TextFormattingModeProperty, TextFormattingMode.Ideal);

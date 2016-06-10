@@ -23,26 +23,32 @@ namespace BundlerMinifier
 
             var bundles = BundleHandler.GetBundles(configFile.FullName);
 
-            foreach (Bundle bundle in bundles)
+            if (bundles != null)
             {
-                var outputFile = bundle.GetAbsoluteOutputFile();
-                var inputFiles = bundle.GetAbsoluteInputFiles();
+                foreach (Bundle bundle in bundles)
+                {
+                    var outputFile = bundle.GetAbsoluteOutputFile();
+                    var inputFiles = bundle.GetAbsoluteInputFiles();
 
-                var minFile = BundleMinifier.GetMinFileName(outputFile);
-                var mapFile = minFile + ".map";
-                var gzipFile = minFile + ".gz";
+                    var minFile = BundleMinifier.GetMinFileName(outputFile);
+                    var mapFile = minFile + ".map";
+                    var gzipFile = minFile + ".gz";
 
-                if (!inputFiles.Contains(outputFile))
-                    Deletefile(outputFile);
+                    if (!inputFiles.Contains(outputFile))
+                        Deletefile(outputFile);
 
-                Deletefile(minFile);
-                Deletefile(mapFile);
-                Deletefile(gzipFile);
+                    Deletefile(minFile);
+                    Deletefile(mapFile);
+                    Deletefile(gzipFile);
+                }
+
+                Log.LogMessage(MessageImportance.High, "Bundler: Done cleaning output file from " + configFile.Name);
+
+                return true;
             }
 
-            Log.LogMessage(MessageImportance.High, "Bundler: Done cleaning output file from " + configFile.Name);
-
-            return true;
+            Log.LogWarning($"There was an error reading {configFile.Name}");
+            return false;
         }
 
         private void Deletefile(string file)

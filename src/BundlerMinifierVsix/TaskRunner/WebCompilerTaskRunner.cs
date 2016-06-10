@@ -6,8 +6,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Microsoft.VisualStudio.TaskRunnerExplorer;
 using BundlerMinifier;
+using Microsoft.VisualStudio.TaskRunnerExplorer;
 
 namespace BundlerMinifierVsix
 {
@@ -47,15 +47,15 @@ namespace BundlerMinifierVsix
             var root = new TaskRunnerNode(Vsix.Name);
             var cwd = Path.GetDirectoryName(configPath);
 
-            root.Children.Add(new TaskRunnerNode("Update all files", true)
+            root.Children.Add(new TaskRunnerNode(Resources.Text.TaskUpdateAllFilesName, true)
             {
-                Description = $"Bundle configs specified in {Constants.CONFIG_FILENAME}.",
+                Description = string.Format(Resources.Text.TaskUpdateAllFilesDescription, Constants.CONFIG_FILENAME),
                 Command = GetCommand(cwd, $"\"{configPath}\"")
             });
 
-            root.Children.Add(new TaskRunnerNode("Clean output files", true)
+            root.Children.Add(new TaskRunnerNode(Resources.Text.TaskCleanOutputFilesName, true)
             {
-                Description = $"Clean all output files",
+                Description = Resources.Text.TaskCleanOutputFilesDescription,
                 Command = GetCommand(cwd, $"clean \"{configPath}\"")
             });
 
