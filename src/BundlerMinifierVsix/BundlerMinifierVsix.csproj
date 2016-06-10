@@ -71,9 +71,6 @@
     <Compile Include="Helpers\ProjectHelpers.cs" />
     <Compile Include="FileListeners\JsonCreationListener.cs" />
     <Compile Include="Helpers\Logger.cs" />
-    <Compile Include="Options.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Text.Designer.cs">
       <AutoGen>True</AutoGen>

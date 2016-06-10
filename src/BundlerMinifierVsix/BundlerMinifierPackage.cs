@@ -14,13 +14,11 @@ namespace BundlerMinifierVsix
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(PackageGuids.guidBundlerPackageString)]
     [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
-    [ProvideOptionPage(typeof(Options), "Web", Vsix.Name, 101, 100, true, new[] { Constants.CONFIG_FILENAME }, ProvidesLocalizedCategoryName = false)]
-    public sealed class BundlerMinifierPackage : Package
+       public sealed class BundlerMinifierPackage : Package
     {
         public static DTE2 _dte;
         public static Dispatcher _dispatcher;
         public static Package Package;
-        public static Options Options;
         public static BundlerMinifierPackage _instance;
         SolutionEvents _solutionEvents;
 
@@ -30,8 +28,7 @@ namespace BundlerMinifierVsix
             _dte = GetService(typeof(DTE)) as DTE2;
             _dispatcher = Dispatcher.CurrentDispatcher;
             Package = this;
-            Options = (Options)GetDialogPage(typeof(Options));
-
+   
             Logger.Initialize(this, Vsix.Name);
 
             Events2 events = _dte.Events as Events2;

@@ -53,9 +53,6 @@ namespace BundlerMinifierVsix.Listeners
 
         private void DocumentSaved(object sender, TextDocumentFileActionEventArgs e)
         {
-            if (!BundlerMinifierPackage.Options.ReRunOnSave)
-                return;
-
             if (ProjectEventCommand.Instance != null)
             {
                 var project = BundlerMinifierPackage._dte.Solution?.FindProjectItem(e.FilePath)?.ContainingProject;
