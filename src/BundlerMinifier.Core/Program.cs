@@ -13,9 +13,13 @@ namespace BundlerMinifier
         {
             int index = args.Length - 1;
             IEnumerable<Bundle> bundles;
+            bool fileExists = false;
+            bool fallbackExists = fileExists = File.Exists(DefaultConfigFileName);
 
             if (index > -1)
             {
+                fileExists = File.Exists(args[index]);
+
                 if (BundleHandler.TryGetBundles(args[index], out bundles))
                 {
                     configPath = args[index];
@@ -27,6 +31,27 @@ namespace BundlerMinifier
             {
                 configPath = new FileInfo(DefaultConfigFileName).FullName;
                 return false;
+            }
+
+            if (args.Length > 0)
+            {
+                if (!fileExists)
+                {
+                    Console.WriteLine($"A configuration file called {args[index]} could not be found".Red().Bright());
+                }
+                else
+                {
+                    Console.WriteLine($"Configuration file {args[index]} has errors".Red().Bright());
+                }
+            }
+
+            if (!fallbackExists)
+            {
+                Console.WriteLine($"A configuration file called {DefaultConfigFileName} could not be found".Red().Bright());
+            }
+            else
+            {
+                Console.WriteLine($"Configuration file {DefaultConfigFileName} has errors".Red().Bright());
             }
 
             configPath = null;
@@ -44,8 +69,13 @@ namespace BundlerMinifier
 
             if (configPath == null)
             {
-                Console.WriteLine("Usage: BundlerMinifier [[patterns]] [configPath]".Orange().Bright());
-                Console.WriteLine("Note:  configPath doesn't need to be specified if bundlerconfig.json exists in the working directory".Orange().Bright());
+#if DOTNET
+                const string commandName = "dotnet bundle";
+#else
+                const string commandName = "BundlerMinifier";
+#endif
+                Console.WriteLine($"Usage: {commandName} [[patterns]] [configPath]".Orange().Bright());
+                Console.WriteLine("Note:  configPath doesn't need to be specified if bundleconfig.json exists in the working directory".Orange().Bright());
                 return 0;
             }
 

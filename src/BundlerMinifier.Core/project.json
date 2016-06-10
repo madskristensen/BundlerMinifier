@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "description": "Bundles and minifies CSS, JS and HTML files",
   "packOptions": {
@@ -14,7 +14,8 @@
   },
   "buildOptions": {
     "emitEntryPoint": true,
-    "outputName": "dotnet-bundle"
+    "outputName": "dotnet-bundle",
+    "define": [ "DOTNET" ]
   },
 
   "dependencies": {
