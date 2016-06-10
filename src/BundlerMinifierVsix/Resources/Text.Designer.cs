@@ -142,6 +142,73 @@ namespace BundlerMinifierVsix.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to install the {0} NuGet package.
+        /// </summary>
+        internal static string NugetErrorInstalling {
+            get {
+                return ResourceManager.GetString("NugetErrorInstalling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to ininstall the {0} NuGet package.
+        /// </summary>
+        internal static string NugetErrorUninstalling {
+            get {
+                return ResourceManager.GetString("NugetErrorUninstalling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finished installing the {0} NuGet package.
+        /// </summary>
+        internal static string NugetFinishedInstalling {
+            get {
+                return ResourceManager.GetString("NugetFinishedInstalling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finished uninstalling the {0} NuGet package.
+        /// </summary>
+        internal static string NugetFinishedUninstalling {
+            get {
+                return ResourceManager.GetString("NugetFinishedUninstalling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installing {0} NuGet package, this may take a minute....
+        /// </summary>
+        internal static string NugetInstalling {
+            get {
+                return ResourceManager.GetString("NugetInstalling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A NuGet package will be installed to augment the MSBuild process, but no files will be added to the project.
+        ///
+        ///This may require an internet connection.
+        ///
+        ///Do you want to continue?.
+        /// </summary>
+        internal static string NugetInstallPrompt {
+            get {
+                return ResourceManager.GetString("NugetInstallPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uninstalling {0} NuGet package, this may take a minute....
+        /// </summary>
+        internal static string NugetUninstalling {
+            get {
+                return ResourceManager.GetString("NugetUninstalling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This will remove the file from {0}.
         ///
         ///Do you want to continue?.

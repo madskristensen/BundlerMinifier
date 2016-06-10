@@ -18,7 +18,7 @@ namespace BundlerMinifierVsix
                 else
                 {
                     ErrorList.CleanErrors(result.FileName);
-                    BundlerMinifierPackage._dte.StatusBar.Text = string.Format(Resources.Text.StatusMinified, Path.GetFileName(result.FileName));
+                    BundlerMinifierPackage._dte.StatusBar.Text = Resources.Text.StatusMinified.AddParams(Path.GetFileName(result.FileName));
                 }
             }), DispatcherPriority.ApplicationIdle, null);
         }

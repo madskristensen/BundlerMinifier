@@ -18,7 +18,8 @@
 - [x] Move all strings to .resx files in VSIX project
 - [x] Removed options page
 - [ ] Create additional source map for the bundle files
-- [ ] Better error messages
+- [ ] Better error messages in CLI
+- [ ] Adopt new VS Error List API
 
 Features that have a checkmark are complete and available for
 download in the

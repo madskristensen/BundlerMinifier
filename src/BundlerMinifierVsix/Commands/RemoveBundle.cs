@@ -75,7 +75,7 @@ namespace BundlerMinifierVsix.Commands
 
         private void RemoveConfig(object sender, EventArgs e)
         {
-            string prompt = string.Format(Resources.Text.promptRemoveBundle, Constants.CONFIG_FILENAME);
+            string prompt = Resources.Text.promptRemoveBundle.AddParams(Constants.CONFIG_FILENAME);
             var question = MessageBox.Show(prompt, Vsix.Name, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
             if (question == DialogResult.Cancel)
@@ -91,7 +91,7 @@ namespace BundlerMinifierVsix.Commands
             catch (Exception ex)
             {
                 Logger.Log(ex);
-                BundlerMinifierPackage._dte.StatusBar.Text = string.Format(Resources.Text.ErrorRemoveBundle, Constants.CONFIG_FILENAME);
+                BundlerMinifierPackage._dte.StatusBar.Text = Resources.Text.ErrorRemoveBundle.AddParams(Constants.CONFIG_FILENAME);
             }
         }
     }

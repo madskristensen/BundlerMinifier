@@ -130,7 +130,7 @@ namespace BundlerMinifierVsix
         private static void HandleProcessingException(string configFile, Exception ex)
         {
             Logger.Log(ex);
-            string message = string.Format(Resources.Text.ErrorConfigFile, Constants.CONFIG_FILENAME);
+            string message = Resources.Text.ErrorConfigFile.AddParams(Constants.CONFIG_FILENAME);
 
             VsShellUtilities.ShowMessageBox(
                         BundlerMinifierPackage._instance,
@@ -171,7 +171,7 @@ namespace BundlerMinifierVsix
         private static void ErrorMinifyingFile(object sender, MinifyFileEventArgs e)
         {
             ErrorListService.ProcessCompilerResults(e.Result);
-            BundlerMinifierPackage._dte.StatusBar.Text = string.Format(Resources.Text.ErrorMinifying, Path.GetFileName(e.OriginalFile));
+            BundlerMinifierPackage._dte.StatusBar.Text = Resources.Text.ErrorMinifying.AddParams(Path.GetFileName(e.OriginalFile));
         }
     }
 }

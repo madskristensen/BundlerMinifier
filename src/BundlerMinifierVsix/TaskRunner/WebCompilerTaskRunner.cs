@@ -49,7 +49,7 @@ namespace BundlerMinifierVsix
 
             root.Children.Add(new TaskRunnerNode(Resources.Text.TaskUpdateAllFilesName, true)
             {
-                Description = string.Format(Resources.Text.TaskUpdateAllFilesDescription, Constants.CONFIG_FILENAME),
+                Description = Resources.Text.TaskUpdateAllFilesDescription.AddParams(Constants.CONFIG_FILENAME),
                 Command = GetCommand(cwd, $"\"{configPath}\"")
             });
 

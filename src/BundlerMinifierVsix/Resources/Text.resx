@@ -175,4 +175,29 @@ Do you want to continue?</value>
   <data name="TaskUpdateAllFilesName" xml:space="preserve">
     <value>Update all files</value>
   </data>
+  <data name="NugetErrorInstalling" xml:space="preserve">
+    <value>Unable to install the {0} NuGet package</value>
+  </data>
+  <data name="NugetErrorUninstalling" xml:space="preserve">
+    <value>Unable to ininstall the {0} NuGet package</value>
+  </data>
+  <data name="NugetFinishedInstalling" xml:space="preserve">
+    <value>Finished installing the {0} NuGet package</value>
+  </data>
+  <data name="NugetFinishedUninstalling" xml:space="preserve">
+    <value>Finished uninstalling the {0} NuGet package</value>
+  </data>
+  <data name="NugetInstalling" xml:space="preserve">
+    <value>Installing {0} NuGet package, this may take a minute...</value>
+  </data>
+  <data name="NugetInstallPrompt" xml:space="preserve">
+    <value>A NuGet package will be installed to augment the MSBuild process, but no files will be added to the project.
+
+This may require an internet connection.
+
+Do you want to continue?</value>
+  </data>
+  <data name="NugetUninstalling" xml:space="preserve">
+    <value>Uninstalling {0} NuGet package, this may take a minute...</value>
+  </data>
 </root>

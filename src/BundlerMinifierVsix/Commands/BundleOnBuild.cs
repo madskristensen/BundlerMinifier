@@ -7,6 +7,7 @@ using EnvDTE;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
 using NuGet.VisualStudio;
+using Text = BundlerMinifierVsix.Resources.Text;
 
 namespace BundlerMinifierVsix.Commands
 {
@@ -87,7 +88,7 @@ namespace BundlerMinifierVsix.Commands
 
             if (!_isInstalled)
             {
-                var question = MessageBox.Show("A NuGet package will be installed to augment the MSBuild process, but no files will be added to the project.\rThis may require an internet connection.\r\rDo you want to continue?", Vsix.Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                var question = MessageBox.Show(Text.NugetInstallPrompt, Vsix.Name, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (question == DialogResult.No)
                     return;
@@ -100,18 +101,19 @@ namespace BundlerMinifierVsix.Commands
                 {
                     try
                     {
-                        BundlerMinifierPackage._dte.StatusBar.Text = $"Installing {Constants.NUGET_ID} NuGet package, this may take a minute...";
+                        string statusInstalling = Text.NugetInstalling.AddParams(Constants.NUGET_ID);
+                        BundlerMinifierPackage._dte.StatusBar.Text = statusInstalling;
                         BundlerMinifierPackage._dte.StatusBar.Animate(true, vsStatusAnimation.vsStatusAnimationSync);
 
                         var installer = componentModel.GetService<IVsPackageInstaller>();
                         installer.InstallPackage(null, item.ContainingProject, Constants.NUGET_ID, version, false);
 
-                        BundlerMinifierPackage._dte.StatusBar.Text = $"Finished installing the {Constants.NUGET_ID} NuGet package";
+                        BundlerMinifierPackage._dte.StatusBar.Text = Text.NugetFinishedInstalling.AddParams(Constants.NUGET_ID);
                     }
                     catch (Exception ex)
                     {
                         Logger.Log(ex);
-                        BundlerMinifierPackage._dte.StatusBar.Text = $"Unable to install the {Constants.NUGET_ID} NuGet package";
+                        BundlerMinifierPackage._dte.StatusBar.Text = Text.NugetErrorInstalling.AddParams(Constants.NUGET_ID);
                     }
                     finally
                     {
@@ -125,17 +127,17 @@ namespace BundlerMinifierVsix.Commands
                 {
                     try
                     {
-                        BundlerMinifierPackage._dte.StatusBar.Text = $"Uninstalling {Constants.NUGET_ID} NuGet package, this may take a minute...";
+                        BundlerMinifierPackage._dte.StatusBar.Text = Text.NugetUninstalling.AddParams(Constants.NUGET_ID);
                         BundlerMinifierPackage._dte.StatusBar.Animate(true, vsStatusAnimation.vsStatusAnimationSync);
                         var uninstaller = componentModel.GetService<IVsPackageUninstaller>();
                         uninstaller.UninstallPackage(item.ContainingProject, Constants.NUGET_ID, false);
 
-                        BundlerMinifierPackage._dte.StatusBar.Text = $"Finished uninstalling the {Constants.NUGET_ID} NuGet package";
+                        BundlerMinifierPackage._dte.StatusBar.Text = Text.NugetFinishedUninstalling.AddParams(Constants.NUGET_ID);
                     }
                     catch (Exception ex)
                     {
                         Logger.Log(ex);
-                        BundlerMinifierPackage._dte.StatusBar.Text = $"Unable to ininstall the {Constants.NUGET_ID} NuGet package";
+                        BundlerMinifierPackage._dte.StatusBar.Text = Text.NugetErrorUninstalling.AddParams(Constants.NUGET_ID);
                     }
                     finally
                     {

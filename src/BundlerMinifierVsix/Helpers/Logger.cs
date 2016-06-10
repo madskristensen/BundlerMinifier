@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using BundlerMinifier;
 using Microsoft.VisualStudio.Shell.Interop;
 
 namespace BundlerMinifierVsix
@@ -8,7 +7,6 @@ namespace BundlerMinifierVsix
     public static class Logger
     {
         private static IVsOutputWindowPane pane;
-        private static object _syncRoot = new object();
         private static IServiceProvider _provider;
         private static string _name;
 
@@ -31,9 +29,9 @@ namespace BundlerMinifierVsix
                     pane.OutputString(DateTime.Now.ToString() + ": " + message + Environment.NewLine);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // Do nothing
+                System.Diagnostics.Debug.Write(ex);
             }
         }
 
