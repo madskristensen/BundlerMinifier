@@ -32,5 +32,7 @@ namespace BundlerMinifier
         {
             get { return Errors.Count > 0; }
         }
+
+        public bool Changed { get; set; }
     }
 }

@@ -41,7 +41,7 @@ namespace BundlerMinifier
             return Path.Combine(folder, OutputFileName.NormalizePath());
         }
 
-        internal List<string> GetAbsoluteInputFiles()
+        internal List<string> GetAbsoluteInputFiles(bool notifyOnPatternMiss = false)
         {
             List<string> files = new List<string>();
 
@@ -71,7 +71,13 @@ namespace BundlerMinifier
                     var allFiles = Directory.EnumerateFiles(searchDir, "*" + ext, SearchOption.AllDirectories).Select(f => f.Replace(folder + FileHelpers.PathSeparatorChar, ""));
 
                     var matches = Minimatcher.Filter(allFiles, inputFile, options).Select(f => Path.Combine(folder, f));
-                    matches = matches.Where(match => match != output && match != outputMin);
+                    matches = matches.Where(match => match != output && match != outputMin).ToList();
+
+                    if (notifyOnPatternMiss)
+                    {
+                        Console.WriteLine($"  No files matched the pattern {inputFile}".Orange().Bright());
+                    }
+
                     files.AddRange(matches.Where(f => !files.Contains(f)));
                 }
                 else
@@ -83,11 +89,23 @@ namespace BundlerMinifier
                         DirectoryInfo dir = new DirectoryInfo(fullPath);
                         SearchOption search = SearchOption.TopDirectoryOnly;
                         var dirFiles = dir.GetFiles("*" + Path.GetExtension(OutputFileName), search);
-                        files.AddRange(dirFiles.Select(f => f.FullName).Where(f => !files.Contains(f)));
+                        var collected = dirFiles.Select(f => f.FullName).Where(f => !files.Contains(f)).ToList();
+
+                        if (notifyOnPatternMiss && collected.Count == 0)
+                        {
+                            Console.WriteLine($"  No files were found in {inputFile}".Orange().Bright());
+                        }
+
+                        files.AddRange(collected);
                     }
                     else
                     {
                         files.Add(fullPath);
+
+                        if (notifyOnPatternMiss && !File.Exists(fullPath))
+                        {
+                            Console.WriteLine($"  {inputFile} was not found".Orange().Bright());
+                        }
                     }
                 }
             }

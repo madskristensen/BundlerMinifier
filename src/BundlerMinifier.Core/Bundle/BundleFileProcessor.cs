@@ -29,15 +29,18 @@ namespace BundlerMinifier
             return true;
         }
 
-        public void Process(string fileName, IEnumerable<Bundle> bundles = null)
+        public bool Process(string fileName, IEnumerable<Bundle> bundles = null)
         {
             FileInfo info = new FileInfo(fileName);
             bundles = bundles ?? BundleHandler.GetBundles(fileName);
+            bool result = false;
 
             foreach (Bundle bundle in bundles)
             {
-                ProcessBundle(info.Directory.FullName, bundle);
+                result |= ProcessBundle(info.Directory.FullName, bundle);
             }
+
+            return result;
         }
 
         public void Clean(string fileName, IEnumerable<Bundle> bundles = null)
@@ -93,12 +96,13 @@ namespace BundlerMinifier
             }
         }
 
-        private void ProcessBundle(string baseFolder, Bundle bundle)
+        private bool ProcessBundle(string baseFolder, Bundle bundle)
         {
             OnProcessing(bundle, baseFolder);
             var inputs = bundle.GetAbsoluteInputFiles();
+            bool changed = false;
 
-            if (bundle.GetAbsoluteInputFiles().Count > 1 || bundle.InputFiles.FirstOrDefault() != bundle.OutputFileName)
+            if (bundle.GetAbsoluteInputFiles(true).Count > 1 || bundle.InputFiles.FirstOrDefault() != bundle.OutputFileName)
             {
                 BundleHandler.ProcessBundle(baseFolder, bundle);
 
@@ -112,6 +116,7 @@ namespace BundlerMinifier
 
                     File.WriteAllText(outputFile, bundle.Output, new UTF8Encoding(false));
                     OnAfterBundling(bundle, baseFolder, containsChanges);
+                    changed = true;
                 }
             }
 
@@ -120,6 +125,7 @@ namespace BundlerMinifier
             if (bundle.Minify.ContainsKey("enabled") && bundle.Minify["enabled"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
             {
                 var result = BundleMinifier.MinifyBundle(bundle);
+                changed |= result.Changed;
 
                 if (result != null && bundle.SourceMap && !string.IsNullOrEmpty(result.SourceMap))
                 {
@@ -131,9 +137,12 @@ namespace BundlerMinifier
                         OnBeforeWritingSourceMap(minFile, mapFile, smChanges);
                         File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(false));
                         OnAfterWritingSourceMap(minFile, mapFile, smChanges);
+                        changed = true;
                     }
                 }
             }
+
+            return changed;
         }
 
         private void CleanBundle(string baseFolder, Bundle bundle)

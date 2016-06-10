@@ -60,6 +60,7 @@ namespace BundlerMinifier
                         bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
 
                         OnBeforeWritingMinFile(file, minFile, bundle, containsChanges);
+                        result.Changed |= containsChanges;
 
                         if (containsChanges)
                         {
@@ -98,7 +99,7 @@ namespace BundlerMinifier
                             if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(result.MinifiedContent))
                             {
                                 bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
-
+                                result.Changed |= containsChanges;
                                 OnBeforeWritingMinFile(file, minFile, bundle, containsChanges);
 
                                 if (containsChanges)
@@ -150,6 +151,7 @@ namespace BundlerMinifier
                 if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(result.MinifiedContent))
                 {
                     bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
+                    result.Changed |= containsChanges;
 
                     OnBeforeWritingMinFile(file, minFile, bundle, containsChanges);
 
@@ -197,7 +199,7 @@ namespace BundlerMinifier
                 if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(minResult.MinifiedContent))
                 {
                     bool containsChanges = FileHelpers.HasFileContentChanged(minFile, minResult.MinifiedContent);
-
+                    minResult.Changed |= containsChanges;
                     OnBeforeWritingMinFile(file, minFile, bundle, containsChanges);
 
                     if (containsChanges)
