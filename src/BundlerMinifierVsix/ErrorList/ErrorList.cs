@@ -61,7 +61,7 @@ namespace BundlerMinifierVsix
                 Category = TaskCategory.Html,
                 Document = error.FileName,
                 Priority = TaskPriority.Low,
-                Text = $"(Minifier) {error.Message}",
+                Text = $"({Vsix.Name}) {error.Message}",
             };
 
             EnvDTE.ProjectItem item = BundlerMinifierPackage._dte.Solution.FindProjectItem(error.FileName);

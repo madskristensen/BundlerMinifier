@@ -67,7 +67,7 @@ namespace BundlerMinifier
             }
             catch
             {
-                bundles = Enumerable.Empty<Bundle>();
+                bundles = null;
                 return false;
             }
         }

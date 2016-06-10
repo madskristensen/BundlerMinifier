@@ -22,10 +22,12 @@ namespace BundlerMinifierVsix
         public static Dispatcher _dispatcher;
         public static Package Package;
         public static Options Options;
+        public static BundlerMinifierPackage _instance;
         SolutionEvents _solutionEvents;
 
         protected override void Initialize()
         {
+            _instance = this;
             _dte = GetService(typeof(DTE)) as DTE2;
             _dispatcher = Dispatcher.CurrentDispatcher;
             Package = this;

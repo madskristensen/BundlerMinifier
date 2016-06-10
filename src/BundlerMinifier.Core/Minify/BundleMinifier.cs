@@ -296,39 +296,27 @@ namespace BundlerMinifier
             }
         }
 
-        public static void OnBeforeWritingMinFile(string file, string minFile, Bundle bundle, bool containsChanges)
+        static void OnBeforeWritingMinFile(string file, string minFile, Bundle bundle, bool containsChanges)
         {
-            if (BeforeWritingMinFile != null)
-            {
-                BeforeWritingMinFile(null, new MinifyFileEventArgs(file, minFile, bundle, containsChanges));
-            }
+            BeforeWritingMinFile?.Invoke(null, new MinifyFileEventArgs(file, minFile, bundle, containsChanges));
         }
 
-        public static void OnAfterWritingMinFile(string file, string minFile, Bundle bundle, bool containsChanges)
+        static void OnAfterWritingMinFile(string file, string minFile, Bundle bundle, bool containsChanges)
         {
-            if (AfterWritingMinFile != null)
-            {
-                AfterWritingMinFile(null, new MinifyFileEventArgs(file, minFile, bundle, containsChanges));
-            }
+            AfterWritingMinFile?.Invoke(null, new MinifyFileEventArgs(file, minFile, bundle, containsChanges));
         }
 
-        public static void OnBeforeWritingGzipFile(string minFile, string gzipFile, Bundle bundle, bool containsChanges)
+        static void OnBeforeWritingGzipFile(string minFile, string gzipFile, Bundle bundle, bool containsChanges)
         {
-            if (BeforeWritingGzipFile != null)
-            {
-                BeforeWritingGzipFile(null, new MinifyFileEventArgs(minFile, gzipFile, bundle, containsChanges));
-            }
+            BeforeWritingGzipFile?.Invoke(null, new MinifyFileEventArgs(minFile, gzipFile, bundle, containsChanges));
         }
 
-        public static void OnAfterWritingGzipFile(string minFile, string gzipFile, Bundle bundle, bool containsChanges)
+        static void OnAfterWritingGzipFile(string minFile, string gzipFile, Bundle bundle, bool containsChanges)
         {
-            if (AfterWritingGzipFile != null)
-            {
-                AfterWritingGzipFile(null, new MinifyFileEventArgs(minFile, gzipFile, bundle, containsChanges));
-            }
+            AfterWritingGzipFile?.Invoke(null, new MinifyFileEventArgs(minFile, gzipFile, bundle, containsChanges));
         }
 
-        public static void OnErrorMinifyingFile(MinificationResult result)
+        static void OnErrorMinifyingFile(MinificationResult result)
         {
             if (ErrorMinifyingFile != null)
             {

@@ -1,12 +1,13 @@
-﻿using System.IO;
-using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using BundlerMinifier;
 using EnvDTE80;
-using System.Linq;
-using System;
-using System.Collections.Generic;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 
 namespace BundlerMinifierVsix
 {
@@ -116,8 +117,7 @@ namespace BundlerMinifierVsix
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log(ex);
-                    MessageBox.Show($"There is an error in the {Constants.CONFIG_FILENAME} file. This could be due to a change in the format after this extension was updated.", Vsix.Name, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    HandleProcessingException(configFile, ex);
                 }
             });
         }
@@ -132,10 +132,26 @@ namespace BundlerMinifierVsix
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log(ex);
-                    MessageBox.Show($"There is an error in the {Constants.CONFIG_FILENAME} file. This could be due to a change in the format after this extension was updated.", Vsix.Name, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    HandleProcessingException(configFile, ex);
                 }
             });
+        }
+
+        private static void HandleProcessingException(string configFile, Exception ex)
+        {
+            Logger.Log(ex);
+            string message = $"There is an error in the {Constants.CONFIG_FILENAME} file. This could be due to a change in the format after this extension was updated.";
+
+            VsShellUtilities.ShowMessageBox(
+                        BundlerMinifierPackage._instance,
+                        message,
+                        Vsix.Name,
+                        OLEMSGICON.OLEMSGICON_INFO,
+                        OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                        OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+
+            if (File.Exists(configFile))
+                BundlerMinifierPackage._dte.ItemOperations.OpenFile(configFile);
         }
 
         private static void AfterProcess(object sender, BundleFileEventArgs e)
@@ -165,7 +181,7 @@ namespace BundlerMinifierVsix
         private static void ErrorMinifyingFile(object sender, MinifyFileEventArgs e)
         {
             ErrorListService.ProcessCompilerResults(e.Result);
-            BundlerMinifierPackage._dte.StatusBar.Text = $"There was a error minifying {Path.GetFileName(e.OriginalFile)}";
+            BundlerMinifierPackage._dte.StatusBar.Text = $"There was an error minifying {Path.GetFileName(e.OriginalFile)}. See Error List for details";
         }
     }
 }
