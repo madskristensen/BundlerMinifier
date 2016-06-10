@@ -17,7 +17,8 @@
 - [x] New up-to-date screenshots on readme
 - [x] Move all strings to .resx files in VSIX project
 - [x] Removed options page
-- [ ] Restart CLI watcher when bundleconfig.json changes
+- [x] Restart CLI watcher when bundleconfig.json changes
+- [x] Show warning on missing input files
 - [ ] Create additional source map for the bundle files
 - [ ] Better error messages in CLI
 - [ ] Adopt new VS Error List API
