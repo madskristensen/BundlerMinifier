@@ -53,7 +53,7 @@ namespace BundlerMinifier
                 if (!bundle.SourceMap)
                 {
                     var uglifyResult = Uglify.Js(ReadAllText(file), settings);
-                    result.MinifiedContent = uglifyResult.Code.Trim();
+                    result.MinifiedContent = uglifyResult.Code?.Trim();
 
                     if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(result.MinifiedContent))
                     {
@@ -94,7 +94,7 @@ namespace BundlerMinifier
                             }
 
                             var uglifyResult = Uglify.Js(ReadAllText(file), file, settings);
-                            result.MinifiedContent = uglifyResult.Code.Trim();
+                            result.MinifiedContent = uglifyResult.Code?.Trim();
 
                             if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(result.MinifiedContent))
                             {
@@ -146,7 +146,7 @@ namespace BundlerMinifier
             try
             {
                 var uglifyResult = Uglify.Css(content, file, settings);
-                result.MinifiedContent = uglifyResult.Code.Trim();
+                result.MinifiedContent = uglifyResult.Code?.Trim();
 
                 if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(result.MinifiedContent))
                 {
@@ -194,7 +194,7 @@ namespace BundlerMinifier
             try
             {
                 var uglifyResult = Uglify.Html(content, settings, file);
-                minResult.MinifiedContent = uglifyResult.Code.Trim();
+                minResult.MinifiedContent = uglifyResult.Code?.Trim();
 
                 if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(minResult.MinifiedContent))
                 {
