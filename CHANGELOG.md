@@ -19,8 +19,8 @@
 - [x] Removed options page
 - [x] Restart CLI watcher when bundleconfig.json changes
 - [x] Show warning on missing input files
+- [x] Better error messages in CLI
 - [ ] Create additional source map for the bundle files
-- [ ] Better error messages in CLI
 - [ ] Adopt new VS Error List API
 
 Features that have a checkmark are complete and available for
