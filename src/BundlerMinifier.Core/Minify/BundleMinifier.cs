@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
@@ -52,7 +53,24 @@ namespace BundlerMinifier
             {
                 if (!bundle.SourceMap)
                 {
-                    var uglifyResult = Uglify.Js(ReadAllText(file), settings);
+                    UgliflyResult uglifyResult;
+                    try
+                    {
+                        uglifyResult = Uglify.Js(ReadAllText(file), settings);
+                    }
+                    catch
+                    {
+                        uglifyResult = new UgliflyResult(null,
+                            new List<UglifyError>{
+                                new UglifyError
+                                {
+                                    IsError = true,
+                                    File = file,
+                                    Message = "Error processing file"
+                                }
+                            });
+                    }
+
                     result.MinifiedContent = uglifyResult.Code?.Trim();
 
                     if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(result.MinifiedContent))
@@ -93,7 +111,24 @@ namespace BundlerMinifier
                                     file = inputs[0];
                             }
 
-                            var uglifyResult = Uglify.Js(ReadAllText(file), file, settings);
+                            UgliflyResult uglifyResult;
+                            try
+                            {
+                                uglifyResult = Uglify.Js(ReadAllText(file), file, settings);
+                            }
+                            catch
+                            {
+                                uglifyResult = new UgliflyResult(null,
+                                    new List<UglifyError>{
+                                        new UglifyError
+                                        {
+                                            IsError = true,
+                                            File = file,
+                                            Message = "Error processing file"
+                                        }
+                                    });
+                            }
+
                             result.MinifiedContent = uglifyResult.Code?.Trim();
 
                             if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(result.MinifiedContent))
@@ -145,7 +180,24 @@ namespace BundlerMinifier
 
             try
             {
-                var uglifyResult = Uglify.Css(content, file, settings);
+                UgliflyResult uglifyResult;
+
+                try
+                {
+                    uglifyResult = Uglify.Css(content, file, settings);
+                }
+                catch
+                {
+                    uglifyResult = new UgliflyResult(null,
+                        new List<UglifyError>{
+                                new UglifyError
+                                {
+                                    IsError = true,
+                                    File = file,
+                                    Message = "Error processing file"
+                                }
+                        });
+                }
                 result.MinifiedContent = uglifyResult.Code?.Trim();
 
                 if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(result.MinifiedContent))
@@ -193,7 +245,25 @@ namespace BundlerMinifier
 
             try
             {
-                var uglifyResult = Uglify.Html(content, settings, file);
+                UgliflyResult uglifyResult;
+
+                try
+                {
+                    uglifyResult = Uglify.Html(content, settings, file);
+                }
+                catch
+                {
+                    uglifyResult = new UgliflyResult(null,
+                        new List<UglifyError>{
+                                new UglifyError
+                                {
+                                    IsError = true,
+                                    File = file,
+                                    Message = "Error processing file"
+                                }
+                        });
+                }
+
                 minResult.MinifiedContent = uglifyResult.Code?.Trim();
 
                 if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(minResult.MinifiedContent))
