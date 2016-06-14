@@ -1,5 +1,36 @@
-﻿namespace BundlerMinifier
+﻿using System;
+
+namespace BundlerMinifier
 {
+    public class ColoredTextRegion : IDisposable
+    {
+        private readonly string _after;
+        private bool _isDisposed;
+
+        private ColoredTextRegion(Func<string, ColoredText> colorization)
+        {
+            string[] parts = colorization("|").ToString().Split('|');
+            Console.Write(parts[0]);
+            _after = parts[1];
+        }
+
+        public static IDisposable Create(Func<string, ColoredText> colorization)
+        {
+            return new ColoredTextRegion(colorization);
+        }
+
+        public void Dispose()
+        {
+            if (_isDisposed)
+            {
+                return;
+            }
+
+            _isDisposed = true;
+            Console.Write(_after);
+        }
+    }
+
     public class ColoredText
     {
         private int _color;

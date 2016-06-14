@@ -69,13 +69,7 @@ namespace BundlerMinifier
 
             if (configPath == null)
             {
-#if DOTNET
-                const string commandName = "dotnet bundle";
-#else
-                const string commandName = "BundlerMinifier";
-#endif
-                Console.WriteLine($"Usage: {commandName} [[patterns]] [configPath]".Orange().Bright());
-                Console.WriteLine("Note:  configPath doesn't need to be specified if bundleconfig.json exists in the working directory".Orange().Bright());
+                ShowHelp();
                 return 0;
             }
 
@@ -87,17 +81,23 @@ namespace BundlerMinifier
             List<string> configurations = new List<string>();
             bool isClean = false;
             bool isWatch = false;
+            bool isHelp = false;
 
             for (int i = 0; i < readConfigsUntilIndex; ++i)
             {
                 bool currentArgIsClean = string.Equals(args[i], "clean", StringComparison.OrdinalIgnoreCase);
                 bool currentArgIsWatch = string.Equals(args[i], "watch", StringComparison.OrdinalIgnoreCase);
+                bool currentArgIsHelp = string.Equals(args[i], "help", StringComparison.OrdinalIgnoreCase);
+                currentArgIsHelp |= string.Equals(args[i], "-h", StringComparison.OrdinalIgnoreCase);
+                currentArgIsHelp |= string.Equals(args[i], "--help", StringComparison.OrdinalIgnoreCase);
+                currentArgIsHelp |= string.Equals(args[i], "help", StringComparison.OrdinalIgnoreCase);
+                currentArgIsHelp |= string.Equals(args[i], "-?", StringComparison.OrdinalIgnoreCase);
 
                 if (!currentArgIsClean && !currentArgIsWatch)
                 {
                     configurations.Add(args[i]);
                 }
-                else if(currentArgIsClean)
+                else if (currentArgIsClean)
                 {
                     isClean = true;
                 }
@@ -105,6 +105,12 @@ namespace BundlerMinifier
                 {
                     isWatch = true;
                 }
+            }
+
+            if (isHelp)
+            {
+                ShowHelp();
+                return 0;
             }
 
             if (isClean && isWatch)
@@ -117,7 +123,7 @@ namespace BundlerMinifier
             {
                 bool isWatching = Watcher.Configure(processor, configurations, configPath);
 
-                if(!isWatching)
+                if (!isWatching)
                 {
                     Console.WriteLine("No output file names were matched".Red().Bright());
                     return -1;
@@ -134,17 +140,45 @@ namespace BundlerMinifier
                 return Run(processor, configPath, null, isClean);
             }
 
-            foreach(string config in configurations)
+            foreach (string config in configurations)
             {
                 int runResult = Run(processor, configPath, config, isClean);
 
-                if(runResult < 0)
+                if (runResult < 0)
                 {
                     return runResult;
                 }
             }
 
             return 0;
+        }
+
+        private static void ShowHelp()
+        {
+#if DOTNET
+            const string commandName = "dotnet bundle";
+#else
+            const string commandName = "BundlerMinifier";
+#endif
+            using (ColoredTextRegion.Create(s => s.Orange().Bright()))
+            {
+                Console.WriteLine($"Usage: {commandName} [[args]] [configPath]");
+                Console.WriteLine(" Each arg in args can be one of the following:");
+                Console.WriteLine("     - The name of an output to process (outputFileName in the configuration file)");
+                Console.WriteLine("         If no outputs to process are specified, all ");
+                Console.WriteLine("     - [ -? | -h | --help | help]        - Shows this help message");
+                Console.WriteLine("         All other arguments are ignored when one of the help switches are included");
+                Console.WriteLine("     - clean                             - Deletes artifacts from previous runs");
+                Console.WriteLine("         All other arguments are ignored when \"clean\" is included");
+                Console.WriteLine("         Not compatible with \"watch\"");
+                Console.WriteLine("     - watch                             - Deletes artifacts from previous runs");
+                Console.WriteLine("         Watches files that would cause specified rules to run");
+                Console.WriteLine("         Not compatible with \"clean\"");
+                Console.WriteLine("     - [ -? | -h | --help ] to show this help message");
+                Console.WriteLine($" The configPath paramter may be omitted if a {DefaultConfigFileName} file is in the working directory");
+                Console.WriteLine("     otherwise, this parameter must be the location of a file containing the definitions for how");
+                Console.WriteLine("     the bundling and minification should be performed.");
+            }
         }
 
         private static int Run(BundleFileProcessor processor, string configPath, string file, bool isClean)
