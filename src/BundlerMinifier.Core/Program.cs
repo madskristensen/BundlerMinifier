@@ -93,7 +93,12 @@ namespace BundlerMinifier
                 currentArgIsHelp |= string.Equals(args[i], "help", StringComparison.OrdinalIgnoreCase);
                 currentArgIsHelp |= string.Equals(args[i], "-?", StringComparison.OrdinalIgnoreCase);
 
-                if (!currentArgIsClean && !currentArgIsWatch)
+                if (currentArgIsHelp)
+                {
+                    isHelp = true;
+                    break;
+                }
+                else if (!currentArgIsClean && !currentArgIsWatch)
                 {
                     configurations.Add(args[i]);
                 }
