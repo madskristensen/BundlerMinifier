@@ -95,6 +95,13 @@ A `.map` file is produced next to the `.min.js` file automatically,
 but if you manually delete the `.map` file, a new one will not be
 created on subsequent minifications.
 
+To enable source maps, add this property to the `bundleconfig.json`
+file:
+
+```json
+"sourceMap": true
+```
+
 ### Task Runner Explorer
 Get a quick overview of the files you've specified or execute a bundle
 directly in Task Runner Explorer.
