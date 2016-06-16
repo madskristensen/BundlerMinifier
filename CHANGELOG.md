@@ -1,5 +1,21 @@
 # Roadmap
 
+- [ ] Create additional source map for the bundle files
+- [ ] Adopt new VS Error List API
+
+Features that have a checkmark are complete and available for
+download in the
+[nightly build](http://vsixgallery.com/extension/a0ae318b-4f07-4f71-93cb-f21d3f03c6d3/).
+
+# Changelog
+
+These are the changes to each version that has been released
+on the official Visual Studio extension gallery.
+
+## 2.0
+
+**2016-06-16**
+
 - [x] Breaking changes to HTML minification settings
 - [x] .NET Core compatible CLI engine
 - [x] Brand new CLI story
@@ -20,17 +36,6 @@
 - [x] Restart CLI watcher when bundleconfig.json changes
 - [x] Show warning on missing input files
 - [x] Better error messages in CLI
-- [ ] Create additional source map for the bundle files
-- [ ] Adopt new VS Error List API
-
-Features that have a checkmark are complete and available for
-download in the
-[nightly build](http://vsixgallery.com/extension/a0ae318b-4f07-4f71-93cb-f21d3f03c6d3/).
-
-# Changelog
-
-These are the changes to each version that has been released
-on the official Visual Studio extension gallery.
 
 ## 1.9
 
