@@ -120,7 +120,7 @@ project which is used to configure all bundling.
 
 Here's an example of what that file looks like:
 
-```json
+```js
 [
   {
     "outputFileName": "output/bundle.css",
