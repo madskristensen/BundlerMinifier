@@ -73,7 +73,7 @@ namespace BundlerMinifier
                 return 0;
             }
 
-            Console.WriteLine($"Running with configuration from {configPath}".Green().Bright());
+            Console.WriteLine($"Bundling with configuration from {configPath}".Green().Bright());
 
             BundleFileProcessor processor = new BundleFileProcessor();
             EventHookups(processor, configPath);
@@ -81,12 +81,14 @@ namespace BundlerMinifier
             List<string> configurations = new List<string>();
             bool isClean = false;
             bool isWatch = false;
+            bool isNoColor = false;
             bool isHelp = false;
 
             for (int i = 0; i < readConfigsUntilIndex; ++i)
             {
                 bool currentArgIsClean = string.Equals(args[i], "clean", StringComparison.OrdinalIgnoreCase);
                 bool currentArgIsWatch = string.Equals(args[i], "watch", StringComparison.OrdinalIgnoreCase);
+                bool currentArgIsNoColor = string.Equals(args[i], "--no-color", StringComparison.OrdinalIgnoreCase);
                 bool currentArgIsHelp = string.Equals(args[i], "help", StringComparison.OrdinalIgnoreCase);
                 currentArgIsHelp |= string.Equals(args[i], "-h", StringComparison.OrdinalIgnoreCase);
                 currentArgIsHelp |= string.Equals(args[i], "--help", StringComparison.OrdinalIgnoreCase);
@@ -98,18 +100,27 @@ namespace BundlerMinifier
                     isHelp = true;
                     break;
                 }
-                else if (!currentArgIsClean && !currentArgIsWatch)
-                {
-                    configurations.Add(args[i]);
-                }
                 else if (currentArgIsClean)
                 {
                     isClean = true;
                 }
-                else
+                else if (currentArgIsWatch)
                 {
                     isWatch = true;
                 }
+                else if (currentArgIsNoColor)
+                {
+                    isNoColor = true;
+                }
+                else
+                {
+                    configurations.Add(args[i]);
+                }
+            }
+
+            if (isNoColor)
+            {
+                StringExtensions.NoColor = true;
             }
 
             if (isHelp)
@@ -179,6 +190,7 @@ namespace BundlerMinifier
                 Console.WriteLine("     - watch                             - Deletes artifacts from previous runs");
                 Console.WriteLine("         Watches files that would cause specified rules to run");
                 Console.WriteLine("         Not compatible with \"clean\"");
+                Console.WriteLine("     - --no-color                        - Doesn't colorize output");
                 Console.WriteLine("     - [ -? | -h | --help ] to show this help message");
                 Console.WriteLine($" The configPath paramter may be omitted if a {DefaultConfigFileName} file is in the working directory");
                 Console.WriteLine("     otherwise, this parameter must be the location of a file containing the definitions for how");

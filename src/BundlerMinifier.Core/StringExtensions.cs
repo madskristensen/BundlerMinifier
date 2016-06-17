@@ -9,9 +9,12 @@ namespace BundlerMinifier
 
         private ColoredTextRegion(Func<string, ColoredText> colorization)
         {
-            string[] parts = colorization("|").ToString().Split('|');
-            Console.Write(parts[0]);
-            _after = parts[1];
+            if (!StringExtensions.NoColor)
+            {
+                string[] parts = colorization("|").ToString().Split('|');
+                Console.Write(parts[0]);
+                _after = parts[1];
+            }
         }
 
         public static IDisposable Create(Func<string, ColoredText> colorization)
@@ -21,13 +24,22 @@ namespace BundlerMinifier
 
         public void Dispose()
         {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool isDisposing)
+        {
             if (_isDisposed)
             {
                 return;
             }
 
             _isDisposed = true;
-            Console.Write(_after);
+
+            if (!StringExtensions.NoColor)
+            {
+                Console.Write(_after);
+            }
         }
     }
 
@@ -103,7 +115,7 @@ namespace BundlerMinifier
 
         public override string ToString()
         {
-            if(_color == 0)
+            if(StringExtensions.NoColor || _color == 0)
             {
                 return _message;
             }
@@ -120,6 +132,8 @@ namespace BundlerMinifier
 
     public static class StringExtensions
     {
+        public static bool NoColor { get; set; }
+
         public static ColoredText Orange(this string s)
         {
             return new ColoredText(s).Orange();
