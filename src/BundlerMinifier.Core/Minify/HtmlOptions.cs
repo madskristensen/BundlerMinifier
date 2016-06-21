@@ -13,7 +13,7 @@ namespace BundlerMinifier
                 ShortBooleanAttribute = GetValue(bundle, "collapseBooleanAttributes", true) == "True",
                 MinifyCss = GetValue(bundle, "minifyEmbeddedCssCode", true) == "True",
                 MinifyJs = GetValue(bundle, "minifyEmbeddedJsCode", true) == "True",
-                MinifyCssAttributes = GetValue(bundle, "minifyInlineCssCode", true) == "True",
+                MinifyCssAttributes = GetValue(bundle, "minifyInlineCssCode", false) == "True",
                 AttributesCaseSensitive = GetValue(bundle, "preserveCase") == "True",
                 RemoveComments = GetValue(bundle, "removeHtmlComments", true) == "True",
                 RemoveQuotedAttributes = GetValue(bundle, "removeQuotedAttributes", true) == "True",
