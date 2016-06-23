@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Option to suppress output
+- [x] Option to disable Task Runner Explorer integration
+- [ ] Command to convert Gulp
 - [ ] ASP.NET Core TagHelper support
 - [ ] Create additional source map for the bundle files
 - [ ] Adopt new VS Error List API

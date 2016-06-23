@@ -35,6 +35,11 @@ namespace BundlerMinifierVsix.Listeners
                 {
                     _document.FileActionOccurred += DocumentSaved;
                 }
+                else if (fileName.Equals(Constants.CONFIG_FILENAME + ".bindings", StringComparison.OrdinalIgnoreCase))
+                {
+                    var project = ProjectHelpers.GetActiveProject();
+                    ProjectEventCommand.Instance.EnsureProjectIsActive(project);
+                }
             }
 
             textView.Closed += TextviewClosed;

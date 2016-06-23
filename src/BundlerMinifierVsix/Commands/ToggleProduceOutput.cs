@@ -69,10 +69,14 @@ namespace BundlerMinifierVsix.Commands
         private void Execute(object sender, EventArgs e)
         {
             var button = (OleMenuCommand)sender;
-            var configFile = ProjectHelpers.GetActiveProject()?.GetConfigFile();
+            var project = ProjectHelpers.GetActiveProject();
+            var configFile = project?.GetConfigFile();
 
             if (!string.IsNullOrEmpty(configFile))
+            {
                 BundleService.ToggleOutputProduction(configFile, !button.Checked);
+                ProjectEventCommand.Instance.EnsureProjectIsActive(project);
+            }
         }
     }
 }
