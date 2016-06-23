@@ -67,6 +67,9 @@ namespace BundlerMinifierVsix.Commands
 
             var config = project.GetConfigFile();
 
+            if (!BundleService.IsOutputProduced(config))
+                return;
+
             try
             {
                 if (!string.IsNullOrEmpty(config) && File.Exists(config))

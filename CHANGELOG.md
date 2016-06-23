@@ -1,5 +1,6 @@
 # Roadmap
 
+- [ ] ASP.NET Core TagHelper support
 - [ ] Create additional source map for the bundle files
 - [ ] Adopt new VS Error List API
 

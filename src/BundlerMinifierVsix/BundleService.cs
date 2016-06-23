@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading;
 using BundlerMinifier;
 using EnvDTE80;
@@ -99,6 +101,9 @@ namespace BundlerMinifierVsix
 
         public static void Process(string configFile, IEnumerable<Bundle> bundles)
         {
+            if (!IsOutputProduced(configFile))
+                return;
+
             ThreadPool.QueueUserWorkItem((o) =>
             {
                 try
@@ -112,8 +117,50 @@ namespace BundlerMinifierVsix
             });
         }
 
+        public static bool IsOutputProduced(string configFile)
+        {
+            if (string.IsNullOrEmpty(configFile))
+                return false;
+
+            string bindings = configFile + ".bindings";
+
+            if (File.Exists(bindings))
+            {
+                var lines = File.ReadAllLines(bindings);
+                return !lines.Any(l => l.TrimStart().StartsWith("produceoutput=false", StringComparison.OrdinalIgnoreCase));
+            }
+
+            return BundlerMinifierPackage.Options.ProduceOutput;
+        }
+
+        public static void ToggleOutputProduction(string configFile, bool produceOutput)
+        {
+            string bindings = configFile + ".bindings";
+            var sb = new StringBuilder();
+
+            if (File.Exists(bindings))
+            {
+                var lines = File.ReadAllLines(bindings);
+
+                foreach (var line in lines)
+                {
+                    if (!line.TrimStart().StartsWith("produceoutput", StringComparison.OrdinalIgnoreCase))
+                        sb.AppendLine(line);
+                }
+            }
+
+            sb.AppendLine($"produceoutput={produceOutput.ToString().ToLowerInvariant()}");
+
+            ProjectHelpers.CheckFileOutOfSourceControl(bindings);
+            File.WriteAllText(bindings, sb.ToString().Trim());
+            ProjectHelpers.AddNestedFile(configFile, bindings);
+        }
+
         public static void SourceFileChanged(string configFile, string sourceFile)
         {
+            if (!IsOutputProduced(configFile))
+                return;
+
             ThreadPool.QueueUserWorkItem((o) =>
             {
                 try

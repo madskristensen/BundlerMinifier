@@ -14,7 +14,7 @@ or get the
 ---------------------------------------
 
 See the
-[changelog](https://github.com/madskristensen/BundlerMinifier/blob/master/CHANGELOG.md)
+[changelog](CHANGELOG.md)
 for changes and roadmap and the 
 [wiki](https://github.com/madskristensen/BundlerMinifier/wiki)
 for more details.

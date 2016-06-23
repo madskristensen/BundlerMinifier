@@ -41,7 +41,11 @@ namespace BundlerMinifier
             return Path.Combine(folder, OutputFileName.NormalizePath());
         }
 
-        internal List<string> GetAbsoluteInputFiles(bool notifyOnPatternMiss = false)
+        /// <summary>
+        /// Returns a list of absolute file paths of all matching input files.
+        /// </summary>
+        /// <param name="notifyOnPatternMiss">Writes to the Console if any input file is missing on disk.</param>
+        public List<string> GetAbsoluteInputFiles(bool notifyOnPatternMiss = false)
         {
             List<string> files = new List<string>();
 

@@ -57,8 +57,10 @@
     <Compile Include="Adornments\AdornmentProvider.cs" />
     <Compile Include="BundleService.cs" />
     <Compile Include="Commands\BundleOnBuild.cs" />
+    <Compile Include="Commands\ToggleProduceOutput.cs" />
     <Compile Include="Commands\ProjectEventCommand.cs" />
     <Compile Include="Commands\RemoveBundle.cs" />
+    <Compile Include="Commands\OpenSettings.cs" />
     <Compile Include="Commands\UpdateAllFiles.cs" />
     <Compile Include="Commands\ClearOutputFiles.cs" />
     <Compile Include="Commands\UpdateBundle.cs" />
@@ -72,6 +74,9 @@
     <Compile Include="FileListeners\JsonCreationListener.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
+    <Compile Include="Options.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Text.Designer.cs">
       <AutoGen>True</AutoGen>

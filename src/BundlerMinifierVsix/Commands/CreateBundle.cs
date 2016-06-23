@@ -156,7 +156,7 @@ namespace BundlerMinifierVsix.Commands
             BundlerMinifierPackage._dte.StatusBar.Progress(false, Resources.Text.StatusCreatingBundle);
             BundlerMinifierPackage._dte.StatusBar.Text = Resources.Text.StatusBundleCreated;
 
-            ProjectEventCommand.Instance.EnsureProjectIsActive(item.ContainingProject);
+            ProjectEventCommand.Instance?.EnsureProjectIsActive(item.ContainingProject);
         }
 
         private static Bundle CreateBundleFile(IEnumerable<string> files, string outputFile)

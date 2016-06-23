@@ -36,6 +36,9 @@ namespace BundlerMinifierVsix
         {
             return await Task.Run(() =>
             {
+                if (!BundlerMinifierPackage.Options.EnableTaskRunnerExplorer)
+                    return null;
+
                 ITaskRunnerNode hierarchy = LoadHierarchy(configPath);
 
                 return new TaskRunnerConfig(context, hierarchy, _icon);
