@@ -10,7 +10,7 @@
       <Menu guid="guidBundlerCmdSet" id="MyMenu" priority="0x0100" type="Menu">
         <Parent guid="guidBundlerCmdSet" id="ContextMenuGroup" />
         <Strings>
-          <ButtonText>Bundler &amp; Minifier</ButtonText>
+          <ButtonText>Bundler &amp;&amp; Minifier</ButtonText>
         </Strings>
       </Menu>
     </Menus>
@@ -88,7 +88,15 @@
           <ButtonText>Produce Output Files</ButtonText>
         </Strings>
       </Button>
-      <Button guid="guidBundlerCmdSet" id="OpenSettings" priority="0x0200" type="Button">
+      <Button guid="guidBundlerCmdSet" id="ConvertToGulp" priority="0x0300" type="Button">
+        <Parent guid="guidBundlerCmdSet" id="SettingsMenuGruop" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Convert To Gulp...</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidBundlerCmdSet" id="OpenSettings" priority="0x0400" type="Button">
         <Parent guid="guidBundlerCmdSet" id="SettingsMenuGruop" />
         <Icon guid="ImageCatalogGuid" id="Settings" />
         <CommandFlag>IconIsMoniker</CommandFlag>
@@ -149,7 +157,8 @@
       <IDSymbol name="UpdateSolution" value="0x0600" />
       <IDSymbol name="ClearOutputFiles" value="0x0700" />
       <IDSymbol name="SuppressOutput" value="0x0800" />
-      <IDSymbol name="OpenSettings" value="0x0900" />
+      <IDSymbol name="ConvertToGulp" value="0x0900" />
+      <IDSymbol name="OpenSettings" value="0x0950" />
     </GuidSymbol>
   </Symbols>
 </CommandTable>

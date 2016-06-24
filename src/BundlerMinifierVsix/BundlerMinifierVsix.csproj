@@ -57,6 +57,7 @@
     <Compile Include="Adornments\AdornmentProvider.cs" />
     <Compile Include="BundleService.cs" />
     <Compile Include="Commands\BundleOnBuild.cs" />
+    <Compile Include="Commands\ConvertToGulp.cs" />
     <Compile Include="Commands\ToggleProduceOutput.cs" />
     <Compile Include="Commands\ProjectEventCommand.cs" />
     <Compile Include="Commands\RemoveBundle.cs" />
@@ -103,6 +104,9 @@
       <Link>BundlerMinifier.pdb</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="Resources\Files\gulpfile.js">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Resources\logo.png">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
@@ -113,6 +117,9 @@
       <DependentUpon>source.extension.vsixmanifest</DependentUpon>
     </Content>
     <None Include="packages.config" />
+    <Content Include="Resources\Files\package.json">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
       <Generator>VsixManifestGenerator</Generator>

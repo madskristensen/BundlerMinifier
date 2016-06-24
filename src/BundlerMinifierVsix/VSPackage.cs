@@ -34,6 +34,7 @@ namespace BundlerMinifierVsix
         public const int UpdateSolution = 0x0600;
         public const int ClearOutputFiles = 0x0700;
         public const int SuppressOutput = 0x0800;
-        public const int OpenSettings = 0x0900;
+        public const int ConvertToGulp = 0x0900;
+        public const int OpenSettings = 0x0950;
     }
 }

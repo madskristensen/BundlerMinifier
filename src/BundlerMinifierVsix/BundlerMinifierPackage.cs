@@ -50,6 +50,7 @@ namespace BundlerMinifierVsix
             ToggleProduceOutput.Initialize(this);
             OpenSettings.Initialize(this);
             ProjectEventCommand.Initialize(this);
+            ConvertToGulp.Initialize(this);
 
             base.Initialize();
         }
