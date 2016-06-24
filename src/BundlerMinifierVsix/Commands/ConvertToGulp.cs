@@ -107,7 +107,7 @@ namespace BundlerMinifierVsix.Commands
             CreateFileAndIncludeInProject(project, gulpFile);
 
             BundlerMinifierPackage._dte.StatusBar.Text = "Installing node modules...";
-            InstallNodeModules(Dispatcher.CurrentDispatcher, root, "del", "gulp", "gulp-concat", "gulp-cssmin", "gulp-uglify", "merge-stream");
+            InstallNodeModules(Dispatcher.CurrentDispatcher, root, "del", "gulp", "gulp-concat", "gulp-cssmin", "gulp-htmlmin", "gulp-uglify", "merge-stream");
         }
 
         private static void InstallNodeModules(Dispatcher dispatcher, string root, params string[] modules)
