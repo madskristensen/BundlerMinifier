@@ -6,9 +6,24 @@
   <Include href="KnownImageIds.vsct"/>
 
   <Commands package="guidBundlerPackage">
+    <Menus>
+      <Menu guid="guidBundlerCmdSet" id="MyMenu" priority="0x0100" type="Menu">
+        <Parent guid="guidBundlerCmdSet" id="ContextMenuGroup" />
+        <Strings>
+          <ButtonText>Bundler &amp;&amp; Minifier</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
+
     <Groups>
-      <Group guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0200">
+      <Group guid="guidBundlerCmdSet" id="ContextMenuGroup" priority="0x0200">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
+      </Group>
+      <Group guid="guidBundlerCmdSet" id="CommandsMenuGruop" priority="0x0300">
+        <Parent guid="guidBundlerCmdSet" id="MyMenu"/>
+      </Group>
+      <Group guid="guidBundlerCmdSet" id="SettingsMenuGruop" priority="0x0400">
+        <Parent guid="guidBundlerCmdSet" id="MyMenu"/>
       </Group>
       <Group guid="guidBundlerCmdSet" id="SolExpMenuGroup" priority="0x0300">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_BUILD"/>
@@ -18,7 +33,7 @@
     <!-- See all available images for ImageCatalogGuid at http://glyphlist.azurewebsites.net/knownmonikers/ -->
     <Buttons>
       <Button guid="guidBundlerCmdSet" id="CreateBundleId" priority="0x0100" type="Button">
-        <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidBundlerCmdSet" id="CommandsMenuGruop" />
         <Icon guid="ImageCatalogGuid" id="Filter" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
@@ -29,7 +44,7 @@
         </Strings>
       </Button>
       <Button guid="guidBundlerCmdSet" id="UpdateBundle" priority="0x0200" type="Button">
-        <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidBundlerCmdSet" id="CommandsMenuGruop" />
         <Icon guid="ImageCatalogGuid" id="Filter" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
@@ -39,7 +54,7 @@
         </Strings>
       </Button>
       <Button guid="guidBundlerCmdSet" id="ClearOutputFiles" priority="0x0200" type="Button">
-        <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidBundlerCmdSet" id="CommandsMenuGruop" />
         <Icon guid="ImageCatalogGuid" id="Cancel" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
@@ -49,7 +64,7 @@
         </Strings>
       </Button>
       <Button guid="guidBundlerCmdSet" id="BundleOnBuild" priority="0x0300" type="Button">
-        <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidBundlerCmdSet" id="CommandsMenuGruop" />
         <CommandFlag>DynamicVisibility</CommandFlag>
         <CommandFlag>DefaultInvisible</CommandFlag>
         <Strings>
@@ -57,13 +72,37 @@
         </Strings>
       </Button>
       <Button guid="guidBundlerCmdSet" id="RemoveBundle" priority="0x0300" type="Button">
-        <Parent guid="guidBundlerCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidBundlerCmdSet" id="CommandsMenuGruop" />
         <Icon guid="ImageCatalogGuid" id="StopFilter" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
         <CommandFlag>DefaultInvisible</CommandFlag>
         <Strings>
           <ButtonText>Remove from bundling...</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidBundlerCmdSet" id="SuppressOutput" priority="0x0200" type="Button">
+        <Parent guid="guidBundlerCmdSet" id="SettingsMenuGruop" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Produce Output Files</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidBundlerCmdSet" id="ConvertToGulp" priority="0x0300" type="Button">
+        <Parent guid="guidBundlerCmdSet" id="SettingsMenuGruop" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Convert To Gulp...</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidBundlerCmdSet" id="OpenSettings" priority="0x0400" type="Button">
+        <Parent guid="guidBundlerCmdSet" id="SettingsMenuGruop" />
+        <Icon guid="ImageCatalogGuid" id="Settings" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Settings...</ButtonText>
         </Strings>
       </Button>
       <Button guid="guidBundlerCmdSet" id="UpdateSolution" priority="0x0200" type="Button">
@@ -80,13 +119,13 @@
   </Commands>
 
   <CommandPlacements>
-    <CommandPlacement guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0100">
+    <CommandPlacement guid="guidBundlerCmdSet" id="ContextMenuGroup" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBITEMNODE"/>
     </CommandPlacement>
-    <CommandPlacement guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0100">
+    <CommandPlacement guid="guidBundlerCmdSet" id="ContextMenuGroup" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBPROJECT"/>
     </CommandPlacement>
-    <CommandPlacement guid="guidBundlerCmdSet" id="MyMenuGroup" priority="0x0100">
+    <CommandPlacement guid="guidBundlerCmdSet" id="ContextMenuGroup" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
     </CommandPlacement>
     <CommandPlacement guid="guidBundlerCmdSet" id="SolExpMenuGroup" priority="0x0100">
@@ -105,8 +144,11 @@
 
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidBundlerCmdSet" value="{7b10be0c-81e1-4817-abda-e08788679bd5}">
-      <IDSymbol name="MyMenuGroup" value="0x1020" />
+      <IDSymbol name="MyMenu" value="0x1000" />
+      <IDSymbol name="ContextMenuGroup" value="0x1020" />
       <IDSymbol name="SolExpMenuGroup" value="0x1030" />
+      <IDSymbol name="CommandsMenuGruop" value="0x1040" />
+      <IDSymbol name="SettingsMenuGruop" value="0x1041" />
 
       <IDSymbol name="CreateBundleId" value="0x0100" />
       <IDSymbol name="UpdateBundle" value="0x0200" />
@@ -114,6 +156,9 @@
       <IDSymbol name="RemoveBundle" value="0x0500" />
       <IDSymbol name="UpdateSolution" value="0x0600" />
       <IDSymbol name="ClearOutputFiles" value="0x0700" />
+      <IDSymbol name="SuppressOutput" value="0x0800" />
+      <IDSymbol name="ConvertToGulp" value="0x0900" />
+      <IDSymbol name="OpenSettings" value="0x0950" />
     </GuidSymbol>
   </Symbols>
 </CommandTable>

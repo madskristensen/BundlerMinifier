@@ -39,8 +39,15 @@ namespace BundlerMinifierVsix
         {
             string bindingPath = configPath + ".bindings";
 
+
             if (File.Exists(bindingPath))
-                return File.ReadAllText(bindingPath).Replace("///", string.Empty);
+            {
+                foreach (var line in File.ReadAllLines(bindingPath))
+                {
+                    if (line.StartsWith("///<binding"))
+                        return line.TrimStart('/').Trim();
+                }
+            }
 
             return "<binding />";
         }
@@ -51,15 +58,31 @@ namespace BundlerMinifierVsix
 
             try
             {
+                var sb = new StringBuilder();
+
+                if (File.Exists(bindingPath))
+                {
+                    var lines = File.ReadAllLines(bindingPath);
+
+                    foreach (var line in lines)
+                    {
+                        if (!line.TrimStart().StartsWith("///<binding", StringComparison.OrdinalIgnoreCase))
+                            sb.AppendLine(line);
+                    }
+                }
+
+                if (bindingsXml != "<binding />")
+                    sb.Insert(0, "///" + bindingsXml);
+
                 ProjectHelpers.CheckFileOutOfSourceControl(bindingPath);
 
-                if (bindingsXml == "<binding />" && File.Exists(bindingPath))
+                if (sb.Length == 0)
                 {
                     ProjectHelpers.DeleteFileFromProject(bindingPath);
                 }
                 else
                 {
-                    File.WriteAllText(bindingPath, "///" + bindingsXml, Encoding.UTF8);
+                    File.WriteAllText(bindingPath, sb.ToString(), Encoding.UTF8);
                     ProjectHelpers.AddNestedFile(configPath, bindingPath);
                 }
 
@@ -70,7 +93,7 @@ namespace BundlerMinifierVsix
                     string newName;
                     persistDocData.SaveDocData(VSSAVEFLAGS.VSSAVE_SilentSave, out newName, out cancelled);
                 }
-                else if(persistDocData == null)
+                else if (persistDocData == null)
                 {
                     new FileInfo(configPath).LastWriteTime = DateTime.Now;
                 }

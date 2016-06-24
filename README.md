@@ -14,7 +14,7 @@ or get the
 ---------------------------------------
 
 See the
-[changelog](https://github.com/madskristensen/BundlerMinifier/blob/master/CHANGELOG.md)
+[changelog](CHANGELOG.md)
 for changes and roadmap and the 
 [wiki](https://github.com/madskristensen/BundlerMinifier/wiki)
 for more details.
@@ -31,6 +31,8 @@ for more details.
 - Task Runner Explorer integration
 - Command line support
 - Shortcut to update all bundles in solution
+- Suppress output file generation
+- Convert to Gulp
 
 ### A note about encoding
 All files without a BOM (Byte Order Mark) is treated as UTF-8. If you
@@ -40,7 +42,7 @@ saving the input files as UTF-8 or an encoding that lets you specify a BOM.
 ### Bundling
 
 Select 2 or more of the same type of files in Solution Explorer
-to create a bundle.
+to create a bundle.   
 
 ![Create bundle](art/contextmenu-createbundle.png)
 
@@ -53,7 +55,7 @@ which gets added to the root of the project.
 ### Minification
 
 Minify any JS, CSS or HTML file by right-clicking it in Solution
-Explorer. That will create a `<filename>.min.<ext>` and nest
+Explorer. That will create a _[filename].min.[ext]_ and nest
 it under the original file.
 
 ![Minify file](art/contextmenu-minify.png)
@@ -62,7 +64,6 @@ When the original file is modified, a new min file is produced
 instantly.
 
 ### Bundle on build / CI support
-
 In ASP.NET MVC and WebForms projects you can enable bundling and
 minification as part of the build step. Simply right-click the
 `bundleconfig.json` file to enable it.
@@ -78,6 +79,8 @@ A NuGet package will be installed into the `packages` folder without adding
 any files to the project itself. That NuGet package contains an MSBuild
 task that will run the exact same compilers on the `bundleconfig.json`
 file in the root of the project.
+
+For ASP.NET Core projects, see the [wiki](https://github.com/madskristensen/MarkdownEditor/wiki)
 
 ### Update all bundles
 
@@ -112,6 +115,33 @@ You can even set bindings so that bundling/minification happens automatically
 during certain Visual Studio events, such as BeforeBuild and Project Open.
 
 ![Task Runner Bindings](art/task-runner-bindings.png)
+
+### Suppress output file generation
+There are cases when you don't want the extension to listen for file
+changes and generate bundled and minified output. That could be if you
+want to use Gulp to use `bundleconfig.json` or server-side code instead. In
+those cases it will still be helpful to have the `bundleconfig.json` file
+with all the Visual Studio tooling around it, but let other tools handle
+the bundling and minification process.
+
+To suppress the output, remove the checkbox located in the right-click
+menu of `bundleconfig.json`.
+
+![Suppress output](art/context-menu-suppress-output.png)
+
+### Convert to Gulp
+This feature makes it easy to start using Gulp based on what's already
+configured in `bundleconfig.json`. It will create `gulpfile.js` and
+`package.js` if they don't already exist and then install the needed
+node modules using npm.
+
+The `gulpfile.js` will consume `bundleconfig.json` to get the input and
+output file paths, but will use regular gulp plugins to do all the
+bundling and minification. You can modify it to use other plugins without
+loosing its ability to read the `bundleconfig.json`.
+
+Read more about this and see code samples on the 
+[wiki](https://github.com/madskristensen/BundlerMinifier/wiki).
 
 ### bundleconfig.json
 

@@ -6,19 +6,19 @@ using Microsoft.VisualStudio.Shell;
 
 namespace BundlerMinifierVsix.Commands
 {
-    internal sealed class UpdateBundle
+    internal sealed class OpenSettings
     {
         private readonly Package _package;
 
-        private UpdateBundle(Package package)
+        private OpenSettings(Package package)
         {
             _package = package;
 
             var commandService = (OleMenuCommandService)ServiceProvider.GetService(typeof(IMenuCommandService));
             if (commandService != null)
             {
-                var menuCommandID = new CommandID(PackageGuids.guidBundlerCmdSet, PackageIds.UpdateBundle);
-                var menuItem = new OleMenuCommand(UpdateSelectedBundle, menuCommandID);
+                var menuCommandID = new CommandID(PackageGuids.guidBundlerCmdSet, PackageIds.OpenSettings);
+                var menuItem = new OleMenuCommand(Execute, menuCommandID);
                 menuItem.BeforeQueryStatus += BeforeQueryStatus;
                 commandService.AddCommand(menuItem);
             }
@@ -27,9 +27,9 @@ namespace BundlerMinifierVsix.Commands
         private void BeforeQueryStatus(object sender, EventArgs e)
         {
             var button = (OleMenuCommand)sender;
-            var files = ProjectHelpers.GetSelectedItemPaths();
-            button.Visible = false;
+            button.Visible = button.Enabled = false;
 
+            var files = ProjectHelpers.GetSelectedItemPaths();
             int count = files.Count();
 
             if (count == 0) // Project
@@ -43,18 +43,16 @@ namespace BundlerMinifierVsix.Commands
 
                 if (!string.IsNullOrEmpty(config) && File.Exists(config))
                 {
-                    button.Visible = true;
-                    button.Enabled = button.Visible && BundleService.IsOutputProduced(config);
+                    button.Visible = button.Enabled = true;
                 }
             }
             else
             {
-                button.Visible = files.Count() == 1 && Path.GetFileName(files.First()) == Constants.CONFIG_FILENAME;
-                button.Enabled = button.Visible && BundleService.IsOutputProduced(files.First());
+                button.Visible = button.Enabled = count == 1 && Path.GetFileName(files.First()) == Constants.CONFIG_FILENAME;
             }
         }
 
-        public static UpdateBundle Instance { get; private set; }
+        public static OpenSettings Instance { get; private set; }
 
         private IServiceProvider ServiceProvider
         {
@@ -63,25 +61,12 @@ namespace BundlerMinifierVsix.Commands
 
         public static void Initialize(Package package)
         {
-            Instance = new UpdateBundle(package);
+            Instance = new OpenSettings(package);
         }
 
-        private void UpdateSelectedBundle(object sender, EventArgs e)
+        private void Execute(object sender, EventArgs e)
         {
-            var file = ProjectHelpers.GetSelectedItemPaths().FirstOrDefault();
-
-            if (string.IsNullOrEmpty(file)) // Project
-            {
-                var project = ProjectHelpers.GetActiveProject();
-
-                if (project != null)
-                    file = project.GetConfigFile();
-            }
-
-            if (!string.IsNullOrEmpty(file))
-            {
-                BundleService.Process(file);
-            }
+            BundlerMinifierPackage._instance.ShowOptionPage(typeof(Options));
         }
     }
 }

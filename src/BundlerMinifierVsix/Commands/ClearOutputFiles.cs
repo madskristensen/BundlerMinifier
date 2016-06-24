@@ -74,7 +74,13 @@ namespace BundlerMinifierVsix.Commands
         {
             var configFile = ProjectHelpers.GetSelectedItemPaths().FirstOrDefault();
 
-            if (!File.Exists(configFile))
+            if (string.IsNullOrEmpty(configFile))
+            {
+                var project = ProjectHelpers.GetActiveProject();
+                configFile = project?.GetConfigFile();
+            }
+
+            if (string.IsNullOrEmpty(configFile) || !File.Exists(configFile))
             {
                 return;
             }
