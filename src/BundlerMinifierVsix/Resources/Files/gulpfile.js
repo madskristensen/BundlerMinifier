@@ -7,7 +7,7 @@ var gulp = require("gulp"),
     uglify = require("gulp-uglify"),
     merge = require("merge-stream"),
     del = require("del"),
-    bundleconfig = require("./bundleconfig.json");
+    bundleconfig = require("./bundleconfig.json"); // make sure bundleconfig.json doesn't contain any comments
 
 gulp.task("min", ["min:js", "min:css", "min:html"]);
 
