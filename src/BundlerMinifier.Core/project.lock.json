@@ -359,7 +359,7 @@
           "lib/netstandard1.0/Newtonsoft.Json.dll": {}
         }
       },
-      "NUglify/1.5.0": {
+      "NUglify/1.5.1": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.0",
@@ -2098,7 +2098,7 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "NUglify/1.5.0": {
+      "NUglify/1.5.1": {
         "type": "package",
         "frameworkAssemblies": [
           "System",
@@ -2487,11 +2487,12 @@
         "tools/install.ps1"
       ]
     },
-    "NUglify/1.5.0": {
-      "sha512": "R4arnamkKcmjH3mD6zlUmoQo9ohdm26YTc89Jt+H9iXA42Brb5uPGvcMNrSmnHW1q8Tot/1egyLYCyzry6+GDw==",
+    "NUglify/1.5.1": {
+      "sha512": "iYV/OtSs+HgyE/RilY7UvGXYec6r0OJenWlPIdX/IivedVpSSdzxvPvUIyWpiV/6ad7VjantH0/6oaOhAZbaoQ==",
       "type": "package",
+      "path": "NUglify/1.5.1",
       "files": [
-        "NUglify.1.5.0.nupkg.sha512",
+        "NUglify.1.5.1.nupkg.sha512",
         "NUglify.nuspec",
         "lib/net35/NUglify.dll",
         "lib/net35/NUglify.xml",
@@ -6713,7 +6714,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "NUglify >= 1.5.0",
+      "NUglify >= 1.5.1",
       "Newtonsoft.Json >= 9.0.1"
     ],
     ".NETCoreApp,Version=v1.0": [
