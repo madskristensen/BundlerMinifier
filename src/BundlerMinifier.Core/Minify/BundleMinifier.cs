@@ -89,7 +89,7 @@ namespace BundlerMinifier
                             OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
                         }
 
-                        GzipFile(minFile, bundle, containsChanges);
+                        GzipFile(minFile, bundle, result, containsChanges);
                     }
                     else
                     {
@@ -147,7 +147,7 @@ namespace BundlerMinifier
                                 }
 
 
-                                GzipFile(minFile, bundle, containsChanges);
+                                GzipFile(minFile, bundle, result, containsChanges);
                             }
                             else
                             {
@@ -215,7 +215,7 @@ namespace BundlerMinifier
                         OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
                     }
 
-                    GzipFile(minFile, bundle, containsChanges);
+                    GzipFile(minFile, bundle, result, containsChanges);
                 }
                 else
                 {
@@ -279,7 +279,7 @@ namespace BundlerMinifier
                         OnAfterWritingMinFile(file, minFile, bundle, containsChanges);
                     }
 
-                    GzipFile(minFile, bundle, containsChanges);
+                    GzipFile(minFile, bundle, minResult, containsChanges);
                 }
                 else
                 {
@@ -309,7 +309,8 @@ namespace BundlerMinifier
             return minResult;
         }
 
-        private static void GzipFile(string sourceFile, Bundle bundle, bool containsChanges)
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
+        private static void GzipFile(string sourceFile, Bundle bundle, MinificationResult result, bool containsChanges)
         {
             if (!bundle.Minify.ContainsKey("gzip") || !bundle.Minify["gzip"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
                 return;
@@ -320,11 +321,12 @@ namespace BundlerMinifier
 
             if (containsChanges)
             {
-                using (var sourceStream = File.OpenRead(sourceFile))
-                using (var targetStream = File.OpenWrite(gzipFile))
+                byte[] buffer = Encoding.UTF8.GetBytes(result.MinifiedContent);
+
+                using (var fileStream = File.OpenWrite(gzipFile))
+                using (var gzipStream = new GZipStream(fileStream, CompressionLevel.Optimal))
                 {
-                    var gzipStream = new GZipStream(targetStream, CompressionMode.Compress);
-                    sourceStream.CopyTo(gzipStream);
+                    gzipStream.Write(buffer, 0, buffer.Length);
                 }
 
                 OnAfterWritingGzipFile(sourceFile, gzipFile, bundle, containsChanges);
