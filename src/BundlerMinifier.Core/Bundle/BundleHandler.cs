@@ -98,7 +98,7 @@ namespace BundlerMinifier
                     }
                     else
                     {
-                        content = BundleMinifier.ReadAllText(file);
+                        content = FileHelpers.ReadAllText(file);
                     }
 
                     sb.AppendLine(content);

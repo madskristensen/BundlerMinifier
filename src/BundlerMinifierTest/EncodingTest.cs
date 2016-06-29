@@ -47,7 +47,7 @@ namespace BundlerMinifierTest
         [TestMethod, TestCategory("Encoding")]
         public void Encoding()
         {
-            string jsResult = BundleMinifier.ReadAllText("../../artifacts/encoding.js");
+            string jsResult = FileHelpers.ReadAllText("../../artifacts/encoding.js");
             Assert.AreEqual("var test = 'æøå';", jsResult);
         }
     }

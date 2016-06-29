@@ -10,7 +10,7 @@ namespace BundlerMinifier
 
         public static string Adjust(string inputFile, string outputPath)
         {
-            string cssFileContents = BundleMinifier.ReadAllText(inputFile);
+            string cssFileContents = FileHelpers.ReadAllText(inputFile);
             string absoluteOutputPath = new FileInfo(outputPath).FullName;
 
             // apply the RegEx to the file (to change relative paths)

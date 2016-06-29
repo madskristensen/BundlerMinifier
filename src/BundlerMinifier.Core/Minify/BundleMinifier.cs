@@ -17,18 +17,21 @@ namespace BundlerMinifier
             string extension = Path.GetExtension(file).ToUpperInvariant();
             MinificationResult result = null;
 
-            switch (extension)
+            if (!string.IsNullOrEmpty(bundle.Output))
             {
-                case ".JS":
-                    result = MinifyJavaScript(bundle);
-                    break;
-                case ".CSS":
-                    result = MinifyCss(bundle);
-                    break;
-                case ".HTML":
-                case ".HTM":
-                    result = MinifyHtml(bundle);
-                    break;
+                switch (extension)
+                {
+                    case ".JS":
+                        result = MinifyJavaScript(bundle);
+                        break;
+                    case ".CSS":
+                        result = MinifyCss(bundle);
+                        break;
+                    case ".HTML":
+                    case ".HTM":
+                        result = MinifyHtml(bundle);
+                        break;
+                }
             }
 
             if (result != null && result.HasErrors)
@@ -56,7 +59,7 @@ namespace BundlerMinifier
                     UgliflyResult uglifyResult;
                     try
                     {
-                        uglifyResult = Uglify.Js(ReadAllText(file), settings);
+                        uglifyResult = Uglify.Js(bundle.Output, settings);
                     }
                     catch
                     {
@@ -114,7 +117,7 @@ namespace BundlerMinifier
                             UgliflyResult uglifyResult;
                             try
                             {
-                                uglifyResult = Uglify.Js(ReadAllText(file), file, settings);
+                                uglifyResult = Uglify.Js(bundle.Output, file, settings);
                             }
                             catch
                             {
@@ -173,7 +176,6 @@ namespace BundlerMinifier
         private static MinificationResult MinifyCss(Bundle bundle)
         {
             string file = bundle.GetAbsoluteOutputFile();
-            string content = ReadAllText(file);
             var settings = CssOptions.GetSettings(bundle);
             string minFile = GetMinFileName(file);
             var result = new MinificationResult(file, null, null);
@@ -184,7 +186,7 @@ namespace BundlerMinifier
 
                 try
                 {
-                    uglifyResult = Uglify.Css(content, file, settings);
+                    uglifyResult = Uglify.Css(bundle.Output, file, settings);
                 }
                 catch
                 {
@@ -237,7 +239,6 @@ namespace BundlerMinifier
         private static MinificationResult MinifyHtml(Bundle bundle)
         {
             string file = bundle.GetAbsoluteOutputFile();
-            string content = ReadAllText(file);
             var settings = HtmlOptions.GetSettings(bundle);
             string minFile = GetMinFileName(file);
 
@@ -249,7 +250,7 @@ namespace BundlerMinifier
 
                 try
                 {
-                    uglifyResult = Uglify.Html(content, settings, file);
+                    uglifyResult = Uglify.Html(bundle.Output, settings, file);
                 }
                 catch
                 {
@@ -356,16 +357,6 @@ namespace BundlerMinifier
 
             string ext = Path.GetExtension(file);
             return file.Substring(0, file.LastIndexOf(ext, StringComparison.OrdinalIgnoreCase)) + ".min" + ext;
-        }
-
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
-        public static string ReadAllText(string file)
-        {
-            using (FileStream stream = File.OpenRead(file))
-            using (StreamReader reader = new StreamReader(stream, Encoding.UTF8, true, 8192, true))
-            {
-                return reader.ReadToEnd();
-            }
         }
 
         static void OnBeforeWritingMinFile(string file, string minFile, Bundle bundle, bool containsChanges)

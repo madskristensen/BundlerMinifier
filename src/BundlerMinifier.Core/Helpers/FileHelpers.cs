@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Text;
 
 namespace BundlerMinifier
 {
@@ -102,6 +104,16 @@ namespace BundlerMinifier
         public static string AsPathSegment(this string path)
         {
             return $"{PathSeparatorChar}{path}{PathSeparatorChar}";
+        }
+
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
+        public static string ReadAllText(string file)
+        {
+            using (FileStream stream = File.OpenRead(file))
+            using (StreamReader reader = new StreamReader(stream, Encoding.UTF8, true, 8192, true))
+            {
+                return reader.ReadToEnd();
+            }
         }
     }
 }

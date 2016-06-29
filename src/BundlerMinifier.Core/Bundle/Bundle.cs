@@ -32,6 +32,20 @@ namespace BundlerMinifier
 
         internal string Output { get; set; }
 
+        internal bool IsMinificationEnabled
+        {
+            get
+            {
+                return Minify.ContainsKey("enabled") && Minify["enabled"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        [JsonIgnore]
+        public bool OutputIsMinFile
+        {
+            get { return Path.GetFileName(OutputFileName).Contains(".min."); }
+        }
+
         /// <summary>
         /// Converts the relative output file to an absolute file path.
         /// </summary>

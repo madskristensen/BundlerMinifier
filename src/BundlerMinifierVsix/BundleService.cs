@@ -20,9 +20,9 @@ namespace BundlerMinifierVsix
         {
             _dte = BundlerMinifierPackage._dte;
 
-            BundleMinifier.BeforeWritingMinFile += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile); };
+            BundleMinifier.BeforeWritingMinFile += CheckFileOutOfSourceControl;
             BundleMinifier.AfterWritingMinFile += AfterWritingFile;
-            BundleMinifier.BeforeWritingGzipFile += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile); };
+            BundleMinifier.BeforeWritingGzipFile += CheckFileOutOfSourceControl;
             BundleMinifier.AfterWritingGzipFile += AfterWritingFile;
             BundleMinifier.ErrorMinifyingFile += ErrorMinifyingFile;
         }
@@ -33,7 +33,7 @@ namespace BundlerMinifierVsix
             {
                 var sourceFile = e.OriginalFile;
 
-                if (Path.GetFileName(sourceFile).Contains(".min."))
+                if (e.Bundle.OutputIsMinFile)
                 {
                     string ext = Path.GetExtension(sourceFile);
                     var unMinFile = sourceFile.Replace(".min" + ext, ext);
@@ -59,10 +59,11 @@ namespace BundlerMinifierVsix
                 if (_processor == null)
                 {
                     _processor = new BundleFileProcessor();
+                    _processor.BeforeBundling += (s, e) => { if (e.ContainsChanges) { ProjectHelpers.CheckFileOutOfSourceControl(e.OutputFileName); } };
                     _processor.AfterBundling += AfterProcess;
                     _processor.AfterWritingSourceMap += AfterWritingSourceMap;
-                    _processor.Processing += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.OutputFileName); ErrorList.CleanErrors(e.OutputFileName); };
-                    _processor.BeforeWritingSourceMap += (s, e) => { ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile); };
+                    _processor.Processing += (s, e) => { ErrorList.CleanErrors(e.OutputFileName); };
+                    _processor.BeforeWritingSourceMap += CheckFileOutOfSourceControl;
                 }
 
                 return _processor;
@@ -189,6 +190,12 @@ namespace BundlerMinifierVsix
 
             if (File.Exists(configFile))
                 BundlerMinifierPackage._dte.ItemOperations.OpenFile(configFile);
+        }
+
+        private static void CheckFileOutOfSourceControl(object sender, MinifyFileEventArgs e)
+        {
+            if (e.ContainsChanges)
+                ProjectHelpers.CheckFileOutOfSourceControl(e.ResultFile);
         }
 
         private static void AfterProcess(object sender, BundleFileEventArgs e)
