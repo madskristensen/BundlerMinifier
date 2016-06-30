@@ -20,6 +20,7 @@ on the official Visual Studio extension gallery.
 - [x] Option to suppress output
 - [x] Option to disable Task Runner Explorer integration
 - [x] Command to convert Gulp
+- [x] Only check files out of source control that has changes
 
 ## 2.0
 
