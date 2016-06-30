@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFileName": "globbing/out3.js",
+    "inputFiles": [ "globbing/*.js" ],
+    "minify": {
+      "enabled": false,
+      "gzip": true
+    }
+  }
+]

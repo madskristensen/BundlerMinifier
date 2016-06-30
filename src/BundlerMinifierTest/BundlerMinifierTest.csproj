@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="artifacts\encoding\encoding.json" />
+    <None Include="artifacts\globbingJustGzip.json" />
     <None Include="artifacts\globbingSubFolders.json" />
     <None Include="artifacts\globbingOneFolder.json" />
     <None Include="artifacts\error.json" />
