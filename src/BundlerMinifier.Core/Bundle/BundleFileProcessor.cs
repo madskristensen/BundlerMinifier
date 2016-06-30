@@ -130,22 +130,19 @@ namespace BundlerMinifier
             {
                 var result = BundleMinifier.MinifyBundle(bundle);
 
-                if (result != null)
+                changed |= result.Changed;
+
+                if (bundle.SourceMap && !string.IsNullOrEmpty(result.SourceMap))
                 {
-                    changed |= result.Changed;
+                    string mapFile = minFile + ".map";
+                    bool smChanges = FileHelpers.HasFileContentChanged(mapFile, result.SourceMap);
 
-                    if (bundle.SourceMap && !string.IsNullOrEmpty(result.SourceMap))
+                    if (smChanges)
                     {
-                        string mapFile = minFile + ".map";
-                        bool smChanges = FileHelpers.HasFileContentChanged(mapFile, result.SourceMap);
-
-                        if (smChanges)
-                        {
-                            OnBeforeWritingSourceMap(minFile, mapFile, smChanges);
-                            File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(false));
-                            OnAfterWritingSourceMap(minFile, mapFile, smChanges);
-                            changed = true;
-                        }
+                        OnBeforeWritingSourceMap(minFile, mapFile, smChanges);
+                        File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(false));
+                        OnAfterWritingSourceMap(minFile, mapFile, smChanges);
+                        changed = true;
                     }
                 }
             }
