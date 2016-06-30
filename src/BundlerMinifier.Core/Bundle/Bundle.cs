@@ -40,6 +40,14 @@ namespace BundlerMinifier
             }
         }
 
+        internal bool IsGzipEnabled
+        {
+            get
+            {
+                return Minify.ContainsKey("gzip") && Minify["gzip"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
         [JsonIgnore]
         public bool OutputIsMinFile
         {
