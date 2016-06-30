@@ -6,5 +6,21 @@
       "enabled": false,
       "gzip": true
     }
+  },
+  {
+    "outputFileName": "globbing/out3.html",
+    "inputFiles": [ "*.html" ],
+    "minify": {
+      "enabled": false,
+      "gzip": true
+    }
+  },
+  {
+    "outputFileName": "globbing/out3.css",
+    "inputFiles": [ "*.css" ],
+    "minify": {
+      "enabled": false,
+      "gzip": true
+    }
   }
 ]
