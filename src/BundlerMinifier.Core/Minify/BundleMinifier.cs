@@ -57,25 +57,40 @@ namespace BundlerMinifier
                 if (!bundle.SourceMap)
                 {
                     UgliflyResult uglifyResult;
-                    try
+                    if (bundle.IsMinificationEnabled)
                     {
-                        uglifyResult = Uglify.Js(bundle.Output, settings);
-                    }
-                    catch
-                    {
-                        uglifyResult = new UgliflyResult(null,
-                            new List<UglifyError>{
+                        try
+                        {
+                            uglifyResult = Uglify.Js(bundle.Output, settings);
+                        }
+                        catch
+                        {
+                            uglifyResult = new UgliflyResult(null,
+                                new List<UglifyError>{
                                 new UglifyError
                                 {
                                     IsError = true,
                                     File = file,
                                     Message = "Error processing file"
                                 }
-                            });
+                                });
+                        }
+
+                        result.MinifiedContent = uglifyResult.Code?.Trim();
                     }
-
-                    result.MinifiedContent = uglifyResult.Code?.Trim();
-
+                    else
+                    {
+                        result.MinifiedContent = bundle.Output;
+                        uglifyResult = new UgliflyResult(null,
+                                new List<UglifyError>{
+                                new UglifyError
+                                {
+                                    IsError = false,
+                                    File = file,
+                                    Message = "Skipped minification"
+                                }
+                                });
+                    }
                     if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(result.MinifiedContent))
                     {
                         bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
@@ -115,25 +130,40 @@ namespace BundlerMinifier
                             }
 
                             UgliflyResult uglifyResult;
-                            try
+                            if (bundle.IsMinificationEnabled)
                             {
-                                uglifyResult = Uglify.Js(bundle.Output, file, settings);
-                            }
-                            catch
-                            {
-                                uglifyResult = new UgliflyResult(null,
-                                    new List<UglifyError>{
+                                try
+                                {
+                                    uglifyResult = Uglify.Js(bundle.Output, file, settings);
+                                }
+                                catch
+                                {
+                                    uglifyResult = new UgliflyResult(null,
+                                        new List<UglifyError>{
                                         new UglifyError
                                         {
                                             IsError = true,
                                             File = file,
                                             Message = "Error processing file"
                                         }
-                                    });
+                                        });
+                                }
+
+                                result.MinifiedContent = uglifyResult.Code?.Trim();
                             }
-
-                            result.MinifiedContent = uglifyResult.Code?.Trim();
-
+                            else
+                            {
+                                result.MinifiedContent = bundle.Output;
+                                uglifyResult = new UgliflyResult(null,
+                                        new List<UglifyError>{
+                                            new UglifyError
+                                            {
+                                                IsError = false,
+                                                File = file,
+                                                Message = "Skipped minification"
+                                            }
+                                        });
+                            }
                             if (!uglifyResult.HasErrors && !string.IsNullOrEmpty(result.MinifiedContent))
                             {
                                 bool containsChanges = FileHelpers.HasFileContentChanged(minFile, result.MinifiedContent);
