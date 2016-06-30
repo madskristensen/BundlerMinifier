@@ -126,7 +126,7 @@ namespace BundlerMinifier
 
             string minFile = BundleMinifier.GetMinFileName(bundle.GetAbsoluteOutputFile());
 
-            if (bundle.IsMinificationEnabled || bundle.IsGzipEnabled)
+            if (bundle.IsMinificationEnabled)
             {
                 var result = BundleMinifier.MinifyBundle(bundle);
 

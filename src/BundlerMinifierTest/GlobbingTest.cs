@@ -26,15 +26,6 @@ namespace BundlerMinifierTest
             File.Delete("../../artifacts/globbing/out1.min.js");
             File.Delete("../../artifacts/globbing/out2.js");
             File.Delete("../../artifacts/globbing/out2.min.js");
-            File.Delete("../../artifacts/globbing/out3.js");
-            File.Delete("../../artifacts/globbing/out3.min.js");
-            File.Delete("../../artifacts/globbing/out3.min.js.gz");
-            File.Delete("../../artifacts/globbing/out3.css");
-            File.Delete("../../artifacts/globbing/out3.min.css");
-            File.Delete("../../artifacts/globbing/out3.min.css.gz");
-            File.Delete("../../artifacts/globbing/out3.html");
-            File.Delete("../../artifacts/globbing/out3.min.html");
-            File.Delete("../../artifacts/globbing/out3.min.html.gz");
         }
 
         [TestMethod, TestCategory("Globbing")]
@@ -73,15 +64,6 @@ namespace BundlerMinifierTest
             string out2Min = File.ReadAllText(new FileInfo("../../artifacts/globbing/out2.min.js").FullName);
             Assert.AreEqual(out2Min, "var a=1,b=2;");
         }
-        
-        [TestMethod, TestCategory("Globbing")]
-        public void GzipWithNoMinificationJS()
-        {
-            _processor.Process("../../artifacts/globbingJustGzip.json");
 
-            Assert.IsTrue(File.Exists("../../artifacts/globbing/out3.min.js.gz"));
-            Assert.IsTrue(File.Exists("../../artifacts/globbing/out3.min.html.gz"));
-            Assert.IsTrue(File.Exists("../../artifacts/globbing/out3.min.css.gz"));
-        }
     }
 }
