@@ -25,6 +25,7 @@ namespace BundlerMinifierTest
         {
             File.Delete("../../artifacts/" + _guid + ".json");
             File.Delete("../../artifacts/foo.js");
+            File.Delete("../../artifacts/foo.js.gz");
             File.Delete("../../artifacts/foo.min.js");
             File.Delete("../../artifacts/foo.min.js.map");
             File.Delete("../../artifacts/foo.css");
@@ -32,6 +33,7 @@ namespace BundlerMinifierTest
             File.Delete("../../artifacts/foo.html");
             File.Delete("../../artifacts/foo.min.html");
             File.Delete("../../artifacts/minify.min.js");
+            File.Delete("../../artifacts/minify.min.js.gz");
             File.Delete("../../artifacts/encoding/encoding.js");
             File.Delete("../../artifacts/encoding/encoding.min.js");
         }
@@ -120,6 +122,16 @@ namespace BundlerMinifierTest
 
             string map = File.ReadAllText(new FileInfo("../../artifacts/minify.min.js.map").FullName);
             Assert.IsTrue(map.Contains("minify.js"));
+        }
+
+        [TestMethod]
+        public void JustGzip()
+        {
+            _processor.Process(TEST_BUNDLE.Replace("test1", "test3"));
+            Assert.IsFalse(File.Exists("../../artifacts/foo.min.js"));
+            Assert.IsTrue(File.Exists("../../artifacts/foo.js.gz"));
+            Assert.IsTrue(File.Exists("../../artifacts/minify.min.js"));
+            Assert.IsTrue(File.Exists("../../artifacts/minify.min.js.gz"));
         }
 
         [TestMethod]

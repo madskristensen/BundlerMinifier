@@ -1,0 +1,22 @@
+﻿[
+  {
+    "outputFileName": "foo.js",
+    "inputFiles": [
+      "test2"
+    ],
+    "minify": {
+      "enabled": false,
+      "gzip": true
+    }
+  },
+  {
+    "outputFileName": "minify.min.js",
+    "inputFiles": [
+      "test2"
+    ],
+    "minify": {
+      "enabled": false,
+      "gzip": true
+    }
+  }
+]
