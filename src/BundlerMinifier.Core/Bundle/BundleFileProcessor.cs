@@ -126,13 +126,13 @@ namespace BundlerMinifier
 
             string minFile = BundleMinifier.GetMinFileName(bundle.GetAbsoluteOutputFile());
 
-            if (bundle.IsMinificationEnabled)
+            if (bundle.IsMinificationEnabled || bundle.IsGzipEnabled)
             {
                 var result = BundleMinifier.MinifyBundle(bundle);
 
                 changed |= result.Changed;
 
-                if (bundle.SourceMap && !string.IsNullOrEmpty(result.SourceMap))
+                if (bundle.IsMinificationEnabled && bundle.SourceMap && !string.IsNullOrEmpty(result.SourceMap))
                 {
                     string mapFile = minFile + ".map";
                     bool smChanges = FileHelpers.HasFileContentChanged(mapFile, result.SourceMap);

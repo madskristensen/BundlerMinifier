@@ -16,7 +16,7 @@ namespace BundlerMinifier
             string extension = Path.GetExtension(file).ToUpperInvariant();
             var minResult = new MinificationResult(file, null, null);
 
-            if (!string.IsNullOrEmpty(bundle.Output))
+            if (!string.IsNullOrEmpty(bundle.Output) && bundle.IsMinificationEnabled)
             {
                 try
                 {
@@ -46,7 +46,7 @@ namespace BundlerMinifier
             }
             else if (bundle.IsGzipEnabled)
             {
-                string minFile = GetMinFileName(bundle.GetAbsoluteOutputFile());
+                string minFile = bundle.IsMinificationEnabled ? GetMinFileName(bundle.GetAbsoluteOutputFile()) : bundle.GetAbsoluteOutputFile();
                 GzipFile(minFile, bundle, minResult);
             }
 
@@ -138,13 +138,13 @@ namespace BundlerMinifier
         private static void GzipFile(string sourceFile, Bundle bundle, MinificationResult result)
         {
             var gzipFile = sourceFile + ".gz";
-            var containsChanges = result.Changed || !File.Exists(gzipFile);
+            var containsChanges = result.Changed || File.GetLastWriteTimeUtc(gzipFile) < File.GetLastWriteTimeUtc(sourceFile);
 
             OnBeforeWritingGzipFile(sourceFile, gzipFile, bundle, containsChanges);
 
             if (containsChanges)
             {
-                byte[] buffer = Encoding.UTF8.GetBytes(result.MinifiedContent);
+                byte[] buffer = Encoding.UTF8.GetBytes(result.MinifiedContent??bundle.Output);
 
                 using (var fileStream = File.OpenWrite(gzipFile))
                 using (var gzipStream = new GZipStream(fileStream, CompressionLevel.Optimal))
