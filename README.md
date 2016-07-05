@@ -80,7 +80,7 @@ any files to the project itself. That NuGet package contains an MSBuild
 task that will run the exact same compilers on the `bundleconfig.json`
 file in the root of the project.
 
-For ASP.NET Core projects, see the [wiki](https://github.com/madskristensen/MarkdownEditor/wiki)
+For ASP.NET Core projects, see the [wiki](https://github.com/madskristensen/BundlerMinifier/wiki)
 
 ### Update all bundles
 
