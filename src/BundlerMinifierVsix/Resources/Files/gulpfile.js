@@ -43,7 +43,7 @@ gulp.task("min:html", function () {
 
 gulp.task("clean", function () {
     var files = bundleconfig.map(function (bundle) {
-        return bundle.outputFileName
+        return bundle.outputFileName;
     });
 
     return del(files);
