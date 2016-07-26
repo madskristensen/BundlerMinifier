@@ -10,7 +10,8 @@
     "repository": {
       "type": "git",
       "url": "https://github.com/madskristensen/BundlerMinifier"
-    }
+    },
+    "packageType": "DotnetCliTool"
   },
   "buildOptions": {
     "emitEntryPoint": true,
