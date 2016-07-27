@@ -132,13 +132,13 @@ menu of `bundleconfig.json`.
 ### Convert to Gulp
 This feature makes it easy to start using Gulp based on what's already
 configured in `bundleconfig.json`. It will create `gulpfile.js` and
-`package.js` if they don't already exist and then install the needed
+`package.json` if they don't already exist and then install the needed
 node modules using npm.
 
 The `gulpfile.js` will consume `bundleconfig.json` to get the input and
 output file paths, but will use regular gulp plugins to do all the
 bundling and minification. You can modify it to use other plugins without
-loosing its ability to read the `bundleconfig.json`.
+losing its ability to read the `bundleconfig.json`.
 
 Read more about this and see code samples on the 
 [wiki](https://github.com/madskristensen/BundlerMinifier/wiki).
