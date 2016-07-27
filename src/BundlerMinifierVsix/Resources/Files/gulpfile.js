@@ -6,7 +6,7 @@ var gulp = require("gulp"),
     htmlmin = require("gulp-htmlmin"),
     uglify = require("gulp-uglify"),
     merge = require("merge-stream"),
-    del = require("del"),
+    rimraf = require("rimraf"),
     bundleconfig = require("./bundleconfig.json"); // make sure bundleconfig.json doesn't contain any comments
 
 gulp.task("min", ["min:js", "min:css", "min:html"]);
@@ -41,12 +41,12 @@ gulp.task("min:html", function () {
     return merge(tasks);
 });
 
-gulp.task("clean", function () {
+gulp.task("clean", function (cb) {
     var files = bundleconfig.map(function (bundle) {
         return bundle.outputFileName;
     });
 
-    return del(files);
+    return rimraf(cb);
 });
 
 gulp.task("watch", function () {
