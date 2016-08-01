@@ -184,13 +184,14 @@ namespace BundlerMinifierVsix.Commands
         {
             string path = ".\\node_modules\\.bin" + ";" + start.EnvironmentVariables["PATH"];
 
-            string toolsDir = Environment.GetEnvironmentVariable("VS140COMNTOOLS");
+            var process = System.Diagnostics.Process.GetCurrentProcess();
+            string ideDir = Path.GetDirectoryName(process.MainModule.FileName);
 
-            if (Directory.Exists(toolsDir))
+            if (Directory.Exists(ideDir))
             {
-                string parent = Directory.GetParent(toolsDir).Parent.FullName;
+                string parent = Directory.GetParent(ideDir).Parent.FullName;
 
-                string rc2Preview1Path = new DirectoryInfo(Path.Combine(parent, @"..\Web\External")).FullName;
+                string rc2Preview1Path = new DirectoryInfo(Path.Combine(parent, @"Web\External")).FullName;
 
                 if (Directory.Exists(rc2Preview1Path))
                 {
@@ -198,7 +199,7 @@ namespace BundlerMinifierVsix.Commands
                 }
                 else
                 {
-                    path += ";" + Path.Combine(parent, @"IDE\Extensions\Microsoft\Web Tools\External");
+                    path += ";" + Path.Combine(ideDir, @"Extensions\Microsoft\Web Tools\External");
                 }
             }
 
