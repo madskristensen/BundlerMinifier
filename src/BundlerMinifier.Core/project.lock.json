@@ -2088,7 +2088,7 @@
         }
       }
     },
-    ".NETFramework,Version=v4.5.2": {
+    ".NETFramework,Version=v4.5.1": {
       "Newtonsoft.Json/9.0.1": {
         "type": "package",
         "compile": {
@@ -6720,7 +6720,7 @@
     ".NETCoreApp,Version=v1.0": [
       "Microsoft.NETCore.App >= 1.0.0"
     ],
-    ".NETFramework,Version=v4.5.2": []
+    ".NETFramework,Version=v4.5.1": []
   },
   "tools": {},
   "projectFileToolGroups": {}
