@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.IO;
@@ -10,6 +9,7 @@ using System.Windows;
 using System.Windows.Threading;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
+using Newtonsoft.Json.Linq;
 
 namespace BundlerMinifierVsix.Commands
 {
@@ -212,11 +212,14 @@ namespace BundlerMinifierVsix.Commands
 
         private static void StripCommentsFromJsonFile(string fileName)
         {
-            IEnumerable<string> filteredFileContent = from line in File.ReadAllLines(fileName)
-                                                      where !line.TrimStart().StartsWith("//")
-                                                      select line;
+            string fileContent = File.ReadAllText(fileName);
+            var loadSettings = new JsonLoadSettings
+            {
+                CommentHandling = CommentHandling.Ignore
+            };
+            var filteredFileContent = JArray.Parse(fileContent, loadSettings);
 
-            File.WriteAllLines(fileName, filteredFileContent, Encoding.UTF8);
+            File.WriteAllText(fileName, filteredFileContent.ToString(), Encoding.UTF8);
         }
 
         private static void CreateFileAndIncludeInProject(Project project, string fileName)
