@@ -5,11 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
+using Newtonsoft.Json.Linq;
 
 namespace BundlerMinifierVsix.Commands
 {
@@ -100,6 +100,10 @@ namespace BundlerMinifierVsix.Commands
 
             var project = ProjectHelpers.GetActiveProject();
             var root = project.GetRootFolder();
+
+            var bundleConfigFile = Path.Combine(root, Constants.CONFIG_FILENAME);
+            StripCommentsFromJsonFile(bundleConfigFile);
+
             var packageFile = Path.Combine(root, "package.json");
             var gulpFile = Path.Combine(root, "gulpfile.js");
 
@@ -166,10 +170,10 @@ namespace BundlerMinifierVsix.Commands
                 {
                     BundlerMinifierPackage._dte.StatusBar.Progress(false, "Node modules installed", 1, 1);
 
-                   if (!hasErrors)
-                       BundlerMinifierPackage._dte.StatusBar.Text = "Node modules installed";
-                   else
-                       BundlerMinifierPackage._dte.StatusBar.Text = "Error installing node modules. See output window for details";
+                    if (!hasErrors)
+                        BundlerMinifierPackage._dte.StatusBar.Text = "Node modules installed";
+                    else
+                        BundlerMinifierPackage._dte.StatusBar.Text = "Error installing node modules. See output window for details";
                 }), DispatcherPriority.ApplicationIdle, null);
             });
         }
@@ -204,6 +208,18 @@ namespace BundlerMinifierVsix.Commands
             }
 
             start.EnvironmentVariables["PATH"] = path;
+        }
+
+        private static void StripCommentsFromJsonFile(string fileName)
+        {
+            string fileContent = File.ReadAllText(fileName);
+            var loadSettings = new JsonLoadSettings
+            {
+                CommentHandling = CommentHandling.Ignore
+            };
+            var filteredFileContent = JArray.Parse(fileContent, loadSettings);
+
+            File.WriteAllText(fileName, filteredFileContent.ToString(), Encoding.UTF8);
         }
 
         private static void CreateFileAndIncludeInProject(Project project, string fileName)
