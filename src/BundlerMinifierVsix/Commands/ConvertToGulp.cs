@@ -16,6 +16,7 @@ namespace BundlerMinifierVsix.Commands
     internal sealed class ConvertToGulp
     {
         private readonly Package _package;
+        private const string GULP_FILE_NAME = "gulpfile.js";
 
         private ConvertToGulp(Package package)
         {
@@ -64,7 +65,7 @@ namespace BundlerMinifierVsix.Commands
                 {
                     button.Visible = true;
                     var root = project.GetRootFolder();
-                    var gulpFile = Path.Combine(root, "gulpfile.js");
+                    var gulpFile = Path.Combine(root, GULP_FILE_NAME);
                     button.Enabled = !File.Exists(gulpFile);
                 }
             }
@@ -75,7 +76,7 @@ namespace BundlerMinifierVsix.Commands
                 if (button.Visible)
                 {
                     var root = ProjectHelpers.GetActiveProject()?.GetRootFolder();
-                    var gulpFile = Path.Combine(root, "gulpfile.js");
+                    var gulpFile = Path.Combine(root, GULP_FILE_NAME);
                     button.Enabled = !File.Exists(gulpFile);
                 }
             }
@@ -86,13 +87,13 @@ namespace BundlerMinifierVsix.Commands
             }
             else
             {
-                button.Text = "Convert To Gulp... (gulpfile.js already exists)";
+                button.Text = $"Convert To Gulp... ({GULP_FILE_NAME} already exists)";
             }
         }
 
         private void Execute(object sender, EventArgs e)
         {
-            var question = "This will generate gulpfile.js and install the npm packages needed (it will take a minute or two).\r\nNo files will be deleted.\r\n\r\nDo you wish to continue?";
+            var question = $"This will generate {GULP_FILE_NAME} and install the npm packages needed (it will take a minute or two).\r\nNo files will be deleted.\r\n\r\nDo you wish to continue?";
             var answer = MessageBox.Show(question, Vsix.Name, MessageBoxButton.OKCancel, MessageBoxImage.Question);
 
             if (answer == MessageBoxResult.Cancel)
@@ -105,7 +106,7 @@ namespace BundlerMinifierVsix.Commands
             StripCommentsFromJsonFile(bundleConfigFile);
 
             var packageFile = Path.Combine(root, "package.json");
-            var gulpFile = Path.Combine(root, "gulpfile.js");
+            var gulpFile = Path.Combine(root, GULP_FILE_NAME);
 
             CreateFileAndIncludeInProject(project, packageFile);
             CreateFileAndIncludeInProject(project, gulpFile);
@@ -217,9 +218,13 @@ namespace BundlerMinifierVsix.Commands
             {
                 CommentHandling = CommentHandling.Ignore
             };
-            var filteredFileContent = JArray.Parse(fileContent, loadSettings);
+            string filteredFileContent = JArray.Parse(fileContent, loadSettings).ToString();
 
-            File.WriteAllText(fileName, filteredFileContent.ToString(), Encoding.UTF8);
+            if (fileContent != filteredFileContent)
+            {
+                ProjectHelpers.CheckFileOutOfSourceControl(fileName);
+                File.WriteAllText(fileName, filteredFileContent, Encoding.UTF8);
+            }
         }
 
         private static void CreateFileAndIncludeInProject(Project project, string fileName)
