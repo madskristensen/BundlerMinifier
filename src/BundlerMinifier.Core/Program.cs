@@ -192,7 +192,7 @@ namespace BundlerMinifier
                 Console.WriteLine("         Not compatible with \"clean\"");
                 Console.WriteLine("     - --no-color                        - Doesn't colorize output");
                 Console.WriteLine("     - [ -? | -h | --help ] to show this help message");
-                Console.WriteLine($" The configPath paramter may be omitted if a {DefaultConfigFileName} file is in the working directory");
+                Console.WriteLine($" The configPath parameter may be omitted if a {DefaultConfigFileName} file is in the working directory");
                 Console.WriteLine("     otherwise, this parameter must be the location of a file containing the definitions for how");
                 Console.WriteLine("     the bundling and minification should be performed.");
             }
