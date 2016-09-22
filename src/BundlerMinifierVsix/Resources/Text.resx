@@ -179,7 +179,7 @@ Do you want to continue?</value>
     <value>Unable to install the {0} NuGet package</value>
   </data>
   <data name="NugetErrorUninstalling" xml:space="preserve">
-    <value>Unable to ininstall the {0} NuGet package</value>
+    <value>Unable to uninstall the {0} NuGet package</value>
   </data>
   <data name="NugetFinishedInstalling" xml:space="preserve">
     <value>Finished installing the {0} NuGet package</value>
