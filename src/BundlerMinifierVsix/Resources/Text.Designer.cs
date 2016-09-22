@@ -151,7 +151,7 @@ namespace BundlerMinifierVsix.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to ininstall the {0} NuGet package.
+        ///   Looks up a localized string similar to Unable to uninstall the {0} NuGet package.
         /// </summary>
         internal static string NugetErrorUninstalling {
             get {
