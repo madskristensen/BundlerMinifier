@@ -9,10 +9,16 @@ var gulp = require("gulp"),
     del = require("del"),
     bundleconfig = require("./bundleconfig.json");
 
+var regex = {
+    css: /\.css$/,
+    html: /\.(html|htm)$/,
+    js: /\.js$/
+};
+
 gulp.task("min", ["min:js", "min:css", "min:html"]);
 
 gulp.task("min:js", function () {
-    var tasks = getBundles(".js").map(function (bundle) {
+    var tasks = getBundles(regex.js).map(function (bundle) {
         return gulp.src(bundle.inputFiles, { base: "." })
             .pipe(concat(bundle.outputFileName))
             .pipe(uglify())
@@ -22,7 +28,7 @@ gulp.task("min:js", function () {
 });
 
 gulp.task("min:css", function () {
-    var tasks = getBundles(".css").map(function (bundle) {
+    var tasks = getBundles(regex.css).map(function (bundle) {
         return gulp.src(bundle.inputFiles, { base: "." })
             .pipe(concat(bundle.outputFileName))
             .pipe(cssmin())
@@ -32,7 +38,7 @@ gulp.task("min:css", function () {
 });
 
 gulp.task("min:html", function () {
-    var tasks = getBundles(".html").map(function (bundle) {
+    var tasks = getBundles(regex.html).map(function (bundle) {
         return gulp.src(bundle.inputFiles, { base: "." })
             .pipe(concat(bundle.outputFileName))
             .pipe(htmlmin({ collapseWhitespace: true, minifyCSS: true, minifyJS: true }))
@@ -50,21 +56,21 @@ gulp.task("clean", function () {
 });
 
 gulp.task("watch", function () {
-    getBundles(".js").forEach(function (bundle) {
+    getBundles(regex.js).forEach(function (bundle) {
         gulp.watch(bundle.inputFiles, ["min:js"]);
     });
 
-    getBundles(".css").forEach(function (bundle) {
+    getBundles(regex.css).forEach(function (bundle) {
         gulp.watch(bundle.inputFiles, ["min:css"]);
     });
 
-    getBundles(".html").forEach(function (bundle) {
+    getBundles(regex.html).forEach(function (bundle) {
         gulp.watch(bundle.inputFiles, ["min:html"]);
     });
 });
 
-function getBundles(extension) {
+function getBundles(regexPattern) {
     return bundleconfig.filter(function (bundle) {
-        return new RegExp(extension).test(bundle.outputFileName);
+        return regexPattern.test(bundle.outputFileName);
     });
 }
