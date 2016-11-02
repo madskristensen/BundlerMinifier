@@ -3,6 +3,7 @@
 - [ ] ASP.NET Core TagHelper support
 - [ ] Create additional source map for the bundle files
 - [ ] Adopt new VS Error List API
+- [x] Updated NuGet package to support .NET Core vNext
 
 Features that have a checkmark are complete and available for
 download in the
