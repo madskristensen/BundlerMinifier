@@ -106,49 +106,42 @@ namespace BundlerMinifier
             {
                 BundleHandler.ProcessBundle(baseFolder, bundle);
 
-                if (!bundle.IsMinificationEnabled || !bundle.OutputIsMinFile)
+                string outputFile = bundle.GetAbsoluteOutputFile();
+                changed = FileHelpers.HasFileContentChanged(outputFile, bundle.Output);
+                if (changed)
                 {
-                    string outputFile = bundle.GetAbsoluteOutputFile();
-                    bool containsChanges = FileHelpers.HasFileContentChanged(outputFile, bundle.Output);
-
-                    if (containsChanges)
-                    {
-                        OnBeforeBundling(bundle, baseFolder, containsChanges);
+                        OnBeforeBundling(bundle, baseFolder, changed);
                         DirectoryInfo outputFileDirectory = Directory.GetParent(outputFile);
                         outputFileDirectory.Create();
 
                         File.WriteAllText(outputFile, bundle.Output, new UTF8Encoding(false));
-                        OnAfterBundling(bundle, baseFolder, containsChanges);
-                        changed = true;
-                    }
+                        OnAfterBundling(bundle, baseFolder, changed);
+
+                        if (bundle.IsMinificationEnabled)
+                        {
+                            var result = BundleMinifier.MinifyBundle(bundle);
+                            if (bundle.SourceMap && !string.IsNullOrEmpty(result.SourceMap))
+                            {
+                                string minFile = BundleMinifier.GetMinFileName(bundle.GetAbsoluteOutputFile());
+                                string mapFile = minFile + ".map";
+                                bool smChanges = FileHelpers.HasFileContentChanged(mapFile, result.SourceMap);
+
+                                if (smChanges)
+                                {
+                                    OnBeforeWritingSourceMap(minFile, mapFile, smChanges);
+                                    File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(false));
+                                    OnAfterWritingSourceMap(minFile, mapFile, smChanges);
+                                    changed = true;
+                                }
+                            }
+                        }
                 }
+
             }
-
-            string minFile = BundleMinifier.GetMinFileName(bundle.GetAbsoluteOutputFile());
-
-            if (bundle.IsMinificationEnabled || bundle.IsGzipEnabled)
-            {
-                var result = BundleMinifier.MinifyBundle(bundle);
-
-                changed |= result.Changed;
-
-                if (bundle.IsMinificationEnabled && bundle.SourceMap && !string.IsNullOrEmpty(result.SourceMap))
-                {
-                    string mapFile = minFile + ".map";
-                    bool smChanges = FileHelpers.HasFileContentChanged(mapFile, result.SourceMap);
-
-                    if (smChanges)
-                    {
-                        OnBeforeWritingSourceMap(minFile, mapFile, smChanges);
-                        File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(false));
-                        OnAfterWritingSourceMap(minFile, mapFile, smChanges);
-                        changed = true;
-                    }
-                }
-            }
-
+          
             return changed;
         }
+
 
         private void CleanBundle(string baseFolder, Bundle bundle)
         {

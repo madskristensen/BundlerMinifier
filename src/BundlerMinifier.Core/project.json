@@ -16,7 +16,8 @@
   "buildOptions": {
     "emitEntryPoint": true,
     "outputName": "dotnet-bundle",
-    "define": [ "DOTNET" ]
+    "define": [ "DOTNET" ],
+     "debugType": "portable"
   },
 
   "dependencies": {

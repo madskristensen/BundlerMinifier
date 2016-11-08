@@ -5,6 +5,7 @@ packages
 *.user
 *.sln.docstates
 .vs/
+.vscode/
 
 # Build results
 
