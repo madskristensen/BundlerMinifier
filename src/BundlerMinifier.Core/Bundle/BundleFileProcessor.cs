@@ -117,7 +117,7 @@ namespace BundlerMinifier
                         File.WriteAllText(outputFile, bundle.Output, new UTF8Encoding(false));
                         OnAfterBundling(bundle, baseFolder, changed);
 
-                        if (bundle.IsMinificationEnabled)
+                        if (bundle.IsMinificationEnabled || bundle.IsGzipEnabled)
                         {
                             var result = BundleMinifier.MinifyBundle(bundle);
                             if (bundle.SourceMap && !string.IsNullOrEmpty(result.SourceMap))
