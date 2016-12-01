@@ -80,7 +80,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>$(MSBuildProjectDirectory)\..\..\packages\NuGet.CommandLine.2.8.5\tools\nuget.exe pack .\msbuild\BuildBundlerMinifier.nuspec -Verbosity quiet</PostBuildEvent>
+    <PostBuildEvent>"$(MSBuildProjectDirectory)\..\..\packages\NuGet.CommandLine.2.8.5\tools\nuget.exe" pack .\msbuild\BuildBundlerMinifier.nuspec -Verbosity quiet</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
