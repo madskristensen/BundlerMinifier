@@ -30,8 +30,7 @@
       "file2.html"
     ],
     "minify": {
-      "enabled": true,
-      "whitespaceMinificationMode": "aggressive"
+      "enabled": true
     },
     "includeInProject": true
   },
