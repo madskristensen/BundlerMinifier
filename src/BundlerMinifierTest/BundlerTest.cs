@@ -36,6 +36,8 @@ namespace BundlerMinifierTest
             File.Delete("../../artifacts/minify.min.js.gz");
             File.Delete("../../artifacts/encoding/encoding.js");
             File.Delete("../../artifacts/encoding/encoding.min.js");
+            File.Delete("../../artifacts/file3.min.html");
+            File.Delete("../../artifacts/file3.min.js");
         }
 
         [TestMethod]
@@ -151,6 +153,24 @@ namespace BundlerMinifierTest
 
             bool result = File.Exists("../../artifacts/error.min.css");
             Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void PreserveKnockoutContainerlessBindings()
+        {
+            _processor.Process(TEST_BUNDLE.Replace("test1", "test4"));
+
+            string htmlResult = File.ReadAllText("../../artifacts/file3.min.html");
+            Assert.AreEqual("<div><!--ko if:observable--><p></p><!--/ko--></div>", htmlResult);
+        }
+
+        [TestMethod]
+        public void PreserveJavaScript0EvalStatements()
+        {
+            _processor.Process(TEST_BUNDLE.Replace("test1", "test5"));
+
+            string jsResult = File.ReadAllText("../../artifacts/file3.min.js");
+            Assert.AreEqual("(function(n){n()})(function(){\"use strict\";var n=(0,eval)(\"this\");console.log(n)});", jsResult);
         }
     }
 }

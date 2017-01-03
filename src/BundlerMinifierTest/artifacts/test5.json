@@ -1,0 +1,11 @@
+﻿[
+  {
+    "outputFileName": "file3.min.js",
+    "inputFiles": [
+      "file3.js"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  }
+]
