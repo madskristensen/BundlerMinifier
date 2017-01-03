@@ -1,0 +1,12 @@
+﻿[
+  {
+    "outputFileName": "file3.min.html",
+    "inputFiles": [
+      "file3.html"
+    ],
+    "minify": {
+      "enabled": true,
+      "removeHtmlComments": true
+    }
+  }
+]

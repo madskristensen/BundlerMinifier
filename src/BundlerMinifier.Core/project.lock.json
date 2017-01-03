@@ -3,7 +3,7 @@
   "version": 2,
   "targets": {
     ".NETCoreApp,Version=v1.0": {
-      "Libuv/1.9.0": {
+      "Libuv/1.9.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.0.1"
@@ -122,7 +122,7 @@
       "Microsoft.NETCore.App/1.1.0": {
         "type": "package",
         "dependencies": {
-          "Libuv": "1.9.0",
+          "Libuv": "1.9.1",
           "Microsoft.CSharp": "4.0.1",
           "Microsoft.CodeAnalysis.CSharp": "1.3.0",
           "Microsoft.CodeAnalysis.VisualBasic": "1.3.0",
@@ -359,7 +359,7 @@
           "lib/netstandard1.0/Newtonsoft.Json.dll": {}
         }
       },
-      "NUglify/1.5.1": {
+      "NUglify/1.5.2": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.0",
@@ -2098,7 +2098,7 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "NUglify/1.5.1": {
+      "NUglify/1.5.2": {
         "type": "package",
         "frameworkAssemblies": [
           "System",
@@ -2116,12 +2116,12 @@
     }
   },
   "libraries": {
-    "Libuv/1.9.0": {
-      "sha512": "9Q7AaqtQhS8JDSIvRBt6ODSLWDBI4c8YxNxyCQemWebBFUtBbc6M5Vi5Gz1ZyIUlTW3rZK9bIr5gnVyv0z7a2Q==",
+    "Libuv/1.9.1": {
+      "sha512": "nC+mMOeCyXH2gPKBt0iVGtEnjTVJLl1aAOT85OQfZhbaufrXxEYiDEiRcGPevmuOPsMbMLOx0cpEpqJvlUrqSg==",
       "type": "package",
-      "path": "Libuv/1.9.0",
+      "path": "Libuv/1.9.1",
       "files": [
-        "Libuv.1.9.0.nupkg.sha512",
+        "Libuv.1.9.1.nupkg.sha512",
         "Libuv.nuspec",
         "License.txt",
         "runtimes/debian-x64/native/libuv.so",
@@ -2256,15 +2256,15 @@
       ]
     },
     "Microsoft.NETCore.App/1.1.0": {
-      "sha512": "qhjkElNOHvbaZHuQApI+6HMRtNFzY1cdAWLBq3IAi7xZ9U793xCc7xPK2ahkbRysxzdkc/dTC90VjWTtoBoxkg==",
+      "sha512": "8+e4SdKVw+gyeE4PJ2Ds7vsTBUDib6dNLvM172L31mF+XYS+Ug509PYilPnclrJA7r8Uy21MuczFl3VeZPAy2g==",
       "type": "package",
       "path": "Microsoft.NETCore.App/1.1.0",
       "files": [
+        "Microsoft.NETCore.App.1.1.0.nupkg.sha512",
+        "Microsoft.NETCore.App.nuspec",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
-        "lib/netcoreapp1.0/_._",
-        "microsoft.netcore.app.1.1.0.nupkg.sha512",
-        "microsoft.netcore.app.nuspec"
+        "lib/netcoreapp1.0/_._"
       ]
     },
     "Microsoft.NETCore.DotNetHost/1.0.1": {
@@ -2506,12 +2506,12 @@
         "tools/install.ps1"
       ]
     },
-    "NUglify/1.5.1": {
-      "sha512": "iYV/OtSs+HgyE/RilY7UvGXYec6r0OJenWlPIdX/IivedVpSSdzxvPvUIyWpiV/6ad7VjantH0/6oaOhAZbaoQ==",
+    "NUglify/1.5.2": {
+      "sha512": "crRn4mozFho9iCrRMTbNqBPFRcuCV5rlIRBqkPA8Kz3qEBUVq53/W3PVhUeJQuEie6aDyXHMoNHymanQfJ45Ww==",
       "type": "package",
-      "path": "NUglify/1.5.1",
+      "path": "NUglify/1.5.2",
       "files": [
-        "NUglify.1.5.1.nupkg.sha512",
+        "NUglify.1.5.2.nupkg.sha512",
         "NUglify.nuspec",
         "lib/net35/NUglify.dll",
         "lib/net35/NUglify.xml",
@@ -6818,7 +6818,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "NUglify >= 1.5.1",
+      "NUglify >= 1.5.2",
       "Newtonsoft.Json >= 9.0.1"
     ],
     ".NETCoreApp,Version=v1.0": [
