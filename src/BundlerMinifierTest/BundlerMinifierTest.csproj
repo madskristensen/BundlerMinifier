@@ -71,6 +71,7 @@
     <None Include="artifacts\test3.json" />
     <None Include="artifacts\test4.json" />
     <None Include="artifacts\test5.json" />
+    <None Include="artifacts\test6.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="artifacts\encoding.js" />
@@ -85,6 +86,7 @@
     <Content Include="artifacts\file1.js" />
     <Content Include="artifacts\file3.html" />
     <Content Include="artifacts\file3.js" />
+    <Content Include="artifacts\file4.html" />
     <Content Include="artifacts\globbing\test.b.js" />
     <Content Include="artifacts\globbing\test.a.js" />
     <Content Include="artifacts\globbing\a.js" />

@@ -46,8 +46,8 @@
       <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NUglify, Version=1.5.2.0, Culture=neutral, PublicKeyToken=15bc7810aec21b5e, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NUglify.1.5.2\lib\net40\NUglify.dll</HintPath>
+    <Reference Include="NUglify, Version=1.5.4.0, Culture=neutral, PublicKeyToken=15bc7810aec21b5e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUglify.1.5.4\lib\net40\NUglify.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
