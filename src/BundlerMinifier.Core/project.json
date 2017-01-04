@@ -20,7 +20,7 @@
   },
 
   "dependencies": {
-    "NUglify": "1.5.2",
+    "NUglify": "1.5.4",
     "Newtonsoft.Json": "9.0.1"
   },
 

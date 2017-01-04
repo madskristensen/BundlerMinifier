@@ -4,7 +4,8 @@
 - [ ] Create additional source map for the bundle files
 - [ ] Adopt new VS Error List API
 - [x] Updated NuGet package to support .NET Core vNext
-- [x] Updated NUglify NuGet package to version 1.5.2 to address #135 & #63
+- [x] Added support to preserve Knockout containerless bindings and (0, eval) JavaScript expressions (#135 & #63)
+- [x] Added "KeepOneSpaceWhenCollapsing" to HTML options (#199)
 
 Features that have a checkmark are complete and available for
 download in the
