@@ -29,6 +29,7 @@ namespace BundlerMinifier
 
             string content = JsonConvert.SerializeObject(bundles, settings);
             File.WriteAllText(configFile, content + Environment.NewLine);
+            File.WriteAllText(configFile + ".defaults", "{}");
         }
 
         public static void RemoveBundle(string configFile, Bundle bundleToRemove)
@@ -54,9 +55,8 @@ namespace BundlerMinifier
                     return false;
                 }
 
-                configFile = new FileInfo(configFile).FullName;
-                string content = File.ReadAllText(configFile);
-                bundles = JArray.Parse(content).ToObject<Bundle[]>();
+
+                bundles = ParseJson(configFile);
 
                 foreach (Bundle bundle in bundles)
                 {
@@ -70,6 +70,16 @@ namespace BundlerMinifier
                 bundles = null;
                 return false;
             }
+        }
+
+        private static IEnumerable<Bundle> ParseJson(string configFile)
+        {
+            configFile = new FileInfo(configFile).FullName;
+            string content = File.ReadAllText(configFile);
+
+            var converters = new JsonConverter[] { new BundleJsonConverter(configFile) };
+            var result = JsonConvert.DeserializeObject<IEnumerable<Bundle>>(content, converters);
+            return result;
         }
 
         public static IEnumerable<Bundle> GetBundles(string configFile)
@@ -114,6 +124,49 @@ namespace BundlerMinifier
                 return true;
 
             return bundle.Minify["adjustRelativePaths"].ToString() == "True";
+        }
+    }
+
+    class BundleJsonConverter : JsonConverter
+    {
+        public JObject DefaultSettings;
+
+        public BundleJsonConverter(string configFile)
+        {
+            string defaultFile = configFile + ".defaults";
+
+            if (File.Exists(defaultFile))
+            {
+                DefaultSettings = JObject.Parse(File.ReadAllText(defaultFile));
+            }
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            // Load JObject from stream
+            JObject jObject = JObject.Load(reader);
+            if (DefaultSettings != null)
+            {
+                jObject.Merge(JObject.FromObject(DefaultSettings));
+            }
+
+            // Create target object based on JObject
+            Bundle target = new Bundle();
+
+            // Populate the object properties
+            serializer.Populate(jObject.CreateReader(), target);
+
+            return target;
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            return typeof(Bundle).IsAssignableFrom(objectType);
         }
     }
 }

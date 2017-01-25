@@ -150,6 +150,7 @@ namespace BundlerMinifierVsix.Commands
             BundlerMinifierPackage._dte.StatusBar.Progress(true, Resources.Text.StatusCreatingBundle, 1, 2);
 
             item.ContainingProject.AddFileToProject(configFile, "None");
+            ProjectHelpers.AddNestedFile(configFile, configFile + ".defaults");
             BundlerMinifierPackage._dte.StatusBar.Progress(true, Resources.Text.StatusCreatingBundle, 2, 2);
 
             BundleService.Process(configFile);
