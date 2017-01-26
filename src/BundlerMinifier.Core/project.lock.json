@@ -2117,7 +2117,7 @@
   },
   "libraries": {
     "Libuv/1.9.1": {
-      "sha512": "nC+mMOeCyXH2gPKBt0iVGtEnjTVJLl1aAOT85OQfZhbaufrXxEYiDEiRcGPevmuOPsMbMLOx0cpEpqJvlUrqSg==",
+      "sha512": "uqX2Frwf9PW8MaY7PRNY6HM5BpW1D8oj1EdqzrmbEFD5nH63Yat3aEjN/tws6Tw6Fk7LwmLBvtUh32tTeTaHiA==",
       "type": "package",
       "path": "Libuv/1.9.1",
       "files": [
@@ -2256,7 +2256,7 @@
       ]
     },
     "Microsoft.NETCore.App/1.1.0": {
-      "sha512": "8+e4SdKVw+gyeE4PJ2Ds7vsTBUDib6dNLvM172L31mF+XYS+Ug509PYilPnclrJA7r8Uy21MuczFl3VeZPAy2g==",
+      "sha512": "DFec+OUojDVocn1GxAL9uJg4qwsgkvKiQpv6BKd9ljGezvc9p6GpFv51IIakiujkVW/wBtQ0xlfjVSgS1UG/uw==",
       "type": "package",
       "path": "Microsoft.NETCore.App/1.1.0",
       "files": [
@@ -6822,7 +6822,8 @@
       "Newtonsoft.Json >= 9.0.1"
     ],
     ".NETCoreApp,Version=v1.0": [
-      "Microsoft.NETCore.App >= 1.1.0"
+      "Microsoft.NETCore.App >= 1.1.0",
+      "System.Reflection.TypeExtensions >= 4.1.0"
     ],
     ".NETFramework,Version=v4.5.2": []
   },
