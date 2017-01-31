@@ -10,6 +10,8 @@ namespace BundlerMinifier
     /// </summary>
     public static class FileHelpers
     {
+        private static readonly string _protocol = "file:///";
+
         /// <summary>
         /// Finds the relative path between two files.
         /// </summary>
@@ -18,8 +20,8 @@ namespace BundlerMinifier
             if (string.IsNullOrEmpty(file))
                 return file;
 
-            Uri baseUri = new Uri(baseFile, UriKind.RelativeOrAbsolute);
-            Uri fileUri = new Uri(file, UriKind.RelativeOrAbsolute);
+            Uri baseUri = new Uri(_protocol + baseFile, UriKind.RelativeOrAbsolute);
+            Uri fileUri = new Uri(_protocol + file, UriKind.RelativeOrAbsolute);
 
             if (baseUri.IsAbsoluteUri)
             {
