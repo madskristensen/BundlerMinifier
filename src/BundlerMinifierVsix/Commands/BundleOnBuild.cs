@@ -46,7 +46,7 @@ namespace BundlerMinifierVsix.Commands
                 return;
 
             // Some projects don't have a .csproj file and will therefore not be able to execute the build task.
-            if (item.ContainingProject.IsKind(ProjectTypes.WEBSITE_PROJECT) || item.ContainingProject.IsKind(ProjectTypes.ASPNET_5))
+            if (item.ContainingProject.IsKind(ProjectTypes.WEBSITE_PROJECT, ProjectTypes.ASPNET_5, ProjectTypes.DOTNET_Core))
             {
                 button.Visible = button.Enabled = false;
                 return;
@@ -93,9 +93,7 @@ namespace BundlerMinifierVsix.Commands
                 if (question == DialogResult.No)
                     return;
 
-                Version version = new Version(BundlerMinifier.Constants.VERSION);
-                if (version == new Version(1, 0, 21))
-                    version = (Version)null;
+                Version version = null;
 
                 System.Threading.ThreadPool.QueueUserWorkItem((o) =>
                 {
