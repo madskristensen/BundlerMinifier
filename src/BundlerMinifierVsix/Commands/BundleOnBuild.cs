@@ -103,7 +103,7 @@ namespace BundlerMinifierVsix.Commands
                         BundlerMinifierPackage._dte.StatusBar.Text = statusInstalling;
                         BundlerMinifierPackage._dte.StatusBar.Animate(true, vsStatusAnimation.vsStatusAnimationSync);
 
-                        var installer = componentModel.GetService<IVsPackageInstaller>();
+                        var installer = componentModel.GetService<IVsPackageInstaller2>();
                         installer.InstallPackage(null, item.ContainingProject, Constants.NUGET_ID, version, false);
 
                         BundlerMinifierPackage._dte.StatusBar.Text = Text.NugetFinishedInstalling.AddParams(Constants.NUGET_ID);
