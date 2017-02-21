@@ -99,7 +99,7 @@ namespace BundlerMinifier
                     var matches = Minimatcher.Filter(allFiles, inputFile, options).Select(f => Path.Combine(folder, f));
                     matches = matches.Where(match => match != output && match != outputMin).ToList();
 
-                    if (notifyOnPatternMiss)
+                    if (notifyOnPatternMiss && !matches.Any())
                     {
                         Console.WriteLine($"  No files matched the pattern {inputFile}".Orange().Bright());
                     }
