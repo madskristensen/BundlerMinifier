@@ -82,7 +82,7 @@ namespace BundlerMinifierVsix
             }
             else if (Path.IsPathRooted(fileName)) // Check that it's not a dynamic generated file
             {
-                var item = BundlerMinifierPackage._dte.Solution.FindProjectItem(fileName);
+                var item = BundlerMinifierPackage._dte.Solution?.FindProjectItem(fileName);
 
                 if (item == null || item.ContainingProject == null)
                     return;
