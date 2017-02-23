@@ -11,7 +11,7 @@
     <UsingTask AssemblyFile="..\tools\BundlerMinifier.exe" TaskName="BundlerMinifier.BundlerBuildTask"/>
     <UsingTask AssemblyFile="..\tools\BundlerMinifier.exe" TaskName="BundlerMinifier.BundlerCleanTask"/>
 
-  <Target Name="BundleMinify" Condition="'$(RunBundleMinify)' != 'False'">
+  <Target Name="BundleMinify" DependsOnTargets="CompileTypeScript" BeforeTargets="AssignTargetPaths" Condition="'$(RunBundleMinify)' != 'False'">
     <BundlerMinifier.BundlerBuildTask FileName="$(MSBuildProjectDirectory)\bundleconfig.json" />
   </Target>
 
