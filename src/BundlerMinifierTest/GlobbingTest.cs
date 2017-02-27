@@ -22,46 +22,46 @@ namespace BundlerMinifierTest
         [TestCleanup]
         public void Cleanup()
         {
-            File.Delete("../../artifacts/globbing/out1.js");
-            File.Delete("../../artifacts/globbing/out1.min.js");
-            File.Delete("../../artifacts/globbing/out2.js");
-            File.Delete("../../artifacts/globbing/out2.min.js");
+            File.Delete("../../../artifacts/globbing/out1.js");
+            File.Delete("../../../artifacts/globbing/out1.min.js");
+            File.Delete("../../../artifacts/globbing/out2.js");
+            File.Delete("../../../artifacts/globbing/out2.min.js");
         }
 
         [TestMethod, TestCategory("Globbing")]
         public void OneFolder()
         {
-            _processor.Process("../../artifacts/globbingOneFolder.json");
+            _processor.Process("../../../artifacts/globbingOneFolder.json");
 
-            string out1 = File.ReadAllText(new FileInfo("../../artifacts/globbing/out1.js").FullName);
+            string out1 = File.ReadAllText(new FileInfo("../../../artifacts/globbing/out1.js").FullName);
             Assert.AreEqual(out1, "var a = 1;");
 
-            string out1Min = File.ReadAllText(new FileInfo("../../artifacts/globbing/out1.min.js").FullName);
+            string out1Min = File.ReadAllText(new FileInfo("../../../artifacts/globbing/out1.min.js").FullName);
             Assert.AreEqual(out1Min, "var a=1;");
         }
 
         [TestMethod, TestCategory("Globbing")]
         public void Subfolders()
         {
-            _processor.Process("../../artifacts/globbingSubFolders.json");
+            _processor.Process("../../../artifacts/globbingSubFolders.json");
 
-            string out2 = File.ReadAllText(new FileInfo("../../artifacts/globbing/out2.js").FullName);
+            string out2 = File.ReadAllText(new FileInfo("../../../artifacts/globbing/out2.js").FullName);
             Assert.AreEqual(out2, "var a = 1;\r\nvar b = 2;");
 
-            string out2Min = File.ReadAllText(new FileInfo("../../artifacts/globbing/out2.min.js").FullName);
+            string out2Min = File.ReadAllText(new FileInfo("../../../artifacts/globbing/out2.min.js").FullName);
             Assert.AreEqual(out2Min, "var a=1,b=2;");
         }
 
         [TestMethod, TestCategory("Globbing")]
         public void DontBundleOutputFile()
         {
-            _processor.Process("../../artifacts/globbingSubFolders.json");
-            _processor.Process("../../artifacts/globbingSubFolders.json");
+            _processor.Process("../../../artifacts/globbingSubFolders.json");
+            _processor.Process("../../../artifacts/globbingSubFolders.json");
 
-            string out2 = File.ReadAllText(new FileInfo("../../artifacts/globbing/out2.js").FullName);
+            string out2 = File.ReadAllText(new FileInfo("../../../artifacts/globbing/out2.js").FullName);
             Assert.AreEqual(out2, "var a = 1;\r\nvar b = 2;");
 
-            string out2Min = File.ReadAllText(new FileInfo("../../artifacts/globbing/out2.min.js").FullName);
+            string out2Min = File.ReadAllText(new FileInfo("../../../artifacts/globbing/out2.min.js").FullName);
             Assert.AreEqual(out2Min, "var a=1,b=2;");
         }
 
