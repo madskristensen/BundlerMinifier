@@ -10,6 +10,13 @@
     <OutputType>Exe</OutputType>
     <PackageId>BundlerMinifier.Core</PackageId>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+
+    <!--
+    TODO remove RuntimeIdentifier and PlatformTarget when VS 2017 RTM's.
+    This was required for RC, but not for RTM.
+     -->
+    <RuntimeIdentifier Condition="'$(TargetFramework)' != 'netcoreapp1.0'">win7-x64</RuntimeIdentifier>
+    <PlatformTarget Condition="'$(TargetFramework)' != 'netcoreapp1.0'">AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
