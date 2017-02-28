@@ -6,17 +6,15 @@ install:
 
 before_build:
   - ps: Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
-  - ps: Vsix-IncrementNuspecVersion .\src\BundlerMinifier\MSBuild\*.nuspec
   - ps: Vsix-TokenReplacement src\BundlerMinifier.Core\Constants.cs 'VERSION = "([0-9\\.]+)"' 'VERSION = "{version}"'
-  - ps: Vsix-TokenReplacement src\BundlerMinifier.Core\project.json '"(1\.0\.0-\*)"' '"{version}"'
 
 build_script:
-  - nuget restore .\src\BundlerMinifier -Verbosity quiet -PackagesDirectory .\Packages
+  - dotnet restore BundlerMinifier.sln
   - nuget restore .\src\BundlerMinifierVSIX -Verbosity quiet -PackagesDirectory .\Packages
   - msbuild .\src\BundlerMinifierVSIX\BundlerMinifierVSIX.csproj /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
   - msbuild .\src\BundlerMinifierTest\BundlerMinifierTest.csproj /p:configuration=Release /v:m
-  - dotnet restore .\src\BundlerMinifier.Core --ignore-failed-sources -v Error
-  - dotnet pack src\BundlerMinifier.Core -c Release
+  - ps: dotnet pack src\BundlerMinifier\ -c Release "/p:Version=${env:APPVEYOR_BUILD_VERSION}"
+  - ps: dotnet pack src\BundlerMinifier.Core\ -c Release "/p:Version=${env:APPVEYOR_BUILD_VERSION}"
 
 after_test:
   - ps: Vsix-PushArtifacts | Vsix-PublishToGallery .\src\BundlerMinifierVsix\**\*.vsix
