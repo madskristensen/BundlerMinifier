@@ -29,15 +29,21 @@
     <Compile Include="..\BundlerMinifier.Core\**\*.cs" Exclude="..\BundlerMinifier.Core\obj\**;..\BundlerMinifier.Core\bin\**">
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
     </Compile>
-    <None Include="build\*.targets">
-      <Pack>true</Pack>
-      <PackagePath>build\</PackagePath>
-    </None>
-    <None Include="bin\$(Configuration)\*\Newtonsoft.Json.dll;bin\$(Configuration)\*\NUglify.dll">
-      <PackagePath>tools\%(RecursiveDir)%(FileName)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-      <Visible>false</Visible>
-    </None>
+    <Content Include="build\*.targets" PackagePath="build\" />
   </ItemGroup>
+
+  <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
+    <!--
+    The include needs to happen after output has been copied to build output folder
+    but before NuGet generates a nuspec. See https://github.com/NuGet/Home/issues/4704.
+    -->
+    <ItemGroup>
+      <_PackageFiles Include="bin\$(Configuration)\*\Newtonsoft.Json.dll;bin\$(Configuration)\*\NUglify.dll">
+        <PackagePath>tools\%(RecursiveDir)</PackagePath>
+        <Visible>false</Visible>
+        <BuildAction>Content</BuildAction>
+      </_PackageFiles>
+    </ItemGroup>
+  </Target>
 
 </Project>
