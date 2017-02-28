@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26224.1
+VisualStudioVersion = 15.0.26226.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E9E392DE-6C44-4AD2-858C-D73AD3016E6E}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,11 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BundlerMinifierVsix", "src\BundlerMinifierVsix\BundlerMinifierVsix.csproj", "{49C270BE-9645-40D5-BE08-91ADE243D394}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BundlerMinifier", "src\BundlerMinifier\BundlerMinifier.csproj", "{B714B5B9-27C4-443C-9517-FE5C5EF46EA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BundlerMinifier", "src\BundlerMinifier\BundlerMinifier.csproj", "{B714B5B9-27C4-443C-9517-FE5C5EF46EA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BundlerMinifierTest", "src\BundlerMinifierTest\BundlerMinifierTest.csproj", "{43AAA3AD-A806-45A0-99A3-F0E7E3B81AEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BundlerMinifierTest", "src\BundlerMinifierTest\BundlerMinifierTest.csproj", "{43AAA3AD-A806-45A0-99A3-F0E7E3B81AEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BundlerMinifier.Core", "src\BundlerMinifier.Core\BundlerMinifier.Core.csproj", "{135A8112-B264-4FB6-B7B4-6139FB8810D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BundlerMinifier.Core", "src\BundlerMinifier.Core\BundlerMinifier.Core.csproj", "{135A8112-B264-4FB6-B7B4-6139FB8810D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

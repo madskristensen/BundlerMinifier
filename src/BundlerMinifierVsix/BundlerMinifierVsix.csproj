@@ -245,6 +245,9 @@
       <HintPath>..\..\packages\NuGet.VisualStudio.3.5.0\lib\net45\NuGet.VisualStudio.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="NUglify, Version=1.5.5.0, Culture=neutral, PublicKeyToken=15bc7810aec21b5e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUglify.1.5.5\lib\net40\NUglify.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -266,17 +269,18 @@
     Exclude some facade-only assemblies (i.e. assemblies without any implementation) from the VSIX using the SuppressFromVsix ItemGroup.
     The list is dependent on the framework being targeted. Changes to TargetFrameworkVersion would may require changes to the SuppressFromVsix ItemGroup.
     -->
-    <SuppressFromVsix Include="Microsoft.Build.Framework.dll" Visible="false"/>
-    <SuppressFromVsix Include="Microsoft.Build.Utilities.Core.dll" Visible="false"/>
-    <SuppressFromVsix Include="System.Threading.Thread.dll" Visible="false"/>
-
+    <SuppressFromVsix Include="Microsoft.Build.Framework.dll" Visible="false" />
+    <SuppressFromVsix Include="Microsoft.Build.Utilities.Core.dll" Visible="false" />
+    <SuppressFromVsix Include="System.Threading.Thread.dll" Visible="false" />
     <ProjectReference Include="..\BundlerMinifier\BundlerMinifier.csproj">
       <Project>{b714b5b9-27c4-443c-9517-fe5c5ef46ea2}</Project>
       <Name>BundlerMinifier</Name>
       <!-- Workaround for https://github.com/dotnet/sdk/issues/433 -->
       <Private>false</Private>
-      <IncludeOutputGroupsInVSIX></IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly></IncludeOutputGroupsInVSIXLocalOnly>
+      <IncludeOutputGroupsInVSIX>
+      </IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>
+      </IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
