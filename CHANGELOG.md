@@ -13,6 +13,11 @@ download in the
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery
 
+## 2.4
+
+- [x] .csproj based ASP.NET Core apps support bundle-on-build
+- [x] BuildBundlerMinifier NuGet package made x-plat
+
 ## 2.3
 
 - [x] Updated NuGet package to support .NET Core vNext
