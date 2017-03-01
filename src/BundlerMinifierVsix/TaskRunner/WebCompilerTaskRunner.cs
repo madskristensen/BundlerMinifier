@@ -23,7 +23,7 @@ namespace BundlerMinifierVsix
             {
                 string folder = GetExecutableFolder();
                 _icon = new BitmapImage(new Uri(Path.Combine(folder, "Resources\\logo.png")));// new BitmapImage(new Uri(@"pack://application:,,,/WebCompilerVsix;component/Resources/logo.png"));
-                _exe = Path.Combine(folder, "BundlerMinifier.exe");
+                _exe = Path.Combine(folder, "BundlerMinifierConsole.exe");
             }
         }
 

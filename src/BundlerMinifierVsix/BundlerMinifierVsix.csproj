@@ -104,7 +104,8 @@
       <Link>BundlerMinifier.pdb</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="BundlerMinifier.exe">
+    <Content Include="..\BundlerMinifierConsole\bin\$(Configuration)\BundlerMinifierConsole.exe">
+      <Link>BundlerMinifierConsole.exe</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Resources\Files\gulpfile.js">
@@ -249,8 +250,8 @@
       <HintPath>..\..\packages\NuGet.VisualStudio.3.5.0\lib\net45\NuGet.VisualStudio.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="NUglify, Version=1.5.4.0, Culture=neutral, PublicKeyToken=15bc7810aec21b5e, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NUglify.1.5.4\lib\net40\NUglify.dll</HintPath>
+    <Reference Include="NUglify, Version=1.5.5.0, Culture=neutral, PublicKeyToken=15bc7810aec21b5e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUglify.1.5.5\lib\net40\NUglify.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

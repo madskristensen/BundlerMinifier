@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BundlerMinifier
 {
-    internal class Watcher
+    public class Watcher
     {
         private static readonly List<ChangeHandler> ChangeHandlers = new List<ChangeHandler>();
         private static FileSystemWatcher _listener;
@@ -14,7 +14,7 @@ namespace BundlerMinifier
         private static bool _watchingAll;
         private static BundleFileProcessor _processor;
 
-        internal static bool Configure(BundleFileProcessor processor, List<string> configurations, string configPath)
+        public static bool Configure(BundleFileProcessor processor, List<string> configurations, string configPath)
         {
             _processor = processor;
 
@@ -137,7 +137,7 @@ namespace BundlerMinifier
                 }
             }
 
-            if(retries >= maxRetries)
+            if (retries >= maxRetries)
             {
                 Console.WriteLine("An error occurred while processing".Red().Bright());
             }
