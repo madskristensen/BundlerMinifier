@@ -10,6 +10,8 @@ namespace BundlerMinifier
 {
     public static class BundleMinifier
     {
+        private static bool MinifyDebugIsAllowed { get; set;}
+
         public static MinificationResult MinifyBundle(Bundle bundle)
         {
             string file = bundle.GetAbsoluteOutputFile();
@@ -57,6 +59,8 @@ namespace BundlerMinifier
         private static void MinifyJavaScript(Bundle bundle, MinificationResult minResult)
         {
             var settings = JavaScriptOptions.GetSettings(bundle);
+
+            MinifyDebugIsAllowed = bundle.IsMinifyDebugEnabled;
 
             if (!bundle.SourceMap)
             {
@@ -191,7 +195,14 @@ namespace BundlerMinifier
                 return file;
 
             string ext = Path.GetExtension(file);
-            return file.Substring(0, file.LastIndexOf(ext, StringComparison.OrdinalIgnoreCase)) + ".min" + ext;
+            if (MinifyDebugIsAllowed && file.EndsWith(".debug" + ext, StringComparison.CurrentCultureIgnoreCase))
+            {
+                return file.Substring(0, file.LastIndexOf(".debug", StringComparison.OrdinalIgnoreCase)) + ext;
+            }
+            else
+            {
+                return file.Substring(0, file.LastIndexOf(ext, StringComparison.OrdinalIgnoreCase)) + ".min" + ext;
+            }
         }
 
         static void OnBeforeWritingMinFile(string file, string minFile, Bundle bundle, bool containsChanges)
