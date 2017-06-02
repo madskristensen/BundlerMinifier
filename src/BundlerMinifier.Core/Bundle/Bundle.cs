@@ -21,6 +21,9 @@ namespace BundlerMinifier
         [JsonProperty("minify")]
         public Dictionary<string, object> Minify { get; } = new Dictionary<string, object> { { "enabled", true } };
 
+        [JsonProperty("minifyDebug")]
+        public Dictionary<string, object> MinifyDebug { get; } = new Dictionary<string, object> { { "enabled", false } };
+
         [JsonProperty("includeInProject")]
         public bool IncludeInProject { get; set; } = true;
 
@@ -37,6 +40,14 @@ namespace BundlerMinifier
             get
             {
                 return Minify.ContainsKey("enabled") && Minify["enabled"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        internal bool IsMinifyDebugEnabled
+        {
+            get
+            {
+                return MinifyDebug.ContainsKey("enabled") && MinifyDebug["enabled"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase);
             }
         }
 
