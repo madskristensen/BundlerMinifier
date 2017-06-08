@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\common.props" />
+
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <TargetFrameworks>netcoreapp1.0;net452</TargetFrameworks>
+    <DefineConstants>$(DefineConstants);DOTNET</DefineConstants>
+    <AssemblyName>dotnet-bundle</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>BundlerMinifier.Core</PackageId>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+
+    <!--
+    TODO remove RuntimeIdentifier and PlatformTarget when VS 2017 RTM's.
+    This was required for RC, but not for RTM.
+     -->
+    <RuntimeIdentifier Condition="'$(TargetFramework)' != 'netcoreapp1.0'">win7-x64</RuntimeIdentifier>
+    <PlatformTarget Condition="'$(TargetFramework)' != 'netcoreapp1.0'">AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      This file instructs dotnet.exe to use whichever version of .NET Core is installed,
+      which may not be the version this tool is compiled against.
+    -->
+    <Content Include="prefercliruntime" Pack="true" PackagePath="\prefercliruntime" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUglify" Version="1.5.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+
+</Project>

@@ -3,7 +3,6 @@
 - [ ] ASP.NET Core TagHelper support
 - [ ] Create additional source map for the bundle files
 - [ ] Adopt new VS Error List API
-- [x] Updated NuGet package to support .NET Core vNext
 
 Features that have a checkmark are complete and available for
 download in the
@@ -12,7 +11,20 @@ download in the
 # Changelog
 
 These are the changes to each version that has been released
-on the official Visual Studio extension gallery.
+on the official Visual Studio extension gallery
+
+## 2.4
+
+- [x] .csproj based ASP.NET Core apps support bundle-on-build
+- [x] BuildBundlerMinifier NuGet package made x-plat
+
+## 2.3
+
+- [x] Updated NuGet package to support .NET Core vNext
+- [x] Added support to preserve Knockout containerless bindings and (0, eval) JavaScript expressions (#135 & #63)
+- [x] Added "KeepOneSpaceWhenCollapsing" to HTML options (#199)
+- [x] Fixed Linux path issues
+- [x] Always install latest version of NuGet package
 
 ## 2.2
 

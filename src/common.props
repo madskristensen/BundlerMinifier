@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <Copyright>Copyright 2017</Copyright>
+    <Authors>Mads Kristensen</Authors>
+    <Description>Bundles and minifies CSS, JS and HTML files</Description>
+    <PackageTags>concat;bundle;minify;minification;css;js;html</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/madskristensen/BundlerMinifier/master/src/BundlerMinifierVsix/Resources/icon.png</PackageIconUrl>
+    <PackageLicenseUrl>https://github.com/madskristensen/BundlerMinifier/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/madskristensen/BundlerMinifier</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+</Project>

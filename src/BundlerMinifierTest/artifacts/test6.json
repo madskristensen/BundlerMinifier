@@ -1,0 +1,13 @@
+﻿[
+  {
+    "outputFileName": "file4.min.html",
+    "inputFiles": [
+      "file4.html"
+    ],
+    "minify": {
+      "enabled": true,
+      "keepOneSpaceWhenCollapsing": true,
+      "removeQuotedAttributes": false
+    }
+  }
+]

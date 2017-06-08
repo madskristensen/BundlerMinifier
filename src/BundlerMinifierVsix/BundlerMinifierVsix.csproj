@@ -104,6 +104,10 @@
       <Link>BundlerMinifier.pdb</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="..\BundlerMinifierConsole\bin\$(Configuration)\BundlerMinifierConsole.exe">
+      <Link>BundlerMinifierConsole.exe</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Resources\Files\gulpfile.js">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
@@ -218,6 +222,7 @@
     <Reference Include="Microsoft.VisualStudio.TaskRunnerExplorer.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Microsoft.VisualStudio.TaskRunnerExplorer.14.0.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Text.Data, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>False</Private>
@@ -241,9 +246,12 @@
       <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NuGet.VisualStudio, Version=2.8.60318.667, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
-      <HintPath>..\..\packages\NuGet.VisualStudio.2.8.5\lib\net40\NuGet.VisualStudio.dll</HintPath>
+    <Reference Include="NuGet.VisualStudio, Version=3.5.0.1996, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NuGet.VisualStudio.3.5.0\lib\net45\NuGet.VisualStudio.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="NUglify, Version=1.5.5.0, Culture=neutral, PublicKeyToken=15bc7810aec21b5e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUglify.1.5.5\lib\net40\NUglify.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -262,20 +270,33 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <!--
+    Exclude some facade-only assemblies (i.e. assemblies without any implementation) from the VSIX using the SuppressFromVsix ItemGroup.
+    The list is dependent on the framework being targeted. Changes to TargetFrameworkVersion would may require changes to the SuppressFromVsix ItemGroup.
+    -->
+    <SuppressFromVsix Include="Microsoft.Build.Framework.dll" Visible="false" />
+    <SuppressFromVsix Include="Microsoft.Build.Utilities.Core.dll" Visible="false" />
+    <SuppressFromVsix Include="System.Threading.Thread.dll" Visible="false" />
     <ProjectReference Include="..\BundlerMinifier\BundlerMinifier.csproj">
       <Project>{b714b5b9-27c4-443c-9517-fe5c5ef46ea2}</Project>
       <Name>BundlerMinifier</Name>
+      <!-- Workaround for https://github.com/dotnet/sdk/issues/433 -->
+      <Private>false</Private>
+      <IncludeOutputGroupsInVSIX>
+      </IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>
+      </IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <VSIXSourceItem Include="..\BundlerMinifier\bin\$(Configuration)\net46\BundlerMinifier.pdb" Visible="false" />
+    <VSIXSourceItem Include="..\BundlerMinifier\bin\$(Configuration)\net46\BundlerMinifier.dll" Visible="false" />
+    <Content Include="@(VSIXSourceItem)">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <!-- end workaround -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="Exists('$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets')" />
   <ProjectExtensions />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
