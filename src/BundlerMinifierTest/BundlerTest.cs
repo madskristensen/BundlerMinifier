@@ -28,6 +28,8 @@ namespace BundlerMinifierTest
             File.Delete("../../../artifacts/foo.js.gz");
             File.Delete("../../../artifacts/foo.min.js");
             File.Delete("../../../artifacts/foo.min.js.map");
+            File.Delete("../../../artifacts/bundle.debug.js");
+            File.Delete("../../../artifacts/bundle.js");
             File.Delete("../../../artifacts/foo.css");
             File.Delete("../../../artifacts/foo.min.css");
             File.Delete("../../../artifacts/foo.html");
@@ -39,6 +41,7 @@ namespace BundlerMinifierTest
             File.Delete("../../../artifacts/file3.min.html");
             File.Delete("../../../artifacts/file3.min.js");
             File.Delete("../../../artifacts/file4.min.html");
+            File.Delete("../../../artifacts/file5.js");
         }
 
         [TestMethod]
@@ -61,7 +64,7 @@ namespace BundlerMinifierTest
         public void GetBundles()
         {
             var bundles = BundleHandler.GetBundles(TEST_BUNDLE);
-            Assert.AreEqual(4, bundles.Count());
+            Assert.AreEqual(5, bundles.Count());
         }
 
         [TestMethod]
@@ -80,6 +83,29 @@ namespace BundlerMinifierTest
         }
 
         [TestMethod]
+        public void ProcessDebugJs()
+        {
+            var bundle = new Bundle();
+            bundle.IncludeInProject = true;
+            var inputFileName = "file5.debug.js";
+            bundle.OutputFileName = BundlerMinifierVsix.FileHelpers.GetMinFileName(inputFileName);
+            Assert.AreNotEqual(bundle.OutputFileName, "fiel5.js");
+            bundle.InputFiles.AddRange(new[] { inputFileName });
+
+            string filePath = "../../../artifacts/" + _guid + ".json";
+            BundleHandler.AddBundle(filePath, bundle);
+
+            var bundles = BundleHandler.GetBundles(filePath);
+            Assert.AreEqual(1, bundles.Count());
+
+            _processor.Process(filePath);
+
+            // JS debug
+            string jsDebugResult = File.ReadAllText(new FileInfo("../../../artifacts/" + bundle.OutputFileName).FullName);
+            Assert.IsTrue(jsDebugResult.StartsWith("var file1=1,file2=file1,sumFromFiles="));
+        }
+
+        [TestMethod]
         public void AddBundleToExisting()
         {
             var bundle = new Bundle();
@@ -92,7 +118,7 @@ namespace BundlerMinifierTest
             BundleHandler.AddBundle(filePath, bundle);
 
             var bundles = BundleHandler.GetBundles(filePath);
-            Assert.AreEqual(5, bundles.Count());
+            Assert.AreEqual(6, bundles.Count());
         }
 
         [TestMethod]
@@ -104,6 +130,11 @@ namespace BundlerMinifierTest
             string jsResult = File.ReadAllText(new FileInfo("../../../artifacts/foo.min.js").FullName);
             Assert.IsTrue(jsResult.StartsWith("var file1=1,file2=2"));
             Assert.IsTrue(new FileInfo("../../../artifacts/foo.min.js.map").Exists);
+
+            // JS debug bundle
+            string jsDebugResult = File.ReadAllText(new FileInfo("../../../artifacts/bundle.js").FullName);
+            Assert.IsTrue(jsDebugResult.StartsWith("var file1=1,file2=2"));
+            Assert.IsFalse(new FileInfo("../../../artifacts/bundle.js.map").Exists);
 
             // CSS
             string cssResult = File.ReadAllText(new FileInfo("../../../artifacts/foo.min.css").FullName);
