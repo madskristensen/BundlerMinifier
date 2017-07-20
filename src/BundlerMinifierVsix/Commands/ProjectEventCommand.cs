@@ -27,7 +27,7 @@ namespace BundlerMinifierVsix.Commands
             _events = dte.Events.SolutionEvents;
 
             _events.Opened += OnSolutionOpened;
-            _events.AfterClosing += OnSolutionClosing;
+            _events.BeforeClosing += OnSolutionClosing;
             _events.ProjectAdded += EnsureProjectIsActive;
             _events.ProjectRemoved += OnProjectRemoved;
 
@@ -109,6 +109,7 @@ namespace BundlerMinifierVsix.Commands
             {
                 FileSystemWatcher fsw;
 
+                _listeners[project].EnableRaisingEvents = false;
                 _listeners[project].Dispose();
                 _listeners.TryRemove(project, out fsw);
             }
