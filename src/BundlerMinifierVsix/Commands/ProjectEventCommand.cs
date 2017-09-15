@@ -108,10 +108,11 @@ namespace BundlerMinifierVsix.Commands
             try
             {
                 FileSystemWatcher fsw;
-
-                _listeners[project].EnableRaisingEvents = false;
-                _listeners[project].Dispose();
-                _listeners.TryRemove(project, out fsw);
+                
+                if (_listeners.TryRemove(project, out fsw))
+                {
+                    fsw.Dispose();
+                }
             }
             catch (Exception ex)
             {
