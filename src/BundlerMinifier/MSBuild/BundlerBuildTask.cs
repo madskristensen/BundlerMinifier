@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
@@ -26,11 +25,11 @@ namespace BundlerMinifier
 
             if (!configFile.Exists)
             {
-                Log.LogWarning(configFile.FullName + " does not exist");
+                Log.LogWarning("Bundler: " + configFile.FullName + " does not exist");
                 return true;
             }
 
-            Log.LogMessage(MessageImportance.High, Environment.NewLine + "Bundler: Begin processing " + configFile.Name);
+            Log.LogMessage(MessageImportance.Normal, "Bundler: Started processing " + configFile.FullName);
 
             BundleFileProcessor processor = new BundleFileProcessor();
             processor.Processing += (s, e) => { RemoveReadonlyFlagFromFile(e.Bundle.GetAbsoluteOutputFile()); };
@@ -43,7 +42,7 @@ namespace BundlerMinifier
 
             processor.Process(configFile.FullName);
 
-            Log.LogMessage(MessageImportance.High, "Bundler: Done processing " + configFile.Name);
+            Log.LogMessage(MessageImportance.Normal, "Bundler: Finished processing " + configFile.FullName);
 
             return _isSuccessful;
         }
@@ -65,23 +64,23 @@ namespace BundlerMinifier
 
             foreach (var error in e.Result.Errors)
             {
-                Log.LogError("Bundler & Minifier", "0", "", error.FileName, error.LineNumber, error.ColumnNumber, error.LineNumber, error.ColumnNumber, error.Message, null); ;
+                Log.LogError("Bundler", "0", "", error.FileName, error.LineNumber, error.ColumnNumber, error.LineNumber, error.ColumnNumber, error.Message, null); ;
             }
         }
 
         private void Processor_AfterProcess(object sender, BundleFileEventArgs e)
         {
-            Log.LogMessage(MessageImportance.High, "\tBundled " + e.Bundle.OutputFileName);
+            Log.LogMessage(MessageImportance.High, "Bundler: Created bundled file " + Path.Combine(e.BaseFolder, e.Bundle.OutputFileName));
         }
 
         private void Processor_AfterWritingSourceMap(object sender, MinifyFileEventArgs e)
         {
-            Log.LogMessage(MessageImportance.High, "\tSourceMap " + FileHelpers.MakeRelative(FileName, e.ResultFile));
+            Log.LogMessage(MessageImportance.High, "Bundler: Created source map file " + FileName, e.ResultFile);
         }
 
         private void FileMinifier_AfterWritingMinFile(object sender, MinifyFileEventArgs e)
         {
-            Log.LogMessage(MessageImportance.High, "\tMinified " + FileHelpers.MakeRelative(FileName, e.ResultFile));
+            Log.LogMessage(MessageImportance.High, "Bundler: Created minified file " + FileName, e.ResultFile);
         }
     }
 }
