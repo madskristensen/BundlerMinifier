@@ -3,6 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NUglify;
 using NUglify.JavaScript;
 
@@ -10,6 +12,12 @@ namespace BundlerMinifier
 {
     public static class BundleMinifier
     {
+        private static readonly JsonLoadSettings _jsonLoadSettings = new JsonLoadSettings
+        {
+            CommentHandling = CommentHandling.Ignore,
+            LineInfoHandling = LineInfoHandling.Ignore
+        };
+
         public static MinificationResult MinifyBundle(Bundle bundle)
         {
             string file = bundle.GetAbsoluteOutputFile();
@@ -31,6 +39,9 @@ namespace BundlerMinifier
                         case ".HTML":
                         case ".HTM":
                             MinifyHtml(bundle, minResult);
+                            break;
+                        case ".JSON":
+                            MinifyJson(bundle, minResult);
                             break;
                     }
                 }
@@ -109,6 +120,41 @@ namespace BundlerMinifier
 
             UgliflyResult uglifyResult = Uglify.Html(bundle.Output, settings, minResult.FileName);
             WriteMinFile(bundle, minResult, uglifyResult);
+        }
+
+        private static void MinifyJson(Bundle bundle, MinificationResult minResult)
+        {
+            try
+            {
+                minResult.MinifiedContent = JToken.Parse(bundle.Output, _jsonLoadSettings).ToString(Formatting.None);
+            }
+            catch (JsonReaderException ex)
+            {
+                var minError = new MinificationError
+                {
+                    FileName = minResult.FileName,
+                    Message = ex.Message,
+                    LineNumber = ex.LineNumber,
+                    ColumnNumber = ex.LinePosition
+                };
+
+                minResult.Errors.Add(minError);
+            }
+
+            if (minResult.Errors.Count == 0)
+            {
+                var minFile = GetMinFileName(minResult.FileName);
+
+                bool containsChanges = FileHelpers.HasFileContentChanged(minFile, minResult.MinifiedContent);
+                minResult.Changed |= containsChanges;
+                OnBeforeWritingMinFile(minResult.FileName, minFile, bundle, containsChanges);
+
+                if (containsChanges)
+                {
+                    File.WriteAllText(minFile, minResult.MinifiedContent, new UTF8Encoding(false));
+                    OnAfterWritingMinFile(minResult.FileName, minFile, bundle, containsChanges);
+                }
+            }
         }
 
         private static void WriteMinFile(Bundle bundle, MinificationResult minResult, UgliflyResult uglifyResult)

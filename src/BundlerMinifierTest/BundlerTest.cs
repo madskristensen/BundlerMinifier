@@ -39,6 +39,7 @@ namespace BundlerMinifierTest
             File.Delete("../../../artifacts/file3.min.html");
             File.Delete("../../../artifacts/file3.min.js");
             File.Delete("../../../artifacts/file4.min.html");
+            File.Delete("../../../artifacts/file1.min.json");
         }
 
         [TestMethod]
@@ -55,6 +56,10 @@ namespace BundlerMinifierTest
             var files3 = new[] { null, "file2.css" };
             var result3 = BundleFileProcessor.IsSupported(files3);
             Assert.IsTrue(result3);
+
+            var files4 = new[] { "file.json" };
+            var result4 = BundleFileProcessor.IsSupported(files4);
+            Assert.IsTrue(result4);
         }
 
         [TestMethod]
@@ -125,6 +130,21 @@ namespace BundlerMinifierTest
 
             string map = File.ReadAllText(new FileInfo("../../../artifacts/minify.min.js.map").FullName);
             Assert.IsTrue(map.Contains("minify.js"));
+        }
+
+        [TestMethod]
+        public void MinifyJson()
+        {
+            _processor.Process("../../../artifacts/test7.json");
+
+            var resultFilePath = "../../../artifacts/file1.min.json";
+
+            Assert.IsTrue(File.Exists(resultFilePath));
+
+            var expectedContent = "[{\"p1\":\"v1\"}]";
+            var actualContent = File.ReadAllText(new FileInfo(resultFilePath).FullName);
+
+            Assert.AreEqual(actualContent, expectedContent);
         }
 
         [TestMethod]
