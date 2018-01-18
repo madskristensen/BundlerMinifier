@@ -13,11 +13,11 @@ namespace BundlerMinifier
         {
             FileInfo configFile = new FileInfo(FileName);
 
-            Log.LogMessage(MessageImportance.High, Environment.NewLine + "Bundler: Cleaning output from " + configFile.Name);
+            Log.LogMessage(MessageImportance.Normal, "Bundler: Started cleaning output for " + configFile.FullName);
 
             if (!configFile.Exists)
             {
-                Log.LogWarning(configFile.FullName + " does not exist");
+                Log.LogWarning("Bundler: " + configFile.FullName + " does not exist");
                 return true;
             }
 
@@ -42,12 +42,12 @@ namespace BundlerMinifier
                     Deletefile(gzipFile);
                 }
 
-                Log.LogMessage(MessageImportance.High, "Bundler: Done cleaning output file from " + configFile.Name);
+                Log.LogMessage(MessageImportance.Normal, "Bundler: Finished cleaning output for " + configFile.FullName);
 
                 return true;
             }
 
-            Log.LogWarning($"There was an error reading {configFile.Name}");
+            Log.LogWarning($"Bundler: There was an error reading {configFile.FullName}");
             return false;
         }
 
@@ -59,6 +59,7 @@ namespace BundlerMinifier
                 {
                     FileHelpers.RemoveReadonlyFlagFromFile(file);
                     File.Delete(file);
+                    Log.LogMessage(MessageImportance.High, "Bundler: Deleted file " + file);
                 }
             }
             catch (Exception ex)
