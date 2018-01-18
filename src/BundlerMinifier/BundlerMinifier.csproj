@@ -18,7 +18,7 @@
     <PackageReference Include="Microsoft.Build.Framework" Version="15.1.0-*" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.1.0-*" PrivateAssets="All" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" PrivateAssets="All" />
-    <PackageReference Include="NUglify" Version="1.5.5" PrivateAssets="All" />
+    <PackageReference Include="NUglify" Version="1.5.9" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
