@@ -60,7 +60,7 @@ namespace BundlerMinifier
 
             if (!bundle.SourceMap)
             {
-                UgliflyResult uglifyResult = Uglify.Js(bundle.Output, settings);
+                var uglifyResult = Uglify.Js(bundle.Output, settings);
                 WriteMinFile(bundle, minResult, uglifyResult);
             }
             else
@@ -86,7 +86,7 @@ namespace BundlerMinifier
                                 file = inputs[0];
                         }
 
-                        UgliflyResult uglifyResult = Uglify.Js(bundle.Output, file, settings);
+                        var uglifyResult = Uglify.Js(bundle.Output, file, settings);
                         WriteMinFile(bundle, minResult, uglifyResult);
                     }
 
@@ -99,7 +99,7 @@ namespace BundlerMinifier
         {
             var settings = CssOptions.GetSettings(bundle);
 
-            UgliflyResult uglifyResult = Uglify.Css(bundle.Output, minResult.FileName, settings);
+            var uglifyResult = Uglify.Css(bundle.Output, minResult.FileName, settings);
             WriteMinFile(bundle, minResult, uglifyResult);
         }
 
@@ -107,11 +107,11 @@ namespace BundlerMinifier
         {
             var settings = HtmlOptions.GetSettings(bundle);
 
-            UgliflyResult uglifyResult = Uglify.Html(bundle.Output, settings, minResult.FileName);
+            var uglifyResult = Uglify.Html(bundle.Output, settings, minResult.FileName);
             WriteMinFile(bundle, minResult, uglifyResult);
         }
 
-        private static void WriteMinFile(Bundle bundle, MinificationResult minResult, UgliflyResult uglifyResult)
+        private static void WriteMinFile(Bundle bundle, MinificationResult minResult, UglifyResult uglifyResult)
         {
             var minFile = GetMinFileName(minResult.FileName);
             minResult.MinifiedContent = uglifyResult.Code?.Trim();
@@ -156,7 +156,7 @@ namespace BundlerMinifier
             }
         }
 
-        private static void AddNUglifyErrors(UgliflyResult minifier, MinificationResult minResult)
+        private static void AddNUglifyErrors(UglifyResult minifier, MinificationResult minResult)
         {
             foreach (var error in minifier.Errors)
             {
