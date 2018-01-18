@@ -1,0 +1,12 @@
+﻿[
+  {
+    "outputFileName": "file1.min.json",
+    "inputFiles": [
+      "file1.json",
+      "file2.json"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  }
+]

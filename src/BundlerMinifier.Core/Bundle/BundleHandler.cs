@@ -10,6 +10,8 @@ namespace BundlerMinifier
 {
     public static class BundleHandler
     {
+        private static string[] _bundlingSupported = new[] { ".JS", ".CSS", ".HTML", ".HTM" };
+
         public static void AddBundle(string configFile, Bundle newBundle)
         {
             IEnumerable<Bundle> existing = GetBundles(configFile)
@@ -83,23 +85,37 @@ namespace BundlerMinifier
         {
             StringBuilder sb = new StringBuilder();
             List<string> inputFiles = bundle.GetAbsoluteInputFiles();
+            string outputFileExt = Path.GetExtension(bundle.OutputFileName).ToUpperInvariant();
 
-            foreach (string input in inputFiles)
+            if (_bundlingSupported.Contains(outputFileExt))
             {
-                string file = Path.Combine(baseFolder, input);
-
-                if (File.Exists(file))
+                foreach (string input in inputFiles)
                 {
-                    string content;
+                    string file = Path.Combine(baseFolder, input);
 
-                    if (input.EndsWith(".css", StringComparison.OrdinalIgnoreCase) && AdjustRelativePaths(bundle))
+                    if (File.Exists(file))
                     {
-                        content = CssRelativePath.Adjust(file, bundle.GetAbsoluteOutputFile());
+                        string content;
+
+                        if (input.EndsWith(".css", StringComparison.OrdinalIgnoreCase) && AdjustRelativePaths(bundle))
+                        {
+                            content = CssRelativePath.Adjust(file, bundle.GetAbsoluteOutputFile());
+                        }
+                        else
+                        {
+                            content = FileHelpers.ReadAllText(file);
+                        }
+
+                        sb.AppendLine(content);
                     }
-                    else
-                    {
-                        content = FileHelpers.ReadAllText(file);
-                    }
+                }
+            }
+            else
+            {
+                if (inputFiles.Count > 0)
+                {
+                    string file = Path.Combine(baseFolder, inputFiles[0]);
+                    string content = FileHelpers.ReadAllText(file);
 
                     sb.AppendLine(content);
                 }
