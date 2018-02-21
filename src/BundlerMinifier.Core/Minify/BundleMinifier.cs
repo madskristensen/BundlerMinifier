@@ -124,6 +124,7 @@ namespace BundlerMinifier
 
                 if (containsChanges)
                 {
+                    Directory.CreateDirectory(Path.GetDirectoryName(minFile));
                     File.WriteAllText(minFile, minResult.MinifiedContent, new UTF8Encoding(false));
                     OnAfterWritingMinFile(minResult.FileName, minFile, bundle, containsChanges);
                 }
