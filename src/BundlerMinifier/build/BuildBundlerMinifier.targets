@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
   <PropertyGroup>
-    <BuildDependsOn>
-        BundleMinify;
-        $(BuildDependsOn)
-    </BuildDependsOn>
-
     <_BundlerMinifierTaskAssembly Condition="'$(MSBuildRuntimeType)' == 'Core'">..\tools\netstandard1.3\BundlerMinifier.dll</_BundlerMinifierTaskAssembly>
     <_BundlerMinifierTaskAssembly Condition="'$(MSBuildRuntimeType)' != 'Core'">..\tools\net46\BundlerMinifier.dll</_BundlerMinifierTaskAssembly>
   </PropertyGroup>
@@ -14,12 +8,11 @@
   <UsingTask AssemblyFile="$(_BundlerMinifierTaskAssembly)" TaskName="BundlerMinifier.BundlerBuildTask"/>
   <UsingTask AssemblyFile="$(_BundlerMinifierTaskAssembly)" TaskName="BundlerMinifier.BundlerCleanTask"/>
 
-  <Target Name="BundleMinify" Condition="'$(RunBundleMinify)' != 'False'">
+  <Target Name="BundleMinify" AfterTargets="CompileTypeScriptWithTSConfig" BeforeTargets="BeforeCompile" Condition="'$(RunBundleMinify)' != 'False'">
     <BundlerMinifier.BundlerBuildTask FileName="$(MSBuildProjectDirectory)\bundleconfig.json" />
   </Target>
 
   <Target Name="BundleMinifyClean" AfterTargets="CoreClean" Condition="'$(RunBundleMinify)' != 'False'">
     <BundlerMinifier.BundlerCleanTask FileName="$(MSBuildProjectDirectory)\bundleconfig.json" />
   </Target>
-
 </Project>

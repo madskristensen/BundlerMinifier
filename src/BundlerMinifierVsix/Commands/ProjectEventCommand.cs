@@ -27,7 +27,7 @@ namespace BundlerMinifierVsix.Commands
             _events = dte.Events.SolutionEvents;
 
             _events.Opened += OnSolutionOpened;
-            _events.AfterClosing += OnSolutionClosing;
+            _events.BeforeClosing += OnSolutionClosing;
             _events.ProjectAdded += EnsureProjectIsActive;
             _events.ProjectRemoved += OnProjectRemoved;
 
@@ -43,11 +43,18 @@ namespace BundlerMinifierVsix.Commands
 
         private void OnSolutionOpened()
         {
-            var projects = ProjectHelpers.GetAllProjects();
-
-            foreach (var project in projects)
+            try
             {
-                EnsureProjectIsActive(project);
+                var projects = ProjectHelpers.GetAllProjects();
+
+                foreach (var project in projects)
+                {
+                    EnsureProjectIsActive(project);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex);
             }
         }
 
@@ -98,10 +105,19 @@ namespace BundlerMinifierVsix.Commands
             if (project == null || !_listeners.ContainsKey(project))
                 return;
 
-            FileSystemWatcher fsw;
+            try
+            {
+                FileSystemWatcher fsw;
 
-            _listeners[project].Dispose();
-            _listeners.TryRemove(project, out fsw);
+                if (_listeners.TryRemove(project, out fsw))
+                {
+                    fsw.EnableRaisingEvents = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex);
+            }
         }
 
         void FileChanged(object sender, FileSystemEventArgs e)
@@ -130,23 +146,30 @@ namespace BundlerMinifierVsix.Commands
 
         private bool IsFileValid(string file)
         {
-            string fileName = Path.GetFileName(file);
-
-            // VS adds ~ to temp file names so let's ignore those
-            if (fileName.Contains('~') || fileName.Contains(".min."))
-                return false;
-
-            if (_ignorePatterns.Any(p => file.IndexOf(p) > -1))
+            try
             {
-                //var fsw = (FileSystemWatcher)sender;
-                //fsw.EnableRaisingEvents = false;
+                string fileName = Path.GetFileName(file);
+
+                // VS adds ~ to temp file names so let's ignore those
+                if (fileName.Contains('~') || fileName.Contains(".min."))
+                    return false;
+
+                if (_ignorePatterns.Any(p => file.IndexOf(p) > -1))
+                {
+                    //var fsw = (FileSystemWatcher)sender;
+                    //fsw.EnableRaisingEvents = false;
+                    return false;
+                }
+
+                if (!BundleFileProcessor.IsSupported(file))
+                    return false;
+
+                return true;
+            }
+            catch (Exception)
+            {
                 return false;
             }
-
-            if (!BundleFileProcessor.IsSupported(file))
-                return false;
-
-            return true;
         }
 
         void TimerElapsed(object state)

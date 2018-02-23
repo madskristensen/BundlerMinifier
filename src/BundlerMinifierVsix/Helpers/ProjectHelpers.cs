@@ -58,7 +58,7 @@ namespace BundlerMinifierVsix
 
         public static string GetRootFolder(this Project project)
         {
-            if (string.IsNullOrEmpty(project.FullName))
+            if (string.IsNullOrEmpty(project?.FullName))
                 return null;
 
             string fullPath;
