@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
 namespace BundlerMinifierVsix
@@ -10,7 +11,7 @@ namespace BundlerMinifierVsix
         private static IServiceProvider _provider;
         private static string _name;
 
-        public static void Initialize(IServiceProvider provider, string name)
+        public static void Initialize(Package provider, string name)
         {
             _provider = provider;
             _name = name;

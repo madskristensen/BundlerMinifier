@@ -6,6 +6,7 @@ using System.Threading;
 using BundlerMinifier;
 using EnvDTE;
 using EnvDTE80;
+using Microsoft.VisualStudio.Shell;
 
 namespace BundlerMinifierVsix.Commands
 {
@@ -36,7 +37,7 @@ namespace BundlerMinifierVsix.Commands
 
         public static ProjectEventCommand Instance { get; private set; }
 
-        public static void Initialize(IServiceProvider provider)
+        public static void Initialize(Package provider)
         {
             Instance = new ProjectEventCommand(provider);
         }
