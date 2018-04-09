@@ -23,6 +23,11 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
     <PackageReference Include="System.IO.FileSystem.Watcher" Version="4.0.0" PrivateAssets="All" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" PrivateAssets="All" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
+    <PackageReference Include="Newtonsoft.Json" Version="8.0.3" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
