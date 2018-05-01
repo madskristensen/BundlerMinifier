@@ -33,6 +33,10 @@ namespace BundlerMinifierVsix.Commands
             _events.ProjectRemoved += OnProjectRemoved;
 
             _timer = new Timer(TimerElapsed, null, 0, 250);
+            if (dte.Solution.IsOpen)
+            {
+                OnSolutionOpened();
+            }
         }
 
         public static ProjectEventCommand Instance { get; private set; }
