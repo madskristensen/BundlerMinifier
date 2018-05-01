@@ -25,7 +25,11 @@ namespace BundlerMinifierVsix
         public static BundlerMinifierPackage _instance;
         SolutionEvents _solutionEvents;
 
-        public static TaskCompletionSource<Package> Package { get; } = new TaskCompletionSource<Package>();
+        private static TaskCompletionSource<Package> _package = new TaskCompletionSource<Package>();
+        public static Task IsPackageInitialized
+        {
+            get { return _package.Task; }
+        } 
 
         public static Options Options { get; private set; }
 
@@ -59,7 +63,7 @@ namespace BundlerMinifierVsix
             ProjectEventCommand.Initialize(this);
             ConvertToGulp.Initialize(this);
 
-            Package.SetResult(this);
+            _package.SetResult(this);
         }
 
         public static bool IsDocumentDirty(string documentPath, out IVsPersistDocData persistDocData)

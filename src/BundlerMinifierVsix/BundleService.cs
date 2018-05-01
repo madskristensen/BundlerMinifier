@@ -177,7 +177,7 @@ namespace BundlerMinifierVsix
 
         private static async void HandleProcessingException(string configFile, Exception ex)
         {
-            await BundlerMinifierPackage.Package.Task;
+            await BundlerMinifierPackage.IsPackageInitialized;
             BundlerMinifierPackage._dispatcher.Invoke(new Action(() =>
             {
                 var errorMessage = Resources.Text.ErrorExceptionThrown
