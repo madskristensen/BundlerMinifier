@@ -27,6 +27,11 @@ namespace BundlerMinifierVsix.Commands
             var dte = (DTE2)provider.GetService(typeof(DTE));
             _events = dte.Events.SolutionEvents;
 
+            if (dte.Solution.IsOpen)
+            {
+                OnSolutionOpened();
+            }
+
             _events.Opened += OnSolutionOpened;
             _events.BeforeClosing += OnSolutionClosing;
             _events.ProjectAdded += EnsureProjectIsActive;
