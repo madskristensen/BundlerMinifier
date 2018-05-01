@@ -34,6 +34,7 @@ namespace BundlerMinifierVsix
 
         public async Task<ITaskRunnerConfig> ParseConfig(ITaskRunnerCommandContext context, string configPath)
         {
+            await BundlerMinifierPackage.Package.Task;
             return await Task.Run(() =>
             {
                 if (!BundlerMinifierPackage.Options.EnableTaskRunnerExplorer)
