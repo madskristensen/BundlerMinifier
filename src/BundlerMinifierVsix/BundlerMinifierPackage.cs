@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 using BundlerMinifierVsix.Commands;
 using EnvDTE;
@@ -21,9 +22,10 @@ namespace BundlerMinifierVsix
     {
         public static DTE2 _dte;
         public static Dispatcher _dispatcher;
-        public static Package Package;
         public static BundlerMinifierPackage _instance;
         SolutionEvents _solutionEvents;
+
+        public static TaskCompletionSource<Package> Package { get; } = new TaskCompletionSource<Package>();
 
         public static Options Options { get; private set; }
 
@@ -36,7 +38,6 @@ namespace BundlerMinifierVsix
             _instance = this;
             
             _dispatcher = Dispatcher.CurrentDispatcher;
-            Package = this;
             Options = (Options)GetDialogPage(typeof(Options));
 
             Logger.Initialize(this, Vsix.Name);
@@ -57,6 +58,8 @@ namespace BundlerMinifierVsix
             OpenSettings.Initialize(this);
             ProjectEventCommand.Initialize(this);
             ConvertToGulp.Initialize(this);
+
+            Package.SetResult(this);
         }
 
         public static bool IsDocumentDirty(string documentPath, out IVsPersistDocData persistDocData)
