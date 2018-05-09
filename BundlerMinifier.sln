@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BundlerMinifier.Core", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BundlerMinifierConsole", "src\BundlerMinifierConsole\BundlerMinifierConsole.csproj", "{005A7A66-2F08-4A2C-9230-F4FA31A6804B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BundlerMinifier.TagHelpers", "src\BundlerMinifier.TagHelpers\BundlerMinifier.TagHelpers.csproj", "{2825CF4A-3F4C-4DC6-AEBB-09E71474D844}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,8 +47,15 @@ Global
 		{005A7A66-2F08-4A2C-9230-F4FA31A6804B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{005A7A66-2F08-4A2C-9230-F4FA31A6804B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{005A7A66-2F08-4A2C-9230-F4FA31A6804B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2825CF4A-3F4C-4DC6-AEBB-09E71474D844}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2825CF4A-3F4C-4DC6-AEBB-09E71474D844}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2825CF4A-3F4C-4DC6-AEBB-09E71474D844}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2825CF4A-3F4C-4DC6-AEBB-09E71474D844}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A316AB0-D62D-4181-8CB6-891E27E95782}
 	EndGlobalSection
 EndGlobal
