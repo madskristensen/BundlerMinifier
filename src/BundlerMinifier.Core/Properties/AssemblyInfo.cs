@@ -8,7 +8,7 @@ using BundlerMinifier;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Mads Kristensen")]
 [assembly: AssemblyProduct("Bundler & Minifier")]
-[assembly: AssemblyCopyright("Copyright © 2015")]
+[assembly: AssemblyCopyright("Copyright © 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
