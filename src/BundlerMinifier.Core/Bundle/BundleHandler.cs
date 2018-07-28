@@ -84,8 +84,10 @@ namespace BundlerMinifier
             StringBuilder sb = new StringBuilder();
             List<string> inputFiles = bundle.GetAbsoluteInputFiles();
 
-            foreach (string input in inputFiles)
+            for (int i = 0; i < inputFiles.Count; i++)
             {
+                var input = inputFiles[i];
+
                 string file = Path.Combine(baseFolder, input);
 
                 if (File.Exists(file))
@@ -101,11 +103,16 @@ namespace BundlerMinifier
                         content = FileHelpers.ReadAllText(file);
                     }
 
-                    sb.AppendLine(content);
+                    // adding new line only if there are more than 1 files
+                    // otherwise we are preserving file integrity
+                    if (sb.Length > 0)
+                        sb.AppendLine();
+
+                    sb.Append(content);
                 }
             }
 
-            bundle.Output = sb.ToString().Trim();
+            bundle.Output = sb.ToString();
         }
 
         private static bool AdjustRelativePaths(Bundle bundle)
