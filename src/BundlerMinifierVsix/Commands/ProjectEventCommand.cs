@@ -6,6 +6,7 @@ using System.Threading;
 using BundlerMinifier;
 using EnvDTE;
 using EnvDTE80;
+using Microsoft.VisualStudio.Shell;
 
 namespace BundlerMinifierVsix.Commands
 {
@@ -26,6 +27,11 @@ namespace BundlerMinifierVsix.Commands
             var dte = (DTE2)provider.GetService(typeof(DTE));
             _events = dte.Events.SolutionEvents;
 
+            if (dte.Solution.IsOpen)
+            {
+                OnSolutionOpened();
+            }
+
             _events.Opened += OnSolutionOpened;
             _events.BeforeClosing += OnSolutionClosing;
             _events.ProjectAdded += EnsureProjectIsActive;
@@ -36,7 +42,7 @@ namespace BundlerMinifierVsix.Commands
 
         public static ProjectEventCommand Instance { get; private set; }
 
-        public static void Initialize(IServiceProvider provider)
+        public static void Initialize(Package provider)
         {
             Instance = new ProjectEventCommand(provider);
         }

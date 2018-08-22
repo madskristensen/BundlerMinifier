@@ -175,21 +175,18 @@ namespace BundlerMinifierVsix
             });
         }
 
-        private static void HandleProcessingException(string configFile, Exception ex)
+        private static async void HandleProcessingException(string configFile, Exception ex)
         {
-            Logger.Log(ex);
-            string message = Resources.Text.ErrorConfigFile.AddParams(Constants.CONFIG_FILENAME);
+            await BundlerMinifierPackage.IsPackageInitialized;
+            BundlerMinifierPackage._dispatcher.Invoke(new Action(() =>
+            {
+                var errorMessage = Resources.Text.ErrorExceptionThrown
+                    .AddParams(configFile, ex);
+                Logger.Log(errorMessage);
 
-            VsShellUtilities.ShowMessageBox(
-                        BundlerMinifierPackage._instance,
-                        message,
-                        Vsix.Name,
-                        OLEMSGICON.OLEMSGICON_INFO,
-                        OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                        OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
-
-            if (File.Exists(configFile))
-                BundlerMinifierPackage._dte.ItemOperations.OpenFile(configFile);
+                var window = _dte.Windows.Item(EnvDTE.Constants.vsWindowKindOutput);
+                window.Activate();
+            }));
         }
 
         private static void CheckFileOutOfSourceControl(object sender, MinifyFileEventArgs e)

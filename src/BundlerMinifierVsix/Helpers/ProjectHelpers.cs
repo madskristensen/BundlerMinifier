@@ -58,7 +58,9 @@ namespace BundlerMinifierVsix
 
         public static string GetRootFolder(this Project project)
         {
-            if (string.IsNullOrEmpty(project?.FullName))
+            // null happens for Business Intelligence Integration Services and similar projects 
+            if (project.Properties == null ||
+                string.IsNullOrEmpty(project?.FullName))
                 return null;
 
             string fullPath;

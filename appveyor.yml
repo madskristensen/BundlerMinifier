@@ -23,6 +23,7 @@ build_script:
   - msbuild .\src\BundlerMinifierTest\BundlerMinifierTest.csproj /p:configuration=Release /v:m
   - ps: dotnet pack src\BundlerMinifier\ -c Release "/p:Version=${env:APPVEYOR_BUILD_VERSION}"
   - ps: dotnet pack src\BundlerMinifier.Core\ -c Release "/p:Version=${env:APPVEYOR_BUILD_VERSION}"
+  - ps: dotnet pack src\BundlerMinifier.TagHelpers\ -c Release "/p:Version=${env:APPVEYOR_BUILD_VERSION}"
 
 after_test:
   - ps: Vsix-PushArtifacts | Vsix-PublishToGallery .\src\BundlerMinifierVsix\**\*.vsix

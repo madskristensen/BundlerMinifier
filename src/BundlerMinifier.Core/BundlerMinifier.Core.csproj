@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <Version>1.0.0</Version>
-    <TargetFrameworks>netcoreapp1.0;net452;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp1.0;net452;netcoreapp2.0;netstandard2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);DOTNET</DefineConstants>
     <AssemblyName>dotnet-bundle</AssemblyName>
     <OutputType>Exe</OutputType>
@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NUglify" Version="1.5.9" />
+    <PackageReference Include="NUglify" Version="1.5.11" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
 

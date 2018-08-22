@@ -15,7 +15,8 @@ namespace BundlerMinifierVsix
         {
             CleanErrors(file);
 
-            ErrorListProvider provider = new ErrorListProvider(BundlerMinifierPackage.Package);
+            // Ideally we want to remove this dependency down the road
+            ErrorListProvider provider = new ErrorListProvider(BundlerMinifierPackage._instance);
 
             foreach (var error in errors)
             {

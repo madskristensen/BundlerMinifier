@@ -200,4 +200,8 @@ Do you want to continue?</value>
   <data name="NugetUninstalling" xml:space="preserve">
     <value>Uninstalling {0} NuGet package, this may take a minute...</value>
   </data>
+  <data name="ErrorExceptionThrown" xml:space="preserve">
+    <value>Processing file '{0}' results in exception:
+{1}</value>
+  </data>
 </root>
