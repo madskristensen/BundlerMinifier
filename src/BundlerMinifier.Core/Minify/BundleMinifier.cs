@@ -46,7 +46,9 @@ namespace BundlerMinifier
             }
             else if (bundle.IsGzipEnabled)
             {
-                string minFile = bundle.IsMinificationEnabled ? GetMinFileName(bundle.GetAbsoluteOutputFile()) : bundle.GetAbsoluteOutputFile();
+                string minFile = bundle.IsMinificationEnabled 
+                    ? GetMinFileName(bundle.GetAbsoluteOutputFile(), bundle.IsDebugMinificationEnabled) 
+                    : bundle.GetAbsoluteOutputFile();
                 GzipFile(minFile, bundle, minResult);
             }
 
@@ -65,7 +67,7 @@ namespace BundlerMinifier
             }
             else
             {
-                string minFile = GetMinFileName(minResult.FileName);
+                string minFile = GetMinFileName(minResult.FileName, bundle.IsDebugMinificationEnabled);
                 string mapFile = minFile + ".map";
 
                 using (StringWriter writer = new StringWriter())
@@ -113,7 +115,8 @@ namespace BundlerMinifier
 
         private static void WriteMinFile(Bundle bundle, MinificationResult minResult, UglifyResult uglifyResult)
         {
-            var minFile = GetMinFileName(minResult.FileName);
+            var minFile = GetMinFileName(minResult.FileName, bundle.IsDebugMinificationEnabled);
+
             minResult.MinifiedContent = uglifyResult.Code?.Trim();
 
             if (!uglifyResult.HasErrors)
@@ -184,7 +187,7 @@ namespace BundlerMinifier
             });
         }
 
-        public static string GetMinFileName(string file)
+        public static string GetMinFileName(string file, bool? isDebugMinificationEnabled = false)
         {
             string fileName = Path.GetFileName(file);
 
@@ -192,9 +195,20 @@ namespace BundlerMinifier
                 return file;
 
             string ext = Path.GetExtension(file);
-            return file.Substring(0, file.LastIndexOf(ext, StringComparison.OrdinalIgnoreCase)) + ".min" + ext;
+
+            fileName = file.EndsWith(".debug.js")
+                ? file.Replace(".debug.", ".")
+                : file.Substring(0, file.LastIndexOf(ext, StringComparison.OrdinalIgnoreCase)) + ".min" + ext;
+
+            if (isDebugMinificationEnabled != null && isDebugMinificationEnabled == true && fileName.Contains(".min."))
+            {
+                fileName = fileName.Replace(".min.", ".");
+            }
+
+            return fileName;
         }
 
+        
         static void OnBeforeWritingMinFile(string file, string minFile, Bundle bundle, bool containsChanges)
         {
             BeforeWritingMinFile?.Invoke(null, new MinifyFileEventArgs(file, minFile, bundle, containsChanges));

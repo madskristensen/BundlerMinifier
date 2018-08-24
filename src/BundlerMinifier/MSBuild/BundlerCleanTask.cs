@@ -30,7 +30,7 @@ namespace BundlerMinifier
                     var outputFile = bundle.GetAbsoluteOutputFile();
                     var inputFiles = bundle.GetAbsoluteInputFiles();
 
-                    var minFile = BundleMinifier.GetMinFileName(outputFile);
+                    var minFile = BundleMinifier.GetMinFileName(outputFile, bundle.IsDebugMinificationEnabled);
                     var mapFile = minFile + ".map";
                     var gzipFile = minFile + ".gz";
 

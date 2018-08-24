@@ -40,6 +40,13 @@ namespace BundlerMinifierVsix
                     if (File.Exists(unMinFile))
                         sourceFile = unMinFile;
                 }
+                else if (e.Bundle.IsDebugMinificationEnabled)
+                {
+                    string ext = Path.GetExtension(sourceFile);
+                    var unMinFile = sourceFile.Replace(ext, ".debug" + ext);
+                    if (File.Exists(unMinFile))
+                        sourceFile = unMinFile;
+                }
 
                 // Bundle file minification
                 if (e.Bundle.IncludeInProject)

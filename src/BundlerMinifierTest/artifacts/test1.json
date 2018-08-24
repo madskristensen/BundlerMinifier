@@ -1,28 +1,36 @@
 ﻿[
-	{
-		"outputFileName": "foo.js",
-		"inputFiles": [
-			"file1.js",
-			"file2.js"
-		],
-		"minify": {
-			"enabled": true
-		},
-		"includeInProject": true,
-		"sourceMap": true
-	},
-	{
-		"outputFileName": "foo.css",
-		"inputFiles": [
-			"file1.css",
+  {
+    "outputFileName": "foo.js",
+    "inputFiles": [
+      "file1.js",
+      "file2.js"
+    ],
+    "minify": {
+      "enabled": true
+    },
+    "includeInProject": true,
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "bundle.debug.js",
+    "inputFiles": [
+      "file1.js",
+      "file2.js"
+    ],
+    "includeInProject": true
+  },
+  {
+    "outputFileName": "foo.css",
+    "inputFiles": [
+      "file1.css",
       "file2.css",
       "test2/foo.css"
-		],
-		"minify": {
+    ],
+    "minify": {
       "enabled": true
-		},
-		"includeInProject": true
-	},
+    },
+    "includeInProject": true
+  },
   {
     "outputFileName": "foo.html",
     "inputFiles": [

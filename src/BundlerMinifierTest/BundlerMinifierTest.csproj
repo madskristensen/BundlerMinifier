@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BundlerMinifierVsix\BundlerMinifierVsix.csproj" />
     <ProjectReference Include="..\BundlerMinifier\BundlerMinifier.csproj" />
   </ItemGroup>
 

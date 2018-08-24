@@ -49,6 +49,15 @@ namespace BundlerMinifier
         }
 
         [JsonIgnore]
+        public bool IsDebugMinificationEnabled
+        {
+            get
+            {
+                return IsMinificationEnabled && InputFiles.Count == 1 && InputFiles[0].EndsWith(".debug.js");
+            }
+        }
+
+        [JsonIgnore]
         public bool OutputIsMinFile
         {
             get { return Path.GetFileName(OutputFileName).Contains(".min."); }
