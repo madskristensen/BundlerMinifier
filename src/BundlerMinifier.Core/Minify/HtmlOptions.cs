@@ -19,7 +19,8 @@ namespace BundlerMinifier
                 RemoveQuotedAttributes = GetValue(bundle, "removeQuotedAttributes", true) == "True",
                 CollapseWhitespaces = GetValue(bundle, "collapseWhitespace", true) == "True",
                 IsFragmentOnly = GetValue(bundle, "isFragmentOnly", true) == "True",
-                KeepOneSpaceWhenCollapsing = GetValue(bundle, "keepOneSpaceWhenCollapsing", false) == "True"
+                KeepOneSpaceWhenCollapsing = GetValue(bundle, "keepOneSpaceWhenCollapsing", false) == "True",
+                DecodeEntityCharacters = GetValue(bundle, "decodeEntityCharacters", true) == "True"
             };
 
             return settings;
