@@ -10,6 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BundlerMinifierVsix", "src\BundlerMinifierVsix\BundlerMinifierVsix.csproj", "{49C270BE-9645-40D5-BE08-91ADE243D394}"
+	ProjectSection(ProjectDependencies) = postProject
+		{005A7A66-2F08-4A2C-9230-F4FA31A6804B} = {005A7A66-2F08-4A2C-9230-F4FA31A6804B}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BundlerMinifier", "src\BundlerMinifier\BundlerMinifier.csproj", "{B714B5B9-27C4-443C-9517-FE5C5EF46EA2}"
 EndProject
@@ -19,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BundlerMinifier.Core", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BundlerMinifierConsole", "src\BundlerMinifierConsole\BundlerMinifierConsole.csproj", "{005A7A66-2F08-4A2C-9230-F4FA31A6804B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BundlerMinifier.TagHelpers", "src\BundlerMinifier.TagHelpers\BundlerMinifier.TagHelpers.csproj", "{2825CF4A-3F4C-4DC6-AEBB-09E71474D844}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BundlerMinifier.TagHelpers", "src\BundlerMinifier.TagHelpers\BundlerMinifier.TagHelpers.csproj", "{2825CF4A-3F4C-4DC6-AEBB-09E71474D844}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
