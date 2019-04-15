@@ -36,7 +36,7 @@ namespace BundlerMinifier.TagHelpers
                 options.Configure(hostingEnvironment);
             }
 
-            _bundleProvider = bundleProvider ?? new BundleProvider();
+            _bundleProvider = bundleProvider ?? new BundleProvider(hostingEnvironment);
             _options = options;
             _hostingEnvironment = hostingEnvironment;
             _cache = cache;
