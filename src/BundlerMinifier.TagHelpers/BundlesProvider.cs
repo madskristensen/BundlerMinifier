@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.AspNetCore.Hosting;
 
 namespace BundlerMinifier.TagHelpers
 {
@@ -12,16 +13,31 @@ namespace BundlerMinifier.TagHelpers
         private IList<Bundle> _bundles;
         private FileSystemWatcher _fileWatcher;
 
-        public BundleProvider()
-            : this("bundleconfig.json")
+
+        public BundleProvider() : this(null)
         {
         }
 
-        public BundleProvider(string configurationPath)
+        public BundleProvider(IHostingEnvironment hostingEnvironment)
+            : this("bundleconfig.json", hostingEnvironment)
+        {
+        }
+
+        public BundleProvider(string configurationPath, IHostingEnvironment hostingEnvironment)
         {
             if (configurationPath == null) throw new ArgumentNullException(nameof(configurationPath));
 
-            var fullPath = Path.GetFullPath(configurationPath);
+            string filePath;
+            if (hostingEnvironment != null && string.IsNullOrWhiteSpace(Path.GetDirectoryName(configurationPath)))
+            {
+                filePath = Path.Combine(hostingEnvironment.ContentRootPath, configurationPath);
+            }
+            else
+            {
+                filePath = configurationPath;
+            }
+
+            var fullPath = Path.GetFullPath(filePath);
             var directory = Path.GetDirectoryName(fullPath);
             var fileName = Path.GetFileName(fullPath);
             _configurationPath = fullPath;
