@@ -54,6 +54,8 @@ namespace BundlerMinifier
             get { return Path.GetFileName(OutputFileName).Contains(".min."); }
         }
 
+        public DateTime MostRecentWrite { get; set; }
+
         /// <summary>
         /// Converts the relative output file to an absolute file path.
         /// </summary>

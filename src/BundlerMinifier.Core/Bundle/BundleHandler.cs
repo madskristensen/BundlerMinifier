@@ -81,6 +81,7 @@ namespace BundlerMinifier
 
         public static void ProcessBundle(string baseFolder, Bundle bundle)
         {
+            DateTime mostRecentWrite = default(DateTime);
             StringBuilder sb = new StringBuilder();
             List<string> inputFiles = bundle.GetAbsoluteInputFiles();
 
@@ -102,6 +103,9 @@ namespace BundlerMinifier
                     {
                         content = FileHelpers.ReadAllText(file);
                     }
+                    var lastWriteFile = System.IO.File.GetLastWriteTimeUtc(file);
+                    if (mostRecentWrite < lastWriteFile)
+                        mostRecentWrite = lastWriteFile;
 
                     // adding new line only if there are more than 1 files
                     // otherwise we are preserving file integrity
@@ -112,6 +116,7 @@ namespace BundlerMinifier
                 }
             }
 
+            bundle.MostRecentWrite = mostRecentWrite;
             bundle.Output = sb.ToString();
         }
 
