@@ -15,7 +15,6 @@ namespace BundlerMinifier
             string file = bundle.GetAbsoluteOutputFile();
             string extension = Path.GetExtension(file).ToUpperInvariant();
             var minResult = new MinificationResult(file, null, null);
-
             if (!string.IsNullOrEmpty(bundle.Output) && bundle.IsMinificationEnabled)
             {
                 try

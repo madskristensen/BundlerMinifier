@@ -128,8 +128,14 @@ namespace BundlerMinifier
 
             if (bundle.IsMinificationEnabled || bundle.IsGzipEnabled)
             {
+                var outputWriteTime = File.GetLastWriteTimeUtc(minFile);
+                if (!bundle.IsGzipEnabled && bundle.MostRecentWrite < outputWriteTime)
+                    return false;
                 var result = BundleMinifier.MinifyBundle(bundle);
 
+                // If no change is detected, then the minFile is not modified, so we need to update the write time manually
+                if (!result.Changed && File.Exists(minFile))
+                    File.SetLastWriteTimeUtc(minFile, DateTime.UtcNow);
                 changed |= result.Changed;
 
                 if (bundle.IsMinificationEnabled && bundle.SourceMap && !string.IsNullOrEmpty(result.SourceMap))
