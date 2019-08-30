@@ -129,7 +129,7 @@ namespace BundlerMinifier
             if (bundle.IsMinificationEnabled || bundle.IsGzipEnabled)
             {
                 var outputWriteTime = File.GetLastWriteTimeUtc(minFile);
-                if (bundle.MostRecentWrite < outputWriteTime)
+                if (!bundle.IsGzipEnabled && bundle.MostRecentWrite < outputWriteTime)
                     return false;
                 var result = BundleMinifier.MinifyBundle(bundle);
 
