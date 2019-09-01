@@ -43,11 +43,6 @@ namespace BundlerMinifier
             {
                 OnErrorMinifyingFile(minResult);
             }
-            else if (bundle.IsGzipEnabled)
-            {
-                string minFile = bundle.IsMinificationEnabled ? GetMinFileName(bundle.GetAbsoluteOutputFile()) : bundle.GetAbsoluteOutputFile();
-                GzipFile(minFile, bundle, minResult);
-            }
 
             return minResult;
         }
@@ -135,16 +130,16 @@ namespace BundlerMinifier
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
-        private static void GzipFile(string sourceFile, Bundle bundle, MinificationResult result)
+        public static void GzipFile(string sourceFile, Bundle bundle, bool minificationChanged, string minifiedContent)
         {
             var gzipFile = sourceFile + ".gz";
-            var containsChanges = result.Changed || File.GetLastWriteTimeUtc(gzipFile) < File.GetLastWriteTimeUtc(sourceFile);
+            var containsChanges = minificationChanged || File.GetLastWriteTimeUtc(gzipFile) < File.GetLastWriteTimeUtc(sourceFile);
 
             OnBeforeWritingGzipFile(sourceFile, gzipFile, bundle, containsChanges);
-
+            
             if (containsChanges)
             {
-                byte[] buffer = Encoding.UTF8.GetBytes(result.MinifiedContent??bundle.Output);
+                byte[] buffer = Encoding.UTF8.GetBytes(minifiedContent ?? bundle.Output);
 
                 using (var fileStream = File.OpenWrite(gzipFile))
                 using (var gzipStream = new GZipStream(fileStream, CompressionLevel.Optimal))
