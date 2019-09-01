@@ -39,6 +39,7 @@ namespace BundlerMinifierTest
             File.Delete("../../../artifacts/file3.min.html");
             File.Delete("../../../artifacts/file3.min.js");
             File.Delete("../../../artifacts/file4.min.html");
+            File.Delete("../../../artifacts/test7.min.js");
         }
 
         [TestMethod]
@@ -181,6 +182,23 @@ namespace BundlerMinifierTest
 
             string htmlResult = File.ReadAllText("../../../artifacts/file4.min.html");
             Assert.AreEqual("<div class=\"bold\"><span><i class=\"fa fa-phone\"></i></span> <span>DEF</span></div>", htmlResult);
+        }
+
+        [TestMethod]
+        public void PreventDoubleProcessing()
+        {
+            var bundle = TEST_BUNDLE.Replace("test1", "test7");
+
+            var result = _processor.Process(bundle);
+            Assert.IsTrue(result);
+            var filePath = "../../../artifacts/test7.min.js";
+            Assert.IsTrue(File.Exists(filePath));
+            var firstFileTime = File.GetLastWriteTimeUtc(filePath);
+
+            result = _processor.Process(bundle);
+            Assert.IsFalse(result);
+            var secondFileTime = File.GetLastWriteTimeUtc(filePath);
+            Assert.AreEqual(firstFileTime, secondFileTime);
         }
     }
 }

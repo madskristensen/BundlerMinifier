@@ -124,33 +124,48 @@ namespace BundlerMinifier
                 }
             }
 
-            string minFile = BundleMinifier.GetMinFileName(bundle.GetAbsoluteOutputFile());
-
-            if (bundle.IsMinificationEnabled || bundle.IsGzipEnabled)
+            MinificationResult minResult = null;
+            if (bundle.IsMinificationEnabled)
             {
+                var minFile = BundleMinifier.GetMinFileName(bundle.GetAbsoluteOutputFile());
                 var outputWriteTime = File.GetLastWriteTimeUtc(minFile);
-                if (!bundle.IsGzipEnabled && bundle.MostRecentWrite < outputWriteTime)
-                    return false;
-                var result = BundleMinifier.MinifyBundle(bundle);
+                var minifyChanged = bundle.MostRecentWrite >= outputWriteTime;
 
-                // If no change is detected, then the minFile is not modified, so we need to update the write time manually
-                if (!result.Changed && File.Exists(minFile))
-                    File.SetLastWriteTimeUtc(minFile, DateTime.UtcNow);
-                changed |= result.Changed;
-
-                if (bundle.IsMinificationEnabled && bundle.SourceMap && !string.IsNullOrEmpty(result.SourceMap))
+                if (minifyChanged)
                 {
-                    string mapFile = minFile + ".map";
-                    bool smChanges = FileHelpers.HasFileContentChanged(mapFile, result.SourceMap);
+                    minResult = BundleMinifier.MinifyBundle(bundle);
 
-                    if (smChanges)
+                    // If no change is detected, then the minFile is not modified, so we need to update the write time manually
+                    if (!minResult.Changed && File.Exists(minFile))
+                        File.SetLastWriteTimeUtc(minFile, DateTime.UtcNow);
+                    changed |= minResult.Changed;
+
+                    if (bundle.IsMinificationEnabled && bundle.SourceMap && !string.IsNullOrEmpty(minResult.SourceMap))
                     {
-                        OnBeforeWritingSourceMap(minFile, mapFile, smChanges);
-                        File.WriteAllText(mapFile, result.SourceMap, new UTF8Encoding(false));
-                        OnAfterWritingSourceMap(minFile, mapFile, smChanges);
-                        changed = true;
+                        string mapFile = minFile + ".map";
+                        bool smChanges = FileHelpers.HasFileContentChanged(mapFile, minResult.SourceMap);
+
+                        if (smChanges)
+                        {
+                            OnBeforeWritingSourceMap(minFile, mapFile, smChanges);
+                            File.WriteAllText(mapFile, minResult.SourceMap, new UTF8Encoding(false));
+                            OnAfterWritingSourceMap(minFile, mapFile, smChanges);
+                            changed = true;
+                        }
                     }
                 }
+            }
+
+            if (bundle.IsGzipEnabled)
+            {
+                var fileToGzip = bundle.IsMinificationEnabled ?
+                    BundleMinifier.GetMinFileName(bundle.GetAbsoluteOutputFile()) :
+                    bundle.GetAbsoluteOutputFile();
+
+                if (minResult == null)
+                    BundleMinifier.GzipFile(fileToGzip, bundle, false, File.ReadAllText(fileToGzip));
+                else
+                    BundleMinifier.GzipFile(fileToGzip, bundle, minResult.Changed, minResult.MinifiedContent);
             }
 
             return changed;
