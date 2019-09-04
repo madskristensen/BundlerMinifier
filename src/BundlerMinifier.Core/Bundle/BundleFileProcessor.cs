@@ -125,9 +125,9 @@ namespace BundlerMinifier
             }
 
             MinificationResult minResult = null;
+            var minFile = BundleMinifier.GetMinFileName(bundle.GetAbsoluteOutputFile());
             if (bundle.IsMinificationEnabled)
             {
-                var minFile = BundleMinifier.GetMinFileName(bundle.GetAbsoluteOutputFile());
                 var outputWriteTime = File.GetLastWriteTimeUtc(minFile);
                 var minifyChanged = bundle.MostRecentWrite >= outputWriteTime;
 
@@ -140,7 +140,7 @@ namespace BundlerMinifier
                         File.SetLastWriteTimeUtc(minFile, DateTime.UtcNow);
                     changed |= minResult.Changed;
 
-                    if (bundle.IsMinificationEnabled && bundle.SourceMap && !string.IsNullOrEmpty(minResult.SourceMap))
+                    if (bundle.SourceMap && !string.IsNullOrEmpty(minResult.SourceMap))
                     {
                         string mapFile = minFile + ".map";
                         bool smChanges = FileHelpers.HasFileContentChanged(mapFile, minResult.SourceMap);
@@ -159,8 +159,7 @@ namespace BundlerMinifier
             if (bundle.IsGzipEnabled)
             {
                 var fileToGzip = bundle.IsMinificationEnabled ?
-                    BundleMinifier.GetMinFileName(bundle.GetAbsoluteOutputFile()) :
-                    bundle.GetAbsoluteOutputFile();
+                    minFile : bundle.GetAbsoluteOutputFile();
 
                 if (minResult == null)
                     BundleMinifier.GzipFile(fileToGzip, bundle, false, File.ReadAllText(fileToGzip));
