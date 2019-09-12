@@ -154,6 +154,10 @@ namespace BundlerMinifier
                         }
                     }
                 }
+                else
+                {
+                    OnMinificationSkipped(bundle, baseFolder, false);
+                }
             }
 
             if (bundle.IsGzipEnabled)
@@ -210,37 +214,43 @@ namespace BundlerMinifier
             }
         }
 
+        public event EventHandler<BundleFileEventArgs> Processing;
         protected void OnProcessing(Bundle bundle, string baseFolder)
         {
             Processing?.Invoke(this, new BundleFileEventArgs(bundle.GetAbsoluteOutputFile(), bundle, baseFolder, false));
         }
 
+        public event EventHandler<BundleFileEventArgs> BeforeBundling;
         protected void OnBeforeBundling(Bundle bundle, string baseFolder, bool containsChanges)
         {
             BeforeBundling?.Invoke(this, new BundleFileEventArgs(bundle.GetAbsoluteOutputFile(), bundle, baseFolder, containsChanges));
         }
 
 
+        public event EventHandler<BundleFileEventArgs> AfterBundling;
         protected void OnAfterBundling(Bundle bundle, string baseFolder, bool containsChanges)
         {
             AfterBundling?.Invoke(this, new BundleFileEventArgs(bundle.GetAbsoluteOutputFile(), bundle, baseFolder, containsChanges));
         }
 
+        public event EventHandler<MinifyFileEventArgs> BeforeWritingSourceMap;
         protected void OnBeforeWritingSourceMap(string file, string mapFile, bool containsChanges)
         {
             BeforeWritingSourceMap?.Invoke(this, new MinifyFileEventArgs(file, mapFile, containsChanges));
         }
 
+        public event EventHandler<MinifyFileEventArgs> AfterWritingSourceMap;
         protected void OnAfterWritingSourceMap(string file, string mapFile, bool containsChanges)
         {
             AfterWritingSourceMap?.Invoke(this, new MinifyFileEventArgs(file, mapFile, containsChanges));
         }
 
-        public event EventHandler<BundleFileEventArgs> Processing;
-        public event EventHandler<BundleFileEventArgs> BeforeBundling;
-        public event EventHandler<BundleFileEventArgs> AfterBundling;
+        public event EventHandler<BundleFileEventArgs> MinificationSkipped;
+        protected void OnMinificationSkipped(Bundle bundle, string baseFolder, bool containsChanges)
+        {
+            MinificationSkipped?.Invoke(this, new BundleFileEventArgs(bundle.GetAbsoluteOutputFile(), bundle, baseFolder, containsChanges));
+        }
 
-        public event EventHandler<MinifyFileEventArgs> BeforeWritingSourceMap;
-        public event EventHandler<MinifyFileEventArgs> AfterWritingSourceMap;
+
     }
 }
