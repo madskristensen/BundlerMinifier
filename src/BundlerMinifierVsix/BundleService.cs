@@ -131,7 +131,10 @@ namespace BundlerMinifierVsix
                 return !lines.Any(l => l.TrimStart().StartsWith("produceoutput=false", StringComparison.OrdinalIgnoreCase));
             }
 
-            return BundlerMinifierPackage.Options.ProduceOutput;
+            if (BundlerMinifierPackage.Options != null)
+                return BundlerMinifierPackage.Options.ProduceOutput;
+            else
+                return false;
         }
 
         public static void ToggleOutputProduction(string configFile, bool produceOutput)
