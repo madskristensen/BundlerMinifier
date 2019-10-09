@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Caching.Memory;
+#if NETSTANDARD2_0
+using IWebHostEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+#endif
 
 namespace BundlerMinifier.TagHelpers
 {
@@ -17,13 +20,13 @@ namespace BundlerMinifier.TagHelpers
     {
         private readonly IBundleProvider _bundleProvider;
         private readonly BundleOptions _options;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IMemoryCache _cache;
         private readonly HtmlEncoder _htmlEncoder;
         private readonly IUrlHelperFactory _urlHelperFactory;
         private FileVersionProvider _fileVersionProvider;
 
-        public BundleTagHelper(IHostingEnvironment hostingEnvironment, IMemoryCache cache, HtmlEncoder htmlEncoder, IUrlHelperFactory urlHelperFactory, BundleOptions options = null, IBundleProvider bundleProvider = null)
+        public BundleTagHelper(IWebHostEnvironment hostingEnvironment, IMemoryCache cache, HtmlEncoder htmlEncoder, IUrlHelperFactory urlHelperFactory, BundleOptions options = null, IBundleProvider bundleProvider = null)
         {
             if (hostingEnvironment == null) throw new ArgumentNullException(nameof(hostingEnvironment));
             if (cache == null) throw new ArgumentNullException(nameof(cache));
