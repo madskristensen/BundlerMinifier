@@ -1,6 +1,9 @@
 using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+#if NETSTANDARD2_0
+using IWebHostEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+#endif
 
 namespace BundlerMinifier.TagHelpers
 {
@@ -16,7 +19,7 @@ namespace BundlerMinifier.TagHelpers
             services.AddSingleton<IBundleProvider, BundleProvider>();
             services.AddTransient<BundleOptions>(serviceProvider =>
             {
-                var env = serviceProvider.GetService<IHostingEnvironment>();
+                var env = serviceProvider.GetService<IWebHostEnvironment>();
 
                 var options = new BundleOptions();
                 options.Configure(env);

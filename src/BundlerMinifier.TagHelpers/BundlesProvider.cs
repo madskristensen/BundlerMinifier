@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
+#if NETSTANDARD2_0
+using IWebHostEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+#endif
 
 namespace BundlerMinifier.TagHelpers
 {
@@ -18,12 +21,12 @@ namespace BundlerMinifier.TagHelpers
         {
         }
 
-        public BundleProvider(IHostingEnvironment hostingEnvironment)
+        public BundleProvider(IWebHostEnvironment hostingEnvironment)
             : this("bundleconfig.json", hostingEnvironment)
         {
         }
 
-        public BundleProvider(string configurationPath, IHostingEnvironment hostingEnvironment)
+        public BundleProvider(string configurationPath, IWebHostEnvironment hostingEnvironment)
         {
             if (configurationPath == null) throw new ArgumentNullException(nameof(configurationPath));
 
