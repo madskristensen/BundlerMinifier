@@ -3,7 +3,7 @@
   <Import Project="..\common.props" />
 
   <PropertyGroup>
-    <TargetFrameworks>net46;netstandard1.3;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net46;netstandard1.3;netcoreapp2.0;netcoreapp3.0</TargetFrameworks>
     <Title>Bundler &amp; Minifier</Title>
     <PackageId>BuildBundlerMinifier</PackageId>
 
