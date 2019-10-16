@@ -106,7 +106,7 @@ namespace BundlerMinifier
                         Console.WriteLine($"  No files matched the pattern {inputFile}".Orange().Bright());
                     }
 
-                    files.AddRange(matches.Where(f => !files.Contains(f)));
+                    files.AddRange(matches.Where(f => !files.Contains(f)).OrderBy(f => f));
                 }
                 else
                 {
