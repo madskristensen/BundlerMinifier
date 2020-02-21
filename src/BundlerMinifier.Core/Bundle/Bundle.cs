@@ -65,6 +65,31 @@ namespace BundlerMinifier
             return Path.Combine(folder, OutputFileName.NormalizePath());
         }
 
+        public List<string> GetAbsoluteBaseDirectories()
+        {
+            List<string> baseDirs = new List<string>();
+            string folder = new DirectoryInfo(Path.GetDirectoryName(FileName)).FullName;
+
+            foreach (var inputFile in InputFiles)
+            {
+                int globIndex = inputFile.IndexOf('*');
+
+                if (globIndex > -1)
+                {
+                    string relative = string.Empty;
+                    int last = inputFile.LastIndexOf('/', globIndex);
+
+                    if (last > -1)
+                        relative = inputFile.Substring(0, last + 1);
+
+                    string baseDir = new FileInfo(Path.Combine(folder, relative).NormalizePath()).FullName;
+                    baseDirs.Add(baseDir);
+
+                }
+            }
+            return baseDirs;
+        }
+
         /// <summary>
         /// Returns a list of absolute file paths of all matching input files.
         /// </summary>

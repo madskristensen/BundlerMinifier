@@ -96,19 +96,52 @@ namespace BundlerMinifier
             }
         }
 
+        private bool ProcessBundleDirectory(string baseFolder, Bundle bundle)
+        {
+            bool changed = false;
+            var baseDirs = bundle.GetAbsoluteBaseDirectories();
+            var outputDir = new FileInfo(bundle.GetAbsoluteOutputFile()).DirectoryName;
+            foreach (var file in bundle.GetAbsoluteInputFiles())
+            {
+                bundle.InputFiles.Clear();
+                bundle.InputFiles.Add(file);
+                var rel = file;
+                foreach (var baseDir in baseDirs)
+                {
+                    rel = rel.Replace(baseDir, "");
+                }
+                bundle.OutputFileName = Path.Combine(outputDir, rel); 
+                if (ProcessBundle(baseFolder, bundle))
+                {
+                    changed = true;
+                }
+            }
+            return changed;
+        }
+
         private bool ProcessBundle(string baseFolder, Bundle bundle)
         {
+            string outputFile = bundle.GetAbsoluteOutputFile();
+            bool isOutputDirectory = outputFile.EndsWith("\\") || outputFile.EndsWith("//");
+
+            if (isOutputDirectory)
+            {
+                return ProcessBundleDirectory(baseFolder, bundle);
+            }
+
             OnProcessing(bundle, baseFolder);
             var inputs = bundle.GetAbsoluteInputFiles();
             bool changed = false;
 
             if (bundle.GetAbsoluteInputFiles(true).Count > 1 || bundle.InputFiles.FirstOrDefault() != bundle.OutputFileName)
             {
+
                 BundleHandler.ProcessBundle(baseFolder, bundle);
+
 
                 if (!bundle.IsMinificationEnabled || !bundle.OutputIsMinFile)
                 {
-                    string outputFile = bundle.GetAbsoluteOutputFile();
+
                     bool containsChanges = FileHelpers.HasFileContentChanged(outputFile, bundle.Output);
 
                     if (containsChanges)
@@ -172,6 +205,7 @@ namespace BundlerMinifier
             }
 
             return changed;
+
         }
 
         private void CleanBundle(string baseFolder, Bundle bundle)
