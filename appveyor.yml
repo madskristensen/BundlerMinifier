@@ -2,7 +2,7 @@ image: Visual Studio 2017
 
 install:
   - ps: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
-  - ps: $urlCurrent = "https://download.visualstudio.microsoft.com/download/pr/ac85ccb0-e761-489f-b5dd-ba5e52735c2b/dd89fcc72092ff6fc7f5f4cb9eea0de4/dotnet-sdk-3.1.200-win-x64.zip"
+  - ps: $urlCurrent = "https://download.visualstudio.microsoft.com/download/pr/adeab8b1-1c44-41b2-b12a-156442f307e9/65ebf805366410c63edeb06e53959383/dotnet-sdk-3.1.201-win-x64.zip"
   - ps: $env:DOTNET_INSTALL_DIR = "$pwd\.dotnetsdk"
   - ps: mkdir $env:DOTNET_INSTALL_DIR -Force | Out-Null
   - ps: $tempFileCurrent = [System.IO.Path]::GetTempFileName()
