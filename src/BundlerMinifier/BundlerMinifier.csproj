@@ -16,7 +16,15 @@
     <PackageLicenseUrl>https://github.com/madskristensen/BundlerMinifier/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/madskristensen/BundlerMinifier</RepositoryUrl>
     <PackageTags>concat;bundle;minify;minification;css;js;html</PackageTags>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Build.Framework" Version="15.1.0-*" PrivateAssets="All" />
