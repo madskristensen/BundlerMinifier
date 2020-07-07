@@ -40,6 +40,7 @@ namespace BundlerMinifierTest
             File.Delete("../../../artifacts/file3.min.js");
             File.Delete("../../../artifacts/file4.min.html");
             File.Delete("../../../artifacts/test7.min.js");
+            File.Delete("../../../artifacts/test8.min.js");
         }
 
         [TestMethod]
@@ -199,6 +200,16 @@ namespace BundlerMinifierTest
             Assert.IsFalse(result);
             var secondFileTime = File.GetLastWriteTimeUtc(filePath);
             Assert.AreEqual(firstFileTime, secondFileTime);
+        }
+
+        [TestMethod]
+        public void SupportNewSyntax()
+        {
+            _processor.Process(TEST_BUNDLE.Replace("test1", "test8"));
+
+            string jsResult = File.ReadAllText("../../../artifacts/test8.min.js");
+
+            Assert.AreEqual("function test(n){for(const t of n)console.log(t)}test([1,2,3,4]);", jsResult);
         }
     }
 }
