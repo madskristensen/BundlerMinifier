@@ -211,5 +211,15 @@ namespace BundlerMinifierTest
 
             Assert.AreEqual("function test(n){for(const t of n)console.log(t)}test([1,2,3,4]);", jsResult);
         }
+
+        [TestMethod]
+        public void SupportDoubleAsteriskOperator()
+        {
+            _processor.Process(TEST_BUNDLE.Replace("test1", "test9"));
+
+            string jsResult = File.ReadAllText("../../../artifacts/test9.min.js");
+
+            Assert.AreEqual("function r(n,t){return n**t}let x=2**5.1,y=3**x,z=2**81,p=21;", jsResult);
+        }
     }
 }
