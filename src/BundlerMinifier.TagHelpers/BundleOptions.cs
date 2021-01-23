@@ -11,7 +11,8 @@ namespace BundlerMinifier.TagHelpers
     {
         public bool UseBundles { get; set; }
         public bool UseMinifiedFiles { get; set; }
-        public bool AppendVersion { get; set; }        
+        public bool AppendVersion { get; set; }
+        public bool UseStylePreloading { get; set; }
 
         internal void Configure(IWebHostEnvironment env)
         {

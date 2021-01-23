@@ -78,7 +78,9 @@ namespace BundlerMinifier.TagHelpers
                     }
                     else if (bundle.OutputFileUrl.EndsWith(".css", StringComparison.OrdinalIgnoreCase))
                     {
-                        output.Content.AppendHtmlLine($"<link href=\"{_htmlEncoder.Encode(src)}\" rel=\"stylesheet\" />");
+                        var preload = _options.UseStylePreloading ? "rel=\"preload\" " : string.Empty;
+                        var @as = _options.UseStylePreloading ? "as=\"style\"" : string.Empty;
+                        output.Content.AppendHtmlLine($"<link {preload}href=\"{_htmlEncoder.Encode(src)}\" rel=\"stylesheet\" {@as}/>");
                     }
                 }
             }
