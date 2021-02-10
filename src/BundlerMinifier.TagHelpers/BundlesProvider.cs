@@ -72,7 +72,7 @@ namespace BundlerMinifier.TagHelpers
                     if (_bundles == null)
                     {
                         if (!BundleHandler.TryGetBundles(_configurationPath, out var bundles))
-                            throw new Exception("Unable to load bundles.");
+                            throw new Exception($"Unable to load bundles from {_configurationPath}.");
 
                         var result = new List<Bundle>();
                         foreach (var bundle in bundles)
