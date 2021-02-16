@@ -37,7 +37,7 @@ namespace BundlerMinifierVsix.Commands
             _events.ProjectAdded += EnsureProjectIsActive;
             _events.ProjectRemoved += OnProjectRemoved;
 
-            _timer = new Timer(TimerElapsed, null, 0, 250);
+            _timer = new Timer(TimerElapsed, null, 0, Timeout.Infinite);
         }
 
         public static ProjectEventCommand Instance { get; private set; }
@@ -206,6 +206,11 @@ namespace BundlerMinifierVsix.Commands
             catch (Exception ex)
             {
                 Logger.Log(ex);
+            }
+            finally
+            {
+                // Only now fire off next event to avoid overlapping timers
+                _timer.Change(250, Timeout.Infinite);
             }
         }
 
