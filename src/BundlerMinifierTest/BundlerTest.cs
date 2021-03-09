@@ -123,7 +123,7 @@ namespace BundlerMinifierTest
             _processor.Process(TEST_BUNDLE, bundles.Where(b => b.OutputFileName == "minify.min.js"));
 
             string cssResult = File.ReadAllText(new FileInfo("../../../artifacts/minify.min.js").FullName);
-            Assert.AreEqual("var i=1,y=3;\n//# sourceMappingURL=minify.min.js.map", cssResult);
+            Assert.AreEqual("var i=1,y=3,o={value:1},o2={...o,newValue:2};\n//# sourceMappingURL=minify.min.js.map", cssResult);
 
             string map = File.ReadAllText(new FileInfo("../../../artifacts/minify.min.js.map").FullName);
             Assert.IsTrue(map.Contains("minify.js"));
