@@ -33,10 +33,6 @@
     <PackageReference Include="NUglify" Version="1.13.8" PrivateAssets="All" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
-    <PackageReference Include="System.IO.FileSystem.Watcher" Version="4.3.0" PrivateAssets="All" />
-  </ItemGroup>
-
   <ItemGroup>
     <Compile Include="..\BundlerMinifier.Core\**\*.cs" Exclude="..\BundlerMinifier.Core\obj\**;..\BundlerMinifier.Core\bin\**">
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
