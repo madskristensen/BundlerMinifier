@@ -65,7 +65,7 @@ instantly.
 
 ### Bundle on build / CI support
 In ASP.NET MVC and WebForms projects you can enable bundling and
-minification as part of the build step. Simply right-click the
+minification as part of the build step (also works for console projects). Simply right-click the
 `bundleconfig.json` file to enable it.
 
 ![Bundle on build](art/contextmenu-bundleonbuild.png)
