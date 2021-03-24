@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_BundlerMinifierTaskAssembly Condition="'$(MSBuildRuntimeType)' == 'Core'">..\tools\netstandard1.3\BundlerMinifier.dll</_BundlerMinifierTaskAssembly>
-    <_BundlerMinifierTaskAssembly Condition="'$(MSBuildRuntimeType)' != 'Core'">..\tools\net46\BundlerMinifier.dll</_BundlerMinifierTaskAssembly>
+    <_BundlerMinifierTaskAssembly Condition="'$(MSBuildRuntimeType)' == 'Core'">..\tools\netstandard2.0\BundlerMinifier.dll</_BundlerMinifierTaskAssembly>
+    <_BundlerMinifierTaskAssembly Condition="'$(MSBuildRuntimeType)' != 'Core'">..\tools\netstandard2.0\BundlerMinifier.dll</_BundlerMinifierTaskAssembly>
   </PropertyGroup>
 
   <UsingTask AssemblyFile="$(_BundlerMinifierTaskAssembly)" TaskName="BundlerMinifier.BundlerBuildTask"/>

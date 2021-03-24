@@ -327,8 +327,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <VSIXSourceItem Include="..\BundlerMinifier\bin\$(Configuration)\net46\BundlerMinifier.pdb" Visible="false" />
-    <VSIXSourceItem Include="..\BundlerMinifier\bin\$(Configuration)\net46\BundlerMinifier.dll" Visible="false" />
+    <VSIXSourceItem Include="..\BundlerMinifier\bin\$(Configuration)\netstandard2.0\BundlerMinifier.pdb" Visible="false" />
+    <VSIXSourceItem Include="..\BundlerMinifier\bin\$(Configuration)\netstandard2.0\BundlerMinifier.dll" Visible="false" />
     <Content Include="@(VSIXSourceItem)">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
