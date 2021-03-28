@@ -16,7 +16,6 @@ before_build:
 
 build_script:
   - dotnet restore BundlerMinifier.sln
-  - nuget restore .\src\BundlerMinifierVSIX -Verbosity quiet -PackagesDirectory .\Packages
   - msbuild .\src\BundlerMinifierConsole\BundlerMinifierConsole.csproj /p:configuration=Release /v:m
   - msbuild .\src\BundlerMinifierVSIX\BundlerMinifierVSIX.csproj /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
   - msbuild .\src\BundlerMinifierTest\BundlerMinifierTest.csproj /p:configuration=Release /v:m
