@@ -50,6 +50,9 @@
     <PlatformTarget>x86</PlatformTarget>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
+  <PropertyGroup>
+    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Adornments\GeneratedAdornment.cs" />
     <Compile Include="Adornments\LogoAdornment.cs" />
