@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netcoreapp3.0;netcoreapp3.1;net5.0</TargetFrameworks>
     
     <Authors>Gérald Barré, Mads Kristensen, RockstarDev</Authors>
     <Product>Bundler &amp; Minifier TagHelpers</Product>
