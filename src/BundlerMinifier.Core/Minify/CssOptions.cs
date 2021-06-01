@@ -9,6 +9,7 @@ namespace BundlerMinifier
         {
             CssSettings settings = new CssSettings();
             settings.TermSemicolons = GetValue(bundle, "termSemicolons") == "True";
+            settings.DecodeEscapes = GetValue(bundle, "decodeEscapes", "True") == "True";
 
             string cssComment = GetValue(bundle, "commentMode");
 
