@@ -9,7 +9,7 @@ namespace BundlerMinifier
         {
             CodeSettings settings = new CodeSettings();
             settings.AlwaysEscapeNonAscii = GetValue(bundle, "alwaysEscapeNonAscii", false) == "True";
-
+            settings.IgnoreErrorList = GetValue(bundle, "ignorableErrors", string.Empty);
             settings.PreserveImportantComments = GetValue(bundle, "preserveImportantComments", true) == "True";
             settings.TermSemicolons = GetValue(bundle, "termSemicolons", true) == "True";
 

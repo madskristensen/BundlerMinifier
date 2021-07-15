@@ -8,6 +8,7 @@ namespace BundlerMinifier
         public static CssSettings GetSettings(Bundle bundle)
         {
             CssSettings settings = new CssSettings();
+            settings.IgnoreErrorList = GetValue(bundle, "ignorableErrors", string.Empty);
             settings.TermSemicolons = GetValue(bundle, "termSemicolons") == "True";
             settings.DecodeEscapes = GetValue(bundle, "decodeEscapes", "True") == "True";
 
