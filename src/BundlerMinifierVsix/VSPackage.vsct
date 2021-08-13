@@ -140,7 +140,7 @@
 
   <Symbols>
     <!-- This is the package guid. -->
-    <GuidSymbol name="guidBundlerPackage" value="{67411f3b-36b3-4df0-84e8-5748f8a541ac}" />
+    <GuidSymbol name="guidBundlerPackage" value="{c7347762-e60a-4407-bb9d-d76fc1fe09b5}" />
 
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidBundlerCmdSet" value="{7b10be0c-81e1-4817-abda-e08788679bd5}">

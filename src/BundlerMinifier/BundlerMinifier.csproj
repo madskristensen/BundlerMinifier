@@ -14,7 +14,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <PackageIconUrl>https://raw.githubusercontent.com/madskristensen/BundlerMinifier/master/src/BundlerMinifierVsix/Resources/icon.png</PackageIconUrl>
     <PackageLicenseUrl>https://github.com/madskristensen/BundlerMinifier/blob/master/LICENSE</PackageLicenseUrl>
-    <RepositoryUrl>https://github.com/madskristensen/BundlerMinifier</RepositoryUrl>
+    <RepositoryUrl>https://github.com/failwyn/BundlerMinifier</RepositoryUrl>
     <PackageTags>concat;bundle;minify;minification;css;js;html</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>

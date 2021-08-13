@@ -1,21 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="a0ae318b-4f07-4f71-93cb-f21d3f03c6d3" Version="3.2" Language="en-US" Publisher="Mads Kristensen" />
-        <DisplayName>Bundler &amp; Minifier</DisplayName>
+        <Identity Id="5783ce1f-b23d-4e84-87a4-6b2cbe9e0602" Version="2.9.0" Language="en-US" Publisher="Jason Moore" />
+        <DisplayName>Bundler &amp; Minifier </DisplayName>
         <Description xml:space="preserve">Adds support for bundling and minifying JavaScript, CSS and HTML files in any project.</Description>
-        <MoreInfo>https://github.com/madskristensen/BundlerMinifier</MoreInfo>
+        <MoreInfo>https://github.com/failwyn/BundlerMinifier</MoreInfo>
         <License>Resources\LICENSE</License>
-        <ReleaseNotes>https://github.com/madskristensen/BundlerMinifier/blob/master/CHANGELOG.md</ReleaseNotes>
+        <ReleaseNotes>https://github.com/failwyn/BundlerMinifier/blob/master/CHANGELOG.md</ReleaseNotes>
         <Icon>Resources\icon.png</Icon>
         <PreviewImage>Resources\preview.png</PreviewImage>
         <Tags>bundle, bundling, minify, minification, js, css, html</Tags>
     </Metadata>
     <Installation>
-        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0,17.0)" />
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,)">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
     </Installation>
     <Prerequisites>
-        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,)" DisplayName="Visual Studio core editor" />
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,)" DisplayName="Visual Studio core editor" />
     </Prerequisites>
     <Assets>
         <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
