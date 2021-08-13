@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="5783ce1f-b23d-4e84-87a4-6b2cbe9e0602" Version="2.9.0" Language="en-US" Publisher="Jason Moore" />
-        <DisplayName>Bundler &amp; Minifier </DisplayName>
+        <Identity Id="5783ce1f-b23d-4e84-87a4-6b2cbe9e0602" Version="2.9.001" Language="en-US" Publisher="Jason Moore" />
+        <DisplayName>Bundler &amp; Minifier 64</DisplayName>
         <Description xml:space="preserve">Adds support for bundling and minifying JavaScript, CSS and HTML files in any project.</Description>
         <MoreInfo>https://github.com/failwyn/BundlerMinifier</MoreInfo>
         <License>Resources\LICENSE</License>
