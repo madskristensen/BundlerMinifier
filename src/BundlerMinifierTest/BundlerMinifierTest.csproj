@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <None Remove="artifacts\file5.js" />
+    <None Remove="artifacts\file6.js" />
   </ItemGroup>
 
   <ItemGroup>
