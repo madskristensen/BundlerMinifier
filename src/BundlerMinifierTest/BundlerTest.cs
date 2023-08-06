@@ -221,5 +221,14 @@ namespace BundlerMinifierTest
 
             Assert.AreEqual("function r(n,t){return n**t}let x=2**5.1,y=3**x,z=2**81,p=21;", jsResult);
         }
+
+
+        [TestMethod]
+        public void SupportIngoreError()
+        {
+           _processor.Process(TEST_BUNDLE.Replace("test1", "test10"));
+           string jsResult = File.ReadAllText("../../../artifacts/test10.min.js");
+           Assert.AreEqual("function throw(n){throw new Error(n);}", jsResult);
+        }
     }
 }

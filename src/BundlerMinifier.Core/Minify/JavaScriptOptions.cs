@@ -13,6 +13,8 @@ namespace BundlerMinifier
             settings.PreserveImportantComments = GetValue(bundle, "preserveImportantComments", true) == "True";
             settings.TermSemicolons = GetValue(bundle, "termSemicolons", true) == "True";
 
+            settings.IgnoreAllErrors = GetValue(bundle, "ignoreAllErrors", false) == "True";
+
             if (GetValue(bundle, "renameLocals", true) == "False")
                 settings.LocalRenaming = LocalRenaming.KeepAll;
 
